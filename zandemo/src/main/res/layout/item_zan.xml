@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:padding="15dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Android工程师~爱Coding~爱思考~不断努力~希望有一天会成为大大的大神~\n你的【Android自定义ViewGroup】不一样的轮子，巧用类变量解决冲突，像IOS那样简单的使用侧滑删除，一个控件搞定Android item侧滑删除菜单。被推荐到首页喽！" />
+
+    <LinearLayout
+        android:id="@+id/llZan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right">
+
+        <TextView
+            android:id="@+id/tvZan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="5dp"
+            android:drawableRight="@drawable/selector_zan_bg"
+            android:padding="10dp"
+            tools:text="40" />
+    </LinearLayout>
+</LinearLayout>

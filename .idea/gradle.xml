@@ -10,8 +10,10 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/itemdecorationdemo" />
             <option value="$PROJECT_DIR$/lib" />
             <option value="$PROJECT_DIR$/webviewdemo" />
+            <option value="$PROJECT_DIR$/zandemo" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
