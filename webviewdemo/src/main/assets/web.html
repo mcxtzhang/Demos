@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <h1 id="h">欢迎光临启舰的blog</h1>
+    <input type="button" value="通过JS调用Native-Android的方法" onclick="jsCallNative()">
+</head>
+<body>
+<script type="text/javascript">
+function jsCallNative() {
+ native_android.nativeToast("我来自Html");
+}
+
+function sum(i,m)
+{
+ document.getElementById("h").innerHTML= (i+m);
+}
+
+</script>
+</body>
+</html>

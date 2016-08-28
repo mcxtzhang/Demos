@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/lib/lib.iml" filepath="$PROJECT_DIR$/lib/lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/webviewdemo/webviewdemo.iml" filepath="$PROJECT_DIR$/webviewdemo/webviewdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/zxt_github.iml" filepath="$PROJECT_DIR$/zxt_github.iml" />
     </modules>
   </component>
