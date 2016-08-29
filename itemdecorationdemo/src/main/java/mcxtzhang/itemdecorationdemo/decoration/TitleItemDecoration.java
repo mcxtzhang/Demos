@@ -85,7 +85,7 @@ public class TitleItemDecoration extends RecyclerView.ItemDecoration {
         int pos = ((LinearLayoutManager)(parent.getLayoutManager())).findFirstVisibleItemPosition();
 
         String tag = mDatas.get(pos).getTag();
-        View child = parent.getChildAt(pos);
+        View child = parent.findViewHolderForLayoutPosition(pos).itemView;//出现一个奇怪的bug，有时候child为空，所以将 child = parent.getChildAt(i)。-》 parent.findViewHolderForLayoutPosition(pos).itemView
         mPaint.setColor(COLOR_TITLE_BG);
         c.drawRect(parent.getPaddingLeft(), parent.getPaddingTop(), parent.getRight() - parent.getPaddingRight(), parent.getPaddingTop() + mTitleHeight, mPaint);
         mPaint.setColor(COLOR_TITLE_FONT);

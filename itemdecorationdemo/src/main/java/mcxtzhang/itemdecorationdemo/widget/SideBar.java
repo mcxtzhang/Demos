@@ -10,7 +10,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -120,7 +119,7 @@ public class SideBar extends View {
      *
      * @param indexStrings
      */
-    public void setIndexText(ArrayList<String> indexStrings) {
+    public void setIndexText(List<String> indexStrings) {
         this.indexStrings = indexStrings;
         invalidate();
     }
