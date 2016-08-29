@@ -8,6 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import mcxtzhang.itemdecorationdemo.decoration.DividerItemDecoration;
+import mcxtzhang.itemdecorationdemo.decoration.TitleItemDecoration;
+
 public class MainActivity extends Activity {
     private static final String TAG = "zxt";
     private RecyclerView mRv;
@@ -27,29 +30,8 @@ public class MainActivity extends Activity {
         mRv.setAdapter(mAdapter = new CityAdapter(this, mDatas));
         mRv.addItemDecoration(mDecoration = new TitleItemDecoration(this, mDatas));
         //如果add两个，那么按照先后顺序，依次渲染。
-        mRv.addItemDecoration(new TitleItemDecoration2(this,mDatas));
-        mRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
-            private int last;
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-/*                if (mManager.findFirstVisibleItemPosition() != last) {
-                    if (null != mDatas.get(mManager.findFirstVisibleItemPosition()).getTag()
-                            && !mDatas.get(mManager.findFirstVisibleItemPosition()).getTag().equals(mDatas.get(last).getTag())) {
-                        mRv.invalidateItemDecorations();
-                    }
-                    last = mManager.findFirstVisibleItemPosition();
-                }*/
-
-
-            }
-        });
+        //mRv.addItemDecoration(new TitleItemDecoration2(this,mDatas));
+        mRv.addItemDecoration(new DividerItemDecoration(MainActivity.this, DividerItemDecoration.VERTICAL_LIST));
     }
 
     private void initDatas() {

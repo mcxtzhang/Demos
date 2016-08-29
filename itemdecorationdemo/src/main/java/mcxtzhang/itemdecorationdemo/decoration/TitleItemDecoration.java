@@ -1,4 +1,4 @@
-package mcxtzhang.itemdecorationdemo;
+package mcxtzhang.itemdecorationdemo.decoration;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -11,6 +11,8 @@ import android.util.TypedValue;
 import android.view.View;
 
 import java.util.List;
+
+import mcxtzhang.itemdecorationdemo.CityBean;
 
 /**
  * 有分类title的 ItemDecoration

@@ -1,4 +1,4 @@
-package mcxtzhang.itemdecorationdemo;
+package mcxtzhang.itemdecorationdemo.decoration;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
