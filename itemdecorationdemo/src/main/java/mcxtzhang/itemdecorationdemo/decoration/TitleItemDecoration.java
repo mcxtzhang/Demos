@@ -30,6 +30,18 @@ public class TitleItemDecoration extends RecyclerView.ItemDecoration {
     private static int COLOR_TITLE_FONT = Color.parseColor("#FF000000");
     private static int mTitleFontSize;//title字体大小
 
+
+    public TitleItemDecoration(Context context, List<CityBean> datas) {
+        super();
+        mDatas = datas;
+        mPaint = new Paint();
+        mBounds = new Rect();
+        mTitleHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30, context.getResources().getDisplayMetrics());
+        mTitleFontSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 16, context.getResources().getDisplayMetrics());
+        mPaint.setTextSize(mTitleFontSize);
+        mPaint.setAntiAlias(true);
+    }
+
     @Override
     public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
         super.onDraw(c, parent, state);
@@ -113,14 +125,4 @@ public class TitleItemDecoration extends RecyclerView.ItemDecoration {
         }
     }
 
-    public TitleItemDecoration(Context context, List<CityBean> datas) {
-        super();
-        mDatas = datas;
-        mPaint = new Paint();
-        mBounds = new Rect();
-        mTitleHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30, context.getResources().getDisplayMetrics());
-        mTitleFontSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 16, context.getResources().getDisplayMetrics());
-        mPaint.setTextSize(mTitleFontSize);
-        mPaint.setAntiAlias(true);
-    }
 }

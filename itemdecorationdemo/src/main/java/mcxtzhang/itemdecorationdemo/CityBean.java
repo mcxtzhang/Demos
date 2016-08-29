@@ -6,7 +6,7 @@ package mcxtzhang.itemdecorationdemo;
  */
 
 public class CityBean {
-    private String tag;//首字母
+    private String tag;//所属的分类（城市的汉语拼音首字母）
     private String city;
 
     public CityBean(String tag, String city) {
