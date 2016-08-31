@@ -48,5 +48,24 @@ public class MainActivity extends Activity {
         mDatas.add(new CityBean("H", "湖南"));
         mDatas.add(new CityBean("H", "河北"));
         mDatas.add(new CityBean("J", "江苏"));
+        mDatas.add(new CityBean("J", "江苏"));
+        mDatas.add(new CityBean("J", "江苏"));
+        mDatas.add(new CityBean("J", "江苏"));
+        mDatas.add(new CityBean("J", "江苏"));
+        mDatas.add(new CityBean("J", "江苏"));
+        mDatas.add(new CityBean("J", "江苏"));
+        mDatas.add(new CityBean("J", "江苏"));
+        mDatas.add(new CityBean("J", "江苏"));
+        mDatas.add(new CityBean("J", "江苏"));
+        mDatas.add(new CityBean("J", "江苏"));
+        mDatas.add(new CityBean("J", "江苏"));
+        mDatas.add(new CityBean("J", "江苏"));
+        mDatas.add(new CityBean("J", "江苏"));
+        mDatas.add(new CityBean("J", "江苏"));
+        mDatas.add(new CityBean("R", "日本"));
+        mDatas.add(new CityBean("R", "日本"));
+        mDatas.add(new CityBean("R", "日本"));
+        mDatas.add(new CityBean("R", "日本"));
+
     }
 }
