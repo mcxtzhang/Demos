@@ -15,6 +15,7 @@
             <option value="$PROJECT_DIR$/spandemos" />
             <option value="$PROJECT_DIR$/webviewdemo" />
             <option value="$PROJECT_DIR$/zandemo" />
+            <option value="$PROJECT_DIR$/zxtcommonlib" />
           </set>
         </option>
         <option name="myModules">
@@ -26,6 +27,7 @@
             <option value="$PROJECT_DIR$/spandemos" />
             <option value="$PROJECT_DIR$/webviewdemo" />
             <option value="$PROJECT_DIR$/zandemo" />
+            <option value="$PROJECT_DIR$/zxtcommonlib" />
           </set>
         </option>
       </GradleProjectSettings>

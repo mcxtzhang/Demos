@@ -9,6 +9,8 @@ import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.widget.TextView;
 
+import com.mcxtzhang.zxtcommonlib.ZxtUtils;
+
 public class MainActivity extends AppCompatActivity {
     TextView mTv;
 
@@ -30,7 +32,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-        mTv.setText(spannableString);
+
+        mTv.setText(ZxtUtils.getFriendColorSpannableString(source,"adsfasdfadsf"));
+
 
     }
 

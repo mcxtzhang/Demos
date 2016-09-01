@@ -1,1 +1,1 @@
-include ':app', ':lib', ':webviewdemo', ':zandemo', ':itemdecorationdemo', ':spandemos'
+include ':app', ':lib', ':webviewdemo', ':zandemo', ':itemdecorationdemo', ':spandemos', ':zxtcommonlib'
