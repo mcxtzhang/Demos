@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.mcxtzhang.spandemos.MainActivity">
+
+    <TextView
+        android:id="@+id/tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="21世纪20年代初，人类设计了由人工智能创造的智能机械（简称为智械），其旨在加强生产和创造世界经济繁荣。然而，令人难以置信的事情发生了，智械变得充满恶意，并开始大量生产军用机器人试图毁灭人类。
+各国政府未能阻止智能机械的进攻，因此联合国创建了一个国际维和组织，以反抗智能机械。汇集全世界最优秀最精英的组织被命名为“守望先锋”，其将围绕机器人军队展开一场实力不对称的战争。
+最初的守望先锋队伍有：来自德国的士兵莱因哈特·威尔海姆，瑞典武器工程师托比昂·林德霍姆，两名美国的强化试验士兵——军中至交好友——加布里埃尔·莱耶斯（死神）和杰克·莫里森（士兵76），廖，以及安娜（法老之鹰的母亲）。
+莱耶斯被选为守望先锋的领导者，但其实这个领袖称号实际上有名无实，莫里森磨合了所有人使之成为一个强大战斗力团队。[4]
+俄罗斯士兵与智能机械交战
+俄罗斯士兵与智能机械交战
+智械危机持续了很多年，一种自适应海洋型机器人杀害了大量印度人民，肆虐澳大利亚，几近毁灭了西伯利亚和朝鲜半岛。但是尽管无比艰难，守望先锋也取得了一些胜利。
+俄国人击败并且关闭了他们的智能中心，韩国派出了电竞职业选手们，包括世界冠军D.Va，他们以新的机甲套装对抗海洋型机器人。危机造成两边的大量伤亡和损失，人类赢得了最终的胜利，这在很大程度上要归功于守望先锋。[4]
+守望先锋
+守望先锋
+在危机被终结后莫里森升任守望先锋指挥官，莱耶斯则负责“暗影守望”——一个潜伏在暗处的秘密行动组织，而且该组织不受官方明文制约。[4]
+随着岁月的流逝，守望先锋掌握的资源和能量日益增加，组织招收了更多的成员，并从突击组织转化成一个世界性维和组织，一些有才华的人加入了守望先锋。" />
+</RelativeLayout>
