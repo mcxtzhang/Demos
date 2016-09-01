@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 
@@ -94,11 +95,24 @@ public class TitleItemDecoration extends RecyclerView.ItemDecoration {
 
     @Override
     public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {//最后调用 绘制在最上层
-        int pos = ((LinearLayoutManager)(parent.getLayoutManager())).findFirstVisibleItemPosition();
+        int pos = ((LinearLayoutManager) (parent.getLayoutManager())).findFirstVisibleItemPosition();
 
         String tag = mDatas.get(pos).getTag();
         //View child = parent.getChildAt(pos);
         View child = parent.findViewHolderForLayoutPosition(pos).itemView;//出现一个奇怪的bug，有时候child为空，所以将 child = parent.getChildAt(i)。-》 parent.findViewHolderForLayoutPosition(pos).itemView
+
+        boolean flag = false;
+        if ((pos + 1) < mDatas.size()) {
+            if (null != mDatas.get(pos).getTag() && !mDatas.get(pos).getTag().equals(mDatas.get(pos + 1).getTag())) {
+                Log.d("zxt", "onDrawOver() called with: c = [" + child.getTop());
+                if (child.getHeight() + child.getTop() < mTitleHeight) {
+                    c.save();
+                    flag = true;
+                    c.clipRect(parent.getPaddingLeft(), parent.getPaddingTop(), parent.getRight() - parent.getPaddingRight(),parent.getPaddingTop() +child.getHeight() + child.getTop());
+                    c.translate(0,child.getHeight() + child.getTop() - mTitleHeight);
+                }
+            }
+        }
         mPaint.setColor(COLOR_TITLE_BG);
         c.drawRect(parent.getPaddingLeft(), parent.getPaddingTop(), parent.getRight() - parent.getPaddingRight(), parent.getPaddingTop() + mTitleHeight, mPaint);
         mPaint.setColor(COLOR_TITLE_FONT);
@@ -106,6 +120,10 @@ public class TitleItemDecoration extends RecyclerView.ItemDecoration {
         c.drawText(tag, child.getPaddingLeft(),
                 parent.getPaddingTop() + mTitleHeight - (mTitleHeight / 2 - mBounds.height() / 2),
                 mPaint);
+        if (flag)
+        c.restore();
+
+
     }
 
     @Override
