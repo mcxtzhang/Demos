@@ -9,11 +9,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import java.util.List;
 
 import mcxtzhang.itemdecorationdemo.CityBean;
+import mcxtzhang.itemdecorationdemo.R;
 
 /**
  * 有分类title的 ItemDecoration
@@ -25,6 +28,8 @@ public class TitleItemDecoration extends RecyclerView.ItemDecoration {
     private List<CityBean> mDatas;
     private Paint mPaint;
     private Rect mBounds;//用于存放测量文字Rect
+
+    private LayoutInflater mInflater;
 
     private int mTitleHeight;//title的高
     private static int COLOR_TITLE_BG = Color.parseColor("#FFDFDFDF");
@@ -41,6 +46,7 @@ public class TitleItemDecoration extends RecyclerView.ItemDecoration {
         mTitleFontSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 16, context.getResources().getDisplayMetrics());
         mPaint.setTextSize(mTitleFontSize);
         mPaint.setAntiAlias(true);
+        mInflater = LayoutInflater.from(context);
     }
 
     @Override
@@ -94,7 +100,7 @@ public class TitleItemDecoration extends RecyclerView.ItemDecoration {
     }
 
     @Override
-    public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {//最后调用 绘制在最上层
+    public void onDrawOver(Canvas c, final RecyclerView parent, RecyclerView.State state) {//最后调用 绘制在最上层
         int pos = ((LinearLayoutManager) (parent.getLayoutManager())).findFirstVisibleItemPosition();
 
         String tag = mDatas.get(pos).getTag();
@@ -129,6 +135,58 @@ public class TitleItemDecoration extends RecyclerView.ItemDecoration {
         if (flag)
             c.restore();//恢复画布到之前保存的状态
 
+
+/*        Button button = new Button(parent.getContext());
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(parent.getContext(), "啊哈", Toast.LENGTH_SHORT).show();//即使给View设置了点击事件，也是无效的，它仅仅draw了
+            }
+        });
+        ViewGroup.LayoutParams params = button.getLayoutParams();
+        if (params == null){
+            params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        }
+        button.setLayoutParams(params);
+        button.setBackgroundColor(Color.RED);
+        button.setText("无哈");
+        *//*button.measure(View.MeasureSpec.makeMeasureSpec(0,View.MeasureSpec.EXACTLY),View.MeasureSpec.makeMeasureSpec(0,View.MeasureSpec.EXACTLY));
+*//*
+        //必须经过 测量 和 布局，View才能被正常的显示出来
+        button.measure(View.MeasureSpec.makeMeasureSpec(9999,View.MeasureSpec.UNSPECIFIED),View.MeasureSpec.makeMeasureSpec(9999,View.MeasureSpec.UNSPECIFIED));
+        button.layout(parent.getPaddingLeft(),parent.getPaddingTop(),
+                parent.getPaddingLeft()+button.getMeasuredWidth(),parent.getPaddingTop()+button.getMeasuredHeight());
+        button.draw(c);*/
+
+        //inflate一个复杂布局 并draw出来
+        View toDrawView = mInflater.inflate(R.layout.header_complex, parent, false);
+        int toDrawWidthSpec;
+        int toDrawHeightSpec;
+        ViewGroup.LayoutParams lp = toDrawView.getLayoutParams();
+        if (lp == null) {
+            lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            toDrawView.setLayoutParams(lp);
+        }
+        if (lp.width == ViewGroup.LayoutParams.MATCH_PARENT) {
+            toDrawWidthSpec = View.MeasureSpec.makeMeasureSpec(parent.getWidth() - parent.getPaddingLeft() - parent.getPaddingRight(), View.MeasureSpec.EXACTLY);
+        } else if (lp.width == ViewGroup.LayoutParams.WRAP_CONTENT) {
+            toDrawWidthSpec = View.MeasureSpec.makeMeasureSpec(parent.getWidth() - parent.getPaddingLeft() - parent.getPaddingRight(), View.MeasureSpec.AT_MOST);
+        } else {
+            toDrawWidthSpec = View.MeasureSpec.makeMeasureSpec(lp.width, View.MeasureSpec.EXACTLY);
+        }
+
+        if (lp.height == ViewGroup.LayoutParams.MATCH_PARENT) {
+            toDrawHeightSpec = View.MeasureSpec.makeMeasureSpec(parent.getHeight() - parent.getPaddingTop() - parent.getPaddingBottom(), View.MeasureSpec.EXACTLY);
+        } else if (lp.height == ViewGroup.LayoutParams.WRAP_CONTENT) {
+            toDrawHeightSpec = View.MeasureSpec.makeMeasureSpec(parent.getHeight() - parent.getPaddingTop() - parent.getPaddingBottom(), View.MeasureSpec.AT_MOST);
+        } else {
+            toDrawHeightSpec = View.MeasureSpec.makeMeasureSpec(lp.width, View.MeasureSpec.EXACTLY);
+        }
+
+        toDrawView.measure(toDrawWidthSpec, toDrawHeightSpec);
+        toDrawView.layout(parent.getPaddingLeft(),parent.getPaddingTop(),
+                parent.getPaddingLeft()+toDrawView.getMeasuredWidth(),parent.getPaddingTop()+toDrawView.getMeasuredHeight());
+        toDrawView.draw(c);
 
     }
 
