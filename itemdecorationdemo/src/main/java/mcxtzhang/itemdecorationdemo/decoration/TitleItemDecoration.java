@@ -113,7 +113,7 @@ public class TitleItemDecoration extends RecyclerView.ItemDecoration {
                     //可与123行 c.drawRect 比较，只有bottom参数不一样，由于 child.getHeight() + child.getTop() < mTitleHeight，所以绘制区域是在不断的减小，有种折叠起来的感觉
                     //c.clipRect(parent.getPaddingLeft(), parent.getPaddingTop(), parent.getRight() - parent.getPaddingRight(), parent.getPaddingTop() + child.getHeight() + child.getTop());
 
-                    //类似饿了么点餐时的头部切换“动画效果”
+                    //类似饿了么点餐时,商品列表的悬停头部切换“动画效果”
                     //上滑时，将canvas上移 （y为负数） ,所以后面canvas 画出来的Rect和Text都上移了，有种切换的“动画”感觉
                     c.translate(0, child.getHeight() + child.getTop() - mTitleHeight);
                 }
