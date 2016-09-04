@@ -166,6 +166,14 @@ public class IndexBar extends View {
                 if (null != mOnIndexPressedListener) {
                     mOnIndexPressedListener.onIndexPressed(pressI, mIndexDatas.get(pressI));
                 }
+                //滑动Rv
+                if (mLayoutManager != null) {
+                    int position = getPosByTag(mIndexDatas.get(pressI));
+                    if (position != -1) {
+                        mLayoutManager.scrollToPositionWithOffset(position, 0);
+                    }
+                }
+
 
                 break;
             case MotionEvent.ACTION_UP:
