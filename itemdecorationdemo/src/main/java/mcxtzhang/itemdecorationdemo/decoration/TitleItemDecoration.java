@@ -11,12 +11,10 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import java.util.List;
 
 import mcxtzhang.itemdecorationdemo.CityBean;
-import mcxtzhang.itemdecorationdemo.R;
 
 /**
  * 有分类title的 ItemDecoration
@@ -159,7 +157,7 @@ public class TitleItemDecoration extends RecyclerView.ItemDecoration {
         button.draw(c);*/
 
         //inflate一个复杂布局 并draw出来
-        View toDrawView = mInflater.inflate(R.layout.header_complex, parent, false);
+/*        View toDrawView = mInflater.inflate(R.layout.header_complex, parent, false);
         int toDrawWidthSpec;
         int toDrawHeightSpec;
         ViewGroup.LayoutParams lp = toDrawView.getLayoutParams();
@@ -186,7 +184,7 @@ public class TitleItemDecoration extends RecyclerView.ItemDecoration {
         toDrawView.measure(toDrawWidthSpec, toDrawHeightSpec);
         toDrawView.layout(parent.getPaddingLeft(),parent.getPaddingTop(),
                 parent.getPaddingLeft()+toDrawView.getMeasuredWidth(),parent.getPaddingTop()+toDrawView.getMeasuredHeight());
-        toDrawView.draw(c);
+        toDrawView.draw(c);*/
 
     }
 
