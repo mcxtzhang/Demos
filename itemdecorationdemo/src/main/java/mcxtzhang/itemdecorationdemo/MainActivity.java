@@ -16,6 +16,7 @@ import java.util.List;
 
 import mcxtzhang.itemdecorationdemo.decoration.DividerItemDecoration;
 import mcxtzhang.itemdecorationdemo.decoration.TitleItemDecoration;
+import mcxtzhang.itemdecorationdemo.widget.IndexBar;
 import mcxtzhang.itemdecorationdemo.widget.SideBar;
 
 public class MainActivity extends Activity {
@@ -33,6 +34,7 @@ public class MainActivity extends Activity {
      * 右侧边栏导航区域
      */
     private SideBar mSideBar;
+    private IndexBar mIndexBar;
 
     /**
      * 显示指示器DialogText
@@ -48,6 +50,10 @@ public class MainActivity extends Activity {
         mSideBar = (SideBar) findViewById(R.id.sideBar);
         mTvSideBarHint = (TextView) findViewById(R.id.tvSideBarHint);
         mSideBar.setTextView(mTvSideBarHint);
+
+        mIndexBar = (IndexBar) findViewById(R.id.indexBar);
+        mIndexBar.setmPressedShowTextView(mTvSideBarHint);
+
         mSideBar.setOnTouchingLetterChangedListener(new SideBar.OnTouchingLetterChangedListener() {
             @Override
             public void onTouchingLetterChanged(String s) {
