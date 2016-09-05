@@ -6,32 +6,6 @@
         <option name="distributionType" value="LOCAL" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="gradleHome" value="C:\devtools\android-studio-ide-143.2664576-windows\android-studio\gradle\gradle-2.14.1" />
-        <option name="modules">
-          <set>
-            <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/cstviewdemo" />
-            <option value="$PROJECT_DIR$/itemdecorationdemo" />
-            <option value="$PROJECT_DIR$/lib" />
-            <option value="$PROJECT_DIR$/spandemos" />
-            <option value="$PROJECT_DIR$/webviewdemo" />
-            <option value="$PROJECT_DIR$/zandemo" />
-            <option value="$PROJECT_DIR$/zxtcommonlib" />
-          </set>
-        </option>
-        <option name="myModules">
-          <set>
-            <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/cstviewdemo" />
-            <option value="$PROJECT_DIR$/itemdecorationdemo" />
-            <option value="$PROJECT_DIR$/lib" />
-            <option value="$PROJECT_DIR$/spandemos" />
-            <option value="$PROJECT_DIR$/webviewdemo" />
-            <option value="$PROJECT_DIR$/zandemo" />
-            <option value="$PROJECT_DIR$/zxtcommonlib" />
-          </set>
-        </option>
       </GradleProjectSettings>
     </option>
   </component>
