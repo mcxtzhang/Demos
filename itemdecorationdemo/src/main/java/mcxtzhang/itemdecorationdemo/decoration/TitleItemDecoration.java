@@ -15,6 +15,7 @@ import android.view.View;
 import java.util.List;
 
 import mcxtzhang.itemdecorationdemo.CityBean;
+import mcxtzhang.itemdecorationdemo.bean.BaseIndexTagBean;
 
 /**
  * 有分类title的 ItemDecoration
@@ -23,7 +24,7 @@ import mcxtzhang.itemdecorationdemo.CityBean;
  */
 
 public class TitleItemDecoration extends RecyclerView.ItemDecoration {
-    private List<CityBean> mDatas;
+    private List<? extends BaseIndexTagBean> mDatas;
     private Paint mPaint;
     private Rect mBounds;//用于存放测量文字Rect
 
