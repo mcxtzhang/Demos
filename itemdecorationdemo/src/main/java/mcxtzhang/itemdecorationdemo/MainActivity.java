@@ -4,14 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.widget.TextView;
 
-import com.github.promeg.pinyinhelper.Pinyin;
-
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import mcxtzhang.itemdecorationdemo.decoration.DividerItemDecoration;
@@ -47,22 +42,20 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mSideBar = (SideBar) findViewById(R.id.sideBar);
+        //mSideBar = (SideBar) findViewById(R.id.sideBar);
         mTvSideBarHint = (TextView) findViewById(R.id.tvSideBarHint);
-        mSideBar.setTextView(mTvSideBarHint);
+        //mSideBar.setTextView(mTvSideBarHint);
 
-        mIndexBar = (IndexBar) findViewById(R.id.indexBar);
-        mIndexBar.setmPressedShowTextView(mTvSideBarHint);
 
-        mSideBar.setOnTouchingLetterChangedListener(new SideBar.OnTouchingLetterChangedListener() {
+/*        mSideBar.setOnTouchingLetterChangedListener(new SideBar.OnTouchingLetterChangedListener() {
             @Override
             public void onTouchingLetterChanged(String s) {
                 int position = getPosByTag(s);
                 if (position != -1) {
-                    mManager.scrollToPositionWithOffset(position/* + mAdapter.getHeaderViewsCount()*/, 0);
+                    mManager.scrollToPositionWithOffset(position*//* + mAdapter.getHeaderViewsCount()*//*, 0);
                 }
             }
-        });
+        });*/
 
         mRv = (RecyclerView) findViewById(R.id.rv);
         mRv.setLayoutManager(mManager = new LinearLayoutManager(this));
@@ -75,6 +68,9 @@ public class MainActivity extends Activity {
         mRv.addItemDecoration(new DividerItemDecoration(MainActivity.this, DividerItemDecoration.VERTICAL_LIST));
 
 
+        mIndexBar = (IndexBar) findViewById(R.id.indexBar);
+        mIndexBar.setmPressedShowTextView(mTvSideBarHint).setNeedRealIndex(true).setmLayoutManager(mManager).setmSourceDatas(mDatas);
+
     }
 
     /**
@@ -83,6 +79,22 @@ public class MainActivity extends Activity {
      * @param data
      * @return
      */
+    private void initDatas(String[] data) {
+        mDatas = new ArrayList<>();
+        for (int i = 0; i < data.length; i++) {
+            CityBean cityBean = new CityBean();
+            cityBean.setCity(data[i]);//设置城市名称
+            mDatas.add(cityBean);
+        }
+    }
+
+/*
+    *//**
+     * 组织数据源
+     *
+     * @param data
+     * @return
+     *//*
     private void initDatas(String[] data) {
         mDatas = new ArrayList<>();
         mSideBarDatas = new ArrayList<>();//导航栏数据源
@@ -117,9 +129,9 @@ public class MainActivity extends Activity {
         sortData();
     }
 
-    /**
+    *//**
      * 对数据源排序
-     */
+     *//*
     private void sortData() {
         //对右侧栏进行排序 将 # 丢在最后
         Collections.sort(mSideBarDatas, new Comparator<String>() {
@@ -152,12 +164,12 @@ public class MainActivity extends Activity {
     }
 
 
-    /**
+    *//**
      * 根据传入的pos返回tag
      *
      * @param tag
      * @return
-     */
+     *//*
     private int getPosByTag(String tag) {
         if (TextUtils.isEmpty(tag)) {
             return -1;
@@ -168,5 +180,5 @@ public class MainActivity extends Activity {
             }
         }
         return -1;
-    }
+    }*/
 }

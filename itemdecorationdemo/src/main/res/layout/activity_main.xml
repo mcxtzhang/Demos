@@ -14,12 +14,11 @@
 
     <mcxtzhang.itemdecorationdemo.widget.IndexBar
         android:id="@+id/indexBar"
-        android:layout_gravity="center_horizontal"
-        android:layout_width="50dp"
+        android:layout_width="24dp"
         android:layout_height="match_parent"
+        android:layout_gravity="right"
         app:pressBackground="@color/partTranslucent"
         app:textSize="16sp" />
-
 
     <TextView
         android:id="@+id/tvSideBarHint"
@@ -34,10 +33,4 @@
         tools:text="A"
         tools:visibility="visible" />
 
-    <mcxtzhang.itemdecorationdemo.widget.SideBar
-        android:id="@+id/sideBar"
-        android:layout_width="24dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="right|center"
-        android:paddingBottom="20dp" />
 </FrameLayout>
