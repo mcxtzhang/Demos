@@ -8,7 +8,6 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
@@ -62,7 +61,7 @@ public class IndexBar extends View {
     private void init(Context context, AttributeSet attrs, int defStyleAttr) {
         int textSize = (int) TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_SP, 16, getResources().getDisplayMetrics());//默认的TextSize
-        mPressedBackground = Color.BLACK;//
+        mPressedBackground = Color.BLACK;//默认按下是纯黑色
         TypedArray typedArray = context.getTheme().obtainStyledAttributes(attrs, R.styleable.IndexBar, defStyleAttr, 0);
         int n = typedArray.getIndexCount();
         for (int i = 0; i < n; i++) {
@@ -93,27 +92,16 @@ public class IndexBar extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-
-        int l = getPaddingLeft();
-        int t = getPaddingTop();
-
-
-        Rect indexBounds = new Rect();
-        String index;
+        int t = getPaddingTop();//top的基准点(支持padding)
+        Rect indexBounds = new Rect();//存放每个绘制的index的Rect区域
+        String index;//每个要绘制的index内容
         for (int i = 0; i < mIndexDatas.size(); i++) {
             index = mIndexDatas.get(i);
-
-            mPaint.getTextBounds(index, 0, index.length(), indexBounds);
-            Paint.FontMetrics fontMetrics = mPaint.getFontMetrics();
-
-            int baseY = (int) (1 / 2 * mGapHeight + 1 / 2 * (fontMetrics.descent - fontMetrics.ascent) - fontMetrics.bottom);
-
-            int baseline = (int) ((mGapHeight - fontMetrics.bottom - fontMetrics.top) / 2);
-
-            Log.d(TAG, "onDraw() called with: canvas = [" + (fontMetrics.descent - fontMetrics.ascent) + "]" + ((fontMetrics.bottom - fontMetrics.top)) + ",boud:" + indexBounds.height());
-            canvas.drawText(index, mWidth / 2 - indexBounds.width() / 2, t + mGapHeight * i /*+ (gapHeight / 2 + indexBounds.height() / 2)*/ + baseline, mPaint);
+            mPaint.getTextBounds(index, 0, index.length(), indexBounds);//测量计算文字所在矩形，可以得到宽高
+            Paint.FontMetrics fontMetrics = mPaint.getFontMetrics();//获得画笔的FontMetrics，用来计算baseLine。因为drawText的y坐标，代表的是绘制的文字的baseLine的位置
+            int baseline = (int) ((mGapHeight - fontMetrics.bottom - fontMetrics.top) / 2);//计算出在每格index区域，竖直居中的baseLine值
+            canvas.drawText(index, mWidth / 2 - indexBounds.width() / 2, t + mGapHeight * i + baseline, mPaint);//调用drawText，居中显示绘制index
         }
-
     }
 
 

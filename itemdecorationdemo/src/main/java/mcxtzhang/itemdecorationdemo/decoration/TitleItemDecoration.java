@@ -11,12 +11,10 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import java.util.List;
 
 import mcxtzhang.itemdecorationdemo.CityBean;
-import mcxtzhang.itemdecorationdemo.R;
 
 /**
  * 有分类title的 ItemDecoration
@@ -159,12 +157,12 @@ public class TitleItemDecoration extends RecyclerView.ItemDecoration {
         button.draw(c);*/
 
         //inflate一个复杂布局 并draw出来
-        View toDrawView = mInflater.inflate(R.layout.header_complex, parent, false);
+/*        View toDrawView = mInflater.inflate(R.layout.header_complex, parent, false);
         int toDrawWidthSpec;
         int toDrawHeightSpec;
         ViewGroup.LayoutParams lp = toDrawView.getLayoutParams();
         if (lp == null) {
-            lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);//这里是根据复杂布局layout的width height，new一个Lp
             toDrawView.setLayoutParams(lp);
         }
         if (lp.width == ViewGroup.LayoutParams.MATCH_PARENT) {
@@ -186,7 +184,7 @@ public class TitleItemDecoration extends RecyclerView.ItemDecoration {
         toDrawView.measure(toDrawWidthSpec, toDrawHeightSpec);
         toDrawView.layout(parent.getPaddingLeft(),parent.getPaddingTop(),
                 parent.getPaddingLeft()+toDrawView.getMeasuredWidth(),parent.getPaddingTop()+toDrawView.getMeasuredHeight());
-        toDrawView.draw(c);
+        toDrawView.draw(c);*/
 
     }
 
