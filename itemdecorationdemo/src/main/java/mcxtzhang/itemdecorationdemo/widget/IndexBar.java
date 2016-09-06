@@ -110,6 +110,14 @@ public class IndexBar extends View {
                     }
                 }
             }
+
+            @Override
+            public void onMotionEventEnd() {
+                //隐藏hintTextView
+                if (mPressedShowTextView != null) {
+                    mPressedShowTextView.setVisibility(View.GONE);
+                }
+            }
         });
     }
 
@@ -137,44 +145,33 @@ public class IndexBar extends View {
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                setBackgroundColor(mPressedBackground);
+                setBackgroundColor(mPressedBackground);//手指按下时背景变色
+                //注意这里没有break，因为down时，也要计算落点 回调监听器
             case MotionEvent.ACTION_MOVE:
-
                 float y = event.getY();
                 //通过计算判断落点在哪个区域：
-
                 int pressI = (int) ((y - getPaddingTop()) / mGapHeight);
-                //边界处理
+                //边界处理（在手指move时，有可能已经移出边界，防止越界）
                 if (pressI < 0) {
                     pressI = 0;
                 } else if (pressI >= mIndexDatas.size()) {
                     pressI = mIndexDatas.size() - 1;
                 }
-
+                //回调监听器
                 if (null != mOnIndexPressedListener) {
                     mOnIndexPressedListener.onIndexPressed(pressI, mIndexDatas.get(pressI));
                 }
-                //滑动Rv
-                if (mLayoutManager != null) {
-                    int position = getPosByTag(mIndexDatas.get(pressI));
-                    if (position != -1) {
-                        mLayoutManager.scrollToPositionWithOffset(position, 0);
-                    }
-                }
-
-
                 break;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
             default:
-                setBackgroundResource(android.R.color.transparent);
-                if (mPressedShowTextView != null) {
-                    mPressedShowTextView.setVisibility(View.GONE);
+                setBackgroundResource(android.R.color.transparent);//手指抬起时背景恢复透明
+                //回调监听器
+                if (null != mOnIndexPressedListener) {
+                    mOnIndexPressedListener.onMotionEventEnd();
                 }
                 break;
         }
-
-
         return true;
     }
 
@@ -191,7 +188,9 @@ public class IndexBar extends View {
      * 当前被按下的index的监听器
      */
     public interface onIndexPressedListener {
-        void onIndexPressed(int index, String text);
+        void onIndexPressed(int index, String text);//当某个Index被按下
+
+        void onMotionEventEnd();//当触摸事件结束（UP CANCEL）
     }
 
     private onIndexPressedListener mOnIndexPressedListener;
@@ -242,7 +241,7 @@ public class IndexBar extends View {
 
 
     /**
-     * 组织数据源
+     * 初始化原始数据源，并取出索引数据源
      *
      * @return
      */
@@ -252,12 +251,14 @@ public class IndexBar extends View {
             BaseIndexPinyinBean indexPinyinBean = mSourceDatas.get(i);
             StringBuilder pySb = new StringBuilder();
             String target = indexPinyinBean.getTarget();//取出需要被拼音化的字段
-            //取出首个char得到它的拼音
+            //遍历target的每个char得到它的全拼音
             for (int i1 = 0; i1 < target.length(); i1++) {
-                //如果c为汉字，则返回大写拼音；如果c不是汉字，则返回String.valueOf(c)
+                //利用TinyPinyin将char转成拼音
+                //查看源码，方法内 如果char为汉字，则返回大写拼音
+                //如果c不是汉字，则返回String.valueOf(c)
                 pySb.append(Pinyin.toPinyin(target.charAt(i1)));
             }
-            indexPinyinBean.setPyCity(pySb.toString());//设置城市名拼音
+            indexPinyinBean.setPyCity(pySb.toString());//设置城市名全拼音
 
             //以下代码设置城市拼音首字母
             String tagString = pySb.toString().substring(0, 1);

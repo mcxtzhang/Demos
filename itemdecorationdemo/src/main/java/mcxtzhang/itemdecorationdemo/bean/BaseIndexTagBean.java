@@ -1,7 +1,7 @@
 package mcxtzhang.itemdecorationdemo.bean;
 
 /**
- * 介绍：索引类的标志位的接口
+ * 介绍：索引类的标志位的实体基类
  * 作者：zhangxutong
  * 邮箱：mcxtzhang@163.com
  * CSDN：http://blog.csdn.net/zxt0601

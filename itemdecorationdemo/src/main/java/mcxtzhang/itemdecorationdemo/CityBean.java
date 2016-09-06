@@ -11,11 +11,8 @@ public class CityBean extends BaseIndexPinyinBean {
 
     private String city;//城市名字
 
-
     public CityBean() {
-
     }
-
     public CityBean(String city) {
         this.city = city;
     }
@@ -27,7 +24,6 @@ public class CityBean extends BaseIndexPinyinBean {
     public void setCity(String city) {
         this.city = city;
     }
-
 
     @Override
     public String getTarget() {

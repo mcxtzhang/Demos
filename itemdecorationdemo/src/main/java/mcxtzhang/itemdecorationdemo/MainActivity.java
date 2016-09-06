@@ -12,7 +12,6 @@ import java.util.List;
 import mcxtzhang.itemdecorationdemo.decoration.DividerItemDecoration;
 import mcxtzhang.itemdecorationdemo.decoration.TitleItemDecoration;
 import mcxtzhang.itemdecorationdemo.widget.IndexBar;
-import mcxtzhang.itemdecorationdemo.widget.SideBar;
 
 public class MainActivity extends Activity {
     private static final String TAG = "zxt";
@@ -20,15 +19,12 @@ public class MainActivity extends Activity {
     private RecyclerView.Adapter mAdapter;
     private LinearLayoutManager mManager;
     private List<CityBean> mDatas;
-    private List<String> mSideBarDatas;
 
     private TitleItemDecoration mDecoration;
-
 
     /**
      * 右侧边栏导航区域
      */
-    private SideBar mSideBar;
     private IndexBar mIndexBar;
 
     /**
@@ -42,20 +38,6 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //mSideBar = (SideBar) findViewById(R.id.sideBar);
-        mTvSideBarHint = (TextView) findViewById(R.id.tvSideBarHint);
-        //mSideBar.setTextView(mTvSideBarHint);
-
-
-/*        mSideBar.setOnTouchingLetterChangedListener(new SideBar.OnTouchingLetterChangedListener() {
-            @Override
-            public void onTouchingLetterChanged(String s) {
-                int position = getPosByTag(s);
-                if (position != -1) {
-                    mManager.scrollToPositionWithOffset(position*//* + mAdapter.getHeaderViewsCount()*//*, 0);
-                }
-            }
-        });*/
 
         mRv = (RecyclerView) findViewById(R.id.rv);
         mRv.setLayoutManager(mManager = new LinearLayoutManager(this));
@@ -67,9 +49,13 @@ public class MainActivity extends Activity {
         //mRv.addItemDecoration(new TitleItemDecoration2(this,mDatas));
         mRv.addItemDecoration(new DividerItemDecoration(MainActivity.this, DividerItemDecoration.VERTICAL_LIST));
 
-
-        mIndexBar = (IndexBar) findViewById(R.id.indexBar);
-        mIndexBar.setmPressedShowTextView(mTvSideBarHint).setNeedRealIndex(true).setmLayoutManager(mManager).setmSourceDatas(mDatas);
+        //使用indexBar
+        mTvSideBarHint = (TextView) findViewById(R.id.tvSideBarHint);//HintTextView
+        mIndexBar = (IndexBar) findViewById(R.id.indexBar);//IndexBar
+        mIndexBar.setmPressedShowTextView(mTvSideBarHint)//设置HintTextView
+                .setNeedRealIndex(true)//设置需要真实的索引
+                .setmLayoutManager(mManager)//设置RecyclerView的LayoutManager
+                .setmSourceDatas(mDatas);//设置数据源
 
     }
 
