@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/cstviewdemo/cstviewdemo.iml" filepath="$PROJECT_DIR$/cstviewdemo/cstviewdemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cstviewdemo/cstviewdemo.iml" filepath="$PROJECT_DIR$/cstviewdemo/cstviewdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/itemdecorationdemo/itemdecorationdemo.iml" filepath="$PROJECT_DIR$/itemdecorationdemo/itemdecorationdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/lib/lib.iml" filepath="$PROJECT_DIR$/lib/lib.iml" />
       <module fileurl="file://$PROJECT_DIR$/spandemos/spandemos.iml" filepath="$PROJECT_DIR$/spandemos/spandemos.iml" />
