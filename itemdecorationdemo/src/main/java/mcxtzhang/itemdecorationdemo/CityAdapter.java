@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -34,6 +35,12 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.ViewHolder> {
     public void onBindViewHolder(final CityAdapter.ViewHolder holder, final int position) {
         final CityBean cityBean = mDatas.get(position);
         holder.tvCity.setText(cityBean.getCity());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(mContext, "pos:"+position, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
