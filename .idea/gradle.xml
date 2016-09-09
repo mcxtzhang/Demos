@@ -10,6 +10,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/cstnorecyclelistview" />
             <option value="$PROJECT_DIR$/cstviewdemo" />
             <option value="$PROJECT_DIR$/itemdecorationdemo" />
             <option value="$PROJECT_DIR$/lib" />
@@ -23,6 +24,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/cstnorecyclelistview" />
             <option value="$PROJECT_DIR$/cstviewdemo" />
             <option value="$PROJECT_DIR$/itemdecorationdemo" />
             <option value="$PROJECT_DIR$/lib" />
