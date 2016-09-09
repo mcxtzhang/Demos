@@ -6,7 +6,7 @@
 .DS_Store
 /build
 /captures
-
+/.idea/*
 # OSX
 
 *.DS_Store
@@ -56,3 +56,13 @@ local.properties
 
 # Log Files
 *.log
+
+.idea
+.gradle
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+.DS_Store
+/build
+/captures
+*.iml

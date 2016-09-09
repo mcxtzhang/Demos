@@ -1,5 +1,7 @@
 package com.example;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -10,7 +12,30 @@ import java.util.regex.Pattern;
  * 时间： 2016/8/31.
  */
 public class ZhengZeClass {
+
+
+
     public static void main(String[] arg) {
+        AtomicBoolean aBoolean = new AtomicBoolean(false);
+        System.out.println("before aBoolean:"+aBoolean);
+        if (aBoolean.compareAndSet(false,true)){
+            System.out.println("if aBoolean:"+aBoolean);
+        }else {
+            System.out.println("else aBoolean:"+aBoolean);
+        }
+        AtomicInteger integer = new AtomicInteger(2);
+
+        System.out.println("before integer:"+integer);
+        if (integer.compareAndSet(2,20)){
+            System.out.println("if integer:"+integer);
+        }else {
+            System.out.println("else integer:"+integer);
+        }
+
+
+
+
+
 
         Pattern regex1 = Pattern.compile("^(17[0-9]|13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\\d{8}$");
         Matcher matcher = regex1.matcher("186163203845");
