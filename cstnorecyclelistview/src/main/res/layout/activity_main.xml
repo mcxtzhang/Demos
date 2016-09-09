@@ -13,4 +13,19 @@
         android:id="@+id/cstFullShowListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></com.mcxtzhang.cstnorecyclelistview.CstFullShowListView>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:onClick="add"
+        android:text="add" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:onClick="del"
+        android:text="del" />
+
 </RelativeLayout>

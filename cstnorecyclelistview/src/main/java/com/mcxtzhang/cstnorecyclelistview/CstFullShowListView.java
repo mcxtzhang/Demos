@@ -6,16 +6,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 介绍：不回收的全展开Lv
+ * 介绍：完全伸展开的ListView（LinearLayout）
  * 作者：zhangxutong
  * 邮箱：zhangxutong@imcoming.com
  * 时间： 2016/9/9.
  */
 public class CstFullShowListView extends LinearLayout {
     private LayoutInflater mInflater;
+    private List<View> mViewCahces;//缓存ItemView的List,按照下标缓存，
 
     public CstFullShowListView(Context context) {
         this(context, null);
@@ -32,61 +34,56 @@ public class CstFullShowListView extends LinearLayout {
 
     private void init(Context context) {
         mInflater = LayoutInflater.from(context);
+        mViewCahces = new ArrayList<View>();
         setOrientation(VERTICAL);
     }
 
 
-
-    public interface onBindListener<T> {
-        void onBind(int pos, T t, View v);
-    }
-
-    private onBindListener onBindListener;
+    private FullListViewAdapter mAdapter;
 
     /**
-     * 2  设置数据填充回调
-     * @param onBindListener
-     * @return
+     * 外部调用  同时刷新视图
+     *
+     * @param mAdapter
      */
-    public CstFullShowListView setOnBindListener(CstFullShowListView.onBindListener onBindListener) {
-        this.onBindListener = onBindListener;
-        return this;
-    }
-
-    private int mItemLayoutId;
-
-    /**
-     * 1 设置Item布局Id
-     * @param mItemLayoutId
-     * @return
-     */
-    public CstFullShowListView setItemLayoutId(int mItemLayoutId) {
-        this.mItemLayoutId = mItemLayoutId;
-        return this;
-    }
-
-    private int getItemLayoutId() {
-        return mItemLayoutId;
-    }
-
-
-    private List mDatas;
-
-    public <T> void setmDatas(List<T> mDatas) {
-        this.mDatas = mDatas;
+    public void setAdapter(FullListViewAdapter mAdapter) {
+        this.mAdapter = mAdapter;
         updateUI();
     }
 
-    public <T> void updateUI() {
-        removeAllViews();
-        if (null != mDatas && !mDatas.isEmpty()) {
-            for (int i = 0; i < mDatas.size(); i++) {
-                View v = mInflater.inflate(getItemLayoutId(), this, false);
-                if (null != onBindListener) {
-                    onBindListener.onBind(i, mDatas.get(i), v);
+
+    public void updateUI() {
+        if (null != mAdapter) {
+            if (null != mAdapter.getDatas() && !mAdapter.getDatas().isEmpty()) {
+                //数据源有数据
+                if (mAdapter.getDatas().size() > getChildCount()) {//数据源大于现有子View不清空
+
+                } else if (mAdapter.getDatas().size() < getChildCount()) {//数据源小于现有子View，删除后面多的
+                    removeViews(mAdapter.getDatas().size(), getChildCount() - mAdapter.getDatas().size());
+                    //删除View也清缓存
+                    while (mViewCahces.size() > mAdapter.getDatas().size()) {
+                        mViewCahces.remove(mViewCahces.size() - 1);
+                    }
                 }
-                addView(v);
+                for (int i = 0; i < mAdapter.getDatas().size(); i++) {
+                    View v;
+                    if (mViewCahces.size() - 1 >= i) {//说明有缓存，不用inflate，否则inflate
+                        v = mViewCahces.get(i);
+                    } else {
+                        v = mInflater.inflate(mAdapter.getItemLayoutId(), this, false);
+                        mViewCahces.add(v);//inflate 出来后 add进来缓存
+                    }
+                    mAdapter.onBind(i, v);
+                    //如果View没有父控件 添加
+                    if (null == v.getParent()) {
+                        this.addView(v);
+                    }
+                }
+            } else {
+                removeAllViews();//数据源没数据 清空视图
             }
+        } else {
+            removeAllViews();//适配器为空 清空视图
         }
     }
 }
