@@ -1,6 +1,4 @@
-package com.mcxtzhang.cstnorecyclelistview;
-
-import android.view.View;
+package com.mcxtzhang.cstnorecyclelistview.utils;
 
 import java.util.List;
 
@@ -25,21 +23,21 @@ public abstract class FullListViewAdapter<T> {
      * 被FullListView调用
      *
      * @param i
-     * @param v
+     * @param holder
      */
-    public void onBind(int i, View v) {
+    public void onBind(int i, FullViewHolder holder) {
         //回调bind方法，多传一个data过去
-        onBind(i, mDatas.get(i), v);
+        onBind(i, mDatas.get(i), holder);
     }
 
     /**
      * 数据绑定方法
      *
-     * @param pos 位置
-     * @param t   数据
-     * @param v   ItemView
+     * @param pos    位置
+     * @param t      数据
+     * @param holder ItemView的ViewHolder
      */
-    abstract void onBind(int pos, T t, View v);
+    public abstract void onBind(int pos, T t, FullViewHolder holder);
 
     public int getItemLayoutId() {
         return mItemLayoutId;

@@ -5,11 +5,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.mcxtzhang.cstnorecyclelistview.bean.NestBean;
 import com.mcxtzhang.cstnorecyclelistview.bean.TestBean;
+import com.mcxtzhang.cstnorecyclelistview.utils.CstFullShowListView;
+import com.mcxtzhang.cstnorecyclelistview.utils.FullListViewAdapter;
+import com.mcxtzhang.cstnorecyclelistview.utils.FullViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,23 +30,23 @@ public class MainActivity extends AppCompatActivity {
 
         cstFullShowListView.setAdapter(new FullListViewAdapter<TestBean>(R.layout.item_lv, mDatas) {
             @Override
-            void onBind(int pos, TestBean testBean, View v) {
-                Log.d(TAG, "嵌套第一层ScrollView onBind() called with: pos = [" + pos + "], testBean = [" + testBean + "], v = [" + v + "]");
-                TextView tv = (TextView) v.findViewById(R.id.tv);
-                tv.setText(testBean.getName());
+            public void onBind(int pos, TestBean testBean, FullViewHolder holder) {
+                Log.d(TAG, "嵌套第一层ScrollView onBind() called with: pos = [" + pos + "], testBean = [" + testBean + "], v = [" + holder + "]");
+                //TextView tv = (TextView) v.findViewById(R.id.tv);
+                holder.setText(R.id.tv, testBean.getName());
 
                 Glide.with(MainActivity.this)
                         .load(testBean.getUrl())
-                        .into((ImageView) v.findViewById(R.id.iv));
+                        .into((ImageView) holder.getView(R.id.iv));
 
 
-                ((CstFullShowListView) v.findViewById(R.id.cstFullShowListView2)).setAdapter(new FullListViewAdapter<NestBean>(R.layout.item_nest_lv, testBean.getNest()) {
+                ((CstFullShowListView) holder.getView(R.id.cstFullShowListView2)).setAdapter(new FullListViewAdapter<NestBean>(R.layout.item_nest_lv, testBean.getNest()) {
                     @Override
-                    void onBind(int pos, NestBean nestBean, View v) {
-                        Log.d(TAG, "嵌套第二层onBind() called with: pos = [" + pos + "], nestBean = [" + nestBean + "], v = [" + v + "]");
+                    public void onBind(int pos, NestBean nestBean, FullViewHolder holder) {
+                        Log.d(TAG, "嵌套第二层onBind() called with: pos = [" + pos + "], nestBean = [" + nestBean + "], v = [" + holder + "]");
                         Glide.with(MainActivity.this)
                                 .load(nestBean.getUrl())
-                                .into((ImageView) v.findViewById(R.id.nestIv));
+                                .into((ImageView) holder.getView(R.id.nestIv));
                     }
                 });
             }

@@ -1,9 +1,8 @@
-package com.mcxtzhang.cstnorecyclelistview;
+package com.mcxtzhang.cstnorecyclelistview.utils;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
@@ -17,7 +16,7 @@ import java.util.List;
  */
 public class CstFullShowListView extends LinearLayout {
     private LayoutInflater mInflater;
-    private List<View> mViewCahces;//缓存ItemView的List,按照下标缓存，
+    private List<FullViewHolder> mViewCahces;//缓存ItemView的List,按照下标缓存，
 
     public CstFullShowListView(Context context) {
         this(context, null);
@@ -34,7 +33,7 @@ public class CstFullShowListView extends LinearLayout {
 
     private void init(Context context) {
         mInflater = LayoutInflater.from(context);
-        mViewCahces = new ArrayList<View>();
+        mViewCahces = new ArrayList<FullViewHolder>();
         setOrientation(VERTICAL);
     }
 
@@ -66,17 +65,17 @@ public class CstFullShowListView extends LinearLayout {
                     }
                 }
                 for (int i = 0; i < mAdapter.getDatas().size(); i++) {
-                    View v;
+                    FullViewHolder holder;
                     if (mViewCahces.size() - 1 >= i) {//说明有缓存，不用inflate，否则inflate
-                        v = mViewCahces.get(i);
+                        holder = mViewCahces.get(i);
                     } else {
-                        v = mInflater.inflate(mAdapter.getItemLayoutId(), this, false);
-                        mViewCahces.add(v);//inflate 出来后 add进来缓存
+                        holder = new FullViewHolder(getContext(), mInflater.inflate(mAdapter.getItemLayoutId(), this, false));
+                        mViewCahces.add(holder);//inflate 出来后 add进来缓存
                     }
-                    mAdapter.onBind(i, v);
+                    mAdapter.onBind(i, holder);
                     //如果View没有父控件 添加
-                    if (null == v.getParent()) {
-                        this.addView(v);
+                    if (null == holder.getConvertView().getParent()) {
+                        this.addView(holder.getConvertView());
                     }
                 }
             } else {
