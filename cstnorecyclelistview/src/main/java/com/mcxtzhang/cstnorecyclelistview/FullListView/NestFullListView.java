@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class NestFullListView extends LinearLayout {
     private LayoutInflater mInflater;
-    private List<NestFullViewHolder> mViewCahces;//缓存ItemView的List,按照下标缓存，
+    private List<NestFullViewHolder> mVHCahces;//缓存ViewHolder,按照add的顺序缓存，
 
     public NestFullListView(Context context) {
         this(context, null);
@@ -33,7 +33,7 @@ public class NestFullListView extends LinearLayout {
 
     private void init(Context context) {
         mInflater = LayoutInflater.from(context);
-        mViewCahces = new ArrayList<NestFullViewHolder>();
+        mVHCahces = new ArrayList<NestFullViewHolder>();
         setOrientation(VERTICAL);
     }
 
@@ -60,17 +60,17 @@ public class NestFullListView extends LinearLayout {
                 } else if (mAdapter.getDatas().size() < getChildCount()) {//数据源小于现有子View，删除后面多的
                     removeViews(mAdapter.getDatas().size(), getChildCount() - mAdapter.getDatas().size());
                     //删除View也清缓存
-                    while (mViewCahces.size() > mAdapter.getDatas().size()) {
-                        mViewCahces.remove(mViewCahces.size() - 1);
+                    while (mVHCahces.size() > mAdapter.getDatas().size()) {
+                        mVHCahces.remove(mVHCahces.size() - 1);
                     }
                 }
                 for (int i = 0; i < mAdapter.getDatas().size(); i++) {
                     NestFullViewHolder holder;
-                    if (mViewCahces.size() - 1 >= i) {//说明有缓存，不用inflate，否则inflate
-                        holder = mViewCahces.get(i);
+                    if (mVHCahces.size() - 1 >= i) {//说明有缓存，不用inflate，否则inflate
+                        holder = mVHCahces.get(i);
                     } else {
                         holder = new NestFullViewHolder(getContext(), mInflater.inflate(mAdapter.getItemLayoutId(), this, false));
-                        mViewCahces.add(holder);//inflate 出来后 add进来缓存
+                        mVHCahces.add(holder);//inflate 出来后 add进来缓存
                     }
                     mAdapter.onBind(i, holder);
                     //如果View没有父控件 添加
