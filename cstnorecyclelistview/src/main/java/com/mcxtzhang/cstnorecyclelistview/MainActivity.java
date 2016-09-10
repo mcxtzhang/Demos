@@ -9,9 +9,9 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.mcxtzhang.cstnorecyclelistview.bean.NestBean;
 import com.mcxtzhang.cstnorecyclelistview.bean.TestBean;
-import com.mcxtzhang.cstnorecyclelistview.utils.CstFullShowListView;
-import com.mcxtzhang.cstnorecyclelistview.utils.FullListViewAdapter;
-import com.mcxtzhang.cstnorecyclelistview.utils.FullViewHolder;
+import com.mcxtzhang.cstnorecyclelistview.FullListView.NestFullListView;
+import com.mcxtzhang.cstnorecyclelistview.FullListView.NestFullListViewAdapter;
+import com.mcxtzhang.cstnorecyclelistview.FullListView.NestFullViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,18 +19,18 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "zxt/FullListView";
     private List<TestBean> mDatas;
-    private CstFullShowListView cstFullShowListView;
+    private NestFullListView nestFullListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initDatas();
-        cstFullShowListView = (CstFullShowListView) findViewById(R.id.cstFullShowListView);
+        nestFullListView = (NestFullListView) findViewById(R.id.cstFullShowListView);
 
-        cstFullShowListView.setAdapter(new FullListViewAdapter<TestBean>(R.layout.item_lv, mDatas) {
+        nestFullListView.setAdapter(new NestFullListViewAdapter<TestBean>(R.layout.item_lv, mDatas) {
             @Override
-            public void onBind(int pos, TestBean testBean, FullViewHolder holder) {
+            public void onBind(int pos, TestBean testBean, NestFullViewHolder holder) {
                 Log.d(TAG, "嵌套第一层ScrollView onBind() called with: pos = [" + pos + "], testBean = [" + testBean + "], v = [" + holder + "]");
                 //TextView tv = (TextView) v.findViewById(R.id.tv);
                 holder.setText(R.id.tv, testBean.getName());
@@ -40,9 +40,9 @@ public class MainActivity extends AppCompatActivity {
                         .into((ImageView) holder.getView(R.id.iv));
 
 
-                ((CstFullShowListView) holder.getView(R.id.cstFullShowListView2)).setAdapter(new FullListViewAdapter<NestBean>(R.layout.item_nest_lv, testBean.getNest()) {
+                ((NestFullListView) holder.getView(R.id.cstFullShowListView2)).setAdapter(new NestFullListViewAdapter<NestBean>(R.layout.item_nest_lv, testBean.getNest()) {
                     @Override
-                    public void onBind(int pos, NestBean nestBean, FullViewHolder holder) {
+                    public void onBind(int pos, NestBean nestBean, NestFullViewHolder holder) {
                         Log.d(TAG, "嵌套第二层onBind() called with: pos = [" + pos + "], nestBean = [" + nestBean + "], v = [" + holder + "]");
                         Glide.with(MainActivity.this)
                                 .load(nestBean.getUrl())
@@ -85,11 +85,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void add(View view) {
         mDatas.add(new TestBean("add", "http://finance.gucheng.com/UploadFiles_7830/201603/2016032110220685.jpg"));
-        cstFullShowListView.updateUI();
+        nestFullListView.updateUI();
     }
 
     public void del(View view) {
         mDatas.remove(mDatas.size() - 1);
-        cstFullShowListView.updateUI();
+        nestFullListView.updateUI();
     }
 }

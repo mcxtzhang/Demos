@@ -17,7 +17,7 @@
         android:scaleType="fitXY"
         android:src="@mipmap/ic_launcher" />
 
-    <com.mcxtzhang.cstnorecyclelistview.utils.CstFullShowListView
+    <com.mcxtzhang.cstnorecyclelistview.FullListView.NestFullListView
         android:id="@+id/cstFullShowListView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

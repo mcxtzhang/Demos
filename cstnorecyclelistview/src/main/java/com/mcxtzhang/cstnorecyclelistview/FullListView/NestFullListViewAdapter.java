@@ -1,4 +1,4 @@
-package com.mcxtzhang.cstnorecyclelistview.utils;
+package com.mcxtzhang.cstnorecyclelistview.FullListView;
 
 import java.util.List;
 
@@ -10,11 +10,11 @@ import java.util.List;
  * 时间： 16/09/09.
  */
 
-public abstract class FullListViewAdapter<T> {
+public abstract class NestFullListViewAdapter<T> {
     private int mItemLayoutId;//看名字
     private List<T> mDatas;//数据源
 
-    public FullListViewAdapter(int mItemLayoutId, List<T> mDatas) {
+    public NestFullListViewAdapter(int mItemLayoutId, List<T> mDatas) {
         this.mItemLayoutId = mItemLayoutId;
         this.mDatas = mDatas;
     }
@@ -25,7 +25,7 @@ public abstract class FullListViewAdapter<T> {
      * @param i
      * @param holder
      */
-    public void onBind(int i, FullViewHolder holder) {
+    public void onBind(int i, NestFullViewHolder holder) {
         //回调bind方法，多传一个data过去
         onBind(i, mDatas.get(i), holder);
     }
@@ -37,7 +37,7 @@ public abstract class FullListViewAdapter<T> {
      * @param t      数据
      * @param holder ItemView的ViewHolder
      */
-    public abstract void onBind(int pos, T t, FullViewHolder holder);
+    public abstract void onBind(int pos, T t, NestFullViewHolder holder);
 
     public int getItemLayoutId() {
         return mItemLayoutId;

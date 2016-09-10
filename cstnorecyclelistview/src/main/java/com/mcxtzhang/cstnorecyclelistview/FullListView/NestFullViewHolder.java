@@ -1,4 +1,4 @@
-package com.mcxtzhang.cstnorecyclelistview.utils;
+package com.mcxtzhang.cstnorecyclelistview.FullListView;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -23,12 +23,12 @@ import android.widget.TextView;
  * Created by zhangxutong .
  * Date: 16/03/11
  */
-public class FullViewHolder {
+public class NestFullViewHolder {
     private SparseArray<View> mViews;
     private View mConvertView;
     private Context mContext;
 
-    public FullViewHolder(Context context, View view) {
+    public NestFullViewHolder(Context context, View view) {
         mContext = context;
         this.mViews = new SparseArray<View>();
         mConvertView = view;
@@ -53,7 +53,7 @@ public class FullViewHolder {
         return mConvertView;
     }
 
-    public FullViewHolder setSelected(int viewId, boolean flag) {
+    public NestFullViewHolder setSelected(int viewId, boolean flag) {
         View v = getView(viewId);
         v.setSelected(flag);
         return this;
@@ -66,56 +66,56 @@ public class FullViewHolder {
      * @param text
      * @return
      */
-    public FullViewHolder setText(int viewId, String text) {
+    public NestFullViewHolder setText(int viewId, String text) {
         TextView tv = getView(viewId);
         tv.setText(text);
         return this;
     }
 
-    public FullViewHolder setImageResource(int viewId, int resId) {
+    public NestFullViewHolder setImageResource(int viewId, int resId) {
         ImageView view = getView(viewId);
         view.setImageResource(resId);
         return this;
     }
 
-    public FullViewHolder setImageBitmap(int viewId, Bitmap bitmap) {
+    public NestFullViewHolder setImageBitmap(int viewId, Bitmap bitmap) {
         ImageView view = getView(viewId);
         view.setImageBitmap(bitmap);
         return this;
     }
 
-    public FullViewHolder setImageDrawable(int viewId, Drawable drawable) {
+    public NestFullViewHolder setImageDrawable(int viewId, Drawable drawable) {
         ImageView view = getView(viewId);
         view.setImageDrawable(drawable);
         return this;
     }
 
-    public FullViewHolder setBackgroundColor(int viewId, int color) {
+    public NestFullViewHolder setBackgroundColor(int viewId, int color) {
         View view = getView(viewId);
         view.setBackgroundColor(color);
         return this;
     }
 
-    public FullViewHolder setBackgroundRes(int viewId, int backgroundRes) {
+    public NestFullViewHolder setBackgroundRes(int viewId, int backgroundRes) {
         View view = getView(viewId);
         view.setBackgroundResource(backgroundRes);
         return this;
     }
 
-    public FullViewHolder setTextColor(int viewId, int textColor) {
+    public NestFullViewHolder setTextColor(int viewId, int textColor) {
         TextView view = getView(viewId);
         view.setTextColor(textColor);
         return this;
     }
 
-    public FullViewHolder setTextColorRes(int viewId, int textColorRes) {
+    public NestFullViewHolder setTextColorRes(int viewId, int textColorRes) {
         TextView view = getView(viewId);
         view.setTextColor(mContext.getResources().getColor(textColorRes));
         return this;
     }
 
     @SuppressLint("NewApi")
-    public FullViewHolder setAlpha(int viewId, float value) {
+    public NestFullViewHolder setAlpha(int viewId, float value) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             getView(viewId).setAlpha(value);
         } else {
@@ -128,19 +128,19 @@ public class FullViewHolder {
         return this;
     }
 
-    public FullViewHolder setVisible(int viewId, boolean visible) {
+    public NestFullViewHolder setVisible(int viewId, boolean visible) {
         View view = getView(viewId);
         view.setVisibility(visible ? View.VISIBLE : View.GONE);
         return this;
     }
 
-    public FullViewHolder linkify(int viewId) {
+    public NestFullViewHolder linkify(int viewId) {
         TextView view = getView(viewId);
         Linkify.addLinks(view, Linkify.ALL);
         return this;
     }
 
-    public FullViewHolder setTypeface(Typeface typeface, int... viewIds) {
+    public NestFullViewHolder setTypeface(Typeface typeface, int... viewIds) {
         for (int viewId : viewIds) {
             TextView view = getView(viewId);
             view.setTypeface(typeface);
@@ -149,51 +149,51 @@ public class FullViewHolder {
         return this;
     }
 
-    public FullViewHolder setProgress(int viewId, int progress) {
+    public NestFullViewHolder setProgress(int viewId, int progress) {
         ProgressBar view = getView(viewId);
         view.setProgress(progress);
         return this;
     }
 
-    public FullViewHolder setProgress(int viewId, int progress, int max) {
+    public NestFullViewHolder setProgress(int viewId, int progress, int max) {
         ProgressBar view = getView(viewId);
         view.setMax(max);
         view.setProgress(progress);
         return this;
     }
 
-    public FullViewHolder setMax(int viewId, int max) {
+    public NestFullViewHolder setMax(int viewId, int max) {
         ProgressBar view = getView(viewId);
         view.setMax(max);
         return this;
     }
 
-    public FullViewHolder setRating(int viewId, float rating) {
+    public NestFullViewHolder setRating(int viewId, float rating) {
         RatingBar view = getView(viewId);
         view.setRating(rating);
         return this;
     }
 
-    public FullViewHolder setRating(int viewId, float rating, int max) {
+    public NestFullViewHolder setRating(int viewId, float rating, int max) {
         RatingBar view = getView(viewId);
         view.setMax(max);
         view.setRating(rating);
         return this;
     }
 
-    public FullViewHolder setTag(int viewId, Object tag) {
+    public NestFullViewHolder setTag(int viewId, Object tag) {
         View view = getView(viewId);
         view.setTag(tag);
         return this;
     }
 
-    public FullViewHolder setTag(int viewId, int key, Object tag) {
+    public NestFullViewHolder setTag(int viewId, int key, Object tag) {
         View view = getView(viewId);
         view.setTag(key, tag);
         return this;
     }
 
-    public FullViewHolder setChecked(int viewId, boolean checked) {
+    public NestFullViewHolder setChecked(int viewId, boolean checked) {
         Checkable view = (Checkable) getView(viewId);
         view.setChecked(checked);
         return this;
@@ -202,22 +202,22 @@ public class FullViewHolder {
     /**
      * 关于事件的
      */
-    public FullViewHolder setOnClickListener(int viewId,
-                                             View.OnClickListener listener) {
+    public NestFullViewHolder setOnClickListener(int viewId,
+                                                 View.OnClickListener listener) {
         View view = getView(viewId);
         view.setOnClickListener(listener);
         return this;
     }
 
-    public FullViewHolder setOnTouchListener(int viewId,
-                                             View.OnTouchListener listener) {
+    public NestFullViewHolder setOnTouchListener(int viewId,
+                                                 View.OnTouchListener listener) {
         View view = getView(viewId);
         view.setOnTouchListener(listener);
         return this;
     }
 
-    public FullViewHolder setOnLongClickListener(int viewId,
-                                                 View.OnLongClickListener listener) {
+    public NestFullViewHolder setOnLongClickListener(int viewId,
+                                                     View.OnLongClickListener listener) {
         View view = getView(viewId);
         view.setOnLongClickListener(listener);
         return this;

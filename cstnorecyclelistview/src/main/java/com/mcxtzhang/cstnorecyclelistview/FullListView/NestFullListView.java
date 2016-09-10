@@ -1,4 +1,4 @@
-package com.mcxtzhang.cstnorecyclelistview.utils;
+package com.mcxtzhang.cstnorecyclelistview.FullListView;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -14,38 +14,38 @@ import java.util.List;
  * 邮箱：zhangxutong@imcoming.com
  * 时间： 2016/9/9.
  */
-public class CstFullShowListView extends LinearLayout {
+public class NestFullListView extends LinearLayout {
     private LayoutInflater mInflater;
-    private List<FullViewHolder> mViewCahces;//缓存ItemView的List,按照下标缓存，
+    private List<NestFullViewHolder> mViewCahces;//缓存ItemView的List,按照下标缓存，
 
-    public CstFullShowListView(Context context) {
+    public NestFullListView(Context context) {
         this(context, null);
     }
 
-    public CstFullShowListView(Context context, AttributeSet attrs) {
+    public NestFullListView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public CstFullShowListView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public NestFullListView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
     }
 
     private void init(Context context) {
         mInflater = LayoutInflater.from(context);
-        mViewCahces = new ArrayList<FullViewHolder>();
+        mViewCahces = new ArrayList<NestFullViewHolder>();
         setOrientation(VERTICAL);
     }
 
 
-    private FullListViewAdapter mAdapter;
+    private NestFullListViewAdapter mAdapter;
 
     /**
      * 外部调用  同时刷新视图
      *
      * @param mAdapter
      */
-    public void setAdapter(FullListViewAdapter mAdapter) {
+    public void setAdapter(NestFullListViewAdapter mAdapter) {
         this.mAdapter = mAdapter;
         updateUI();
     }
@@ -65,11 +65,11 @@ public class CstFullShowListView extends LinearLayout {
                     }
                 }
                 for (int i = 0; i < mAdapter.getDatas().size(); i++) {
-                    FullViewHolder holder;
+                    NestFullViewHolder holder;
                     if (mViewCahces.size() - 1 >= i) {//说明有缓存，不用inflate，否则inflate
                         holder = mViewCahces.get(i);
                     } else {
-                        holder = new FullViewHolder(getContext(), mInflater.inflate(mAdapter.getItemLayoutId(), this, false));
+                        holder = new NestFullViewHolder(getContext(), mInflater.inflate(mAdapter.getItemLayoutId(), this, false));
                         mViewCahces.add(holder);//inflate 出来后 add进来缓存
                     }
                     mAdapter.onBind(i, holder);
