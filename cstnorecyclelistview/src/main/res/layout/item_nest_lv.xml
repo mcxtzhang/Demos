@@ -5,20 +5,12 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="哈哈" />
+        android:text="嵌套第二层已经很不要脸，如果设计要你嵌套三层，请反手给他一巴掌，就说我让你打的" />
 
     <ImageView
-        android:id="@+id/iv"
+        android:id="@+id/nestIv"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:scaleType="fitXY"
-        android:src="@mipmap/ic_launcher" />
-
-    <com.mcxtzhang.cstnorecyclelistview.CstFullShowListView
-        android:id="@+id/cstFullShowListView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="100dp" />
 </LinearLayout>

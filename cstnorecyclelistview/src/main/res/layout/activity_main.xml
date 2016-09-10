@@ -9,10 +9,23 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.mcxtzhang.cstnorecyclelistview.MainActivity">
 
-    <com.mcxtzhang.cstnorecyclelistview.CstFullShowListView
-        android:id="@+id/cstFullShowListView"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></com.mcxtzhang.cstnorecyclelistview.CstFullShowListView>
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.mcxtzhang.cstnorecyclelistview.CstFullShowListView
+                android:id="@+id/cstFullShowListView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+    </ScrollView>
+
 
     <Button
         android:layout_width="wrap_content"
