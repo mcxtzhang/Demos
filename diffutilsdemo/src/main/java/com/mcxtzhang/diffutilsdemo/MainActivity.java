@@ -32,8 +32,9 @@ public class MainActivity extends AppCompatActivity {
             for (TestBean bean : mDatas) {
                 newDatas.add(bean.clone());
             }
-            newDatas.add(new TestBean("赵子龙", "帅"));
+            newDatas.add(new TestBean("赵子龙", "帅", R.drawable.pic6));
             newDatas.get(0).setDesc("Android+");
+            newDatas.get(0).setPic(R.drawable.pic7);
             TestBean testBean = newDatas.get(1);
             newDatas.remove(testBean);
             newDatas.add(testBean);
@@ -50,11 +51,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void initData() {
         mDatas = new ArrayList<>();
-        mDatas.add(new TestBean("张旭童1", "Android"));
-        mDatas.add(new TestBean("张旭童2", "Java"));
-        mDatas.add(new TestBean("张旭童3", "背锅"));
-        mDatas.add(new TestBean("张旭童4", "手撕产品"));
-        mDatas.add(new TestBean("张旭童5", "手撕测试"));
+        mDatas.add(new TestBean("张旭童1", "Android", R.drawable.pic1));
+        mDatas.add(new TestBean("张旭童2", "Java", R.drawable.pic2));
+        mDatas.add(new TestBean("张旭童3", "背锅", R.drawable.pic3));
+        mDatas.add(new TestBean("张旭童4", "手撕产品", R.drawable.pic4));
+        mDatas.add(new TestBean("张旭童5", "手撕测试", R.drawable.pic5));
     }
 
 }

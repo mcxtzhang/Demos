@@ -9,10 +9,20 @@ package com.mcxtzhang.diffutilsdemo;
 class TestBean implements Cloneable {
     private String name;
     private String desc;
+    private int pic;
 
-    public TestBean(String name, String desc) {
+    public TestBean(String name, String desc, int pic) {
         this.name = name;
         this.desc = desc;
+        this.pic = pic;
+    }
+
+    public int getPic() {
+        return pic;
+    }
+
+    public void setPic(int pic) {
+        this.pic = pic;
     }
 
     public String getName() {

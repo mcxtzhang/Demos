@@ -1,10 +1,12 @@
 package com.mcxtzhang.diffutilsdemo;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -44,14 +46,30 @@ public class DiffAdapter extends RecyclerView.Adapter<DiffAdapter.DiffVH> {
         TestBean bean = mDatas.get(position);
         holder.tv1.setText(bean.getName());
         holder.tv2.setText(bean.getDesc());
+        holder.iv.setImageResource(bean.getPic());
     }
 
     @Override
     public void onBindViewHolder(DiffVH holder, int position, List<Object> payloads) {
-        if(payloads.isEmpty()){
+        if (payloads.isEmpty()) {
             onBindViewHolder(holder, position);
-        }else{
-            onBindViewHolder(holder, position);
+        } else {
+            //文艺青年中的文青
+            Bundle payload = (Bundle) payloads.get(0);
+            TestBean bean = mDatas.get(position);
+            for (String key : payload.keySet()) {
+                switch (key) {
+                    case "KEY_DESC":
+                        //这里可以用payload里的数据，不过data也是新的 也可以用
+                        holder.tv2.setText(bean.getDesc());
+                        break;
+                    case "KEY_PIC":
+                        holder.iv.setImageResource(payload.getInt(key));
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
     }
 
@@ -62,11 +80,13 @@ public class DiffAdapter extends RecyclerView.Adapter<DiffAdapter.DiffVH> {
 
     class DiffVH extends RecyclerView.ViewHolder {
         TextView tv1, tv2;
+        ImageView iv;
 
         public DiffVH(View itemView) {
             super(itemView);
             tv1 = (TextView) itemView.findViewById(R.id.tv1);
             tv2 = (TextView) itemView.findViewById(R.id.tv2);
+            iv = (ImageView) itemView.findViewById(R.id.iv);
         }
     }
 }
