@@ -5,7 +5,7 @@
       <GradleProjectSettings>
         <option name="distributionType" value="LOCAL" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleHome" value="$APPLICATION_HOME_DIR$/gradle/gradle-2.14.1" />
+        <option name="gradleHome" value="E:\android tools\android-studio-ide-145.3200535-windows\android-studio\gradle\gradle-2.14.1" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
@@ -15,6 +15,8 @@
             <option value="$PROJECT_DIR$/diffutilsdemo" />
             <option value="$PROJECT_DIR$/itemdecorationdemo" />
             <option value="$PROJECT_DIR$/lib" />
+            <option value="$PROJECT_DIR$/mediademo" />
+            <option value="$PROJECT_DIR$/retrofitdemo" />
             <option value="$PROJECT_DIR$/spandemos" />
             <option value="$PROJECT_DIR$/webviewdemo" />
             <option value="$PROJECT_DIR$/zandemo" />

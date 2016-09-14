@@ -1,7 +1,9 @@
 package com.mcxtzhang.diffutilsdemo;
 
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.util.DiffUtil;
+import android.support.v7.widget.RecyclerView;
 
 import java.util.List;
 
@@ -62,9 +64,47 @@ public class DiffCallBack extends DiffUtil.Callback {
      * @param newItemPosition
      * @return
      */
+    /**
+     * When {@link #areItemsTheSame(int, int)} returns {@code true} for two items and
+     * {@link #areContentsTheSame(int, int)} returns false for them, DiffUtil
+     * calls this method to get a payload about the change.
+     * <p>
+     * 当{@link #areItemsTheSame(int, int)} 返回true，且{@link #areContentsTheSame(int, int)} 返回false时，DiffUtils会回调此方法，
+     * 去得到这个Item（有哪些）改变的payload。
+     * <p>
+     * For example, if you are using DiffUtil with {@link RecyclerView}, you can return the
+     * particular field that changed in the item and your
+     * {@link android.support.v7.widget.RecyclerView.ItemAnimator ItemAnimator} can use that
+     * information to run the correct animation.
+     * <p>
+     * 例如，如果你用RecyclerView配合DiffUtils，你可以返回  这个Item改变的那些字段，
+     * {@link android.support.v7.widget.RecyclerView.ItemAnimator ItemAnimator} 可以用那些信息去执行正确的动画
+     * <p>
+     * Default implementation returns {@code null}.\
+     * 默认的实现是返回null
+     *
+     * @param oldItemPosition The position of the item in the old list
+     * @param newItemPosition The position of the item in the new list
+     * @return A payload object that represents the change between the two items.
+     * 返回 一个 代表着新老item的改变内容的 payload对象，
+     */
     @Nullable
     @Override
     public Object getChangePayload(int oldItemPosition, int newItemPosition) {
-        return super.getChangePayload(oldItemPosition, newItemPosition);
+        TestBean oldBean = mOldDatas.get(oldItemPosition);
+        TestBean newBean = mNewDatas.get(newItemPosition);
+
+        //这里就不用比较核心字段了,一定相等
+        Bundle payload = new Bundle();
+        if (!oldBean.getDesc().equals(newBean.getDesc())) {
+            payload.putString("KEY_DESC", newBean.getDesc());
+        }
+        if (oldBean.getPic() != newBean.getPic()) {
+            payload.putInt("KEY_PIC", newBean.getPic());
+        }
+
+        if (payload.size() == 0)//如果没有变化 就传空
+            return null;
+        return payload;
     }
 }
