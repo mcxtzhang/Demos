@@ -1,7 +1,11 @@
 package com.example;
 
+import com.example.bean.EnumInfoBean;
 import com.example.bean.JobInfoBean;
 import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MyClass {
     private static final int MODE_SHIFT = 30;
@@ -56,7 +60,22 @@ public class MyClass {
             System.out.println(s);
         }*/
 
+        String a = null;
+        try {
+            if (a.equals("")) {
+
+            }
+        } catch (Exception e) {
+            System.out.println("error");
+            return;
+        }
+
 
         System.out.println(new Gson().toJson(new JobInfoBean()));
+
+
+
+
+
     }
 }

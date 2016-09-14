@@ -6,6 +6,11 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 
+import com.mcxtzhang.github.bean.EnumInfoBean;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends Activity {
 
     private static final String TAG = "zxt";
@@ -39,6 +44,33 @@ public class MainActivity extends Activity {
                 Log.d(TAG, "onCreate() called with: location = [" + location4[0] + "]"+ location4[1] + "]");
             }
         });
+
+
+
+
+
+
+
+
+
+
+        List<EnumInfoBean> enumInfoBeen1 = EnumInfoBean.fakerDatas();
+
+        for (EnumInfoBean bean : enumInfoBeen1) {
+
+            bean.setSelected(true);
+
+        }
+
+
+        List<EnumInfoBean> enumInfoBeen2 = new ArrayList<>();
+
+        for (EnumInfoBean bean : enumInfoBeen1) {
+
+            enumInfoBeen2.add((EnumInfoBean) bean.clone());
+
+        }
+
 
 
     }
