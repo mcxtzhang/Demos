@@ -1,5 +1,8 @@
 package com.example;
 
+import com.example.bean.JobInfoBean;
+import com.google.gson.Gson;
+
 public class MyClass {
     private static final int MODE_SHIFT = 30;
     private static final int MODE_MASK = 0x3 << MODE_SHIFT;
@@ -24,7 +27,7 @@ public class MyClass {
     public static final int AT_MOST = 2 << MODE_SHIFT;
 
     public static void main(String[] args) {
-        System.out.println(MODE_MASK);
+/*        System.out.println(MODE_MASK);
         System.out.println(UNSPECIFIED);
         System.out.println(EXACTLY);
         System.out.println(AT_MOST);
@@ -43,5 +46,17 @@ public class MyClass {
 
         System.out.println((a==b)+"????");
         System.out.println((c.equals(d))+"????");
+
+
+        System.out.println("".compareTo("anhui"));
+
+
+        List<String> localCityNameList = null;
+        for (String s : localCityNameList) {
+            System.out.println(s);
+        }*/
+
+
+        System.out.println(new Gson().toJson(new JobInfoBean()));
     }
 }

@@ -1,6 +1,7 @@
 apply plugin: 'java'
 
 dependencies {
+    compile 'com.google.code.gson:gson:2.4'
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }
 
