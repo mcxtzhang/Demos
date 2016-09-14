@@ -1,11 +1,7 @@
 package com.example;
 
-import com.example.bean.EnumInfoBean;
 import com.example.bean.JobInfoBean;
 import com.google.gson.Gson;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MyClass {
     private static final int MODE_SHIFT = 30;
