@@ -39,11 +39,15 @@ public class MainActivity extends AppCompatActivity {
             newDatas.remove(testBean);
             newDatas.add(testBean);
 
-            DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DiffCallBack(mDatas, newDatas), true);
-            diffResult.dispatchUpdatesTo(mAdapter);
+            //新宠
+            //DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DiffCallBack(mDatas, newDatas), true);
+            //diffResult.dispatchUpdatesTo(mAdapter);
             //别忘了将新数据给Adapter
             mDatas = newDatas;
             mAdapter.setDatas(mDatas);
+
+            mAdapter.notifyDataSetChanged();//以前我们只能这样，现在我们有新宠了  ，实验二 验证notifyDataSetChanged getAdapterPosition为-1，也用的上
+
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }
