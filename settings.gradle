@@ -1,1 +1,1 @@
-include ':app', ':lib', ':webviewdemo', ':zandemo', ':itemdecorationdemo', ':spandemos', ':zxtcommonlib', ':cstviewdemo', ':cstnorecyclelistview', ':diffutilsdemo', ':mediademo', ':retrofitdemo'
+include ':app', ':lib', ':webviewdemo', ':zandemo', ':itemdecorationdemo', ':spandemos', ':zxtcommonlib', ':cstviewdemo', ':cstnorecyclelistview', ':diffutilsdemo', ':mediademo', ':retrofitdemo', ':picdemo'
