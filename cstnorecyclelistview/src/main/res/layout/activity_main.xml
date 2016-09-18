@@ -19,6 +19,7 @@
             android:orientation="vertical">
 
             <com.mcxtzhang.cstnorecyclelistview.FullListView.NestFullListView
+                android:orientation="vertical"
                 android:id="@+id/cstFullShowListView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

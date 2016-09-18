@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/animdemo/animdemo.iml" filepath="$PROJECT_DIR$/animdemo/animdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/cstnorecyclelistview/cstnorecyclelistview.iml" filepath="$PROJECT_DIR$/cstnorecyclelistview/cstnorecyclelistview.iml" />
       <module fileurl="file://$PROJECT_DIR$/cstviewdemo/cstviewdemo.iml" filepath="$PROJECT_DIR$/cstviewdemo/cstviewdemo.iml" />

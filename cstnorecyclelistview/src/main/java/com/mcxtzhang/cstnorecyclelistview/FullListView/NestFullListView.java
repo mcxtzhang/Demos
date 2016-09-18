@@ -34,7 +34,6 @@ public class NestFullListView extends LinearLayout {
     private void init(Context context) {
         mInflater = LayoutInflater.from(context);
         mVHCahces = new ArrayList<NestFullViewHolder>();
-        setOrientation(VERTICAL);
     }
 
 

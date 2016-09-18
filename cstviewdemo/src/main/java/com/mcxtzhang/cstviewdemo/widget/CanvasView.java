@@ -46,6 +46,8 @@ public class CanvasView extends View {
     protected void onDraw(Canvas canvas) {
         setBackgroundColor(Color.GREEN);
         mPaint.setColor(Color.YELLOW);
+
+        canvas.save();
         canvas.rotate(90);
 
         canvas.drawRect(0, -getWidth(), getHeight(), 0, mPaint);
@@ -54,5 +56,12 @@ public class CanvasView extends View {
 
         mPaint.setColor(Color.RED);
         canvas.drawText("123456789", 50, -50, mPaint);
+
+        canvas.restore();
+
+
+        mPaint.setColor(Color.GREEN);
+        canvas.drawOval(0,0,getRight()-getLeft(),getBottom()-getTop(),mPaint);
+
     }
 }

@@ -2,6 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginRight="10dp"
+    android:background="@color/colorAccent"
     android:orientation="vertical">
 
     <TextView
@@ -18,6 +20,7 @@
         android:src="@mipmap/ic_launcher" />
 
     <com.mcxtzhang.cstnorecyclelistview.FullListView.NestFullListView
+        android:orientation="vertical"
         android:id="@+id/cstFullShowListView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

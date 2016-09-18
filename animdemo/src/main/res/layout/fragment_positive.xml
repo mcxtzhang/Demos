@@ -1,0 +1,34 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#a6c"
+    android:gravity="bottom"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="切换" />
+
+    <TextView
+        android:id="@android:id/text1"
+        style="?android:textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="正面扯淡淡"
+        android:textColor="#fff"
+        android:textStyle="bold" />
+
+    <TextView
+        style="?android:textAppearanceSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lineSpacingMultiplier="1.2"
+        android:text="正面瞎扯淡"
+        android:textAllCaps="true"
+        android:textColor="#80ffffff"
+        android:textStyle="bold" />
+
+</LinearLayout>
