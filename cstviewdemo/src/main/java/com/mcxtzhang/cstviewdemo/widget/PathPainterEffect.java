@@ -11,7 +11,7 @@ import android.graphics.PathEffect;
 import android.graphics.PathMeasure;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.LinearInterpolator;
 
 public class PathPainterEffect extends View implements View.OnClickListener{
 
@@ -50,14 +50,15 @@ public class PathPainterEffect extends View implements View.OnClickListener{
         final float length = mPathMeasure.getLength();
 
         mAnimator = ValueAnimator.ofFloat(1, 0);
-        mAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
-        mAnimator.setDuration(2000);
+        mAnimator.setInterpolator(/*new AccelerateDecelerateInterpolator()*/ new LinearInterpolator());
+        mAnimator.setDuration(500);
+        mAnimator.setRepeatCount(ValueAnimator.INFINITE);
         mAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
                 fraction = (float) valueAnimator.getAnimatedValue();
-                mEffect = new DashPathEffect(new float[]{length, length}, fraction * length);
-                mPaint.setPathEffect(mEffect);
+/*                mEffect = new DashPathEffect(new float[]{length, length}, fraction * length);
+                mPaint.setPathEffect(mEffect);*/
                 invalidate();
             }
         });
@@ -72,7 +73,7 @@ public class PathPainterEffect extends View implements View.OnClickListener{
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        mEffect = new DashPathEffect(new float[]{100, 100},  0);
+        mEffect = new DashPathEffect(new float[]{100, 100},  200*fraction);
         mPaint.setPathEffect(mEffect);
 
         canvas.drawPath(mPath, mPaint);
