@@ -61,7 +61,11 @@ public class Main2Activity extends AppCompatActivity {
                 for (Field field : targetClass.getFields()) {
                     if (field.isAnnotationPresent(FirstAnnotation.class)) {
                         FirstAnnotation varAnnotation = field.getAnnotation(FirstAnnotation.class);
-                        Log.i(TAG, "公开变量方法有注解 = [" + varAnnotation.value() + "]   " + varAnnotation.isShow());
+                        try {
+                            Log.i(TAG, "公开变量有注解 = [" + varAnnotation.value() + "]   " + varAnnotation.isShow() +" ，值为："+field.get(this));
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
 
@@ -69,7 +73,7 @@ public class Main2Activity extends AppCompatActivity {
                 for (Field field : targetClass.getDeclaredFields()) {
                     if (field.isAnnotationPresent(FirstAnnotation.class)) {
                         FirstAnnotation varAnnotation = field.getAnnotation(FirstAnnotation.class);
-                        Log.i(TAG, "所有变量方法有注解 = [" + varAnnotation.value() + "]   " + varAnnotation.isShow());
+                        Log.i(TAG, "所有变量有注解 = [" + varAnnotation.value() + "]   " + varAnnotation.isShow());
                     }
                 }
             }
