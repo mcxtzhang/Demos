@@ -11,6 +11,7 @@ import android.databinding.Bindable;
  */
 
 public class TestBean extends BaseObservable {
+    public static final String EMPTY_VALUE = "这里空了？？";
     private int id;
     private String name;
 

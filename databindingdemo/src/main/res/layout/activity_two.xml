@@ -27,7 +27,7 @@
 
         <variable
             name="collectionMap"
-            type="ObservableArrayMap&lt;String,Object>"/>
+            type="ObservableArrayMap&lt;String,Object>" />
 
 
     </data>
@@ -86,10 +86,16 @@
 
 
         <TextView
-            android:onClick="@{mainPresenter::onMapClick}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="@{mainPresenter::onMapClick}"
             android:text='@{collectionMap["lastName"]}' />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{cstTestBean2.testBean.name ??com.mcxtzhang.databindingdemo.TestBean.EMPTY_VALUE }" />
     </LinearLayout>
 
 

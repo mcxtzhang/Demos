@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.widget.Toast;
 
 import com.mcxtzhang.databindingdemo.databinding.ActivityTwoBinding;
 
@@ -27,7 +28,12 @@ public class MainActivity extends AppCompatActivity {
         //或者直接通过 setVariable (查看生成的代码，这种方式多了一个switch)
         binding.setVariable(BR.cstTestBean, new TestBean(2, "另一种方式设置 setVariable"));
 
-        binding.setCstTestBean2(new TestBean2("同名name"));
+
+        //发现嵌套的空指针也被自动判断了？
+        TestBean2 testBean2 = new TestBean2("同名name");
+        //testBean2.setTestBean(new TestBean(4,"测试。。。的空"));
+        binding.setCstTestBean2(testBean2);
+        //Toast.makeText(this, ""+testBean2.getTestBean().getName(), Toast.LENGTH_SHORT).show();
 
 
         //Observable Collections

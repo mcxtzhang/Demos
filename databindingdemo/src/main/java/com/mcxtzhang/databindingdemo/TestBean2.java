@@ -12,7 +12,18 @@ import android.databinding.Bindable;
  */
 
 public class TestBean2 extends BaseObservable {
+
     public String name;
+
+    private TestBean testBean;
+
+    public TestBean getTestBean() {
+        return testBean;
+    }
+
+    public void setTestBean(TestBean testBean) {
+        this.testBean = testBean;
+    }
 
     public TestBean2(String name) {
         this.name = name;
