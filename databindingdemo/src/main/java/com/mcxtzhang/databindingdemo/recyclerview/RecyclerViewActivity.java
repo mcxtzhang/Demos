@@ -1,14 +1,26 @@
 package com.mcxtzhang.databindingdemo.recyclerview;
 
 import android.app.Activity;
+import android.databinding.Observable;
+import android.databinding.OnRebindCallback;
+import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.transition.TransitionManager;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.android.databinding.library.baseAdapters.BR;
+import com.bumptech.glide.Glide;
+import com.mcxtzhang.databindingdemo.R;
 import com.mcxtzhang.databindingdemo.databinding.ActivityRecyclerViewBinding;
+import com.mcxtzhang.databindingdemo.databinding.ItemFirstRvBinding;
+import com.mcxtzhang.databindingdemo.databinding.ItemMulType1Binding;
 import com.mcxtzhang.databindingdemo.recyclerview.base.BaseBindingAdapter;
+import com.mcxtzhang.databindingdemo.recyclerview.base.BaseBindingViewHolder;
+import com.mcxtzhang.databindingdemo.recyclerview.base.mul.BaseMulTypeAdapter;
 import com.mcxtzhang.databindingdemo.recyclerview.m.FirstBindingBean;
-import com.mcxtzhang.databindingdemo.recyclerview.multype.MulTypeAdapter;
-import com.mcxtzhang.databindingdemo.recyclerview.multype.base.BaseMulTypeAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,11 +78,28 @@ public class RecyclerViewActivity extends Activity {
             }
         });*/
 
-        //多种item
+        //普通多种item
         //mBinding.rv.setAdapter( new MulTypeAdapter(this, mDatas));
 
         //Base多种Item
-        mBinding.rv.setAdapter(new BaseMulTypeAdapter(this, mDatas));
+        mBinding.rv.setAdapter(new BaseMulTypeAdapter(this, mDatas) {
+            @Override
+            public void onBindViewHolder(final BaseBindingViewHolder holder, final int position) {
+                super.onBindViewHolder(holder, position);
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        switch (getItemViewType(position)) {
+                            case R.layout.item_mul_type_1:
+                                ItemMulType1Binding binding = (ItemMulType1Binding) holder.getBinding();
+                                binding.tv.setText(binding.tv.getText() + "追加");
+                                break;
+                        }
+                    }
+                });
+
+            }
+        });
 
         mBinding.setPresenter(new FirstPresenter());
     }

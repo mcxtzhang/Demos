@@ -1,4 +1,4 @@
-package com.mcxtzhang.databindingdemo.recyclerview.multype.base;
+package com.mcxtzhang.databindingdemo.recyclerview.base.mul;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.android.databinding.library.baseAdapters.BR;
-import com.mcxtzhang.databindingdemo.R;
 import com.mcxtzhang.databindingdemo.recyclerview.base.BaseBindingViewHolder;
 
 import java.util.List;

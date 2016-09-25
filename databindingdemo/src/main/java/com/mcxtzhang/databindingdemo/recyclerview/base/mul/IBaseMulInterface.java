@@ -1,4 +1,4 @@
-package com.mcxtzhang.databindingdemo.recyclerview.multype.base;
+package com.mcxtzhang.databindingdemo.recyclerview.base.mul;
 
 /**
  * 介绍：多种类型viewType的ViewModel需要实现的接口
