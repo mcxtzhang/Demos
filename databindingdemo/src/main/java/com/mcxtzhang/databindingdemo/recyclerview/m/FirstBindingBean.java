@@ -2,7 +2,9 @@ package com.mcxtzhang.databindingdemo.recyclerview.m;
 
 import android.databinding.Bindable;
 
+import com.mcxtzhang.databindingdemo.R;
 import com.mcxtzhang.databindingdemo.recyclerview.multype.MulTypeBean;
+import com.mcxtzhang.databindingdemo.recyclerview.multype.base.IBaseMulInterface;
 
 /**
  * 介绍：
@@ -12,7 +14,7 @@ import com.mcxtzhang.databindingdemo.recyclerview.multype.MulTypeBean;
  * 时间： 16/09/25.
  */
 
-public class FirstBindingBean extends MulTypeBean {
+public class FirstBindingBean extends MulTypeBean implements IBaseMulInterface {
     private String url;
     private String name;
 
@@ -54,5 +56,19 @@ public class FirstBindingBean extends MulTypeBean {
     public void setName(String name) {
         this.name = name;
         notifyPropertyChanged(com.mcxtzhang.databindingdemo.BR.name);
+    }
+
+    @Override
+    public int getItemLayoutId() {
+        switch (getRole()) {
+            case 1:
+                return R.layout.item_mul_type_1;
+            case 2:
+                return R.layout.item_mul_type_2;
+            case 3:
+            default:
+                return R.layout.item_mul_type_3;
+        }
+
     }
 }

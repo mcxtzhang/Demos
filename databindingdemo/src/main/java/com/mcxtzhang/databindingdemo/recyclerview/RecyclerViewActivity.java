@@ -8,6 +8,7 @@ import com.mcxtzhang.databindingdemo.databinding.ActivityRecyclerViewBinding;
 import com.mcxtzhang.databindingdemo.recyclerview.base.BaseBindingAdapter;
 import com.mcxtzhang.databindingdemo.recyclerview.m.FirstBindingBean;
 import com.mcxtzhang.databindingdemo.recyclerview.multype.MulTypeAdapter;
+import com.mcxtzhang.databindingdemo.recyclerview.multype.base.BaseMulTypeAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +67,11 @@ public class RecyclerViewActivity extends Activity {
         });*/
 
         //多种item
-        mBinding.rv.setAdapter( new MulTypeAdapter(this, mDatas));
+        //mBinding.rv.setAdapter( new MulTypeAdapter(this, mDatas));
+
+        //Base多种Item
+        mBinding.rv.setAdapter(new BaseMulTypeAdapter(this, mDatas));
+
         mBinding.setPresenter(new FirstPresenter());
     }
 
@@ -76,13 +81,13 @@ public class RecyclerViewActivity extends Activity {
         mDatas.add(new FirstBindingBean("http://imgs.ebrun.com/resources/2016_03/2016_03_25/201603259771458878793312_origin.jpg", "张", 1));
 
 
-        mDatas.add(new FirstBindingBean("http://p14.go007.com/2014_11_02_05/a03541088cce31b8_1.jpg", "旭童", 1));
-        mDatas.add(new FirstBindingBean("http://news.k618.cn/tech/201604/W020160407281077548026.jpg", 1));
-        mDatas.add(new FirstBindingBean("http://www.kejik.com/image/1460343965520.jpg", 0));
-        mDatas.add(new FirstBindingBean("http://cn.chinadaily.com.cn/img/attachement/jpg/site1/20160318/eca86bd77be61855f1b81c.jpg", 0));
-        mDatas.add(new FirstBindingBean("http://imgs.ebrun.com/resources/2016_04/2016_04_12/201604124411460430531500.jpg", 1));
-        mDatas.add(new FirstBindingBean("http://imgs.ebrun.com/resources/2016_04/2016_04_24/201604244971461460826484_origin.jpeg", 0));
-        mDatas.add(new FirstBindingBean("http://www.lnmoto.cn/bbs/data/attachment/forum/201408/12/074018gshshia3is1cw3sg.jpg", 1));
+        mDatas.add(new FirstBindingBean("http://p14.go007.com/2014_11_02_05/a03541088cce31b8_1.jpg", "旭童", 2));
+        mDatas.add(new FirstBindingBean("http://news.k618.cn/tech/201604/W020160407281077548026.jpg", 3));
+        mDatas.add(new FirstBindingBean("http://www.kejik.com/image/1460343965520.jpg", 1));
+        mDatas.add(new FirstBindingBean("http://cn.chinadaily.com.cn/img/attachement/jpg/site1/20160318/eca86bd77be61855f1b81c.jpg", 2));
+        mDatas.add(new FirstBindingBean("http://imgs.ebrun.com/resources/2016_04/2016_04_12/201604124411460430531500.jpg", 3));
+        mDatas.add(new FirstBindingBean("http://imgs.ebrun.com/resources/2016_04/2016_04_24/201604244971461460826484_origin.jpeg", 1));
+        mDatas.add(new FirstBindingBean("http://www.lnmoto.cn/bbs/data/attachment/forum/201408/12/074018gshshia3is1cw3sg.jpg", 2));
     }
 
     public class FirstPresenter {
