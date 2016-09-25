@@ -61,7 +61,7 @@ public abstract class BaseBindingAdapter<T extends ViewDataBinding, K> extends R
      *
      * @param holder
      */
-    public abstract void onBindViewHolder(BaseBindingViewHolder<T> holder, int position, T t, K k);
+    public abstract void onBindViewHolder(BaseBindingViewHolder<T> holder, int position, T binding, K k);
 
     @Override
     public int getItemCount() {

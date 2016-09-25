@@ -35,7 +35,7 @@ public class RecyclerViewActivity extends Activity {
             @Override
             public void onBindViewHolder(BaseBindingViewHolder<ItemFirstRvBinding> holder, int position, ItemFirstRvBinding itemFirstRvBinding, final FirstBindingBean firstBindingBean) {
                 itemFirstRvBinding.setBean(firstBindingBean);
-                //普通的加载方法
+                //普通的加载方法 但是当数据改变时 它不会立刻改变
                 Glide.with(RecyclerViewActivity.this).load(firstBindingBean.getUrl()).into(itemFirstRvBinding.normalLoadIv);
                 itemFirstRvBinding.getRoot().setOnClickListener(new View.OnClickListener() {
                     @Override
