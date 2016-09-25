@@ -3,6 +3,8 @@ package com.mcxtzhang.databindingdemo.recyclerview;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.mcxtzhang.databindingdemo.R;
@@ -31,10 +33,18 @@ public class RecyclerViewActivity extends Activity {
         mBinding.rv.setLayoutManager(new LinearLayoutManager(this));
         mBinding.rv.setAdapter(mAdapter = new BaseBindingAdapter<ItemFirstRvBinding, FirstBindingBean>(this, R.layout.item_first_rv, mDatas) {
             @Override
-            public void onBindViewHolder(BaseBindingViewHolder<ItemFirstRvBinding> holder, int position, ItemFirstRvBinding itemFirstRvBinding, FirstBindingBean firstBindingBean) {
+            public void onBindViewHolder(BaseBindingViewHolder<ItemFirstRvBinding> holder, int position, ItemFirstRvBinding itemFirstRvBinding, final FirstBindingBean firstBindingBean) {
                 itemFirstRvBinding.setBean(firstBindingBean);
                 //普通的加载方法
                 Glide.with(RecyclerViewActivity.this).load(firstBindingBean.getUrl()).into(itemFirstRvBinding.normalLoadIv);
+                itemFirstRvBinding.getRoot().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(RecyclerViewActivity.this, "改变name", Toast.LENGTH_SHORT).show();
+                        firstBindingBean.setName(firstBindingBean.getName()+"改变");
+                        firstBindingBean.setUrl("https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png");
+                    }
+                });
             }
         });
         mBinding.setPresenter(new FirstPresenter());
