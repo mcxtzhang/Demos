@@ -1,12 +1,18 @@
 package com.mcxtzhang.databindingdemo.recyclerview;
 
 import android.app.Activity;
+import android.databinding.Observable;
+import android.databinding.OnRebindCallback;
+import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.transition.TransitionManager;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.mcxtzhang.databindingdemo.BR;
 import com.mcxtzhang.databindingdemo.R;
 import com.mcxtzhang.databindingdemo.databinding.ActivityRecyclerViewBinding;
 import com.mcxtzhang.databindingdemo.databinding.ItemFirstRvBinding;
@@ -43,6 +49,28 @@ public class RecyclerViewActivity extends Activity {
                         Toast.makeText(RecyclerViewActivity.this, "改变name", Toast.LENGTH_SHORT).show();
                         firstBindingBean.setName(firstBindingBean.getName()+"改变");
                         firstBindingBean.setUrl("https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png");
+                    }
+                });
+                firstBindingBean.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+                    @Override
+                    public void onPropertyChanged(Observable sender, int propertyId) {
+                        switch (propertyId) {
+                            case BR.name:
+                                Toast.makeText(RecyclerViewActivity.this, "name propertyId:"+propertyId, Toast.LENGTH_SHORT).show();
+                                break;
+                            case BR.url:
+                                break;
+
+                        }
+                    }
+                });
+
+                itemFirstRvBinding.addOnRebindCallback(new OnRebindCallback() {
+                    @Override
+                    public boolean onPreBind(ViewDataBinding binding) {
+                        ViewGroup sceneRoot = (ViewGroup) binding.getRoot();
+                        TransitionManager.beginDelayedTransition(sceneRoot);
+                        return true;
                     }
                 });
             }
