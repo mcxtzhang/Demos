@@ -1,4 +1,4 @@
-package com.mcxtzhang.databindingdemo.recyclerview.vm;
+package com.mcxtzhang.databindingdemo.recyclerview.adapter;
 
 import android.databinding.BindingAdapter;
 import android.widget.ImageView;
@@ -14,7 +14,7 @@ import com.bumptech.glide.Glide;
  * 时间： 16/09/25.
  */
 
-public class FirstBindingBeanViewModel {
+public class LoadImgAdapter {
 
     //后面的netUrl是xml里的名字, 必须是static方法
     @BindingAdapter({"netUrl", "shenqi"})
@@ -22,5 +22,10 @@ public class FirstBindingBeanViewModel {
         //图片加载
         Glide.with(imageView.getContext()).load(url).into(imageView);
         Toast.makeText(imageView.getContext(), "shenqi" + shenqi, Toast.LENGTH_SHORT).show();
+    }
+
+    @BindingAdapter({"netUrl"})
+    public static void loadNetImage(ImageView iv, String url) {
+        Glide.with(iv.getContext()).load(url).into(iv);
     }
 }

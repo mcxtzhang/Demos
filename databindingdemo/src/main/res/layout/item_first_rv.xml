@@ -31,6 +31,7 @@
             tools:src="@mipmap/ic_launcher" />
 
         <ImageView
+            app:netUrl="@{bean.url}"
             android:id="@+id/normalLoadIv"
             android:layout_width="100dp"
             android:layout_height="100dp" />

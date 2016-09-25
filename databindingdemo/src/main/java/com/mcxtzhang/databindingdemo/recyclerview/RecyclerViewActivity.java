@@ -1,24 +1,13 @@
 package com.mcxtzhang.databindingdemo.recyclerview;
 
 import android.app.Activity;
-import android.databinding.Observable;
-import android.databinding.OnRebindCallback;
-import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.transition.TransitionManager;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.mcxtzhang.databindingdemo.BR;
-import com.mcxtzhang.databindingdemo.R;
 import com.mcxtzhang.databindingdemo.databinding.ActivityRecyclerViewBinding;
-import com.mcxtzhang.databindingdemo.databinding.ItemFirstRvBinding;
 import com.mcxtzhang.databindingdemo.recyclerview.base.BaseBindingAdapter;
-import com.mcxtzhang.databindingdemo.recyclerview.base.BaseBindingViewHolder;
 import com.mcxtzhang.databindingdemo.recyclerview.m.FirstBindingBean;
+import com.mcxtzhang.databindingdemo.recyclerview.multype.MulTypeAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +26,7 @@ public class RecyclerViewActivity extends Activity {
 
         initDatas();
         mBinding.rv.setLayoutManager(new LinearLayoutManager(this));
-        mBinding.rv.setAdapter(mAdapter = new BaseBindingAdapter<ItemFirstRvBinding, FirstBindingBean>(this, R.layout.item_first_rv, mDatas) {
+/*        mBinding.rv.setAdapter(mAdapter = new BaseBindingAdapter<ItemFirstRvBinding, FirstBindingBean>(this, R.layout.item_first_rv, mDatas) {
             @Override
             public void onBindViewHolder(BaseBindingViewHolder<ItemFirstRvBinding> holder, int position, ItemFirstRvBinding itemFirstRvBinding, final FirstBindingBean firstBindingBean) {
                 itemFirstRvBinding.setBean(firstBindingBean);
@@ -47,7 +36,7 @@ public class RecyclerViewActivity extends Activity {
                     @Override
                     public void onClick(View view) {
                         Toast.makeText(RecyclerViewActivity.this, "改变name", Toast.LENGTH_SHORT).show();
-                        firstBindingBean.setName(firstBindingBean.getName()+"改变");
+                        firstBindingBean.setName(firstBindingBean.getName() + "改变");
                         firstBindingBean.setUrl("https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png");
                     }
                 });
@@ -56,7 +45,7 @@ public class RecyclerViewActivity extends Activity {
                     public void onPropertyChanged(Observable sender, int propertyId) {
                         switch (propertyId) {
                             case BR.name:
-                                Toast.makeText(RecyclerViewActivity.this, "name propertyId:"+propertyId, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RecyclerViewActivity.this, "name propertyId:" + propertyId, Toast.LENGTH_SHORT).show();
                                 break;
                             case BR.url:
                                 break;
@@ -74,23 +63,26 @@ public class RecyclerViewActivity extends Activity {
                     }
                 });
             }
-        });
+        });*/
+
+        //多种item
+        mBinding.rv.setAdapter( new MulTypeAdapter(this, mDatas));
         mBinding.setPresenter(new FirstPresenter());
     }
 
     private void initDatas() {
         mDatas = new ArrayList<>();
         ArrayList<FirstBindingBean> nestBeen = new ArrayList<>();
-        mDatas.add(new FirstBindingBean("http://imgs.ebrun.com/resources/2016_03/2016_03_25/201603259771458878793312_origin.jpg", "张"));
+        mDatas.add(new FirstBindingBean("http://imgs.ebrun.com/resources/2016_03/2016_03_25/201603259771458878793312_origin.jpg", "张", 1));
 
 
-        mDatas.add(new FirstBindingBean("http://p14.go007.com/2014_11_02_05/a03541088cce31b8_1.jpg", "旭童"));
-        mDatas.add(new FirstBindingBean("http://news.k618.cn/tech/201604/W020160407281077548026.jpg"));
-        mDatas.add(new FirstBindingBean("http://www.kejik.com/image/1460343965520.jpg"));
-        mDatas.add(new FirstBindingBean("http://cn.chinadaily.com.cn/img/attachement/jpg/site1/20160318/eca86bd77be61855f1b81c.jpg"));
-        mDatas.add(new FirstBindingBean("http://imgs.ebrun.com/resources/2016_04/2016_04_12/201604124411460430531500.jpg"));
-        mDatas.add(new FirstBindingBean("http://imgs.ebrun.com/resources/2016_04/2016_04_24/201604244971461460826484_origin.jpeg"));
-        mDatas.add(new FirstBindingBean("http://www.lnmoto.cn/bbs/data/attachment/forum/201408/12/074018gshshia3is1cw3sg.jpg"));
+        mDatas.add(new FirstBindingBean("http://p14.go007.com/2014_11_02_05/a03541088cce31b8_1.jpg", "旭童", 1));
+        mDatas.add(new FirstBindingBean("http://news.k618.cn/tech/201604/W020160407281077548026.jpg", 1));
+        mDatas.add(new FirstBindingBean("http://www.kejik.com/image/1460343965520.jpg", 0));
+        mDatas.add(new FirstBindingBean("http://cn.chinadaily.com.cn/img/attachement/jpg/site1/20160318/eca86bd77be61855f1b81c.jpg", 0));
+        mDatas.add(new FirstBindingBean("http://imgs.ebrun.com/resources/2016_04/2016_04_12/201604124411460430531500.jpg", 1));
+        mDatas.add(new FirstBindingBean("http://imgs.ebrun.com/resources/2016_04/2016_04_24/201604244971461460826484_origin.jpeg", 0));
+        mDatas.add(new FirstBindingBean("http://www.lnmoto.cn/bbs/data/attachment/forum/201408/12/074018gshshia3is1cw3sg.jpg", 1));
     }
 
     public class FirstPresenter {

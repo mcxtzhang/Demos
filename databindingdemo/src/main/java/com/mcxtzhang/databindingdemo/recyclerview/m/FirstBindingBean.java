@@ -1,9 +1,8 @@
 package com.mcxtzhang.databindingdemo.recyclerview.m;
 
-import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
-import static android.databinding.tool.util.GenerationalClassUtil.ExtensionFilter.BR;
+import com.mcxtzhang.databindingdemo.recyclerview.multype.MulTypeBean;
 
 /**
  * 介绍：
@@ -13,7 +12,7 @@ import static android.databinding.tool.util.GenerationalClassUtil.ExtensionFilte
  * 时间： 16/09/25.
  */
 
-public class FirstBindingBean extends BaseObservable {
+public class FirstBindingBean extends MulTypeBean {
     private String url;
     private String name;
 
@@ -25,6 +24,18 @@ public class FirstBindingBean extends BaseObservable {
         this.url = url;
         this.name = name;
     }
+
+    public FirstBindingBean(String url, int role) {
+        this.url = url;
+        setRole(role);
+    }
+
+    public FirstBindingBean(String url, String name, int role) {
+        this.url = url;
+        this.name = name;
+        setRole(role);
+    }
+
     @Bindable
     public String getUrl() {
         return url;
