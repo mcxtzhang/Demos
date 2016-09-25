@@ -1,25 +1,13 @@
 package com.mcxtzhang.databindingdemo.recyclerview;
 
 import android.app.Activity;
-import android.databinding.Observable;
-import android.databinding.OnRebindCallback;
-import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.transition.TransitionManager;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.android.databinding.library.baseAdapters.BR;
-import com.bumptech.glide.Glide;
 import com.mcxtzhang.databindingdemo.R;
 import com.mcxtzhang.databindingdemo.databinding.ActivityRecyclerViewBinding;
-import com.mcxtzhang.databindingdemo.databinding.ItemFirstRvBinding;
-import com.mcxtzhang.databindingdemo.databinding.ItemMulType1Binding;
 import com.mcxtzhang.databindingdemo.recyclerview.base.BaseBindingAdapter;
-import com.mcxtzhang.databindingdemo.recyclerview.base.BaseBindingViewHolder;
-import com.mcxtzhang.databindingdemo.recyclerview.base.mul.BaseMulTypeAdapter;
+import com.mcxtzhang.databindingdemo.recyclerview.base.NewBaseBindingAdapter;
 import com.mcxtzhang.databindingdemo.recyclerview.m.FirstBindingBean;
 
 import java.util.ArrayList;
@@ -39,7 +27,7 @@ public class RecyclerViewActivity extends Activity {
 
         initDatas();
         mBinding.rv.setLayoutManager(new LinearLayoutManager(this));
-/*        mBinding.rv.setAdapter(mAdapter = new BaseBindingAdapter<ItemFirstRvBinding, FirstBindingBean>(this, R.layout.item_first_rv, mDatas) {
+       /* mBinding.rv.setAdapter(mAdapter = new BaseBindingAdapter<ItemFirstRvBinding, FirstBindingBean>(this, R.layout.item_first_rv, mDatas) {
             @Override
             public void onBindViewHolder(BaseBindingViewHolder<ItemFirstRvBinding> holder, int position, ItemFirstRvBinding itemFirstRvBinding, final FirstBindingBean firstBindingBean) {
                 itemFirstRvBinding.setBean(firstBindingBean);
@@ -78,11 +66,14 @@ public class RecyclerViewActivity extends Activity {
             }
         });*/
 
+        //就一种Item：新写法 代码更少了，但是总觉得有种约束感 ：
+        mBinding.rv.setAdapter(new NewBaseBindingAdapter(this, R.layout.item_mul_type_1, mDatas));
+
         //普通多种item
         //mBinding.rv.setAdapter( new MulTypeAdapter(this, mDatas));
 
         //Base多种Item
-        mBinding.rv.setAdapter(new BaseMulTypeAdapter(this, mDatas) {
+/*        mBinding.rv.setAdapter(new BaseMulTypeAdapter(this, mDatas) {
             @Override
             public void onBindViewHolder(final BaseBindingViewHolder holder, final int position) {
                 super.onBindViewHolder(holder, position);
@@ -99,7 +90,7 @@ public class RecyclerViewActivity extends Activity {
                 });
 
             }
-        });
+        });*/
 
         mBinding.setPresenter(new FirstPresenter());
     }
