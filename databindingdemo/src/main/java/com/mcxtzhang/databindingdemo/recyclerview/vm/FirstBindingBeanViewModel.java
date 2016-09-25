@@ -2,6 +2,7 @@ package com.mcxtzhang.databindingdemo.recyclerview.vm;
 
 import android.databinding.BindingAdapter;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -16,9 +17,10 @@ import com.bumptech.glide.Glide;
 public class FirstBindingBeanViewModel {
 
     //后面的netUrl是xml里的名字, 必须是static方法
-    @BindingAdapter({"bind:netUrl"})
-    public static void loadNetImage(ImageView imageView, String url) {
+    @BindingAdapter({"netUrl", "shenqi"})
+    public static void loadNetImage(ImageView imageView, String url, String shenqi) {
         //图片加载
         Glide.with(imageView.getContext()).load(url).into(imageView);
+        Toast.makeText(imageView.getContext(), "shenqi" + shenqi, Toast.LENGTH_SHORT).show();
     }
 }

@@ -3,9 +3,13 @@ package com.mcxtzhang.databindingdemo.recyclerview;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.View;
 
+import com.bumptech.glide.Glide;
+import com.mcxtzhang.databindingdemo.R;
 import com.mcxtzhang.databindingdemo.databinding.ActivityRecyclerViewBinding;
+import com.mcxtzhang.databindingdemo.databinding.ItemFirstRvBinding;
+import com.mcxtzhang.databindingdemo.recyclerview.base.BaseBindingAdapter;
+import com.mcxtzhang.databindingdemo.recyclerview.base.BaseBindingViewHolder;
 import com.mcxtzhang.databindingdemo.recyclerview.m.FirstBindingBean;
 
 import java.util.ArrayList;
@@ -13,7 +17,7 @@ import java.util.List;
 
 public class RecyclerViewActivity extends Activity {
     private ActivityRecyclerViewBinding mBinding;
-    private FirstBindingAdapter mAdapter;
+    private BaseBindingAdapter mAdapter;
     private List<FirstBindingBean> mDatas;
 
 
@@ -25,7 +29,14 @@ public class RecyclerViewActivity extends Activity {
 
         initDatas();
         mBinding.rv.setLayoutManager(new LinearLayoutManager(this));
-        mBinding.rv.setAdapter(mAdapter = new FirstBindingAdapter(this, mDatas));
+        mBinding.rv.setAdapter(mAdapter = new BaseBindingAdapter<ItemFirstRvBinding, FirstBindingBean>(this, R.layout.item_first_rv, mDatas) {
+            @Override
+            public void onBindViewHolder(BaseBindingViewHolder<ItemFirstRvBinding> holder, int position, ItemFirstRvBinding itemFirstRvBinding, FirstBindingBean firstBindingBean) {
+                itemFirstRvBinding.setBean(firstBindingBean);
+                //普通的加载方法
+                Glide.with(RecyclerViewActivity.this).load(firstBindingBean.getUrl()).into(itemFirstRvBinding.normalLoadIv);
+            }
+        });
         mBinding.setPresenter(new FirstPresenter());
     }
 
@@ -46,7 +57,7 @@ public class RecyclerViewActivity extends Activity {
 
     public class FirstPresenter {
         public void onAddClick() {
-            mDatas.add(new FirstBindingBean("http://finance.gucheng.com/UploadFiles_7830/201603/2016032110220685.jpg","add"));
+            mDatas.add(new FirstBindingBean("http://finance.gucheng.com/UploadFiles_7830/201603/2016032110220685.jpg", "add"));
             mAdapter.notifyItemInserted(mDatas.size());
         }
 
