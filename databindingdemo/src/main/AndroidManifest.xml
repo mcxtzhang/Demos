@@ -2,17 +2,20 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mcxtzhang.databindingdemo">
 
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"></activity>
-        <activity android:name=".VarLevelHigherActivity">
+        <activity android:name=".MainActivity">
 
         </activity>
-        <activity android:name=".FragmentActivity">
+        <activity android:name=".VarLevelHigherActivity" />
+        <activity android:name=".FragmentActivity" />
+        <activity android:name=".TestIncludeActivity"></activity>
+        <activity android:name=".recyclerview.RecyclerViewActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

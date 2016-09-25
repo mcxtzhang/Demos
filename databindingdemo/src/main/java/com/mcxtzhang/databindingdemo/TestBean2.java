@@ -4,27 +4,18 @@ import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
 /**
- * 介绍：
+ * 介绍：同名成员变量，BR里会不会冲突？
  * 作者：zhangxutong
- * 邮箱：zhangxutong@imcoming.com
- * 时间： 2016/9/23.
+ * 邮箱：mcxtzhang@163.com
+ * CSDN：http://blog.csdn.net/zxt0601
+ * 时间： 16/09/24.
  */
 
-public class TestBean extends BaseObservable {
-    private int id;
-    private String name;
+public class TestBean2 extends BaseObservable {
+    public String name;
 
-    public TestBean(int id, String name) {
-        this.id = id;
+    public TestBean2(String name) {
         this.name = name;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     @Bindable

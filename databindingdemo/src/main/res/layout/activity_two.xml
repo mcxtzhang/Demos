@@ -15,8 +15,19 @@
             type="com.mcxtzhang.databindingdemo.MainPresenter" />
 
         <variable
-            name="testBean"
+            name="cstTestBean"
             type="com.mcxtzhang.databindingdemo.TestBean" />
+
+        <variable
+            name="cstTestBean2"
+            type="com.mcxtzhang.databindingdemo.TestBean2" />
+
+
+        <import type="android.databinding.ObservableArrayMap" />
+
+        <variable
+            name="collectionMap"
+            type="ObservableArrayMap&lt;String,Object>"/>
 
 
     </data>
@@ -37,19 +48,22 @@
             android:id="@+id/tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{testBean.name}" />
+            android:text="@{cstTestBean.name}" />
 
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="firstName"
+            android:onTextChanged="@{()->mainPresenter.onCstEditChangeListener(cstTestBean)}"
             android:text="@={firstName}" />
 
         <EditText
+            android:id="@+id/etSecond"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="SecondName"
+            android:onTextChanged="@{mainPresenter::onEditChange}"
             android:text="@={SecondName}" />
 
 
@@ -61,7 +75,21 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{mainPresenter::onBtnClick}" />
+            android:onClick="@{()->mainPresenter.onCstEditChangeListener(cstTestBean)}" />
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{()->mainPresenter.changeTestBean(cstTestBean,cstTestBean2)}"
+            android:text="@{cstTestBean2.name}" />
+
+
+        <TextView
+            android:onClick="@{mainPresenter::onMapClick}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text='@{collectionMap["lastName"]}' />
     </LinearLayout>
 
 
