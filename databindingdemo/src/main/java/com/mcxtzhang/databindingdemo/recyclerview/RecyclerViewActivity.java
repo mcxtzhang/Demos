@@ -7,9 +7,10 @@ import android.view.View;
 
 import com.mcxtzhang.databindingdemo.R;
 import com.mcxtzhang.databindingdemo.databinding.ActivityRecyclerViewBinding;
-import com.mcxtzhang.databindingdemo.recyclerview.base.BaseBindingAdapter;
+import com.mcxtzhang.databindingdemo.databinding.ItemMulType1Binding;
+import com.mcxtzhang.databindingdemo.recyclerview.base.OldBaseBindingAdapter;
 import com.mcxtzhang.databindingdemo.recyclerview.base.BaseBindingViewHolder;
-import com.mcxtzhang.databindingdemo.recyclerview.base.NewBaseBindingAdapter;
+import com.mcxtzhang.databindingdemo.recyclerview.base.mul.BaseMulTypeAdapter;
 import com.mcxtzhang.databindingdemo.recyclerview.m.FirstBindingBean;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ import java.util.List;
 
 public class RecyclerViewActivity extends Activity {
     private ActivityRecyclerViewBinding mBinding;
-    private BaseBindingAdapter mAdapter;
+    private OldBaseBindingAdapter mAdapter;
     private List<FirstBindingBean> mDatas;
 
 
@@ -29,7 +30,7 @@ public class RecyclerViewActivity extends Activity {
 
         initDatas();
         mBinding.rv.setLayoutManager(new LinearLayoutManager(this));
-       /* mBinding.rv.setAdapter(mAdapter = new BaseBindingAdapter<ItemFirstRvBinding, FirstBindingBean>(this, R.layout.item_first_rv, mDatas) {
+       /* mBinding.rv.setAdapter(mAdapter = new OldBaseBindingAdapter<ItemFirstRvBinding, FirstBindingBean>(this, R.layout.item_first_rv, mDatas) {
             @Override
             public void onBindViewHolder(BaseBindingViewHolder<ItemFirstRvBinding> holder, int position, ItemFirstRvBinding itemFirstRvBinding, final FirstBindingBean firstBindingBean) {
                 itemFirstRvBinding.setBean(firstBindingBean);
@@ -69,7 +70,7 @@ public class RecyclerViewActivity extends Activity {
         });*/
 
         //就一种Item：新写法 代码更少了，但是总觉得有种约束感 ：
-        mBinding.rv.setAdapter(new NewBaseBindingAdapter(this, R.layout.item_mul_type_1, mDatas){
+/*        mBinding.rv.setAdapter(new BaseBindingAdapter(this, R.layout.item_mul_type_1, mDatas){
             @Override
             public void onBindViewHolder(BaseBindingViewHolder holder, final int position) {
                 super.onBindViewHolder(holder, position);
@@ -80,13 +81,13 @@ public class RecyclerViewActivity extends Activity {
                     }
                 });
             }
-        });
+        });*/
 
         //普通多种item
         //mBinding.rv.setAdapter( new MulTypeAdapter(this, mDatas));
 
         //Base多种Item
-/*        mBinding.rv.setAdapter(new BaseMulTypeAdapter(this, mDatas) {
+        mBinding.rv.setAdapter(new BaseMulTypeAdapter(this, mDatas) {
             @Override
             public void onBindViewHolder(final BaseBindingViewHolder holder, final int position) {
                 super.onBindViewHolder(holder, position);
@@ -103,7 +104,7 @@ public class RecyclerViewActivity extends Activity {
                 });
 
             }
-        });*/
+        });
 
         mBinding.setPresenter(new FirstPresenter());
     }
