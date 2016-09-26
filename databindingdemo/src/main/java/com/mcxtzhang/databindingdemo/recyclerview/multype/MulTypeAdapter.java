@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import com.android.databinding.library.baseAdapters.BR;
 import com.mcxtzhang.databindingdemo.R;
-import com.mcxtzhang.databindingdemo.recyclerview.base.BaseBindingViewHolder;
+import com.mcxtzhang.zxtcommonlib.databinding.base.BaseBindingViewHolder;
 
 import java.util.List;
 

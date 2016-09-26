@@ -4,7 +4,7 @@ import android.databinding.Bindable;
 
 import com.mcxtzhang.databindingdemo.R;
 import com.mcxtzhang.databindingdemo.recyclerview.multype.MulTypeBean;
-import com.mcxtzhang.databindingdemo.recyclerview.base.mul.IBaseMulInterface;
+import com.mcxtzhang.zxtcommonlib.databinding.base.mul.IBaseMulInterface;
 
 /**
  * 介绍：

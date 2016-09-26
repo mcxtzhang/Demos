@@ -8,17 +8,16 @@ import android.view.View;
 import com.mcxtzhang.databindingdemo.R;
 import com.mcxtzhang.databindingdemo.databinding.ActivityRecyclerViewBinding;
 import com.mcxtzhang.databindingdemo.databinding.ItemMulType1Binding;
-import com.mcxtzhang.databindingdemo.recyclerview.base.OldBaseBindingAdapter;
-import com.mcxtzhang.databindingdemo.recyclerview.base.BaseBindingViewHolder;
-import com.mcxtzhang.databindingdemo.recyclerview.base.mul.BaseMulTypeAdapter;
 import com.mcxtzhang.databindingdemo.recyclerview.m.FirstBindingBean;
+import com.mcxtzhang.zxtcommonlib.databinding.base.BaseBindingViewHolder;
+import com.mcxtzhang.zxtcommonlib.databinding.base.mul.BaseMulTypeAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RecyclerViewActivity extends Activity {
     private ActivityRecyclerViewBinding mBinding;
-    private OldBaseBindingAdapter mAdapter;
+    //private OldBaseBindingAdapter mAdapter;
     private List<FirstBindingBean> mDatas;
 
 
@@ -127,12 +126,12 @@ public class RecyclerViewActivity extends Activity {
     public class FirstPresenter {
         public void onAddClick() {
             mDatas.add(new FirstBindingBean("http://finance.gucheng.com/UploadFiles_7830/201603/2016032110220685.jpg", "add"));
-            mAdapter.notifyItemInserted(mDatas.size());
+            //mAdapter.notifyItemInserted(mDatas.size());
         }
 
         public void onDelClick() {
             mDatas.remove(mDatas.size() - 1);
-            mAdapter.notifyItemRemoved(mDatas.size());
+            //mAdapter.notifyItemRemoved(mDatas.size());
         }
     }
 
