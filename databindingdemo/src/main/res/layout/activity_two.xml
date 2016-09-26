@@ -30,6 +30,12 @@
             type="ObservableArrayMap&lt;String,Object>" />
 
 
+
+        <variable
+            name="nestP"
+            type="com.mcxtzhang.databindingdemo.MainActivity.NestBeanP"/>
+
+
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -93,9 +99,10 @@
 
 
         <TextView
+            android:onClick="@{()->nestP.onNestBeanClick(cstTestBean2)}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{cstTestBean2.testBean.name ??com.mcxtzhang.databindingdemo.TestBean.EMPTY_VALUE }" />
+            android:text="@{cstTestBean2.testBean.name }" />
     </LinearLayout>
 
 

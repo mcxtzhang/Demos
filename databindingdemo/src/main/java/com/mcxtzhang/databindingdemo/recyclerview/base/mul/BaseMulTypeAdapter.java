@@ -43,6 +43,7 @@ public class BaseMulTypeAdapter<T extends IBaseMulInterface> extends RecyclerVie
     @Override
     public void onBindViewHolder(BaseBindingViewHolder holder, int position) {
         holder.getBinding().setVariable(BR.data, mDatas.get(position));
+        holder.getBinding().executePendingBindings();
     }
 
     @Override

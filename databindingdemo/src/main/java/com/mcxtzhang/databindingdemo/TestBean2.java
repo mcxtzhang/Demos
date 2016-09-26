@@ -17,12 +17,14 @@ public class TestBean2 extends BaseObservable {
 
     private TestBean testBean;
 
+    @Bindable
     public TestBean getTestBean() {
         return testBean;
     }
 
     public void setTestBean(TestBean testBean) {
         this.testBean = testBean;
+        notifyPropertyChanged(BR.testBean);
     }
 
     public TestBean2(String name) {

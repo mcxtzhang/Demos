@@ -3,10 +3,12 @@ package com.mcxtzhang.databindingdemo.recyclerview;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
 
 import com.mcxtzhang.databindingdemo.R;
 import com.mcxtzhang.databindingdemo.databinding.ActivityRecyclerViewBinding;
 import com.mcxtzhang.databindingdemo.recyclerview.base.BaseBindingAdapter;
+import com.mcxtzhang.databindingdemo.recyclerview.base.BaseBindingViewHolder;
 import com.mcxtzhang.databindingdemo.recyclerview.base.NewBaseBindingAdapter;
 import com.mcxtzhang.databindingdemo.recyclerview.m.FirstBindingBean;
 
@@ -67,7 +69,18 @@ public class RecyclerViewActivity extends Activity {
         });*/
 
         //就一种Item：新写法 代码更少了，但是总觉得有种约束感 ：
-        mBinding.rv.setAdapter(new NewBaseBindingAdapter(this, R.layout.item_mul_type_1, mDatas));
+        mBinding.rv.setAdapter(new NewBaseBindingAdapter(this, R.layout.item_mul_type_1, mDatas){
+            @Override
+            public void onBindViewHolder(BaseBindingViewHolder holder, final int position) {
+                super.onBindViewHolder(holder, position);
+                holder.getBinding().getRoot().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mDatas.get(position).setName("变变变");
+                    }
+                });
+            }
+        });
 
         //普通多种item
         //mBinding.rv.setAdapter( new MulTypeAdapter(this, mDatas));
