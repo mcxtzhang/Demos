@@ -16,7 +16,7 @@ import java.util.List;
  * CSDN：http://blog.csdn.net/zxt0601
  * 时间： 16/09/25.
  */
-
+@Deprecated
 public abstract class OldBaseBindingAdapter<T extends ViewDataBinding, K> extends RecyclerView.Adapter<BaseBindingViewHolder<T>> {
     private Context mContext;
     private int mLayoutId;
