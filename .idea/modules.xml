@@ -4,19 +4,14 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/animdemo/animdemo.iml" filepath="$PROJECT_DIR$/animdemo/animdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/cstnorecyclelistview/cstnorecyclelistview.iml" filepath="$PROJECT_DIR$/cstnorecyclelistview/cstnorecyclelistview.iml" />
       <module fileurl="file://$PROJECT_DIR$/cstviewdemo/cstviewdemo.iml" filepath="$PROJECT_DIR$/cstviewdemo/cstviewdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/databindingdemo/databindingdemo.iml" filepath="$PROJECT_DIR$/databindingdemo/databindingdemo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/diffutilsdemo/diffutilsdemo.iml" filepath="$PROJECT_DIR$/diffutilsdemo/diffutilsdemo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/fontdemo/fontdemo.iml" filepath="$PROJECT_DIR$/fontdemo/fontdemo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/itemdecorationdemo/itemdecorationdemo.iml" filepath="$PROJECT_DIR$/itemdecorationdemo/itemdecorationdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/learnannotationdemo/learnannotationdemo.iml" filepath="$PROJECT_DIR$/learnannotationdemo/learnannotationdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/lib/lib.iml" filepath="$PROJECT_DIR$/lib/lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libannotation/libannotation.iml" filepath="$PROJECT_DIR$/libannotation/libannotation.iml" />
       <module fileurl="file://$PROJECT_DIR$/mediademo/mediademo.iml" filepath="$PROJECT_DIR$/mediademo/mediademo.iml" />
       <module fileurl="file://$PROJECT_DIR$/picdemo/picdemo.iml" filepath="$PROJECT_DIR$/picdemo/picdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/retrofitdemo/retrofitdemo.iml" filepath="$PROJECT_DIR$/retrofitdemo/retrofitdemo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/spandemos/spandemos.iml" filepath="$PROJECT_DIR$/spandemos/spandemos.iml" />
-      <module fileurl="file://$PROJECT_DIR$/webviewdemo/webviewdemo.iml" filepath="$PROJECT_DIR$/webviewdemo/webviewdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/zandemo/zandemo.iml" filepath="$PROJECT_DIR$/zandemo/zandemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/zxt_github.iml" filepath="$PROJECT_DIR$/zxt_github.iml" />
       <module fileurl="file://$PROJECT_DIR$/zxt_github_proj.iml" filepath="$PROJECT_DIR$/zxt_github_proj.iml" />
