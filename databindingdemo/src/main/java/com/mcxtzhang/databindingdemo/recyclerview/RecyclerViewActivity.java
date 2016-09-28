@@ -3,13 +3,11 @@ package com.mcxtzhang.databindingdemo.recyclerview;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.View;
 
-import com.mcxtzhang.databindingdemo.R;
 import com.mcxtzhang.databindingdemo.databinding.ActivityRecyclerViewBinding;
-import com.mcxtzhang.databindingdemo.databinding.ItemMulType1Binding;
 import com.mcxtzhang.databindingdemo.recyclerview.m.FirstBindingBean;
-import com.mcxtzhang.zxtcommonlib.databinding.base.BaseBindingViewHolder;
+import com.mcxtzhang.databindingdemo.recyclerview.multype.MBean1;
+import com.mcxtzhang.databindingdemo.recyclerview.multype.MBean2;
 import com.mcxtzhang.zxtcommonlib.databinding.base.mul.BaseMulTypeAdapter;
 
 import java.util.ArrayList;
@@ -86,7 +84,7 @@ public class RecyclerViewActivity extends Activity {
         //mBinding.rv.setAdapter( new MulTypeAdapter(this, mDatas));
 
         //Base多种Item
-        mBinding.rv.setAdapter(new BaseMulTypeAdapter(this, mDatas) {
+/*        mBinding.rv.setAdapter(new BaseMulTypeAdapter(this, mDatas) {
             @Override
             public void onBindViewHolder(final BaseBindingViewHolder holder, final int position) {
                 super.onBindViewHolder(holder, position);
@@ -103,10 +101,30 @@ public class RecyclerViewActivity extends Activity {
                 });
 
             }
-        });
+        });*/
+
+
+        //Base 多种Item，连bean都可以不一样，你觉得屌不屌
+        mBinding.rv.setAdapter(new BaseMulTypeAdapter(this, initMulTypeDatas()));
 
         mBinding.setPresenter(new FirstPresenter());
     }
+
+    public List initMulTypeDatas() {
+        List mulTypeDatas = new ArrayList<>();
+        mulTypeDatas.add(new MBean1("http://imgs.ebrun.com/resources/2016_03/2016_03_25/201603259771458878793312_origin.jpg", "张"));
+
+
+        mulTypeDatas.add(new MBean1("http://p14.go007.com/2014_11_02_05/a03541088cce31b8_1.jpg", "旭童"));
+        mulTypeDatas.add(new MBean2("http://news.k618.cn/tech/201604/W020160407281077548026.jpg", "多种type"));
+        mulTypeDatas.add(new MBean2("http://www.kejik.com/image/1460343965520.jpg", "多种type"));
+        mulTypeDatas.add(new MBean2("http://cn.chinadaily.com.cn/img/attachement/jpg/site1/20160318/eca86bd77be61855f1b81c.jpg", "多种type"));
+        mulTypeDatas.add(new MBean2("http://imgs.ebrun.com/resources/2016_04/2016_04_12/201604124411460430531500.jpg", "多种type"));
+        mulTypeDatas.add(new MBean1("http://imgs.ebrun.com/resources/2016_04/2016_04_24/201604244971461460826484_origin.jpeg", "多种type"));
+        mulTypeDatas.add(new MBean1("http://www.lnmoto.cn/bbs/data/attachment/forum/201408/12/074018gshshia3is1cw3sg.jpg", "多种type"));
+        return mulTypeDatas;
+    }
+
 
     private void initDatas() {
         mDatas = new ArrayList<>();
