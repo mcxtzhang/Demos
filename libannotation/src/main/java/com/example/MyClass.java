@@ -41,7 +41,7 @@ public class MyClass {
         //通过反射获取注解的信息
         try {
             MyClass myClass = new MyClass();
-            Class targetClass = Class.forName("com.example.MyClass");
+            Class targetClass = /*Class.forName("com.example.MyClass")*/myClass.getClass();
             if (targetClass.isAnnotationPresent(FirstAnnotation.class)) {//如果含有我们的注解
                 FirstAnnotation classFirstAnnotation = (FirstAnnotation) targetClass.getAnnotation(FirstAnnotation.class);
                 System.out.println("类有注解 = [" + classFirstAnnotation.value() + "]" + "  " + classFirstAnnotation.isShow());
@@ -71,11 +71,21 @@ public class MyClass {
                     if (field.isAnnotationPresent(FirstAnnotation.class)) {
                         FirstAnnotation varAnnotation = field.getAnnotation(FirstAnnotation.class);
                         System.out.println("所有变量有注解 = [" + varAnnotation.value() + "]   " + varAnnotation.isShow());
+                        try {
+                            System.out.println("他的名：" +field.getName()+",值"+ field.get(myClass));
+                            if ("testAnnotationVar1".equals(field.getName())){
+                                field.set(myClass,"你看着办");
+                                System.out.println("他被我改了：" +field.getName()+",值"+ field.get(myClass));
+                            }
+
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
 
-        } catch (ClassNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
