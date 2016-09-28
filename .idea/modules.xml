@@ -16,6 +16,7 @@
       <module fileurl="file://$PROJECT_DIR$/picdemo/picdemo.iml" filepath="$PROJECT_DIR$/picdemo/picdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/retrofitdemo/retrofitdemo.iml" filepath="$PROJECT_DIR$/retrofitdemo/retrofitdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/spandemos/spandemos.iml" filepath="$PROJECT_DIR$/spandemos/spandemos.iml" />
+      <module fileurl="file://$PROJECT_DIR$/toolbar/toolbar.iml" filepath="$PROJECT_DIR$/toolbar/toolbar.iml" />
       <module fileurl="file://$PROJECT_DIR$/webviewdemo/webviewdemo.iml" filepath="$PROJECT_DIR$/webviewdemo/webviewdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/zandemo/zandemo.iml" filepath="$PROJECT_DIR$/zandemo/zandemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/zxt_github.iml" filepath="$PROJECT_DIR$/zxt_github.iml" />
