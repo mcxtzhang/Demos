@@ -11,6 +11,7 @@
       <module fileurl="file://$PROJECT_DIR$/libannotation/libannotation.iml" filepath="$PROJECT_DIR$/libannotation/libannotation.iml" />
       <module fileurl="file://$PROJECT_DIR$/mediademo/mediademo.iml" filepath="$PROJECT_DIR$/mediademo/mediademo.iml" />
       <module fileurl="file://$PROJECT_DIR$/picdemo/picdemo.iml" filepath="$PROJECT_DIR$/picdemo/picdemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/recyclerviewdemo/recyclerviewdemo.iml" filepath="$PROJECT_DIR$/recyclerviewdemo/recyclerviewdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/retrofitdemo/retrofitdemo.iml" filepath="$PROJECT_DIR$/retrofitdemo/retrofitdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/zandemo/zandemo.iml" filepath="$PROJECT_DIR$/zandemo/zandemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/zxt_github.iml" filepath="$PROJECT_DIR$/zxt_github.iml" />
