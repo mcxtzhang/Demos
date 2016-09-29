@@ -2,6 +2,7 @@ package com.mcxtzhang.selectcoupondemo.recyclerview;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -68,24 +69,44 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponVH> 
                 mDatas.get(position).setSelected(true);
                 notifyDataSetChanged();*/
                 //实现单选方法二： notifyItemChanged() 定向刷新两个视图
-                //先取消上个item的勾选状态
-/*                mDatas.get(mSelectedPos).setSelected(false);
-                notifyItemChanged(mSelectedPos);
-                //设置新Item的勾选状态
-                mSelectedPos = position;
-                mDatas.get(mSelectedPos).setSelected(true);
-                notifyItemChanged(mSelectedPos);*/
+                //如果勾选的不是已经勾选状态的Item
+/*                if (mSelectedPos!=position){
+                    //先取消上个item的勾选状态
+                    mDatas.get(mSelectedPos).setSelected(false);
+                    notifyItemChanged(mSelectedPos);
+                    //设置新Item的勾选状态
+                    mSelectedPos = position;
+                    mDatas.get(mSelectedPos).setSelected(true);
+                    notifyItemChanged(mSelectedPos);
+                }*/
 
                 //实现单选方法三： RecyclerView另一种定向刷新方法：不会有白光一闪动画 也不会重复onBindVIewHolder
-                CouponVH couponVH = (CouponVH) mRv.findViewHolderForLayoutPosition(mSelectedPos);
-                if (couponVH!=null){//还在屏幕里
+/*                CouponVH couponVH = (CouponVH) mRv.findViewHolderForLayoutPosition(mSelectedPos);
+                if (couponVH != null) {//还在屏幕里
                     couponVH.ivSelect.setSelected(false);
                 }
-                mDatas.get(mSelectedPos).setSelected(false);
+                mDatas.get(mSelectedPos).setSelected(false);//不管在不在屏幕里 都需要改变数据
                 //设置新Item的勾选状态
                 mSelectedPos = position;
                 mDatas.get(mSelectedPos).setSelected(true);
-                holder.ivSelect.setSelected(true);
+                holder.ivSelect.setSelected(true);*/
+
+
+                //实现单选方法四：
+                if (mSelectedPos != position) {
+                    //先取消上个item的勾选状态
+                    mDatas.get(mSelectedPos).setSelected(false);
+                    //传递一个payload
+                    Bundle payloadOld = new Bundle();
+                    payloadOld.putBoolean("KEY_BOOLEAN", false);
+                    notifyItemChanged(mSelectedPos, payloadOld);
+                    //设置新Item的勾选状态
+                    mSelectedPos = position;
+                    mDatas.get(mSelectedPos).setSelected(true);
+                    Bundle payloadNew = new Bundle();
+                    payloadNew.putBoolean("KEY_BOOLEAN", true);
+                    notifyItemChanged(mSelectedPos, payloadNew);
+                }
 
             }
         });
@@ -96,6 +117,20 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponVH> 
                 mContext.startActivity(new Intent(mContext, ListViewActivity.class));
             }
         });
+    }
+
+    @Override
+    public void onBindViewHolder(CouponVH holder, int position, List<Object> payloads) {
+        Log.d("TAG", "onBindViewHolder() called with: holder = [" + holder + "], position = [" + position + "], payloads = [" + payloads + "]");
+        if (payloads.isEmpty()) {
+            onBindViewHolder(holder, position);
+        } else {
+            Bundle payload = (Bundle) payloads.get(0);
+            if (payload.containsKey("KEY_BOOLEAN")) {
+                boolean aBoolean = payload.getBoolean("KEY_BOOLEAN");
+                holder.ivSelect.setSelected(aBoolean);
+            }
+        }
     }
 
     @Override
