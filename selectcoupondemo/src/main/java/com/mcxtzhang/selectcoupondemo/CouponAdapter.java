@@ -40,6 +40,8 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponVH> 
         holder.ivSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //实现单选，第一种方法，十分简单，
+                // 每次点击时，先将所有的selected设为false，并且将当前点击的item 设为true， 刷新整个视图
                 for (TestBean data : mDatas) {
                     data.setSelected(false);
                 }
