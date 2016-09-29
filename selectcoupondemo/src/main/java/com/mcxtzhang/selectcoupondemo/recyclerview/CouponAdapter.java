@@ -3,6 +3,7 @@ package com.mcxtzhang.selectcoupondemo.recyclerview;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,10 +30,13 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponVH> 
 
     private int mSelectedPos = -1;//实现单选  方法二，变量保存当前选中的position
 
-    public CouponAdapter(List<TestBean> datas, Context context) {
+    private RecyclerView mRv;//实现单选方法三： RecyclerView另一种定向刷新方法：
+
+    public CouponAdapter(List<TestBean> datas, Context context, RecyclerView rv) {
         mDatas = datas;
         mContext = context;
         mInflater = LayoutInflater.from(mContext);
+        mRv = rv;
 
         //实现单选方法二： 设置数据集时，找到默认选中的pos
         for (int i = 0; i < mDatas.size(); i++) {
@@ -49,6 +53,7 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponVH> 
 
     @Override
     public void onBindViewHolder(final CouponVH holder, final int position) {
+        Log.d("TAG", "onBindViewHolder() called with: holder = [" + holder + "], position = [" + position + "]");
         holder.ivSelect.setSelected(mDatas.get(position).isSelected());
         holder.tvCoupon.setText(mDatas.get(position).getName());
 
@@ -62,14 +67,26 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponVH> 
                 }
                 mDatas.get(position).setSelected(true);
                 notifyDataSetChanged();*/
-                //实现单选方法二： 只会定向刷新两个视图
+                //实现单选方法二： notifyItemChanged() 定向刷新两个视图
                 //先取消上个item的勾选状态
-                mDatas.get(mSelectedPos).setSelected(false);
+/*                mDatas.get(mSelectedPos).setSelected(false);
                 notifyItemChanged(mSelectedPos);
                 //设置新Item的勾选状态
                 mSelectedPos = position;
                 mDatas.get(mSelectedPos).setSelected(true);
-                notifyItemChanged(mSelectedPos);
+                notifyItemChanged(mSelectedPos);*/
+
+                //实现单选方法三： RecyclerView另一种定向刷新方法：不会有白光一闪动画 也不会重复onBindVIewHolder
+                CouponVH couponVH = (CouponVH) mRv.findViewHolderForLayoutPosition(mSelectedPos);
+                if (couponVH!=null){//还在屏幕里
+                    couponVH.ivSelect.setSelected(false);
+                }
+                mDatas.get(mSelectedPos).setSelected(false);
+                //设置新Item的勾选状态
+                mSelectedPos = position;
+                mDatas.get(mSelectedPos).setSelected(true);
+                holder.ivSelect.setSelected(true);
+
             }
         });
 

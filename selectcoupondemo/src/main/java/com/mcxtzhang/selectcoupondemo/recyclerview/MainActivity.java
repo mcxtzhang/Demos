@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mRv = (RecyclerView) findViewById(R.id.rv);
         mRv.setLayoutManager(new LinearLayoutManager(this));
-        mRv.setAdapter(new CouponAdapter(initDatas(), this));
+        mRv.setAdapter(new CouponAdapter(initDatas(), this,mRv));
     }
 
     public List<TestBean> initDatas() {
