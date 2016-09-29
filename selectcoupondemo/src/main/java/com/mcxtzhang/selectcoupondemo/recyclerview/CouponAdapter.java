@@ -51,11 +51,11 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponVH> 
     public void onBindViewHolder(final CouponVH holder, final int position) {
         holder.ivSelect.setSelected(mDatas.get(position).isSelected());
         holder.tvCoupon.setText(mDatas.get(position).getName());
-        //方法二 设置选中的值
+
         holder.ivSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //实现单选，第一种方法，十分简单，
+                //实现单选，第一种方法，十分简单， Lv Rv通用,因为它们都有notifyDataSetChanged()方法
                 // 每次点击时，先将所有的selected设为false，并且将当前点击的item 设为true， 刷新整个视图
 /*                for (TestBean data : mDatas) {
                     data.setSelected(false);

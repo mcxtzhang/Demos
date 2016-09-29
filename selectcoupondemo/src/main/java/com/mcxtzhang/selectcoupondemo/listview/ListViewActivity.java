@@ -3,6 +3,7 @@ package com.mcxtzhang.selectcoupondemo.listview;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.mcxtzhang.selectcoupondemo.R;
 import com.mcxtzhang.selectcoupondemo.TestBean;
@@ -19,7 +20,10 @@ public class ListViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
         mLv = (ListView) findViewById(R.id.lv);
-        mLv.setAdapter(new ListCouponAdapter(initDatas(), this));
+        mLv.setAdapter(new ListCouponAdapter(initDatas(), this, mLv));
+        TextView header = new TextView(this);
+        header.setText("我是头");
+        mLv.addHeaderView(header);
     }
 
     public List<TestBean> initDatas() {
