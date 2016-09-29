@@ -1,23 +1,25 @@
-package com.mcxtzhang.selectcoupondemo;
+package com.mcxtzhang.selectcoupondemo.listview;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v7.app.AppCompatActivity;
+import android.widget.ListView;
+
+import com.mcxtzhang.selectcoupondemo.R;
+import com.mcxtzhang.selectcoupondemo.TestBean;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
-    private RecyclerView mRv;
+public class ListViewActivity extends AppCompatActivity {
+
+    private ListView mLv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        mRv = (RecyclerView) findViewById(R.id.rv);
-        mRv.setLayoutManager(new LinearLayoutManager(this));
-        mRv.setAdapter(new CouponAdapter(initDatas(), this));
+        setContentView(R.layout.activity_list);
+        mLv = (ListView) findViewById(R.id.lv);
+        mLv.setAdapter(new ListCouponAdapter(initDatas(), this));
     }
 
     public List<TestBean> initDatas() {

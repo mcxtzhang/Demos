@@ -1,12 +1,17 @@
-package com.mcxtzhang.selectcoupondemo;
+package com.mcxtzhang.selectcoupondemo.recyclerview;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.mcxtzhang.selectcoupondemo.R;
+import com.mcxtzhang.selectcoupondemo.TestBean;
+import com.mcxtzhang.selectcoupondemo.listview.ListViewActivity;
 
 import java.util.List;
 
@@ -41,7 +46,7 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponVH> 
     public CouponVH onCreateViewHolder(ViewGroup parent, int viewType) {
         return new CouponVH(mInflater.inflate(R.layout.item_coupon, parent, false));
     }
-    
+
     @Override
     public void onBindViewHolder(final CouponVH holder, final int position) {
         holder.ivSelect.setSelected(mDatas.get(position).isSelected());
@@ -65,6 +70,13 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponVH> 
                 mSelectedPos = position;
                 mDatas.get(mSelectedPos).setSelected(true);
                 notifyItemChanged(mSelectedPos);
+            }
+        });
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mContext.startActivity(new Intent(mContext, ListViewActivity.class));
             }
         });
     }
