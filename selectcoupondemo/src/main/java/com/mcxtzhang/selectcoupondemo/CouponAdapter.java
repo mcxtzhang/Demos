@@ -22,31 +22,49 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponVH> 
     private Context mContext;
     private LayoutInflater mInflater;
 
+    private int mSelectedPos = -1;//实现单选  方法二，变量保存当前选中的position
+
     public CouponAdapter(List<TestBean> datas, Context context) {
         mDatas = datas;
         mContext = context;
         mInflater = LayoutInflater.from(mContext);
+
+        //实现单选方法二： 设置数据集时，找到默认选中的pos
+        for (int i = 0; i < mDatas.size(); i++) {
+            if (mDatas.get(i).isSelected()) {
+                mSelectedPos = i;
+            }
+        }
     }
 
     @Override
     public CouponVH onCreateViewHolder(ViewGroup parent, int viewType) {
         return new CouponVH(mInflater.inflate(R.layout.item_coupon, parent, false));
     }
-
+    
     @Override
-    public void onBindViewHolder(final CouponVH holder, int position) {
+    public void onBindViewHolder(final CouponVH holder, final int position) {
         holder.ivSelect.setSelected(mDatas.get(position).isSelected());
         holder.tvCoupon.setText(mDatas.get(position).getName());
+        //方法二 设置选中的值
         holder.ivSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //实现单选，第一种方法，十分简单，
                 // 每次点击时，先将所有的selected设为false，并且将当前点击的item 设为true， 刷新整个视图
-                for (TestBean data : mDatas) {
+/*                for (TestBean data : mDatas) {
                     data.setSelected(false);
                 }
-                mDatas.get(holder.getAdapterPosition()).setSelected(true);
-                notifyDataSetChanged();
+                mDatas.get(position).setSelected(true);
+                notifyDataSetChanged();*/
+                //实现单选方法二： 只会定向刷新两个视图
+                //先取消上个item的勾选状态
+                mDatas.get(mSelectedPos).setSelected(false);
+                notifyItemChanged(mSelectedPos);
+                //设置新Item的勾选状态
+                mSelectedPos = position;
+                mDatas.get(mSelectedPos).setSelected(true);
+                notifyItemChanged(mSelectedPos);
             }
         });
     }
