@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * 介绍：
+ * 介绍：自定义LayoutManager
  * 作者：zhangxutong
  * 邮箱：mcxtzhang@163.com
  * CSDN：http://blog.csdn.net/zxt0601
@@ -33,21 +33,21 @@ public class CstLinearLayoutManager extends RecyclerView.LayoutManager {
     @Override
     public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
         //如果没有item，直接返回
-        if (getItemCount() <= 0) return;
+        if (getItemCount() <= 0) {//参考源码
+            removeAndRecycleAllViews(recycler);
+            return;
+        }
 
         // 跳过preLayout，preLayout主要用于支持动画
         if (state.isPreLayout()) {
             return;
         }
 
-
         detachAndScrapAttachedViews(recycler);
 
         //定义竖直方向的偏移量
         int offsetY = 0;
-
         totalHeight = 0;
-
 
         for (int i = 0; i < getItemCount(); i++) {
             View child = recycler.getViewForPosition(i);
@@ -62,8 +62,7 @@ public class CstLinearLayoutManager extends RecyclerView.LayoutManager {
             //最后，将View布局
 /*            layoutDecorated(child, getPaddingLeft() + lp.leftMargin, getPaddingTop() + lp.topMargin + offsetY,
                     getPaddingLeft() + lp.leftMargin + width + lp.rightMargin, getPaddingTop() + lp.topMargin + offsetY + height + lp.bottomMargin);*/
-            //将竖直方向偏移量增大height
-            offsetY += (height + lp.leftMargin + lp.bottomMargin);
+
 
             Rect frame = allItemFrames.get(i);
             if (frame == null) {
@@ -75,6 +74,9 @@ public class CstLinearLayoutManager extends RecyclerView.LayoutManager {
             allItemFrames.put(i, frame);
             // 由于已经调用了detachAndScrapAttachedViews，因此需要将当前的Item设置为未出现过
             hasAttachedItems.put(i, false);
+
+            //将竖直方向偏移量增大height
+            offsetY += (height + lp.leftMargin + lp.bottomMargin);
         }
 
         //如果所有子View的高度和没有填满RecyclerView的高度，
@@ -137,6 +139,7 @@ public class CstLinearLayoutManager extends RecyclerView.LayoutManager {
     //滑动
     @Override
     public boolean canScrollVertically() {
+
         return true;
     }
 
@@ -167,7 +170,7 @@ public class CstLinearLayoutManager extends RecyclerView.LayoutManager {
         offsetChildrenVertical(-travel);
 
         recycleAndFillItems(recycler, state);
-        Log.d("--->", " childView count:" + getChildCount());
+        Log.d("zxt", " childView count:" + getChildCount());
 
         return travel;//返回0 没有fling效果
     }
