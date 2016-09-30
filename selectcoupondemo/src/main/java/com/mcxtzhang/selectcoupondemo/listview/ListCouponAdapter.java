@@ -87,21 +87,24 @@ public class ListCouponAdapter extends BaseAdapter {
                 notifyDataSetChanged();*/
 
                 //实现单选：方法二：Lv的定向刷新
-                int firstPos = mLv.getFirstVisiblePosition() - mLv.getHeaderViewsCount();//这里考虑了HeaderView的情况
-                int lastPos = mLv.getLastVisiblePosition() - mLv.getHeaderViewsCount();
                 //如果 当前选中的View 在当前屏幕可见,且不是自己，要定向刷新一下之前的View的状态
-                if (mSelectedPos >= firstPos && mSelectedPos <= lastPos && position != mSelectedPos) {
-                    View lastSelectedView = mLv.getChildAt(mSelectedPos - firstPos);
-                    CouponVH lastVh = (CouponVH) lastSelectedView.getTag();
-                    lastVh.ivSelect.setSelected(false);
-                }
-                //不管在屏幕是否可见，都需要改变之前的data
-                mDatas.get(mSelectedPos).setSelected(false);
+                if (position != mSelectedPos) {
+                    int firstPos = mLv.getFirstVisiblePosition() - mLv.getHeaderViewsCount();//这里考虑了HeaderView的情况
+                    int lastPos = mLv.getLastVisiblePosition() - mLv.getHeaderViewsCount();
+                    if (mSelectedPos >= firstPos && mSelectedPos <= lastPos) {
+                        View lastSelectedView = mLv.getChildAt(mSelectedPos - firstPos);//取出选中的View
+                        CouponVH lastVh = (CouponVH) lastSelectedView.getTag();
+                        lastVh.ivSelect.setSelected(false);
+                    }
+                    //不管在屏幕是否可见，都需要改变之前的data
+                    mDatas.get(mSelectedPos).setSelected(false);
 
-                //改变现在的点击的这个View的选中状态
-                couponVH.ivSelect.setSelected(true);
-                mDatas.get(position).setSelected(true);
-                mSelectedPos = position;
+                    //改变现在的点击的这个View的选中状态
+                    couponVH.ivSelect.setSelected(true);
+                    mDatas.get(position).setSelected(true);
+                    mSelectedPos = position;
+                }
+
 
             }
         });
