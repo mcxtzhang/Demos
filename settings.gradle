@@ -1,1 +1,1 @@
-include ':app', ':lib', ':zandemo', ':zxtcommonlib', ':cstviewdemo', ':mediademo', ':retrofitdemo', ':picdemo', ':animdemo', ':learnannotationdemo', ':databindingdemo', ':libannotation', ':rxjavademo', ':recyclerviewdemo', ':selectcoupondemo'
+include ':app', ':lib', ':zandemo', ':zxtcommonlib', ':cstviewdemo', ':mediademo', ':retrofitdemo', ':picdemo', ':animdemo', ':learnannotationdemo', ':databindingdemo', ':libannotation', ':rxjavademo', ':recyclerviewdemo', ':selectcoupondemo', ':coordinatordemo'
