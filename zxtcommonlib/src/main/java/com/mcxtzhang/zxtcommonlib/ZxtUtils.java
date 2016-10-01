@@ -1,10 +1,13 @@
 package com.mcxtzhang.zxtcommonlib;
 
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
+import android.view.TouchDelegate;
+import android.view.View;
 
 /**
  * 介绍：乱七八糟的Utils
@@ -47,5 +50,28 @@ public class ZxtUtils {
             }
         }
         return spannableString;
+    }
+
+    /**
+     * 为View扩大点击范围
+     *
+     * @param view
+     * @param expandTouchWidth
+     */
+    public static void expandViewClickRect(final View view, final int expandTouchWidth) {
+        final View parentView = (View) view.getParent();
+        parentView.post(new Runnable() {
+            @Override
+            public void run() {
+                final Rect rect = new Rect();
+                view.getHitRect(rect);
+                rect.top -= expandTouchWidth;
+                rect.bottom += expandTouchWidth;
+                rect.left -= expandTouchWidth;
+                rect.right += expandTouchWidth;
+                TouchDelegate touchDelegate = new TouchDelegate(rect, view);
+                parentView.setTouchDelegate(touchDelegate);
+            }
+        });
     }
 }
