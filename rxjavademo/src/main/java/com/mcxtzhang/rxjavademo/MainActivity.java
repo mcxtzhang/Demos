@@ -6,15 +6,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
@@ -144,7 +147,8 @@ public class MainActivity extends AppCompatActivity {
                 });
 
 
-        //利用变化做上面的demo
+        //[map]：
+        // 利用变化做上面的demo
         final ImageView iv2 = (ImageView) findViewById(R.id.iv2);
         Observable.create(new Observable.OnSubscribe<Integer>() {
             @Override
@@ -215,5 +219,65 @@ public class MainActivity extends AppCompatActivity {
         }).subscribeOn(Schedulers.io())//加上这句话  Observable的动作都在io线程里
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(courseSubscriber);
+
+
+        final Observable<String> throttleFirst = Observable.just("什么鬼")
+                .throttleFirst(500, TimeUnit.MILLISECONDS);//500秒不会重复发出事件;
+        findViewById(android.R.id.content).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                throttleFirst.subscribeOn(Schedulers.computation())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Action1<String>() {
+                            @Override
+                            public void call(String s) {
+                                Log.d(TAG, "防止重复点击吗？call() called with: s = [" + s + "]");
+                            }
+                        });
+            }
+        });
+
+
+        final TextView tv = (TextView) findViewById(R.id.tv);
+        tv.setText("切换前");
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Log.d(TAG, "run() called" + Thread.currentThread());
+                tv.setText("变化之前ddddddd");
+                Observable.create(new Observable.OnSubscribe<String>() {
+                    @Override
+                    public void call(Subscriber<? super String> subscriber) {
+                        Log.d(TAG, "处理时 called" + Thread.currentThread());
+                        subscriber.onNext("呵呵哒");
+                        subscriber.onCompleted();
+                    }
+                })
+                        .subscribeOn(Schedulers.computation())
+                        .subscribeOn(AndroidSchedulers.mainThread())//即使重复写 但是以上面那个为准
+                        .doOnSubscribe(new Action0() {//可以设置start所在现成的onStart方法
+                            @Override
+                            public void call() {
+                                Log.d(TAG, "变化之前 called" + Thread.currentThread());
+                                tv.setText("变化之前");
+                            }
+                        })
+                        .subscribeOn(Schedulers.io())//改变doOnSubscribe的线程，这离doOnSubscribe这句话最近
+                        .subscribeOn(AndroidSchedulers.mainThread())//即使重复写 但是以上面那个为准
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Action1<String>() {
+                            @Override
+                            public void call(String s) {
+                                Log.d(TAG, "call() called with: s = [" + s + "]" + Thread.currentThread());
+                            }
+                        });
+            }
+        }).start();
+
+
     }
+
+
 }
