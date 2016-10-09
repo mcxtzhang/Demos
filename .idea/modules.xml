@@ -10,6 +10,7 @@
       <module fileurl="file://$PROJECT_DIR$/learnannotationdemo/learnannotationdemo.iml" filepath="$PROJECT_DIR$/learnannotationdemo/learnannotationdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/lib/lib.iml" filepath="$PROJECT_DIR$/lib/lib.iml" />
       <module fileurl="file://$PROJECT_DIR$/libannotation/libannotation.iml" filepath="$PROJECT_DIR$/libannotation/libannotation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libfactorypattern/libfactorypattern.iml" filepath="$PROJECT_DIR$/libfactorypattern/libfactorypattern.iml" />
       <module fileurl="file://$PROJECT_DIR$/mediademo/mediademo.iml" filepath="$PROJECT_DIR$/mediademo/mediademo.iml" />
       <module fileurl="file://$PROJECT_DIR$/picdemo/picdemo.iml" filepath="$PROJECT_DIR$/picdemo/picdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/recyclerviewdemo/recyclerviewdemo.iml" filepath="$PROJECT_DIR$/recyclerviewdemo/recyclerviewdemo.iml" />
