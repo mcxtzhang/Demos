@@ -1,34 +1,35 @@
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
             name="firstName"
-            type="String" />
+            type="String"/>
 
         <variable
             name="SecondName"
-            type="String" />
+            type="String"/>
 
         <variable
             name="mainPresenter"
-            type="com.mcxtzhang.databindingdemo.MainPresenter" />
+            type="com.mcxtzhang.databindingdemo.MainPresenter"/>
 
         <variable
             name="cstTestBean"
-            type="com.mcxtzhang.databindingdemo.TestBean" />
+            type="com.mcxtzhang.databindingdemo.TestBean"/>
 
         <variable
             name="cstTestBean2"
-            type="com.mcxtzhang.databindingdemo.TestBean2" />
+            type="com.mcxtzhang.databindingdemo.TestBean2"/>
 
 
-        <import type="android.databinding.ObservableArrayMap" />
+        <import type="android.databinding.ObservableArrayMap"/>
 
         <variable
             name="collectionMap"
-            type="ObservableArrayMap&lt;String,Object>" />
-
+            type="ObservableArrayMap&lt;String,Object>"/>
 
 
         <variable
@@ -36,10 +37,21 @@
             type="com.mcxtzhang.databindingdemo.MainActivity.NestBeanP"/>
 
 
+        <import type="java.lang.String"/>
+
+<!--        <variable
+            name="flowDatas"
+            type="List&lt;FlowBean>"/>-->
+
+        <import type="com.mcxtzhang.databindingdemo.flowgroup.FlowBean"/>
+
+        <variable
+            name="visiData"
+            type="FlowBean"/>
+
     </data>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout
         android:id="@+id/activity_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -51,10 +63,12 @@
         tools:context="com.mcxtzhang.databindingdemo.MainActivity">
 
         <TextView
+            android:visibility="@{true == true ? View.VISIBLE : View.GONE}"
+
             android:id="@+id/tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{cstTestBean.name}" />
+            android:text="@{cstTestBean.name}"/>
 
 
         <EditText
@@ -62,7 +76,7 @@
             android:layout_height="wrap_content"
             android:hint="firstName"
             android:onTextChanged="@{()->mainPresenter.onCstEditChangeListener(cstTestBean)}"
-            android:text="@={firstName}" />
+            android:text="@={firstName}"/>
 
         <EditText
             android:id="@+id/etSecond"
@@ -70,39 +84,51 @@
             android:layout_height="wrap_content"
             android:hint="SecondName"
             android:onTextChanged="@{mainPresenter::onEditChange}"
-            android:text="@={SecondName}" />
+            android:text="@={SecondName}"/>
 
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{()->tv.setText(firstName+`...`+SecondName)}" />
+            android:onClick="@{()->tv.setText(firstName+`...`+SecondName)}"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{()->mainPresenter.onCstEditChangeListener(cstTestBean)}" />
+            android:onClick="@{()->mainPresenter.onCstEditChangeListener(cstTestBean)}"/>
 
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="@{()->mainPresenter.changeTestBean(cstTestBean,cstTestBean2)}"
-            android:text="@{cstTestBean2.name}" />
+            android:text="@{cstTestBean2.name}"/>
 
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="@{mainPresenter::onMapClick}"
-            android:text='@{collectionMap["lastName"]}' />
+            android:text='@{collectionMap["lastName"]}'/>
 
 
         <TextView
-            android:onClick="@{()->nestP.onNestBeanClick(cstTestBean2)}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{cstTestBean2.testBean.name }" />
+            android:onClick="@{()->nestP.onNestBeanClick(cstTestBean2)}"
+            android:text="@{cstTestBean2.testBean.name }"/>
+
+
+        <com.mcxtzhang.zxtcommonlib.widget.FlowViewGroup
+
+            android:id="@+id/flowLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:paddingBottom="15dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+/>
     </LinearLayout>
 
 

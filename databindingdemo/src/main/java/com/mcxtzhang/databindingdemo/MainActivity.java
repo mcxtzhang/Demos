@@ -1,11 +1,19 @@
 package com.mcxtzhang.databindingdemo;
 
+import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.databinding.ObservableArrayMap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.widget.Toast;
 
 import com.mcxtzhang.databindingdemo.databinding.ActivityTwoBinding;
+import com.mcxtzhang.databindingdemo.databinding.ItemFlowBinding;
+import com.mcxtzhang.databindingdemo.flowgroup.FlowBean;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -49,6 +57,32 @@ public class MainActivity extends AppCompatActivity {
 
         binding.setNestP(new NestBeanP());
 
+
+
+
+
+        FlowBean bean2 = new FlowBean("dd","");
+        binding.setVisiData(bean2);
+
+        //binding.setFlowDatas(initDatas());
+        List<FlowBean> flowBeanList = initDatas();
+        binding.flowLayout.removeAllViews();
+        if (flowBeanList != null) {
+            Context context = binding.flowLayout.getContext();
+            LayoutInflater inflater = LayoutInflater.from(context);
+            for (final FlowBean bean : flowBeanList) {
+                ItemFlowBinding itemFlowBinding = DataBindingUtil.inflate(inflater, R.layout.item_flow,  binding.flowLayout, false);
+                itemFlowBinding.setData(bean);
+                binding.flowLayout.addView(itemFlowBinding.getRoot());
+            }
+        }
+
+
+
+
+
+
+
     }
 
     public class NestBeanP {
@@ -57,5 +91,19 @@ public class MainActivity extends AppCompatActivity {
             //testBean2.getTestBean().setName("嵌套的Bean，直接改变里面的Bean的内容   我变了");
             testBean2.setTestBean(new TestBean(5,"直接set一个新Bean会改变？"));
         }
+    }
+
+
+    public List<FlowBean> initDatas() {
+        List datas = new ArrayList<>();
+        datas.add(new FlowBean("http://imgs.ebrun.com/resources/2016_03/2016_03_25/201603259771458878793312_origin.jpg", "张"));
+        datas.add(new FlowBean("http://p14.go007.com/2014_11_02_05/a03541088cce31b8_1.jpg", "旭童"));
+        datas.add(new FlowBean("http://news.k618.cn/tech/201604/W020160407281077548026.jpg", "多种type"));
+        datas.add(new FlowBean("http://www.kejik.com/image/1460343965520.jpg", "多种type"));
+        datas.add(new FlowBean("http://cn.chinadaily.com.cn/img/attachement/jpg/site1/20160318/eca86bd77be61855f1b81c.jpg", "多种type"));
+        datas.add(new FlowBean("http://imgs.ebrun.com/resources/2016_04/2016_04_12/201604124411460430531500.jpg", "多种type"));
+        datas.add(new FlowBean("http://imgs.ebrun.com/resources/2016_04/2016_04_24/201604244971461460826484_origin.jpeg", "多种type"));
+        datas.add(new FlowBean("http://www.lnmoto.cn/bbs/data/attachment/forum/201408/12/074018gshshia3is1cw3sg.jpg", "多种type"));
+        return datas;
     }
 }

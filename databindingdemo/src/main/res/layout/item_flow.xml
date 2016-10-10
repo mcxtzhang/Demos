@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="com.mcxtzhang.databindingdemo.flowgroup.FlowBean"/>
+
+        <variable
+            name="data"
+            type="FlowBean"/>
+    </data>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@android:color/holo_blue_bright"
+        android:onClick="@{data.onItemClick}"
+        android:text="@{data.name}"
+        />
+</layout>
