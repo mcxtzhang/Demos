@@ -1,7 +1,8 @@
 package com.example;
 
-import com.example.bean.JobInfoBean;
-import com.google.gson.Gson;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class MyClass {
     private static final int MODE_SHIFT = 30;
@@ -56,7 +57,7 @@ public class MyClass {
             System.out.println(s);
         }*/
 
-        String a = null;
+/*        String a = null;
         try {
             if (a.equals("")) {
 
@@ -67,11 +68,39 @@ public class MyClass {
         }
 
 
-        System.out.println(new Gson().toJson(new JobInfoBean()));
+        System.out.println(new Gson().toJson(new JobInfoBean()));*/
+
+        List list = initDatas();
+        System.out.println("list:" + list.size());
+/*        for (int i = 0; i < list.size(); i++) {
+            if (i % 2 == 0) {
+                list.remove(i);
+            }
+        }*/
+        Iterator iterator = list.iterator();
+        int i = 0;
+        while (iterator.hasNext()) {
+            String next = (String) iterator.next();
+            if (i % 2 == 0) {
+                iterator.remove();
+            }
+            i++;
+        }
+
+        System.out.println("list:" + list.size());
+    }
 
 
-
-
-
+    public static List initDatas() {
+        List datas = new ArrayList<>();
+        datas.add(new String("http://imgs.ebrun.com/resources/2016_03/2016_03_25/201603259771458878793312_origin.jpg"));
+        datas.add(new String("http://p14.go007.com/2014_11_02_05/a03541088cce31b8_1.jpg"));
+        datas.add(new String("http://news.k618.cn/tech/201604/W020160407281077548026.jpg"));
+        datas.add(new String("http://www.kejik.com/image/1460343965520.jpg"));
+        datas.add(new String("http://cn.chinadaily.com.cn/img/attachement/jpg/site1/20160318/eca86bd77be61855f1b81c.jpg"));
+        datas.add(new String("http://imgs.ebrun.com/resources/2016_04/2016_04_12/201604124411460430531500.jpg"));
+        datas.add(new String("http://imgs.ebrun.com/resources/2016_04/2016_04_24/201604244971461460826484_origin.jpeg"));
+        datas.add(new String("http://www.lnmoto.cn/bbs/data/attachment/forum/201408/12/074018gshshia3is1cw3sg.jpg"));
+        return datas;
     }
 }
