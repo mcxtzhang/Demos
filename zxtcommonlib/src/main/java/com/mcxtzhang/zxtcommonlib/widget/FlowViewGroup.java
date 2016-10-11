@@ -6,6 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.mcxtzhang.zxtcommonlib.widget.FullListView.NestFullListViewAdapter;
+import com.mcxtzhang.zxtcommonlib.widget.FullListView.NestFullViewHolder;
+
 /**
  * 流式布局
  * Created by zhangxutong on 2016/1/17.
@@ -16,6 +19,7 @@ import android.view.ViewGroup;
 public class FlowViewGroup extends ViewGroup {
     private static final String TAG = "zxt/FlowViewGroup";
     private LayoutInflater mInflater;
+    private Context mContext;
 
     public FlowViewGroup(Context context) {
         this(context, null);
@@ -32,6 +36,7 @@ public class FlowViewGroup extends ViewGroup {
 
     private void init(Context context) {
         mInflater = LayoutInflater.from(context);
+        mContext = context;
     }
 
     //在onMeasure里，测量所有子View的宽高，以及确定Viewgroup自己的宽高。
@@ -217,9 +222,28 @@ public class FlowViewGroup extends ViewGroup {
         return new MarginLayoutParams(getContext(), attrs);
     }
 
+    private NestFullListViewAdapter mAdapter;
 
+    /**
+     * 外部调用  同时刷新视图
+     *
+     * @param mAdapter
+     */
+    public void setAdapter(NestFullListViewAdapter mAdapter) {
+        this.mAdapter = mAdapter;
+        updateUI();
+    }
 
-
+    public void updateUI() {
+        removeAllViews();
+        if (null != mAdapter && mAdapter.getDatas() != null) {
+            for (int i = 0; i < mAdapter.getDatas().size(); i++) {
+                NestFullViewHolder itemVh = new NestFullViewHolder(mContext, mInflater.inflate(mAdapter.getItemLayoutId(), this, false));
+                mAdapter.onBind(i, itemVh);
+                addView(itemVh.getConvertView());
+            }
+        }
+    }
 
 
     //看名字
