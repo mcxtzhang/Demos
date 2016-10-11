@@ -25,16 +25,32 @@ public abstract class FlowBaseAdapter<T> {
         mInflater = LayoutInflater.from(mContext);
     }
 
+    /**
+     * ViewGroup调用获取ItemView,create bind一起做
+     *
+     * @param parent
+     * @param pos
+     * @return
+     */
     public View getView(ViewGroup parent, int pos) {
-        View itemView = onCreateView(parent, pos);
-        onBindView(parent, itemView, mDatas.get(pos), pos);
-        return itemView;
+        return getView(parent, pos, mDatas.get(pos));
     }
 
-    public abstract View onCreateView(ViewGroup parent, int pos);
+    /**
+     * 实际的createItemView的地方
+     *
+     * @param parent
+     * @param pos
+     * @param data
+     * @return
+     */
+    public abstract View getView(ViewGroup parent, int pos, T data);
 
-    public abstract void onBindView(ViewGroup parent, View itemView, T data, int pos);
-
+    /**
+     * ViewGroup调用，得到ItemCount
+     *
+     * @return
+     */
     public int getCount() {
         return mDatas != null ? mDatas.size() : 0;
     }

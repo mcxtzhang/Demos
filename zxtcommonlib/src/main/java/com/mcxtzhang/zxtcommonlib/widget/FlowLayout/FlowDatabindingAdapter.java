@@ -10,6 +10,7 @@ import com.mcxtzhang.zxtcommonlib.BR;
 
 import java.util.List;
 
+
 /**
  * 介绍：DataBinding用的 流式布局的Adapter
  * create bind 在一起做了
@@ -26,19 +27,10 @@ public class FlowDatabindingAdapter<T> extends FlowBaseAdapter<T> {
         mItemLayoutId = itemLayoutId;
     }
 
-    public View getView(ViewGroup parent, int pos) {
+    @Override
+    public View getView(ViewGroup parent, int pos, T data) {
         ViewDataBinding viewDataBinding = DataBindingUtil.inflate(mInflater, mItemLayoutId, parent, false);
-        viewDataBinding.setVariable(BR.data, mDatas.get(pos));
+        viewDataBinding.setVariable(BR.data, data);
         return viewDataBinding.getRoot();
-    }
-
-    @Override
-    public View onCreateView(ViewGroup parent, int pos) {
-        return null;
-    }
-
-    @Override
-    public void onBindView(ViewGroup parent, View itemView, T data, int pos) {
-
     }
 }
