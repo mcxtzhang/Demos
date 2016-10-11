@@ -39,15 +39,19 @@
 
         <import type="java.lang.String"/>
 
-<!--        <variable
-            name="flowDatas"
-            type="List&lt;FlowBean>"/>-->
+        <!--        <variable
+                    name="flowDatas"
+                    type="List&lt;FlowBean>"/>-->
 
         <import type="com.mcxtzhang.databindingdemo.flowgroup.FlowBean"/>
 
         <variable
             name="visiData"
             type="FlowBean"/>
+
+
+        <import type="android.view.View"/>
+
 
     </data>
 
@@ -63,12 +67,12 @@
         tools:context="com.mcxtzhang.databindingdemo.MainActivity">
 
         <TextView
-            android:visibility="@{true == true ? View.VISIBLE : View.GONE}"
-
             android:id="@+id/tv"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{cstTestBean.name}"/>
+            android:text="@{visiData.name}"
+            android:visibility="@{true == true ? View.VISIBLE : View.GONE}"/>
 
 
         <EditText
@@ -118,9 +122,12 @@
             android:onClick="@{()->nestP.onNestBeanClick(cstTestBean2)}"
             android:text="@{cstTestBean2.testBean.name }"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{visiData.name}"/>
 
         <com.mcxtzhang.zxtcommonlib.widget.FlowViewGroup
-
             android:id="@+id/flowLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -128,7 +135,9 @@
             android:paddingBottom="15dp"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
-/>
+            android:visibility="@{  visiData.list.size()>0 ? View.VISIBLE: View.GONE }"
+
+            />
     </LinearLayout>
 
 

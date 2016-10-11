@@ -58,10 +58,7 @@ public class MainActivity extends AppCompatActivity {
         binding.setNestP(new NestBeanP());
 
 
-
-
-
-        FlowBean bean2 = new FlowBean("dd","");
+        FlowBean bean2 = new FlowBean("fgg", "");
         binding.setVisiData(bean2);
 
         //binding.setFlowDatas(initDatas());
@@ -71,39 +68,34 @@ public class MainActivity extends AppCompatActivity {
             Context context = binding.flowLayout.getContext();
             LayoutInflater inflater = LayoutInflater.from(context);
             for (final FlowBean bean : flowBeanList) {
-                ItemFlowBinding itemFlowBinding = DataBindingUtil.inflate(inflater, R.layout.item_flow,  binding.flowLayout, false);
+                ItemFlowBinding itemFlowBinding = DataBindingUtil.inflate(inflater, R.layout.item_flow, binding.flowLayout, false);
                 itemFlowBinding.setData(bean);
                 binding.flowLayout.addView(itemFlowBinding.getRoot());
             }
         }
 
 
-
-
-
-
-
     }
 
     public class NestBeanP {
-        public void onNestBeanClick(TestBean2 testBean2){
+        public void onNestBeanClick(TestBean2 testBean2) {
             Toast.makeText(MainActivity.this, "嵌套的Bean，直接改变里面的Bean的内容，变不变", Toast.LENGTH_SHORT).show();
             //testBean2.getTestBean().setName("嵌套的Bean，直接改变里面的Bean的内容   我变了");
-            testBean2.setTestBean(new TestBean(5,"直接set一个新Bean会改变？"));
+            testBean2.setTestBean(new TestBean(5, "直接set一个新Bean会改变？"));
         }
     }
 
 
     public List<FlowBean> initDatas() {
         List datas = new ArrayList<>();
-        datas.add(new FlowBean("http://imgs.ebrun.com/resources/2016_03/2016_03_25/201603259771458878793312_origin.jpg", "张"));
-        datas.add(new FlowBean("http://p14.go007.com/2014_11_02_05/a03541088cce31b8_1.jpg", "旭童"));
-        datas.add(new FlowBean("http://news.k618.cn/tech/201604/W020160407281077548026.jpg", "多种type"));
-        datas.add(new FlowBean("http://www.kejik.com/image/1460343965520.jpg", "多种type"));
-        datas.add(new FlowBean("http://cn.chinadaily.com.cn/img/attachement/jpg/site1/20160318/eca86bd77be61855f1b81c.jpg", "多种type"));
-        datas.add(new FlowBean("http://imgs.ebrun.com/resources/2016_04/2016_04_12/201604124411460430531500.jpg", "多种type"));
-        datas.add(new FlowBean("http://imgs.ebrun.com/resources/2016_04/2016_04_24/201604244971461460826484_origin.jpeg", "多种type"));
-        datas.add(new FlowBean("http://www.lnmoto.cn/bbs/data/attachment/forum/201408/12/074018gshshia3is1cw3sg.jpg", "多种type"));
+        datas.add(new FlowBean("1111", "张"));
+        datas.add(new FlowBean("222", "旭童"));
+        datas.add(new FlowBean("33333", "多种type"));
+        datas.add(new FlowBean("4444444", ""));
+        datas.add(new FlowBean("55555555", "多种type"));
+        datas.add(new FlowBean("66666", "多种type"));
+        datas.add(new FlowBean("7", "多种type"));
+        datas.add(new FlowBean("88", "多种type"));
         return datas;
     }
 }

@@ -3,6 +3,9 @@ package com.mcxtzhang.databindingdemo.flowgroup;
 import android.view.View;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 介绍：
  * 作者：zhangxutong
@@ -12,7 +15,21 @@ import android.widget.Toast;
 
 public class FlowBean {
     String name;
-    boolean show = true;
+    boolean show = false;
+
+    private List<String> list = new ArrayList<>();
+
+    public List<String> getList() {
+        if (list.size()<1){
+            list.add(new String("ddd"));
+        }
+        return list;
+    }
+
+    public FlowBean setList(List<String> list) {
+        this.list = list;
+        return this;
+    }
 
     public boolean isShow() {
         return show;
