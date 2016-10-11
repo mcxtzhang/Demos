@@ -8,7 +8,7 @@ import android.widget.Toast;
 
 import com.mcxtzhang.databindingdemo.databinding.ActivityTwoBinding;
 import com.mcxtzhang.databindingdemo.flowgroup.FlowBean;
-import com.mcxtzhang.zxtcommonlib.widget.FlowLayout.FlowDatabindingAdapter;
+import com.mcxtzhang.zxtcommonlib.databinding.base.flow.FlowDatabindingAdapter;
 import com.mcxtzhang.zxtcommonlib.widget.FlowLayout.FlowViewGroup;
 
 import java.util.ArrayList;

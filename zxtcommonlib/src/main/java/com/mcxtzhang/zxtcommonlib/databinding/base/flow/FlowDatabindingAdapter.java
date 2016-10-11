@@ -1,4 +1,4 @@
-package com.mcxtzhang.zxtcommonlib.widget.FlowLayout;
+package com.mcxtzhang.zxtcommonlib.databinding.base.flow;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mcxtzhang.zxtcommonlib.BR;
+import com.mcxtzhang.zxtcommonlib.widget.FlowLayout.FlowBaseAdapter;
 
 import java.util.List;
 
