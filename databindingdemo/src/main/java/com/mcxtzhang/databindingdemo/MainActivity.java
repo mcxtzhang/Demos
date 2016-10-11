@@ -1,18 +1,17 @@
 package com.mcxtzhang.databindingdemo;
 
-import android.content.Context;
-import android.databinding.DataBindingUtil;
 import android.databinding.ObservableArrayMap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mcxtzhang.databindingdemo.databinding.ActivityTwoBinding;
-import com.mcxtzhang.databindingdemo.databinding.ItemFlowBinding;
 import com.mcxtzhang.databindingdemo.flowgroup.FlowBean;
-import com.mcxtzhang.zxtcommonlib.widget.FlowViewGroup;
+import com.mcxtzhang.zxtcommonlib.widget.FlowLayout.FlowSimpleAdapter;
+import com.mcxtzhang.zxtcommonlib.widget.FlowLayout.FlowViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
         //binding.setFlowDatas(initDatas());
         final List<FlowBean> flowBeanList = initDatas();
-        binding.flowLayout.removeAllViews();
+/*        binding.flowLayout.removeAllViews();
         if (flowBeanList != null) {
             Context context = binding.flowLayout.getContext();
             LayoutInflater inflater = LayoutInflater.from(context);
@@ -74,11 +73,18 @@ public class MainActivity extends AppCompatActivity {
                 itemFlowBinding.setData(bean);
                 binding.flowLayout.addView(itemFlowBinding.getRoot());
             }
-        }
+        }*/
         binding.flowLayout.setOnItemClickListener(new FlowViewGroup.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int pos, FlowViewGroup parent) {
-                Toast.makeText(MainActivity.this, "现在呢:"+flowBeanList.get(pos).getName(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "现在呢:" + flowBeanList.get(pos).getName(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        binding.flowLayout.setAdapter(new FlowSimpleAdapter<FlowBean>(flowBeanList, this, R.layout.item_flow) {
+            @Override
+            public void onBindView(ViewGroup parent, View itemView, FlowBean data, int pos) {
+                TextView tv = (TextView) itemView.findViewById(R.id.tv);
+                tv.setText(data.getName()+"new");
             }
         });
 

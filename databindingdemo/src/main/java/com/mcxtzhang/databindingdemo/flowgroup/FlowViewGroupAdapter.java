@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.mcxtzhang.databindingdemo.R;
 import com.mcxtzhang.databindingdemo.databinding.ItemFlowBinding;
-import com.mcxtzhang.zxtcommonlib.widget.FlowViewGroup;
+import com.mcxtzhang.zxtcommonlib.widget.FlowLayout.FlowViewGroup;
 
 import java.util.List;
 

@@ -127,7 +127,7 @@
             android:layout_height="wrap_content"
             android:text="@{visiData.name}"/>
 
-        <com.mcxtzhang.zxtcommonlib.widget.FlowViewGroup
+        <com.mcxtzhang.zxtcommonlib.widget.FlowLayout.FlowViewGroup
             android:id="@+id/flowLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

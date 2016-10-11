@@ -1,13 +1,9 @@
-package com.mcxtzhang.zxtcommonlib.widget;
+package com.mcxtzhang.zxtcommonlib.widget.FlowLayout;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.mcxtzhang.zxtcommonlib.widget.FullListView.NestFullListViewAdapter;
-import com.mcxtzhang.zxtcommonlib.widget.FullListView.NestFullViewHolder;
 
 /**
  * 流式布局
@@ -18,8 +14,7 @@ import com.mcxtzhang.zxtcommonlib.widget.FullListView.NestFullViewHolder;
  */
 public class FlowViewGroup extends ViewGroup {
     private static final String TAG = "zxt/FlowViewGroup";
-    private LayoutInflater mInflater;
-    private Context mContext;
+    private FlowBaseAdapter mAdapter;
 
     public FlowViewGroup(Context context) {
         this(context, null);
@@ -31,12 +26,6 @@ public class FlowViewGroup extends ViewGroup {
 
     public FlowViewGroup(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context);
-    }
-
-    private void init(Context context) {
-        mInflater = LayoutInflater.from(context);
-        mContext = context;
     }
 
     //在onMeasure里，测量所有子View的宽高，以及确定Viewgroup自己的宽高。
@@ -222,25 +211,26 @@ public class FlowViewGroup extends ViewGroup {
         return new MarginLayoutParams(getContext(), attrs);
     }
 
-    private NestFullListViewAdapter mAdapter;
-
     /**
      * 外部调用  同时刷新视图
      *
      * @param mAdapter
      */
-    public void setAdapter(NestFullListViewAdapter mAdapter) {
+    public void setAdapter(FlowBaseAdapter mAdapter) {
         this.mAdapter = mAdapter;
         updateUI();
     }
 
+    /**
+     * 刷新UI
+     */
     public void updateUI() {
         removeAllViews();
-        if (null != mAdapter && mAdapter.getDatas() != null) {
-            for (int i = 0; i < mAdapter.getDatas().size(); i++) {
-                NestFullViewHolder itemVh = new NestFullViewHolder(mContext, mInflater.inflate(mAdapter.getItemLayoutId(), this, false));
-                mAdapter.onBind(i, itemVh);
-                addView(itemVh.getConvertView());
+        int count = mAdapter.getCount();
+        if (null != mAdapter && count > 0) {
+            for (int i = 0; i < count; i++) {
+                View child = mAdapter.getView(this, i);
+                addView(child);
             }
         }
     }
