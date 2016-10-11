@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:background="@android:color/holo_blue_bright"
-        android:onClick="@{data.onItemClick}"
+
         android:text="@{data.name}"
         />
 </layout>

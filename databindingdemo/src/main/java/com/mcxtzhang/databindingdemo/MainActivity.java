@@ -6,11 +6,13 @@ import android.databinding.ObservableArrayMap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Toast;
 
 import com.mcxtzhang.databindingdemo.databinding.ActivityTwoBinding;
 import com.mcxtzhang.databindingdemo.databinding.ItemFlowBinding;
 import com.mcxtzhang.databindingdemo.flowgroup.FlowBean;
+import com.mcxtzhang.zxtcommonlib.widget.FlowViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         binding.setVisiData(bean2);
 
         //binding.setFlowDatas(initDatas());
-        List<FlowBean> flowBeanList = initDatas();
+        final List<FlowBean> flowBeanList = initDatas();
         binding.flowLayout.removeAllViews();
         if (flowBeanList != null) {
             Context context = binding.flowLayout.getContext();
@@ -73,6 +75,12 @@ public class MainActivity extends AppCompatActivity {
                 binding.flowLayout.addView(itemFlowBinding.getRoot());
             }
         }
+        binding.flowLayout.setOnItemClickListener(new FlowViewGroup.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int pos, FlowViewGroup parent) {
+                Toast.makeText(MainActivity.this, "现在呢:"+flowBeanList.get(pos).getName(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
     }

@@ -2,16 +2,20 @@ package com.mcxtzhang.zxtcommonlib.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 /**
  * 流式布局
  * Created by zhangxutong on 2016/1/17.
+ * 1 增加点击事件
+ * 2 增加Adapter
+ * Updated by zhangxutong on 2016/10/11
  */
 public class FlowViewGroup extends ViewGroup {
     private static final String TAG = "zxt/FlowViewGroup";
+    private LayoutInflater mInflater;
 
     public FlowViewGroup(Context context) {
         this(context, null);
@@ -23,6 +27,11 @@ public class FlowViewGroup extends ViewGroup {
 
     public FlowViewGroup(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        init(context);
+    }
+
+    private void init(Context context) {
+        mInflater = LayoutInflater.from(context);
     }
 
     //在onMeasure里，测量所有子View的宽高，以及确定Viewgroup自己的宽高。
@@ -50,9 +59,9 @@ public class FlowViewGroup extends ViewGroup {
         int count = getChildCount();
 
         //存储子View
-        View child =null;
+        View child = null;
         //存储子View的LayoutParams
-        MarginLayoutParams params =null;
+        MarginLayoutParams params = null;
         //子View Layout需要的宽高(包含margin)，用于计算是否越界
         int childWidth;
         int childHeight;
@@ -72,7 +81,7 @@ public class FlowViewGroup extends ViewGroup {
             //子View需要的宽度 为 子View 本身宽度+marginLeft + marginRight
             childWidth = child.getMeasuredWidth() + params.leftMargin + params.rightMargin;
             childHeight = child.getMeasuredHeight() + params.topMargin + params.bottomMargin;
-            Log.i(TAG, "子View Layout需要的宽高(包含margin)：childWidth:" + childWidth + "   ,childHeight:" + childHeight);
+            //Log.i(TAG, "子View Layout需要的宽高(包含margin)：childWidth:" + childWidth + "   ,childHeight:" + childHeight);
 
             //如果当前的行宽度大于 父控件允许的最大宽度 则要换行
             //父控件允许的最大宽度 如果要适配 padding 这里要- getPaddingLeft() - getPaddingRight()
@@ -97,11 +106,11 @@ public class FlowViewGroup extends ViewGroup {
             }
         }
 
-        Log.i(TAG, "系统测量允许的尺寸最大值：widthMeasure:" + widthMeasure + "   ,heightMeasure:" + heightMeasure);
-        Log.i(TAG, "经过我们测量实际的尺寸(不包括父控件的padding)：maxLineWidth:" + maxLineWidth + "   ,totalHeight:" + totalHeight);
-        Log.i(TAG, "heightMode == MeasureSpec.AT_MOST:" +(heightMode == MeasureSpec.AT_MOST));
-        Log.i(TAG, "heightMode == MeasureSpec.EXACTLY:" +(heightMode == MeasureSpec.EXACTLY));
-        Log.i(TAG, "heightMode == MeasureSpec.UNSPECIFIED:" +(heightMode == MeasureSpec.UNSPECIFIED));
+        //Log.i(TAG, "系统测量允许的尺寸最大值：widthMeasure:" + widthMeasure + "   ,heightMeasure:" + heightMeasure);
+        //Log.i(TAG, "经过我们测量实际的尺寸(不包括父控件的padding)：maxLineWidth:" + maxLineWidth + "   ,totalHeight:" + totalHeight);
+        //Log.i(TAG, "heightMode == MeasureSpec.AT_MOST:" +(heightMode == MeasureSpec.AT_MOST));
+        //Log.i(TAG, "heightMode == MeasureSpec.EXACTLY:" +(heightMode == MeasureSpec.EXACTLY));
+        //Log.i(TAG, "heightMode == MeasureSpec.UNSPECIFIED:" +(heightMode == MeasureSpec.UNSPECIFIED));
 
         //适配padding,如果是wrap_content,则除了子控件本身占据的控件，还要在加上父控件的padding
         setMeasuredDimension(
@@ -112,13 +121,13 @@ public class FlowViewGroup extends ViewGroup {
     //布局父控件位置以及子控件的位置
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        Log.i(TAG, "changed:" + changed + "   ,l:" + l + "  t:" + t + "  r:" + r + "  b:" + b);
+        //Log.i(TAG, "changed:" + changed + "   ,l:" + l + "  t:" + t + "  r:" + r + "  b:" + b);
         //子控件的个数
         int count = getChildCount();
         //ViewParent宽度(包含padding)
         int width = getWidth();
         //ViewParent 的右边x的布局限制值
-        int rightLimit =  width - getPaddingRight();
+        int rightLimit = width - getPaddingRight();
 
         //存储基准的left top (子类.layout(),里的坐标是基于父控件的坐标，所以 x应该是从0+父控件左内边距开始，y从0+父控件上内边距开始)
         int baseLeft = 0 + getPaddingLeft();
@@ -130,20 +139,32 @@ public class FlowViewGroup extends ViewGroup {
         //子View
         View child = null;
         //子view用于layout的 l t r b
-        int viewL,viewT,viewR,viewB;
+        int viewL, viewT, viewR, viewB;
         //子View的LayoutParams
         MarginLayoutParams params = null;
         //子View Layout需要的宽高(包含margin)，用于计算是否越界
         int childWidth;
         int childHeight;
         //子View 本身的宽高
-        int childW,childH;
+        int childW, childH;
 
         //临时增加一个temp 存储上一个View的高度 解决过长的两行View导致显示不正确的bug
-        int lastChildHeight =0;
+        int lastChildHeight = 0;
         //
         for (int i = 0; i < count; i++) {
             child = getChildAt(i);
+            //add by zhangxutong 2016 10 11 begin:Feature 1:点击事件
+            final int finalI = i;
+            child.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (null != mOnItemClickListener) {
+                        mOnItemClickListener.onItemClick(v, finalI, FlowViewGroup.this);
+                    }
+                }
+            });
+            //add by zhangxutong 2016 10 11 end
+
             //如果gone，不布局了
             if (View.GONE == child.getVisibility()) {
                 continue;
@@ -154,16 +175,16 @@ public class FlowViewGroup extends ViewGroup {
             //获取子View的LayoutParams，用于获取其margin
             params = (MarginLayoutParams) child.getLayoutParams();
             //子View需要的宽高 为 本身宽高+marginLeft + marginRight
-            childWidth =  childW + params.leftMargin + params.rightMargin;
+            childWidth = childW + params.leftMargin + params.rightMargin;
             childHeight = childH + params.topMargin + params.bottomMargin;
 
             //这里要考虑padding，所以右边界为 ViewParent宽度(包含padding) -ViewParent右内边距
-            if (curLeft + childWidth > rightLimit ) {
+            if (curLeft + childWidth > rightLimit) {
                 //如果当前行已经放不下该子View了 需要换行放置：
                 //在新的一行布局子View，左x就是baseLeft，上y是 top +前一行高(这里假设的是每一行行高一样)，
                 curTop = curTop + lastChildHeight;
                 //layout时要考虑margin
-                viewL = baseLeft +params.leftMargin;
+                viewL = baseLeft + params.leftMargin;
                 viewT = curTop + params.topMargin;
                 viewR = viewL + childW;
                 viewB = viewT + childH;
@@ -173,7 +194,7 @@ public class FlowViewGroup extends ViewGroup {
 
             } else {
                 //当前行可以放下子View:
-                viewL = curLeft +params.leftMargin;
+                viewL = curLeft + params.leftMargin;
                 viewT = curTop + params.topMargin;
                 viewR = viewL + childW;
                 viewB = viewT + childH;
@@ -184,14 +205,36 @@ public class FlowViewGroup extends ViewGroup {
             }
             lastChildHeight = childHeight;
             //布局子View
-            child.layout(viewL,viewT,viewR,viewB);
+            child.layout(viewL, viewT, viewR, viewB);
         }
     }
+
     /**
      * @return 当前ViewGroup返回的Params的类型
      */
     @Override
     public LayoutParams generateLayoutParams(AttributeSet attrs) {
         return new MarginLayoutParams(getContext(), attrs);
+    }
+
+
+
+
+
+
+    //看名字
+    public interface OnItemClickListener {
+        void onItemClick(View view, int pos, FlowViewGroup parent);
+    }
+
+    private OnItemClickListener mOnItemClickListener;
+
+    public OnItemClickListener getOnItemClickListener() {
+        return mOnItemClickListener;
+    }
+
+    public FlowViewGroup setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        mOnItemClickListener = onItemClickListener;
+        return this;
     }
 }

@@ -1,8 +1,5 @@
 package com.mcxtzhang.databindingdemo.flowgroup;
 
-import android.view.View;
-import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +50,7 @@ public class FlowBean {
         return this;
     }
 
-    public void onItemClick(View v) {
+/*    public void onItemClick(View v) {
         Toast.makeText(v.getContext(), "ddd:" + name, Toast.LENGTH_SHORT).show();
-    }
+    }*/
 }
