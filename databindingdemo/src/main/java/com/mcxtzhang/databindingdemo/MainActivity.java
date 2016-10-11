@@ -4,13 +4,11 @@ import android.databinding.ObservableArrayMap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mcxtzhang.databindingdemo.databinding.ActivityTwoBinding;
 import com.mcxtzhang.databindingdemo.flowgroup.FlowBean;
-import com.mcxtzhang.zxtcommonlib.widget.FlowLayout.FlowSimpleAdapter;
+import com.mcxtzhang.zxtcommonlib.widget.FlowLayout.FlowDatabindingAdapter;
 import com.mcxtzhang.zxtcommonlib.widget.FlowLayout.FlowViewGroup;
 
 import java.util.ArrayList;
@@ -27,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());*/
 
 
-        ActivityTwoBinding binding = ActivityTwoBinding.inflate(getLayoutInflater());
+        final ActivityTwoBinding binding = ActivityTwoBinding.inflate(getLayoutInflater());
         mainPresenter = new MainPresenter(this);
         binding.setMainPresenter(mainPresenter);
         //activityTwoBinding.setTestBean(new TestBean(1,"张旭童"));
@@ -78,15 +76,35 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(View view, int pos, FlowViewGroup parent) {
                 Toast.makeText(MainActivity.this, "现在呢:" + flowBeanList.get(pos).getName(), Toast.LENGTH_SHORT).show();
+                flowBeanList.add(new FlowBean("新增的", ""));
+                binding.flowLayout.updateUI();
             }
         });
-        binding.flowLayout.setAdapter(new FlowSimpleAdapter<FlowBean>(flowBeanList, this, R.layout.item_flow) {
+
+        //普通写法
+/*        binding.flowLayout.setAdapter(new FlowSimpleAdapter<FlowBean>(flowBeanList, this, R.layout.item_flow) {
             @Override
             public void onBindView(ViewGroup parent, View itemView, FlowBean data, int pos) {
                 TextView tv = (TextView) itemView.findViewById(R.id.tv);
-                tv.setText(data.getName()+"new");
+                tv.setText(data.getName() + "new");
             }
-        });
+        });*/
+
+        //DataBinding的写法
+        binding.flowLayout.setAdapter(new FlowDatabindingAdapter(flowBeanList, this, R.layout.item_flow));
+/*        binding.flowLayout.setAdapter(new FlowBaseAdapter<FlowBean>(flowBeanList, this) {
+            @Override
+            public View onCreateView(ViewGroup parent, int pos) {
+                ItemFlowBinding itemFlowBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.item_flow, binding.flowLayout, false);
+                itemFlowBinding.setData(flowBeanList.get(pos));
+                return itemFlowBinding.getRoot();
+            }
+
+            @Override
+            public void onBindView(ViewGroup parent, View itemView, FlowBean data, int pos) {
+
+            }
+        });*/
 
 
     }
