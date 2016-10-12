@@ -1,9 +1,6 @@
 package com.example.staticc;
 
-import com.example.bean.GankouNoodles;
 import com.example.bean.INoodles;
-import com.example.bean.LzNoodles;
-import com.example.bean.PaoNoodles;
 
 /**
  * 介绍：静态工厂（个人认为是）
@@ -28,35 +25,5 @@ public class StaticNoodlesFactory {
             e.printStackTrace();
         }
         return result;
-    }
-
-    /**
-     * 模仿Executors 类
-     * 生产泡面
-     *
-     * @return
-     */
-    public static INoodles createPm() {
-        return new PaoNoodles();
-    }
-
-    /**
-     * 模仿Executors 类
-     * 生产兰州拉面
-     *
-     * @return
-     */
-    public static INoodles createLz() {
-        return new LzNoodles();
-    }
-
-    /**
-     * 模仿Executors 类
-     * 生产干扣面
-     *
-     * @return
-     */
-    public static INoodles createGk() {
-        return new GankouNoodles();
     }
 }

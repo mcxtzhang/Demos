@@ -88,6 +88,15 @@ public class MyClass {
         }
 
         System.out.println("list:" + list.size());
+
+
+
+
+
+
+        String city = "我爱祖国天安门";
+        city = city.substring(1,4)+"...";
+        System.out.println(city);
     }
 
 
