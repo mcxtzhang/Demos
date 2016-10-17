@@ -277,6 +277,31 @@ public class MainActivity extends AppCompatActivity {
         }).start();
 
 
+        Observable.just("On", "Off", "On", "Off")
+                .filter(new Func1<String, Boolean>() {
+                    @Override
+                    public Boolean call(String s) {
+                        return s != null;
+                    }
+                }).subscribe(new Subscriber<String>() {
+            @Override
+            public void onCompleted() {
+                Log.d("DDDDDD", "结束观察...\n");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                //出现错误会调用这个方法
+            }
+
+            @Override
+            public void onNext(String s) {
+                //处理事件
+                Log.d("DDDDD", "handle this---" + s);
+            }
+        });
+
+
     }
 
 
