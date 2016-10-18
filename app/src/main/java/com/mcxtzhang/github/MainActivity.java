@@ -1,8 +1,10 @@
 package com.mcxtzhang.github;
 
 import android.app.Activity;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.TouchDelegate;
 import android.view.View;
 import android.view.Window;
 
@@ -20,6 +22,8 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
+        expandViewClickRect(findViewById(R.id.btnHAHA),200);
+
 
 
         findViewById(R.id.btnHAHA).setOnClickListener(new View.OnClickListener() {
@@ -72,6 +76,39 @@ public class MainActivity extends Activity {
         }
 
 
+        getClassLoaders();
 
+
+    }
+
+    private void getClassLoaders() {
+        ClassLoader classLoader = getClassLoader();
+        while (null != classLoader) {
+            Log.d(TAG, "----> classLoader=" + classLoader);
+            classLoader = classLoader.getParent();
+        }
+    }
+
+    /**
+     * 为View扩大点击范围
+     *
+     * @param view
+     * @param expandTouchWidth
+     */
+    public static void expandViewClickRect(final View view, final int expandTouchWidth) {
+        final View parentView = (View) view.getParent();
+        parentView.post(new Runnable() {
+            @Override
+            public void run() {
+                final Rect rect = new Rect();
+                view.getHitRect(rect);
+                rect.top -= expandTouchWidth;
+                rect.bottom += expandTouchWidth;
+                rect.left -= expandTouchWidth;
+                rect.right += expandTouchWidth;
+                TouchDelegate touchDelegate = new TouchDelegate(rect, view);
+                parentView.setTouchDelegate(touchDelegate);
+            }
+        });
     }
 }
