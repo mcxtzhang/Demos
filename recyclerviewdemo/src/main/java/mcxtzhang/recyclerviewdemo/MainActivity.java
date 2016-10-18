@@ -22,7 +22,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initDatas();
         mRv = (RecyclerView) findViewById(R.id.rv);
-        mRv.setLayoutManager(new CstLinearLayoutManager());
+        //mRv.setLayoutManager(new CstLinearLayoutManager());
+        mRv.setLayoutManager(new CstLM());
         //mRv.setLayoutManager(new LinearLayoutManager(this));
         mRv.setAdapter(new CommonAdapter<TestBean>(this, R.layout.item_rv_1, mDatas) {
             @Override
