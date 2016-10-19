@@ -1,5 +1,6 @@
 package mcxtzhang.recyclerviewdemo.zxt;
 
+import android.os.CountDownTimer;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.SparseArray;
@@ -106,9 +107,28 @@ public class ZxtCstLM1 extends RecyclerView.LayoutManager {
             }
         }
 
+        int count;
+        if (delta > 0) {// + 上啦 显示底端,可能隐藏topView，mFirstVisiblePosition增加
+            count = (-getDecoratedTop(topView) + delta) / mDecoratedChildHeight;
+            if (count > 0) {
+                //mFirstVisiblePosition = mFirstVisiblePosition + count;
+            } else {
+                count = 0;
+            }
+        } else {// - 下拉 显示顶端
+            int gap = getDecoratedTop(topView) - delta;
+            if (gap >= 0) {
+                count = gap / mDecoratedChildHeight   +1;
+                count = -count;
+            }else {
+                count = 0;
+            }
+        }
+
+
         offsetChildrenVertical(-delta);//平移View,-向上 ,+ 向下
 
-        fillChild(recycler, 0, 0, delta);
+        fillChild(recycler, 0, 0, count);
 
         return -delta;
 
@@ -123,7 +143,7 @@ public class ZxtCstLM1 extends RecyclerView.LayoutManager {
      * @param topOffset
      * @param delta      上拉+，下拉-
      */
-    private void fillChild(RecyclerView.Recycler recycler, int leftOffset, int topOffset, int delta) {
+    private void fillChild(RecyclerView.Recycler recycler, int leftOffset, int topOffset, int count) {
         //边界处理
         if (mFirstVisiblePosition < 0) mFirstVisiblePosition = 0;
         if (mFirstVisiblePosition >= getItemCount()) mFirstVisiblePosition = (getItemCount() - 1);
@@ -141,33 +161,37 @@ public class ZxtCstLM1 extends RecyclerView.LayoutManager {
                 tempCache.put(i + mFirstVisiblePosition, child);//以postion，View缓存它们
                 //detachView(child);//并且detach
             }
-            int beforeCount = getChildCount();
 
             //屏幕上有View 那么这个偏移量按照屏幕上的TopView来
-            View topView;
-            if (delta>0){
-                topView = getVisibleTopViewAndRecycleAboveView(recycler);
-            }else {
-                topView = getChildAt(0);
+            View topView /*= getChildAt(0);
+            int topGap = getDecoratedTop(topView) - getPaddingTop();
+            if (topGap != 0) {
+                if (topGap > 0) {//mFirstVisiblePosition要减少咯
+                    int count = topGap / mDecoratedChildHeight;
+*//*                    if (topGap % mDecoratedChildHeight > 0) {
+                        count++;
+                    }*//*
+                    mFirstVisiblePosition = mFirstVisiblePosition - count;
+                } else {//mFirstVisiblePosition要增加咯
+                    topGap = -topGap;
+                    int count = topGap / mDecoratedChildHeight;
+*//*                    if (topGap % mDecoratedChildHeight > 0) {
+                        count++;
+                    }*//*
+                    mFirstVisiblePosition = mFirstVisiblePosition + count;
+                }
             }
-
-
-            int afterCount = getChildCount();
-            if (beforeCount - afterCount != 0) {
-                mFirstVisiblePosition = mFirstVisiblePosition + beforeCount - afterCount;//保证上拉位置更新
-            }
-
+            topView*/ = getVisibleTopViewAndRecycleAboveView(recycler);
             View bottomView = getVisibleBottomViewAndRecycleBelowView(recycler);
-
-
             fillLeftOffset = getDecoratedLeft(topView);
             fillTopOffset = getDecoratedTop(topView);
 
-
         }
+        mFirstVisiblePosition = mFirstVisiblePosition + count;
         //布局所有应该可见的View，如果缓存里有，不需要做任何操作，如果没有，layout出来
         for (int i = 0; i < getScreenChildCount(); i++) {//还没考虑刷新
             int position = i + mFirstVisiblePosition;
+            //// TODO: 16/10/20 已有的view有问题 
             View child = tempCache.get(position);
             if (child == null) {
                 child = recycler.getViewForPosition(position);
