@@ -5,8 +5,6 @@ import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 
-import static android.R.attr.topOffset;
-
 /**
  * 介绍：
  * 作者：zhangxutong
@@ -42,7 +40,7 @@ public class CstLM extends RecyclerView.LayoutManager {
     public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
         //We have nothing to show for an empty data set but clear any existing views
         if (getItemCount() == 0) {
-            detachAndScrapAttachedViews(recycler);
+            detachAndScrapAttachedViews(recycler);//轻量回收所有View
             return;
         }
         if (getChildCount() == 0 && state.isPreLayout()) {
@@ -52,9 +50,9 @@ public class CstLM extends RecyclerView.LayoutManager {
 
 
         //Scrap measure one child
-        View scrap = recycler.getViewForPosition(0);
+        View scrap = recycler.getViewForPosition(0);//获取postion的View
         addView(scrap);
-        measureChildWithMargins(scrap, 0, 0);
+        measureChildWithMargins(scrap, 0, 0);//测量View
 
     /*
      * We make some assumptions in this code based on every child
@@ -62,9 +60,9 @@ public class CstLM extends RecyclerView.LayoutManager {
      * us to compute the following values up front because they
      * won't change.
      */
-        mDecoratedChildWidth = getDecoratedMeasuredWidth(scrap);
+        mDecoratedChildWidth = getDecoratedMeasuredWidth(scrap);//获取+上Decorated的 宽 高、上下 左右
         mDecoratedChildHeight = getDecoratedMeasuredHeight(scrap);
-        detachAndScrapView(scrap, recycler);
+        detachAndScrapView(scrap, recycler);//轻量回收指定View
 
 
         //Always update the visible row/column counts
@@ -81,17 +79,17 @@ public class CstLM extends RecyclerView.LayoutManager {
         //Clear all attached views into the recycle bin
         detachAndScrapAttachedViews(recycler);
         //Fill the grid for the initial layout of views
-        fillGrid(DIRECTION_NONE, childLeft, childTop, recycler);
+        fillGrid(DIRECTION_NONE, childLeft, childTop, recycler, state);
 
 
     }
 
-    private void fillGrid(int direction, int emptyLeft, int emptyTop, RecyclerView.Recycler recycler) {
-        if (mFirstVisiblePosition < 0) mFirstVisiblePosition = 0;
+    private void fillGrid(int direction, int emptyLeft, int emptyTop, RecyclerView.Recycler recycler, RecyclerView.State state) {
+        if (mFirstVisiblePosition < 0) mFirstVisiblePosition = 0;//边界处理
         if (mFirstVisiblePosition >= getItemCount()) mFirstVisiblePosition = (getItemCount() - 1);
 
 
-        //1 清点目前我们所有的视图。将他们 Detach 以便稍后重新连接。
+        //1 清点目前我们所有的视图。将他们 Detach 以便稍后重新连接。(主要还是for scroll)
         SparseArray<View> viewCache = new SparseArray<View>(getChildCount());
         int startLeftOffset = emptyLeft;
         int startTopOffset = emptyTop;
@@ -117,8 +115,9 @@ public class CstLM extends RecyclerView.LayoutManager {
         //2 测量/布局每一个当前可见的子视图。重新连接已有的视图很简单； 新的视图是从 Recycler 之中获取的。
         int leftOffset = startLeftOffset;
         int topOffset = startTopOffset;
+        int nextPosition = 0;
         for (int i = 0; i < getVisibleChildCount(); i++) {
-            int nextPosition = positionOfIndex(i);
+            nextPosition = positionOfIndex(i);
             //...
 
             //Layout this position
@@ -139,27 +138,49 @@ public class CstLM extends RecyclerView.LayoutManager {
             * this for views we are just re-arranging.
             */
                 measureChildWithMargins(view, 0, 0);
-                layoutDecorated(view, leftOffset, topOffset,
-                        leftOffset + mDecoratedChildWidth,
-                        topOffset + mDecoratedChildHeight);
+                layoutDecoratedWithMargins(view, leftOffset, topOffset,
+                        leftOffset + getDecoratedMeasuredWidth(view),
+                        topOffset + getDecoratedMeasuredHeight(view));
             } else {
                 //Re-attach the cached view at its new index
-                attachView(view);
+                attachView(view);//将detach的View add回来
                 viewCache.remove(nextPosition);
             }
 
-            if (i % mVisibleColumnCount == (mVisibleColumnCount - 1)) {
+            if (i % mVisibleColumnCount == (mVisibleColumnCount - 1)) {//换行
                 leftOffset = startLeftOffset;
-                topOffset += mDecoratedChildHeight;
+                topOffset += getDecoratedMeasuredHeight(view);
 
 
-            } else {
-                leftOffset += mDecoratedChildWidth;
+            } else {//增加左边距
+                leftOffset += getDecoratedMeasuredWidth(view);
             }
         }
+/*        //add by zhangxutong Feature1: 不同大小的Item也适应 add完以后看看是否没填满
+        while (getVerticalSpace() > topOffset) {
+            View additionalView = viewCache.get(++nextPosition);//取出缓存
+            if (additionalView != null) {
+                attachView(additionalView);
+                viewCache.remove(nextPosition);
+            } else {
+                additionalView = recycler.getViewForPosition(nextPosition);
+                addView(additionalView);
+                measureChildWithMargins(additionalView, 0, 0);
+                layoutDecoratedWithMargins(additionalView, leftOffset, topOffset,
+                        leftOffset + getDecoratedMeasuredWidth(additionalView),
+                        topOffset + getDecoratedMeasuredHeight(additionalView));
+            }
+            if (nextPosition % mVisibleColumnCount == (mVisibleColumnCount - 1)) {//换行
+                leftOffset = startLeftOffset;
+                topOffset += getDecoratedMeasuredHeight(additionalView);
+            } else {//增加左边距
+                leftOffset += getDecoratedMeasuredWidth(additionalView);
+            }
+        }*/
+
 
         for (int i = 0; i < viewCache.size(); i++) {
-            recycler.recycleView(viewCache.valueAt(i));
+            recycler.recycleView(viewCache.valueAt(i));//detachView 后 没有attachView的话 就要真的回收掉他们
         }
 
 

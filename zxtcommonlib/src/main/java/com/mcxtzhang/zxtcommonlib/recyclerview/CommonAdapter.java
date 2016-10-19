@@ -2,6 +2,7 @@ package com.mcxtzhang.zxtcommonlib.recyclerview;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +42,7 @@ public abstract class CommonAdapter<T> extends RecyclerView.Adapter<ViewHolder> 
 
     @Override
     public ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
-        //Log.d("zxt", "onCreateViewHolder() called with: parent = [" + parent + "], viewType = [" + viewType + "]");
+        Log.d("zxt", "onCreateViewHolder() called with: parent = [" + parent + "], viewType = [" + viewType + "]");
         ViewHolder viewHolder = ViewHolder.get(mContext, null, parent, mLayoutId, -1);
         //add by zhangxutong 2016 08 05 begin ,for 点击事件为了兼容HeaderView FooterView 的Adapter
         if (null == mRv) {

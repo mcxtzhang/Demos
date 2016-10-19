@@ -170,8 +170,7 @@ public class CstLinearLayoutManager extends RecyclerView.LayoutManager {
         offsetChildrenVertical(-travel);
 
         recycleAndFillItems(recycler, state);
-        Log.d("zxt", " childView count:" + getChildCount());
-
+        Log.d("TAG", " childView count:" + getChildCount());
         return travel;//返回0 没有fling效果
     }
 
