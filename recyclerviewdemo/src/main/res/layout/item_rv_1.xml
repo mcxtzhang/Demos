@@ -4,11 +4,20 @@
               android:layout_height="50dp"
               android:layout_margin="1dp"
               android:orientation="vertical">
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="#0a0a0a"/>
     <TextView
         android:id="@+id/tv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:background="@color/colorAccent"
         android:gravity="center"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="#1500fd"/>
 </LinearLayout>

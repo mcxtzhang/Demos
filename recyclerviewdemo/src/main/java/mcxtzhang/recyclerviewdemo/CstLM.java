@@ -1,6 +1,7 @@
 package mcxtzhang.recyclerviewdemo;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,10 @@ public class CstLM extends RecyclerView.LayoutManager {
 
 
     private static final int DIRECTION_NONE = -1;
+    private static final int DIRECTION_START = 0;
+    private static final int DIRECTION_END = 1;
+    private static final int DIRECTION_UP = 2;
+    private static final int DIRECTION_DOWN = 3;
 
 
     /* First (top-left) position visible at any point */
@@ -84,12 +89,105 @@ public class CstLM extends RecyclerView.LayoutManager {
 
     }
 
+    @Override
+    public boolean canScrollHorizontally() {
+        return true;
+    }
+
+    @Override
+    public boolean canScrollVertically() {
+        return true;
+    }
+
+    @Override
+    public int scrollVerticallyBy(int dy, RecyclerView.Recycler recycler, RecyclerView.State state) {
+        Log.d("TAG", "scrollVerticallyBy() called with: dy = [" + dy + "]");
+        if (getChildCount() == 0) {
+            return 0;
+        }
+        //Take top measurements from the top-left child
+        final View topView = getChildAt(0);
+        //Take bottom measurements from the bottom-right child.
+        final View bottomView = getChildAt(getChildCount() - 1);
+
+        //Optimize the case where the entire data set is too small to scroll
+        int viewSpan = getDecoratedBottom(bottomView) - getDecoratedTop(topView);
+        if (viewSpan <= getVerticalSpace()) {//不足一屏幕不滑动
+            //We cannot scroll in either direction
+            return 0;
+        }
+
+        int delta;//位移
+        int maxRowCount = getTotalRowCount();//所有Item的行数，这里应该是20
+        boolean topBoundReached = getFirstVisibleRow() == 0;//边界处理
+        boolean bottomBoundReached = getLastVisibleRow() >= maxRowCount;
+
+        if (dy > 0) { // Contents are scrolling up
+            //Check against bottom bound
+            if (bottomBoundReached) {
+                //If we've reached the last row, enforce limits
+                int bottomOffset;
+                if (rowOfIndex(getChildCount() - 1) >= (maxRowCount - 1)) {
+                    //We are truly at the bottom, determine how far
+                    bottomOffset = getVerticalSpace() - getDecoratedBottom(bottomView)
+                            + getPaddingBottom();
+                } else {
+                /*
+                 * Extra space added to account for allowing bottom space in the grid.
+                 * This occurs when the overlap in the last row is not large enough to
+                 * ensure that at least one element in that row isn't fully recycled.
+                 */
+                    bottomOffset = getVerticalSpace() - (getDecoratedBottom(bottomView)
+                            + getDecoratedMeasuredHeight(bottomView)) + getPaddingBottom();
+                }
+                delta = Math.max(-dy, bottomOffset);
+            } else {
+                //No limits while the last row isn't visible
+                delta = -dy;
+            }
+        } else { // Contents are scrolling down
+            //Check against top bound
+            if (topBoundReached) {
+                int topOffset = -getDecoratedTop(topView) + getPaddingTop();
+                delta = Math.min(-dy, topOffset);//下拉，dy 本来是负数，取- ，正数，所以
+            } else {
+                delta = -dy;
+            }
+        }
+
+        offsetChildrenVertical(delta);//这里是先平移，再填充
+
+        if (dy > 0) {
+            if (getDecoratedBottom(topView) < 0 && !bottomBoundReached) {//第一个View移出屏幕 且没到底部 可见要+1
+                //mFirstVisiblePosition++;
+                fillGrid(DIRECTION_DOWN, recycler, state);
+
+            } else if (!bottomBoundReached) {
+                fillGrid(DIRECTION_NONE, recycler, state);
+            }
+        } else {
+            if (getDecoratedTop(topView) > 0 && !topBoundReached) {//第一个View 离顶部有距离了，且没到顶部  可见要-1
+                //mFirstVisiblePosition--;
+                fillGrid(DIRECTION_UP, recycler, state);
+            } else if (!topBoundReached) {
+                fillGrid(DIRECTION_NONE, recycler, state);
+            }
+        }
+
+
+        return -delta;
+    }
+
+    private void fillGrid(int direction, RecyclerView.Recycler recycler, RecyclerView.State state) {
+        fillGrid(direction, 0, 0, recycler, state);
+    }
+
     private void fillGrid(int direction, int emptyLeft, int emptyTop, RecyclerView.Recycler recycler, RecyclerView.State state) {
         if (mFirstVisiblePosition < 0) mFirstVisiblePosition = 0;//边界处理
         if (mFirstVisiblePosition >= getItemCount()) mFirstVisiblePosition = (getItemCount() - 1);
 
 
-        //1 清点目前我们所有的视图。将他们 Detach 以便稍后重新连接。(主要还是for scroll)
+        //1 清点目前我们所有的视图。将他们 Detach 以便稍后重新连接。(主要还是for scroll，平移后 view移动了 )
         SparseArray<View> viewCache = new SparseArray<View>(getChildCount());
         int startLeftOffset = emptyLeft;
         int startTopOffset = emptyTop;
@@ -98,6 +196,20 @@ public class CstLM extends RecyclerView.LayoutManager {
             final View topView = getChildAt(0);
             startLeftOffset = getDecoratedLeft(topView);
             startTopOffset = getDecoratedTop(topView);
+            switch (direction) {
+/*                case DIRECTION_START:
+                    startLeftOffset -= mDecoratedChildWidth;
+                    break;
+                case DIRECTION_END:
+                    startLeftOffset += mDecoratedChildWidth;
+                    break;*/
+                case DIRECTION_UP:
+                    startTopOffset -= getDecoratedMeasuredHeight(getChildAt(getChildCount() - 1));
+                    break;
+                case DIRECTION_DOWN:
+                    startTopOffset += getDecoratedMeasuredHeight(topView);
+                    break;
+            }
 
             //Cache all views by their existing position, before updating counts
             for (int i = 0; i < getChildCount(); i++) {
@@ -111,6 +223,26 @@ public class CstLM extends RecyclerView.LayoutManager {
                 detachView(viewCache.valueAt(i));
             }
         }
+
+                /*
+         * Next, we advance the visible position based on the fill direction.
+         * DIRECTION_NONE doesn't advance the position in any direction.
+         */
+        switch (direction) {
+            case DIRECTION_START:
+                mFirstVisiblePosition--;
+                break;
+            case DIRECTION_END:
+                mFirstVisiblePosition++;
+                break;
+            case DIRECTION_UP:
+                mFirstVisiblePosition -= getTotalColumnCount();
+                break;
+            case DIRECTION_DOWN:
+                mFirstVisiblePosition += getTotalColumnCount();
+                break;
+        }
+
 
         //2 测量/布局每一个当前可见的子视图。重新连接已有的视图很简单； 新的视图是从 Recycler 之中获取的。
         int leftOffset = startLeftOffset;
@@ -138,7 +270,7 @@ public class CstLM extends RecyclerView.LayoutManager {
             * this for views we are just re-arranging.
             */
                 measureChildWithMargins(view, 0, 0);
-                layoutDecoratedWithMargins(view, leftOffset, topOffset,
+                layoutDecorated(view, leftOffset, topOffset,
                         leftOffset + getDecoratedMeasuredWidth(view),
                         topOffset + getDecoratedMeasuredHeight(view));
             } else {
@@ -191,6 +323,7 @@ public class CstLM extends RecyclerView.LayoutManager {
      * based on scroll offsets, we simplify the math by computing the
      * visible grid as what will initially fit on screen, plus one.
      */
+    // 计算出 一个屏幕的行列数
     private void updateWindowSizing() {
         //求出可见的能容纳多少列
         mVisibleColumnCount = (getHorizontalSpace() / mDecoratedChildWidth) + 1;
@@ -231,6 +364,37 @@ public class CstLM extends RecyclerView.LayoutManager {
     private int getVisibleChildCount() {
         return mVisibleColumnCount * mVisibleRowCount;
     }
+
+    /**
+     * 第几行
+     *
+     * @param childIndex
+     * @return
+     */
+    private int rowOfIndex(int childIndex) {
+        int position = positionOfIndex(childIndex);
+
+        return position / getTotalColumnCount();
+    }
+
+    /**
+     * 可见的第一行,是第几行
+     *
+     * @return
+     */
+    private int getFirstVisibleRow() {
+        return (mFirstVisiblePosition / getTotalColumnCount());
+    }
+
+    /**
+     * 可见的最后一行，是第几行
+     *
+     * @return
+     */
+    private int getLastVisibleRow() {
+        return getFirstVisibleRow() + mVisibleRowCount;
+    }
+
 
     /**
      * 定义的列数
