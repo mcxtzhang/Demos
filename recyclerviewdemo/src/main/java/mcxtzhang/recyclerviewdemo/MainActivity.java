@@ -11,6 +11,8 @@ import com.mcxtzhang.zxtcommonlib.recyclerview.ViewHolder;
 import java.util.ArrayList;
 import java.util.List;
 
+import mcxtzhang.recyclerviewdemo.zxt.ZxtCstLM1;
+
 public class MainActivity extends AppCompatActivity {
     private RecyclerView mRv;
     private List<TestBean> mDatas;
@@ -21,13 +23,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initDatas();
         mRv = (RecyclerView) findViewById(R.id.rv);
-        //mRv.setLayoutManager(new CstLinearLayoutManager());
-        mRv.setLayoutManager(new CstLM());
+        //mRv.setLayoutManager(new CstLinearLayoutManager());//一个Demo
+        //mRv.setLayoutManager(new CstLM());//学习仿造国外大神
 
 
-        FixedGridLayoutManager layoutManager = new FixedGridLayoutManager();
+        FixedGridLayoutManager layoutManager = new FixedGridLayoutManager();//国外大神
         //layoutManager.setTotalColumnCount(2);
         //mRv.setLayoutManager(layoutManager);
+
+        mRv.setLayoutManager(new ZxtCstLM1());//自己的第一个自定义LM
 
         //mRv.setLayoutManager(new LinearLayoutManager(this));
         mRv.setAdapter(new CommonAdapter<TestBean>(this, R.layout.item_rv_1, mDatas) {
