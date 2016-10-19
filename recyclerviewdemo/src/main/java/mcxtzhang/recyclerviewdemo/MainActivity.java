@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
             public void convert(ViewHolder holder, TestBean testBean) {
                 Log.d("zxt", "convert() called with: holder = [" + holder + "], testBean = [" + testBean + "]");
                 holder.setText(R.id.tv, testBean.getName());
-                //add by zhangxutong Feature1: 不同大小的Item也适应 
+                //add by zhangxutong Feature1: 不同大小的Item也适应
 /*                if (holder.getLayoutPosition() == 0) {
                     ViewGroup.LayoutParams layoutParams = holder.itemView.getLayoutParams();
                     if (layoutParams != null) {
