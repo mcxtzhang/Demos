@@ -16,35 +16,50 @@ import android.view.ViewGroup;
  */
 
 public class ZxtCstLM2 extends RecyclerView.LayoutManager {
-    private final static int LAYOUT_FROM_TOP = 1;
-    private final static int LAYOUT_FROM_BOTTOM = 2;
+    private final static int LAYOUT_FROM_TOP = 1;//从top->bottom布局子child
+    private final static int LAYOUT_FROM_BOTTOM = 2;//从bottom->top布局子child
 
-    private int mLayoutDirection;
+    private int mLayoutDirection;//layout child的方向
 
+    private int mFirstVisiblePosition;//记录第一个可见的postion 不太好算啊
+    private int mLastVisiblePosition; //记录最后一个可见的position
+
+    private int mVerticalScrollOffset = 0;//竖直滑动了多少距离
 
     @Override
     public RecyclerView.LayoutParams generateDefaultLayoutParams() {
         return new RecyclerView.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
-    private int mFirstVisiblePosition;//记录第一个可见的postion 不太好算啊
-    private int mLastVisiblePosition;
-
     @Override
     public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
+        if (getItemCount() == 0) {
+            detachAndScrapAttachedViews(recycler);
+            return;
+        }
+        if (getChildCount() == 0 && state.isPreLayout()) {
+            return;
+        }
 
         detachAndScrapAttachedViews(recycler);
-
+        //初始化postion和布局方向
         mFirstVisiblePosition = 0;
         mLastVisiblePosition = getItemCount() - 1;
-
 /*        int leftOffset = getPaddingLeft();
         int topOffset = getPaddingTop();*/
         mLayoutDirection = LAYOUT_FROM_TOP;
+        //布局子View
         fill(recycler, state);
     }
 
+    /**
+     * 核心布局子View函数
+     *
+     * @param recycler
+     * @param state
+     */
     private void fill(RecyclerView.Recycler recycler, RecyclerView.State state) {
+        //布局 offset初始化
         int topOffset = getPaddingTop();
         int leftOffset = getPaddingLeft();
         int bottomOffset = getBottomBorder();//
@@ -83,9 +98,8 @@ public class ZxtCstLM2 extends RecyclerView.LayoutManager {
                 }
                 //step2 将没越界的View不做任何处理
                 //unChangedIndexView.put(beforeRemoveFirstPosition + i, child);
-                //step3 为topOffset bottomOffset设置正确的值
-
             }
+            //recycle掉不可见的后，detach所有可见的view
             detachAndScrapAttachedViews(recycler);
         }
 
@@ -100,11 +114,7 @@ public class ZxtCstLM2 extends RecyclerView.LayoutManager {
         if (mLayoutDirection == LAYOUT_FROM_TOP) {//从上往下显示
             mLastVisiblePosition = getItemCount() - 1;
             for (int i = mFirstVisiblePosition; i <= mLastVisiblePosition; i++) {
-                View child /*= unChangedIndexView.get(i);
-                if (child != null) {//如果是没变化的，不变
-
-                }else { //否则是一个取出来 布局的过程
-                    child */ = recycler.getViewForPosition(i);
+                View child = recycler.getViewForPosition(i);
                 addView(child);
                 measureChildWithMargins(child, 0, 0);
                 layoutDecoratedWithMargins(child, leftOffset, topOffset, leftOffset + getDecoratedMeasuredWidth(child), topOffset + getDecoratedMeasuredHeight(child));
@@ -118,12 +128,7 @@ public class ZxtCstLM2 extends RecyclerView.LayoutManager {
         } else {//从下往上显示
             mFirstVisiblePosition = 0;//从下往上看，上面最小应该是0
             for (int i = mLastVisiblePosition; i >= mFirstVisiblePosition; i--) {
-                View child /*= unChangedIndexView.get(i);
-                if (child != null) {//如果是没变化的，不变
-
-                }else {
-                    //否则是一个取出来 布局的过程
-                    child */ = recycler.getViewForPosition(i);
+                View child = recycler.getViewForPosition(i);
                 addView(child, 0);
                 measureChildWithMargins(child, 0, 0);
                 layoutDecoratedWithMargins(child, leftOffset, bottomOffset - getDecoratedMeasuredHeight(child), leftOffset + getDecoratedMeasuredWidth(child), bottomOffset);
@@ -145,17 +150,14 @@ public class ZxtCstLM2 extends RecyclerView.LayoutManager {
         return true;
     }
 
-    private int mVerticalScrollOffset = 0;//滑动了多少距离
-
     @Override
     public int scrollVerticallyBy(int dy, RecyclerView.Recycler recycler, RecyclerView.State state) {
         //位移0、没有子View 当然不移动
         if (dy == 0 || getChildCount() == 0) {
             return 0;
         }
-        
-        int offset = dy;
 
+        int offset = dy;
         //边界处理 和滑动距离处理
         if (offset > 0) {
             View bottomView = getChildClosestToEnd();
@@ -180,33 +182,27 @@ public class ZxtCstLM2 extends RecyclerView.LayoutManager {
             } else {//反常了 你赶紧给我修正！
                 Log.e("TAG", "//反常了，只有最后一个VIew越界才会出现 你赶紧给我修正！]");
             }
-
-
         } else {//,offset 负
             if (mVerticalScrollOffset + offset < 0) {//处理上边界 top
                 offset = -mVerticalScrollOffset;//这里还是负值
             }
         }
-         /*else if (mVerticalScrollOffset + offset > mTotalHeight - getVerticalSpace()) {
-            offset = mTotalHeight - getVerticalSpace() - mVerticalScrollOffset;
-        }*/
 
-        offsetChildrenVertical(-offset);//平移childView,传入负值向上平移View，正值向下平移View
+        //平移childView,传入负值向上平移View，正值向下平移View
+        offsetChildrenVertical(-offset);
         mVerticalScrollOffset += offset;
-
+        //根据位移方向 设置布局子View方向
         if (offset > 0) {
             mLayoutDirection = LAYOUT_FROM_TOP;
-            fill(recycler, state);
         } else if (offset < 0) {
             mLayoutDirection = LAYOUT_FROM_BOTTOM;
-            fill(recycler, state);
         }
-
-        return offset;
+        fill(recycler, state);
+        return offset;// 边界效果和fling
     }
 
     /**
-     * 抄源码的
+     * 模仿源码的
      *
      * @return
      */
