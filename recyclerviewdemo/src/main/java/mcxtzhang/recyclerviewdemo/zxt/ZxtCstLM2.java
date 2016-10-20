@@ -153,22 +153,35 @@ public class ZxtCstLM2 extends RecyclerView.LayoutManager {
         if (dy == 0 || getChildCount() == 0) {
             return 0;
         }
-
+        
         int offset = dy;
 
         //边界处理 和滑动距离处理
         if (offset > 0) {
-/*            View bottomView = getChildClosestToEnd();
+            View bottomView = getChildClosestToEnd();
             //最后一个子View隐藏起来的距离
-            int bottomViewHeightHind = getDecoratedMeasuredHeight(bottomView) - (getDecoratedBottom(bottomView) - getBottomBorder());
-            if (offset > bottomViewHeightHind) {//下边界 bottom , 拉的太大 要留白了
-                Log.d("TAG", "scrollVerticallyBy() called with: offset = [" + offset + "], getDecoratedBottom(bottomView()) = [" + getDecoratedBottom(bottomView) + "], getBottomBorder() = [" + getBottomBorder() + "]");
-                offset = bottomViewHeightHind;//这里还是正值
-            }
+            int bottomViewHeightHind = /*getDecoratedMeasuredHeight(bottomView) - */(getDecoratedBottom(bottomView) - getBottomBorder());
+            int position = getPosition(bottomView);
+
             //如果是最后一个子View 而且没有隐藏的距离了
-            if (mLastVisiblePosition == getItemCount() - 1 && bottomViewHeightHind >= 0) {
-                offset = -bottomViewHeightHind;
-            }*/
+            if (position == getItemCount() - 1 && bottomViewHeightHind <= 0) {
+                //return 0;
+                offset = bottomViewHeightHind;
+                //offset = -bottomViewHeightHind;
+            }
+            if (bottomViewHeightHind == 0) {
+                //offset 随意吧
+                Log.w("TAG", "不设置限制://bottomViewHeightHind == 0]");
+            } else if (bottomViewHeightHind > 0) {//
+                if (offset > bottomViewHeightHind) {//下边界 bottom , 拉的太大 要留白了
+                    Log.d("TAG", "scrollVerticallyBy() called with: offset = [" + offset + "], getDecoratedBottom(bottomView()) = [" + getDecoratedBottom(bottomView) + "], getBottomBorder() = [" + getBottomBorder() + "]");
+                    //offset = bottomViewHeightHind;//这里还是正值
+                }
+            } else {//反常了 你赶紧给我修正！
+                Log.e("TAG", "//反常了，只有最后一个VIew越界才会出现 你赶紧给我修正！]");
+            }
+
+
         } else {//,offset 负
             if (mVerticalScrollOffset + offset < 0) {//处理上边界 top
                 offset = -mVerticalScrollOffset;//这里还是负值
@@ -202,8 +215,8 @@ public class ZxtCstLM2 extends RecyclerView.LayoutManager {
     }
 
     private View getChildClosestToEnd() {
-        /*return getChildAt(false ? 0 : getChildCount() - 1);*/
-        return findViewByPosition(mLastVisiblePosition);
+        return getChildAt(false ? 0 : getChildCount() - 1);
+        //return findViewByPosition(mLastVisiblePosition);
     }
 
     public int getVerticalSpace() {
