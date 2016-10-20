@@ -5,25 +5,20 @@
       <module fileurl="file://$PROJECT_DIR$/animdemo/animdemo.iml" filepath="$PROJECT_DIR$/animdemo/animdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/coordinatordemo/coordinatordemo.iml" filepath="$PROJECT_DIR$/coordinatordemo/coordinatordemo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/coordinatordemo/coordinatordemo.iml" filepath="$PROJECT_DIR$/coordinatordemo/coordinatordemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/cstviewdemo/cstviewdemo.iml" filepath="$PROJECT_DIR$/cstviewdemo/cstviewdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/databindingdemo/databindingdemo.iml" filepath="$PROJECT_DIR$/databindingdemo/databindingdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/decoratorpatterndemo/decoratorpatterndemo.iml" filepath="$PROJECT_DIR$/decoratorpatterndemo/decoratorpatterndemo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/decoratorpatterndemo/decoratorpatterndemo.iml" filepath="$PROJECT_DIR$/decoratorpatterndemo/decoratorpatterndemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/layoutmanager/layoutmanager.iml" filepath="$PROJECT_DIR$/layoutmanager/layoutmanager.iml" />
       <module fileurl="file://$PROJECT_DIR$/learnannotationdemo/learnannotationdemo.iml" filepath="$PROJECT_DIR$/learnannotationdemo/learnannotationdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/lib/lib.iml" filepath="$PROJECT_DIR$/lib/lib.iml" />
       <module fileurl="file://$PROJECT_DIR$/libadapterpattern/libadapterpattern.iml" filepath="$PROJECT_DIR$/libadapterpattern/libadapterpattern.iml" />
-      <module fileurl="file://$PROJECT_DIR$/libadapterpattern/libadapterpattern.iml" filepath="$PROJECT_DIR$/libadapterpattern/libadapterpattern.iml" />
       <module fileurl="file://$PROJECT_DIR$/libannotation/libannotation.iml" filepath="$PROJECT_DIR$/libannotation/libannotation.iml" />
-      <module fileurl="file://$PROJECT_DIR$/libfactorypattern/libfactorypattern.iml" filepath="$PROJECT_DIR$/libfactorypattern/libfactorypattern.iml" />
       <module fileurl="file://$PROJECT_DIR$/libfactorypattern/libfactorypattern.iml" filepath="$PROJECT_DIR$/libfactorypattern/libfactorypattern.iml" />
       <module fileurl="file://$PROJECT_DIR$/mediademo/mediademo.iml" filepath="$PROJECT_DIR$/mediademo/mediademo.iml" />
       <module fileurl="file://$PROJECT_DIR$/picdemo/picdemo.iml" filepath="$PROJECT_DIR$/picdemo/picdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/recyclerviewdemo/recyclerviewdemo.iml" filepath="$PROJECT_DIR$/recyclerviewdemo/recyclerviewdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/retrofitdemo/retrofitdemo.iml" filepath="$PROJECT_DIR$/retrofitdemo/retrofitdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/rxjavademo/rxjavademo.iml" filepath="$PROJECT_DIR$/rxjavademo/rxjavademo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/rxjavademo/rxjavademo.iml" filepath="$PROJECT_DIR$/rxjavademo/rxjavademo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/selectcoupondemo/selectcoupondemo.iml" filepath="$PROJECT_DIR$/selectcoupondemo/selectcoupondemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/selectcoupondemo/selectcoupondemo.iml" filepath="$PROJECT_DIR$/selectcoupondemo/selectcoupondemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/zandemo/zandemo.iml" filepath="$PROJECT_DIR$/zandemo/zandemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/zxt_github.iml" filepath="$PROJECT_DIR$/zxt_github.iml" />

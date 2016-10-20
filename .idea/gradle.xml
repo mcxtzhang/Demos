@@ -5,7 +5,7 @@
       <GradleProjectSettings>
         <option name="distributionType" value="LOCAL" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleHome" value="E:\android tools\android-studio-ide-145.3200535-windows\android-studio\gradle\gradle-2.14.1" />
+        <option name="gradleHome" value="$APPLICATION_HOME_DIR$/gradle/gradle-2.14.1" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
@@ -15,6 +15,7 @@
             <option value="$PROJECT_DIR$/cstviewdemo" />
             <option value="$PROJECT_DIR$/databindingdemo" />
             <option value="$PROJECT_DIR$/decoratorpatterndemo" />
+            <option value="$PROJECT_DIR$/layoutmanager" />
             <option value="$PROJECT_DIR$/learnannotationdemo" />
             <option value="$PROJECT_DIR$/lib" />
             <option value="$PROJECT_DIR$/libadapterpattern" />

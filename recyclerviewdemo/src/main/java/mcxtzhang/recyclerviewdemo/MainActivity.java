@@ -11,7 +11,7 @@ import com.mcxtzhang.zxtcommonlib.recyclerview.ViewHolder;
 import java.util.ArrayList;
 import java.util.List;
 
-import mcxtzhang.recyclerviewdemo.zxt.ZxtCstLM1;
+import mcxtzhang.recyclerviewdemo.zxt.ZxtCstLM2;
 
 public class MainActivity extends AppCompatActivity {
     private RecyclerView mRv;
@@ -31,9 +31,12 @@ public class MainActivity extends AppCompatActivity {
         //layoutManager.setTotalColumnCount(2);
         //mRv.setLayoutManager(layoutManager);
 
-        mRv.setLayoutManager(new ZxtCstLM1());//自己的第一个自定义LM
+        //mRv.setLayoutManager(new ZxtCstLM1());//自己的第一个自定义LM
+
+        mRv.setLayoutManager(new ZxtCstLM2());
 
         //mRv.setLayoutManager(new LinearLayoutManager(this));
+        //mRv.setLayoutManager(new CstSysLM(this));
         mRv.setAdapter(new CommonAdapter<TestBean>(this, R.layout.item_rv_1, mDatas) {
             private int lastHeight = 0;
 
