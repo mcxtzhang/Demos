@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 
 import com.mcxtzhang.zxtcommonlib.recyclerview.CommonAdapter;
 import com.mcxtzhang.zxtcommonlib.recyclerview.ViewHolder;
@@ -11,6 +12,7 @@ import com.mcxtzhang.zxtcommonlib.recyclerview.ViewHolder;
 import java.util.ArrayList;
 import java.util.List;
 
+import mcxtzhang.recyclerviewdemo.itemlistener.OnItemTouchListener;
 import mcxtzhang.recyclerviewdemo.zxt.ZxtCstLM2;
 
 public class MainActivity extends AppCompatActivity {
@@ -37,6 +39,21 @@ public class MainActivity extends AppCompatActivity {
 
         //mRv.setLayoutManager(new LinearLayoutManager(this));
         //mRv.setLayoutManager(new CstSysLM(this));
+
+        mRv.addOnItemTouchListener(new OnItemTouchListener<ViewHolder,TestBean>(this, mRv, mDatas) {
+            @Override
+            protected void onItemClick(ViewHolder viewHolder, TestBean data, View itemView, int position) {
+                Log.d("TAG1", "onItemClick() called with: itemView = [" + itemView + "], viewHolder = [" + viewHolder + "], position = [" + position + "]");
+            }
+
+            @Override
+            protected void onItemLongClick(ViewHolder viewHolder, TestBean data, View itemView, int position) {
+                Log.d("TAG1", "onItemLongClick() called with: itemView = [" + itemView + "], viewHolder = [" + viewHolder + "], position = [" + position + "]");
+            }
+
+        });
+
+
         mRv.setAdapter(new CommonAdapter<TestBean>(this, R.layout.item_rv_1, mDatas) {
             private int lastHeight = 0;
 
@@ -44,6 +61,12 @@ public class MainActivity extends AppCompatActivity {
             public void convert(ViewHolder holder, TestBean testBean) {
                 Log.d("zxt", "convert() called with: holder = [" + holder + "], testBean = [" + testBean + "]");
                 holder.setText(R.id.tv, testBean.getName());
+                holder.setOnClickListener(R.id.tv, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Log.e("TAG1", "onClick() called with: v = [" + v + "]");
+                    }
+                });
                 //add by zhangxutong Feature1: 不同大小的Item也适应
 /*                if (holder.getAdapterPosition() == 0) {
                     ViewGroup.LayoutParams layoutParams = holder.itemView.getLayoutParams();
