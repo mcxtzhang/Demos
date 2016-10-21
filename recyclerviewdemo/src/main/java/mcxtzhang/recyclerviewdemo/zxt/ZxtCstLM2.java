@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * 介绍：换一种思路实现LM
+ * 介绍：换一种思路实现LM:一个普通的竖直列表(ListView)
  * 支持不同大小的View
  * 显示底端更多的，就从上往下排列，
  * 显示头部更多的，就从下往上排.
