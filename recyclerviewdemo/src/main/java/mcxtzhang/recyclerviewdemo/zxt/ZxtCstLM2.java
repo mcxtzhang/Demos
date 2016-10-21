@@ -161,27 +161,26 @@ public class ZxtCstLM2 extends RecyclerView.LayoutManager {
         //边界处理 和滑动距离处理
         if (offset > 0) {
             View bottomView = getChildClosestToEnd();
-            //最后一个子View隐藏起来的距离
-            int bottomViewHeightHind = /*getDecoratedMeasuredHeight(bottomView) - */(getDecoratedBottom(bottomView) - getBottomBorder());
-            int position = getPosition(bottomView);
-
-            //如果是最后一个子View 而且没有隐藏的距离了
-            if (position == getItemCount() - 1 && bottomViewHeightHind <= 0) {
-                //return 0;
-                offset = bottomViewHeightHind;
-                //offset = -bottomViewHeightHind;
-            }
-            if (bottomViewHeightHind == 0) {
+            //最后一个子View隐藏起来的距离,一般情况下它的取值是，0~bottomView的Height，但是当滑动到最后一个ItemCount的时候，它才可能为负值
+            int bottomViewHeightHind = (getDecoratedBottom(bottomView) - getBottomBorder());
+/*            if (bottomViewHeightHind == 0) {
                 //offset 随意吧
-                Log.w("TAG", "不设置限制://bottomViewHeightHind == 0]");
+                Log.w("TAG", "不设置限制:bottomViewHeightHind == 0]");
             } else if (bottomViewHeightHind > 0) {//
                 if (offset > bottomViewHeightHind) {//下边界 bottom , 拉的太大 要留白了
                     Log.d("TAG", "scrollVerticallyBy() called with: offset = [" + offset + "], getDecoratedBottom(bottomView()) = [" + getDecoratedBottom(bottomView) + "], getBottomBorder() = [" + getBottomBorder() + "]");
                     //offset = bottomViewHeightHind;//这里还是正值
                 }
             } else {//反常了 你赶紧给我修正！
-                Log.e("TAG", "//反常了，只有最后一个VIew越界才会出现 你赶紧给我修正！]");
+                Log.e("TAG", "//反常了，只有最后一个VIew越界才会出现 你赶紧给我修正！],下面的代码修正");
+            }*/
+            //这里很重要，获取bottomView的postion
+            int bottomPosition = getPosition(bottomView);
+            //如果是最后一个子View 而且没有隐藏的距离了
+            if (bottomPosition == getItemCount() - 1 && bottomViewHeightHind <= 0) {
+                offset = bottomViewHeightHind;//滑动的太嗨了，需要回弹
             }
+
         } else {//,offset 负
             if (mVerticalScrollOffset + offset < 0) {//处理上边界 top
                 offset = -mVerticalScrollOffset;//这里还是负值
