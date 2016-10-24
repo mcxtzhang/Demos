@@ -1,6 +1,7 @@
 package com.mcxtzhang.coordinatordemo;
 
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -10,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.mcxtzhang.zxtcommonlib.recyclerview.CommonAdapter;
 import com.mcxtzhang.zxtcommonlib.recyclerview.ViewHolder;
@@ -38,12 +40,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appBarLayout);
+        final AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appBarLayout);
         CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) appBarLayout.getLayoutParams();
         lp.setBehavior(new CstAppBehavior());
 /*        TextView tvHeader1 = (TextView) findViewById(R.id.tvHeader1);
         CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams)tvHeader1.getLayoutParams();
         lp.setBehavior(new AppBarLayout.Behavior());*/
+        appBarLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                Rect appBarRect = new Rect();
+                ViewGroupUtils.getDescendantRect((ViewGroup) getWindow().getDecorView(), appBarLayout, appBarRect);
+                Log.d("TAG", "appBarRect = [" + appBarRect +"]");
+            }
+        });
+
     }
 
 
@@ -113,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
         public void onNestedScroll(CoordinatorLayout coordinatorLayout, AppBarLayout child, View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
             Log.v(TAG, "onNestedScroll() called with: child = [" + child + "], target = [" + target + "], dxConsumed = [" + dxConsumed + "], dyConsumed = [" + dyConsumed + "], dxUnconsumed = [" + dxUnconsumed + "], dyUnconsumed = [" + dyUnconsumed + "]");
             if (isConsumed) {
-                ViewCompat.offsetTopAndBottom(child,-dyConsumed);
+                ViewCompat.offsetTopAndBottom(child, -dyConsumed);
             } else {
 
             }

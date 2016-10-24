@@ -1,3 +1,290 @@
 <resources>
     <string name="app_name">CoordinatorDemo</string>
+    <string name="large_text">
+
+princy的专栏
+目录视图摘要视图订阅
+【1024程序员节】参加活动领暖心礼品     【观点】有了深度学习，你还学传统机器学习算法么？     【知识库】深度学习知识图谱上线啦
+关闭
+ 代理模式与装饰模式的异同
+标签： behaviorrandomstringclassinterface测试
+2011-09-20 18:22 9179人阅读 评论(14) 收藏 举报
+ 分类： 设计模式（2）
+版权声明：本文为博主原创文章，未经博主允许不得转载。
+
+
+代理模式和装饰模式有很大的相似之处，看代理模式的类图，可以看做是代理模式的类图，也可以看做是装饰模式的类图，因为他们之间太像了，像到什么程度？把实现的代码改一下就是装饰模式，改回来就是代理模式。
+
+
+
+追美女的一种方式是从她的朋友下手，让她的死党帮忙，那就离成功没有多远了。好，我们把她的死党作为这个美女的代理，开始的时候我们当然要和代理打交道了，我们用代理模式实现以下。定义一个接口，这个借口有一个behavior()方法。
+
+[java] view plain copy print?
+1.public interface Girl {
+2.
+3.    public void behavior();
+4.
+5.}
+
+然后让美女类实现这个接口
+
+[java] view plain copy print?
+1.public class NiceGirl implements Girl {
+2.
+3.    private String name;
+4.    public NiceGirl(String name){
+5.        this.name = name;
+6.    }
+7.    @Override
+8.    public void behavior() {
+9.        System.out.println(this.name+"长的非常nice");
+10.        System.out.println(this.name+"说话也非常nice");
+11.
+12.    }
+13.
+14.}
+
+
+
+接下来定义代理类，代理类也实现了Girl接口，不但如此，代理类还要关联它要代理的对象，所以要定义Girl类型的一个成员变量，
+
+[java] view plain copy print?
+1.import java.util.Random;
+2.
+3.public class GirlAgent implements Girl {
+4.
+5.    private Girl girl;
+6.
+7.    public GirlAgent(Girl girl) {
+8.        super();
+9.        this.girl = girl;
+10.    }
+11.
+12.    @Override
+13.    public void behavior() {
+14.        Random rand = new Random();
+15.        if(rand.nextBoolean())
+16.        {
+17.            System.out.println("我安排你们上自习");
+18.            girl.behavior();
+19.        }
+20.        else{
+21.            System.out.println("先看你的表现，上自习以后再说");
+22.        }
+23.    }
+24.}
+
+OK，代理类图中的所有的类都实现了，下面编写一个测试类
+
+[java] view plain copy print?
+1.public class Client {
+2.
+3.    public static void main(String[] args) {
+4.
+5.      Girl niceGirl = new NiceGirl("小美");
+6.
+7.      Girl friend = new GirlAgent(niceGirl);
+8.
+9.      friend.behavior();
+10.    }
+11.
+12.}
+
+哈哈，代理模式就学会了吧。那装饰模式是怎么回事呢？装饰模式只要改动一处代码就可以了，对代理类的behavior()方法改动如下，其他的类不用动。
+
+[java] view plain copy print?
+     @Override
+2.       public void behavior() {
+3.
+4.System.out.println("我家MM不但知书达礼，而且还会做饭");
+5.girl.behavior();
+6.
+7.        }
+
+看出却别来了吗？只是代理类（或者说装饰类）的实现方法不同。
+
+代理模式中，代理类对被代理的对象有控制权，决定其执行或者不执行。而装饰模式中，装饰类对代理对象没有控制权，只能为其增加一层装饰，以加强被装饰对象的功能，仅此而已。
+
+什么情况下用代理模式什么情况下用装饰模式呢?那就得看情况了，如果是为了给对象增加功能，那就用装饰模式。比如一个Plane类它的fly()方法中飞行速度是300m/s，那能不能实现500m/s的飞机对象呢？有装饰模式就可以实现。700m/s的呢？呵呵，装饰两次就行了。不是定义两个装饰器类，而是定义一个装饰器能够增速200m/s，然后装饰两次。
+
+
+
+顶
+0
+踩
+7
+
+
+上一篇IBM.Rational.Rose.Enterprise.v7.0 下载
+下一篇由阿里一道笔试题引发的思考
+我的同类文章
+设计模式（2）
+•对《设计模式之禅》中里氏替换原则的思考2011-09-20阅读487
+•里氏替换原则--设计模式之禅读书笔记2010-06-14阅读657
+参考知识库
+img
+Java EE知识库
+7567关注|714收录
+img
+Java SE知识库
+14545关注|459收录
+img
+Java 知识库
+16666关注|1336收录
+猜你在找
+
+
+查看评论
+12楼 KidT 2016-10-12 16:35发表 [回复]
+
+[java] view plain copy print?
+//但是我看think in java里讲到代理的时候，静态代理的第一个例子就是
+class SimpleProxy implements Interface {
+  private Interface proxied;
+  public SimpleProxy(Interface proxied) {
+    this.proxied = proxied;
+  }
+  public void doSomething() {
+    print("SimpleProxy doSomething");
+    proxied.doSomething();
+  }
+  public void somethingElse(String arg) {
+    print("SimpleProxy somethingElse " + arg);
+    proxied.somethingElse(arg);
+  }
+}
+11楼 memories5977 2016-10-04 20:53发表 [回复]
+
+跟我这扯犊子呢，差点骗了我这个吃瓜群众，还不快删了
+10楼 pofengliuming 2016-08-24 10:41发表 [回复]
+
+使用代理模式，代理和真实对象之间的的关系通常在编译时就已经确定了，而装饰者能够在运行时递归地被构造。
+9楼 爱德华_孙 2016-08-22 09:45发表 [回复]
+
+装饰模式主要玩的是构造输入原对象进行装饰，主要关心的是为原对象添加新方法。代理模式主要关心的是访问的控制。。。。
+8楼 csyaonie 2016-08-19 15:57发表 [回复]
+
+你这理解的什么鬼 简直是给人误导
+7楼 fantao005x 2016-07-28 11:10发表 [回复]
+
+为了不让后来者误解代理模式和装饰器模式，我特意登陆账号来评论下。
+2楼和6楼的说法是对的，而楼主的理解有偏差，完全错误的理解了装饰器模式的精髓。
+6楼 奇横 2016-05-22 09:49发表 [回复]
+
+楼主，你理解的好像有误，装饰者模式应该是可以动态指定被装饰的对象，具体做法是，装饰者类应该包含一个以被装饰者对象为参数的构造函数。代理模式是，直接在构造函数里面new一个被代理对象。不知道我说的对不对。
+5楼 智能飞鱼 2015-08-07 20:44发表 [回复]
+
+还是具体的例子容易理解，谢谢博主！
+4楼 w_vc_love 2015-05-26 17:42发表 [回复]
+
+学习啦 非常感谢！
+3楼 童小绿 2014-10-03 16:05发表 [回复]
+
+明白了，就是他们实现方法不一样呗。
+2楼 q550145191 2014-08-31 00:03发表 [回复]
+
+楼主，代理模式注重控制对方法的访问，你应在构造方法中进行实例化。并不应让访问者知道，你代理了哪个对象。
+Re: 我非青蝗c 2015-05-10 14:14发表 [回复]
+
+回复q550145191：2楼说得很正确
+Re: 王-飞 2014-09-05 09:39发表 [回复]
+
+回复q550145191：恩, 这个是对的.也是他们之间的一个重要区别
+1楼 tygm2010 2014-04-28 21:42发表 [回复]
+
+O(∩_∩)O谢谢
+发表评论
+用 户 名：
+zxt0601
+评论内容：
+插入代码
+
+提交
+* 以上用户言论只代表其个人观点，不代表CSDN网站的观点或立场
+核心技术类目
+全部主题 Hadoop AWS 移动游戏 Java Android iOS Swift 智能硬件 Docker OpenStack VPN Spark ERP IE10 Eclipse CRM JavaScript 数据库 Ubuntu NFC WAP jQuery BI HTML5 Spring Apache .NET API HTML SDK IIS Fedora XML LBS Unity Splashtop UML components Windows Mobile Rails QEMU KDE Cassandra CloudStack FTC coremail OPhone CouchBase 云计算 iOS6 Rackspace Web App SpringSide Maemo Compuware 大数据 aptech Perl Tornado Ruby Hibernate ThinkPHP HBase Pure Solr Angular Cloud Foundry Redis Scala Django Bootstrap
+个人资料
+ 访问我的空间
+工大王子
+
+访问：153471次
+积分：1855
+等级：
+排名：第15886名
+原创：45篇转载：17篇译文：0篇评论：56条
+文章搜索
+
+搜索
+文章分类
+Java(8)
+Lucene(0)
+MySql(4)
+Web(4)
+电脑常识(6)
+设计模式(3)
+测试(1)
+c/c++(4)
+linux(8)
+文章存档
+2014年05月(1)
+2014年04月(1)
+2013年12月(1)
+2013年06月(2)
+2012年08月(3)
+展开
+阅读排行
+IBM.Rational.Rose.Enterprise.v7.0 下载(37427)
+win7上安装vs2010报错：microsoft 应用程序错误报告[解决方法](11489)
+代理模式与装饰模式的异同(9172)
+使用thrift要小心超时(8238)
+关于UltraEdit 关键字颜色显示的问题(6737)
+多表之间实现左连接(6548)
+乱码转换经典方法(5766)
+数组列表与数组的差别(5071)
+c/c++程序编译连接过程(4358)
+程序员的未来之路[转](4294)
+评论排行
+IBM.Rational.Rose.Enterprise.v7.0 下载(30)
+代理模式与装饰模式的异同(14)
+关于UltraEdit 关键字颜色显示的问题(3)
+对《设计模式之禅》中里氏替换原则的思考(3)
+c/c++程序编译连接过程(3)
+由阿里一道笔试题引发的思考(1)
+多表之间实现左连接(1)
+char, unsigned char, signed char 为什么会存在三种类型(1)
+关于MySql Client 乱码问题(1)
+javax.mail.NoSuchProviderException: smtp 报错(1)
+推荐文章
+* 2016 年最受欢迎的编程语言是什么？
+* Chromium扩展（Extension）的页面（Page）加载过程分析
+* Android Studio 2.2 来啦
+* 手把手教你做音乐播放器（二）技术原理与框架设计
+* JVM 性能调优实战之：使用阿里开源工具 TProfiler 在海量业务代码中精确定位性能代码
+最新评论
+代理模式与装饰模式的异同
+KidT: //但是我看think in java里讲到代理的时候，静态代理的第一个例子就是class Simp...
+代理模式与装饰模式的异同
+memories5977: 跟我这扯犊子呢，差点骗了我这个吃瓜群众，还不快删了
+IBM.Rational.Rose.Enterprise.v7.0 下载
+文之悲者: 不错
+代理模式与装饰模式的异同
+pofengliuming: 使用代理模式，代理和真实对象之间的的关系通常在编译时就已经确定了，而装饰者能够在运行时递归地被构造。
+代理模式与装饰模式的异同
+爱德华_孙: 装饰模式主要玩的是构造输入原对象进行装饰，主要关心的是为原对象添加新方法。代理模式主要关心的是访问的...
+代理模式与装饰模式的异同
+csyaonie: 你这理解的什么鬼 简直是给人误导
+代理模式与装饰模式的异同
+fantao005x: 为了不让后来者误解代理模式和装饰器模式，我特意登陆账号来评论下。2楼和6楼的说法是对的，而楼主的理解...
+代理模式与装饰模式的异同
+奇横: 楼主，你理解的好像有误，装饰者模式应该是可以动态指定被装饰的对象，具体做法是，装饰者类应该包含一个以...
+关于UltraEdit 关键字颜色显示的问题
+磨坊没墨: 不错，解决了
+代理模式与装饰模式的异同
+智能飞鱼: 还是具体的例子容易理解，谢谢博主！
+
+公司简介|招贤纳士|广告服务|银行汇款帐号|联系方式|版权声明|法律顾问|问题报告|合作伙伴|论坛反馈
+网站客服杂志客服微博客服webmaster@csdn.net400-600-2320|北京创新乐知信息技术有限公司 版权所有|江苏乐知网络技术有限公司 提供商务支持
+京 ICP 证 09002463 号|Copyright © 1999-2016, CSDN.NET, All Rights Reserved GongshangLogo
+
+</string>
 </resources>
