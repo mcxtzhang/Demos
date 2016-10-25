@@ -16,6 +16,10 @@
         <variable
             name="data3"
             type="com.mcxtzhang.databindingdemo.mullayout.MulLayoutBean3"/>
+
+        <variable
+            name="checkBean"
+            type="com.mcxtzhang.databindingdemo.TestDoubleBindBean"/>
     </data>
 
     <LinearLayout
@@ -31,6 +35,18 @@
         <include
             layout="@layout/include_layout_mul_3"
             app:data3="@{data3}"/>
+
+        <CheckBox
+            android:id="@+id/cb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="@={checkBean.select}"/>
+
+        <Button
+            android:id="@+id/btnCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="检查CB的值"/>
     </LinearLayout>
 </layout>
 
