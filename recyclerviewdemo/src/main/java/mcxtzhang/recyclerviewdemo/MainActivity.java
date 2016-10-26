@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mcxtzhang.recyclerviewdemo.itemlistener.OnItemTouchListener;
-import mcxtzhang.recyclerviewdemo.zxt.ZxtCstLM2;
+import mcxtzhang.recyclerviewdemo.zxt.FlowLayoutManager;
 
 public class MainActivity extends AppCompatActivity {
     private RecyclerView mRv;
@@ -33,11 +33,10 @@ public class MainActivity extends AppCompatActivity {
         //layoutManager.setTotalColumnCount(2);
         //mRv.setLayoutManager(layoutManager);
 
-        //mRv.setLayoutManager(new ZxtCstLM1());//自己的第一个自定义LM
+        //mRv.setLayoutManager(new ZxtCstLM2());//自己的第一个成品
+        mRv.setLayoutManager(new FlowLayoutManager());//自己写的流式布局
 
-        mRv.setLayoutManager(new ZxtCstLM2());
-
-        //mRv.setLayoutManager(new LinearLayoutManager(this));
+        //mRv.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
         //mRv.setLayoutManager(new CstSysLM(this));
 
         mRv.addOnItemTouchListener(new OnItemTouchListener<ViewHolder, TestBean>(this, mRv, mDatas) {
@@ -96,11 +95,11 @@ public class MainActivity extends AppCompatActivity {
     public List<TestBean> initDatas() {
         mDatas = new ArrayList<>();
         int i = 0;
-        for (int j = 0; j < 3; j++) {
+        for (int j = 0; j < 30; j++) {
             mDatas.add(new TestBean((i++) + "  ", "张"));
             mDatas.add(new TestBean((i++) + " ", "旭童"));
             mDatas.add(new TestBean((i++) + " ", "多种type"));
-            mDatas.add(new TestBean((i++) + "    ", ""));
+            mDatas.add(new TestBean((i++) + "    ", "遍"));
             mDatas.add(new TestBean((i++) + "   ", "多种type"));
             mDatas.add(new TestBean((i++) + "  ", "多种type"));
             mDatas.add(new TestBean((i++) + "  ", "多种type"));
