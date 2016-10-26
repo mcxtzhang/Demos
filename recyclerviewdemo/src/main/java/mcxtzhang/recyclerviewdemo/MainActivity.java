@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
     public List<TestBean> initDatas() {
         mDatas = new ArrayList<>();
         int i = 0;
-        for (int j = 0; j < 30; j++) {
+        for (int j = 0; j < 6; j++) {
             mDatas.add(new TestBean((i++) + "  ", "张"));
             mDatas.add(new TestBean((i++) + " ", "旭童"));
             mDatas.add(new TestBean((i++) + " ", "多种type"));
