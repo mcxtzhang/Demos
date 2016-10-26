@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         //mRv.setLayoutManager(new LinearLayoutManager(this));
         //mRv.setLayoutManager(new CstSysLM(this));
 
-        mRv.addOnItemTouchListener(new OnItemTouchListener<ViewHolder,TestBean>(this, mRv, mDatas) {
+        mRv.addOnItemTouchListener(new OnItemTouchListener<ViewHolder, TestBean>(this, mRv, mDatas) {
             @Override
             protected void onItemClick(ViewHolder viewHolder, TestBean data, View itemView, int position) {
                 Log.d("TAG1", "onItemClick() called with: itemView = [" + itemView + "], viewHolder = [" + viewHolder + "], position = [" + position + "]");
@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void convert(ViewHolder holder, TestBean testBean) {
                 Log.d("zxt", "convert() called with: holder = [" + holder + "], testBean = [" + testBean + "]");
-                holder.setText(R.id.tv, testBean.getName());
+                holder.setText(R.id.tv, testBean.getName() + testBean.getUrl());
                 holder.setOnClickListener(R.id.tv, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -92,7 +92,24 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void initDatas() {
+
+    public List<TestBean> initDatas() {
+        mDatas = new ArrayList<>();
+        int i = 0;
+        for (int j = 0; j < 3; j++) {
+            mDatas.add(new TestBean((i++) + "  ", "张"));
+            mDatas.add(new TestBean((i++) + " ", "旭童"));
+            mDatas.add(new TestBean((i++) + " ", "多种type"));
+            mDatas.add(new TestBean((i++) + "    ", ""));
+            mDatas.add(new TestBean((i++) + "   ", "多种type"));
+            mDatas.add(new TestBean((i++) + "  ", "多种type"));
+            mDatas.add(new TestBean((i++) + "  ", "多种type"));
+            mDatas.add(new TestBean((i++) + "  ", "多种type"));
+        }
+        return mDatas;
+    }
+
+    /*private void initDatas() {
         int i = 0;
         mDatas = new ArrayList<>();
 
@@ -120,5 +137,5 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-    }
+    }*/
 }

@@ -71,11 +71,11 @@ public class ZxtCstLM2 extends RecyclerView.LayoutManager {
             if (mLayoutDirection == LAYOUT_FROM_TOP) {
                 View topView = getChildAt(0);
                 topOffset = getDecoratedTop(topView);
-                leftOffset = getDecoratedLeft(topView);
+                //leftOffset = getDecoratedLeft(topView);
             } else {
                 View bottomView = getChildAt(getChildCount() - 1);
                 bottomOffset = getDecoratedBottom(bottomView);
-                leftOffset = getDecoratedLeft(bottomView);
+                //leftOffset = getDecoratedLeft(bottomView);
             }
             //先将屏幕上不显示的移除掉，并且累加offset
             int beforeRemoveFirstPosition = mFirstVisiblePosition;
