@@ -12,6 +12,16 @@ import android.databinding.Bindable;
 
 public class TestDoubleBindBean extends BaseObservable {
     private boolean select;
+    private String price;
+
+    public String getPrice() {
+        return price;
+    }
+
+    public TestDoubleBindBean setPrice(String price) {
+        this.price = price;
+        return this;
+    }
 
     @Bindable
     public boolean isSelect() {

@@ -47,6 +47,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="检查CB的值"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text='@{"+$"+(checkBean.price??"1.00")}'/>
     </LinearLayout>
 </layout>
 
