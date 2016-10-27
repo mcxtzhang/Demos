@@ -2,6 +2,7 @@ package mcxtzhang.recyclerviewdemo;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         //mRv.setLayoutManager(new ZxtCstLM2());//自己的第一个成品
         mRv.setLayoutManager(new FlowLayoutManager());//自己写的流式布局
 
-        //mRv.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+        mRv.setLayoutManager(new LinearLayoutManager(this/*,LinearLayoutManager.HORIZONTAL,false*/));
         //mRv.setLayoutManager(new CstSysLM(this));
 
         mRv.addOnItemTouchListener(new OnItemTouchListener<ViewHolder, TestBean>(this, mRv, mDatas) {
@@ -54,7 +55,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        mRv.setAdapter(mAdapter = new CommonAdapter<TestBean>(this, R.layout.item_flow, mDatas) {
+        mRv.setAdapter(mAdapter = new CommonAdapter<TestBean>(this, R.layout.item_rv_1, mDatas) {
+
+            @Override
+            public int getItemViewType(int position) {
+                return position;
+            }
+
             private int lastHeight = 0;
 
             @Override
@@ -98,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
     public List<TestBean> initDatas() {
         mDatas = new ArrayList<>();
 
-        for (int j = 0; j < 6; j++) {
+        for (int j = 0; j < 600; j++) {
             mDatas.add(new TestBean((i++) + "  ", "张"));
             mDatas.add(new TestBean((i++) + " ", "旭童"));
             mDatas.add(new TestBean((i++) + " ", "多种type"));
