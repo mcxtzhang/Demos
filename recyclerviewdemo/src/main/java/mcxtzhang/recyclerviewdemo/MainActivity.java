@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        mRv.setAdapter(mAdapter = new CommonAdapter<TestBean>(this, R.layout.item_rv_1, mDatas) {
+        mRv.setAdapter(mAdapter = new CommonAdapter<TestBean>(this, R.layout.item_flow, mDatas) {
             private int lastHeight = 0;
 
             @Override
@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private int i = 0;
+
     public List<TestBean> initDatas() {
         mDatas = new ArrayList<>();
 
@@ -110,13 +111,13 @@ public class MainActivity extends AppCompatActivity {
         return mDatas;
     }
 
-    public void add(View vIew){
+    public void add(View vIew) {
         mDatas.add(new TestBean((i++) + "  ", "新增的一个Item"));
         mAdapter.notifyDataSetChanged();
     }
 
-    public void del(View vIew){
-        mDatas.remove(mDatas.size()-1);
+    public void del(View vIew) {
+        mDatas.remove(mDatas.size() - 1);
         mAdapter.notifyDataSetChanged();
     }
 
