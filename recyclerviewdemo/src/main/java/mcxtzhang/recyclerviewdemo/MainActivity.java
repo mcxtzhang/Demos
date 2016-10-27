@@ -17,6 +17,7 @@ import mcxtzhang.recyclerviewdemo.zxt.FlowLayoutManager;
 
 public class MainActivity extends AppCompatActivity {
     private RecyclerView mRv;
+    private CommonAdapter<TestBean> mAdapter;
     private List<TestBean> mDatas;
 
     @Override
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        mRv.setAdapter(new CommonAdapter<TestBean>(this, R.layout.item_rv_1, mDatas) {
+        mRv.setAdapter(mAdapter = new CommonAdapter<TestBean>(this, R.layout.item_rv_1, mDatas) {
             private int lastHeight = 0;
 
             @Override
@@ -92,9 +93,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    private int i = 0;
     public List<TestBean> initDatas() {
         mDatas = new ArrayList<>();
-        int i = 0;
+
         for (int j = 0; j < 6; j++) {
             mDatas.add(new TestBean((i++) + "  ", "张"));
             mDatas.add(new TestBean((i++) + " ", "旭童"));
@@ -107,6 +109,19 @@ public class MainActivity extends AppCompatActivity {
         }
         return mDatas;
     }
+
+    public void add(View vIew){
+        mDatas.add(new TestBean((i++) + "  ", "新增的一个Item"));
+        mAdapter.notifyDataSetChanged();
+    }
+
+    public void del(View vIew){
+        mDatas.remove(mDatas.size()-1);
+        mAdapter.notifyDataSetChanged();
+    }
+
+
+
 
     /*private void initDatas() {
         int i = 0;
