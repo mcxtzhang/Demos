@@ -2,6 +2,7 @@ package com.mcxtzhang.zxtcommonlib.databinding.base;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -18,10 +19,10 @@ import java.util.List;
  * 时间： 16/09/25.
  */
 
-public class BaseBindingAdapter extends RecyclerView.Adapter<BaseBindingViewHolder> {
+public class BaseBindingAdapter<D, B extends ViewDataBinding> extends RecyclerView.Adapter<BaseBindingViewHolder<B>> {
     protected Context mContext;
     protected int mLayoutId;
-    protected List mDatas;
+    protected List<D> mDatas;
     protected LayoutInflater mInfalter;
 
     public BaseBindingAdapter(Context mContext, int mLayoutId, List mDatas) {
@@ -39,8 +40,8 @@ public class BaseBindingAdapter extends RecyclerView.Adapter<BaseBindingViewHold
 
     @Override
 
-    public BaseBindingViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        BaseBindingViewHolder holder = new BaseBindingViewHolder(DataBindingUtil.inflate(mInfalter, mLayoutId, parent, false));
+    public BaseBindingViewHolder<B> onCreateViewHolder(ViewGroup parent, int viewType) {
+        BaseBindingViewHolder<B> holder = new BaseBindingViewHolder<B>((B) DataBindingUtil.inflate(mInfalter, mLayoutId, parent, false));
         onCreateViewHolder(holder);
         return holder;
     }
@@ -55,7 +56,7 @@ public class BaseBindingAdapter extends RecyclerView.Adapter<BaseBindingViewHold
     }
 
     @Override
-    public void onBindViewHolder(BaseBindingViewHolder holder, int position) {
+    public void onBindViewHolder(BaseBindingViewHolder<B> holder, int position) {
         holder.getBinding().setVariable(BR.data, mDatas.get(position));
         holder.getBinding().executePendingBindings();
     }

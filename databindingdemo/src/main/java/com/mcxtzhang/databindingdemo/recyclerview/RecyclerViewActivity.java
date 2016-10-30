@@ -3,7 +3,6 @@ package com.mcxtzhang.databindingdemo.recyclerview;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.widget.Toast;
 
 import com.mcxtzhang.databindingdemo.databinding.ActivityRecyclerViewBinding;
 import com.mcxtzhang.databindingdemo.recyclerview.m.FirstBindingBean;
@@ -68,20 +67,36 @@ public class RecyclerViewActivity extends Activity {
         });*/
 
         //就一种Item：新写法 代码更少了，但是总觉得有种约束感 ：
-/*        mBinding.rv.setAdapter(new BaseBindingAdapter(this, R.layout.item_mul_type_1, mDatas){
+/*        mBinding.rv.setAdapter(new BaseBindingAdapter<FirstBindingBean, ItemMulType1Binding>(this, R.layout.item_mul_type_1, mDatas) {
             @Override
-            public void onBindViewHolder(BaseBindingViewHolder holder, final int position) {
+            public void onBindViewHolder(final BaseBindingViewHolder holder, final int position) {
                 super.onBindViewHolder(holder, position);
                 holder.getBinding().getRoot().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         mDatas.get(position).setName("变变变");
+                        ViewDataBinding binding = holder.getBinding();
                     }
                 });
             }
         });*/
 
-        //普通多种item
+        //2016 10 30 封装两个泛型
+/*        mBinding.rv.setAdapter(new BaseBindingAdapter<FirstBindingBean, ItemMulType1Binding>(this, R.layout.item_mul_type_1, mDatas) {
+            @Override
+            public void onBindViewHolder(BaseBindingViewHolder<ItemMulType1Binding> holder, int position) {
+                super.onBindViewHolder(holder, position);
+                final ItemMulType1Binding binding = holder.getBinding();
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        binding.tv.setText("只是试一试 不要这么写");
+                    }
+                });
+            }
+        });*/
+
+        //普通多种item(未封装)
         //mBinding.rv.setAdapter( new MulTypeAdapter(this, mDatas));
 
         //Base多种Item
@@ -108,14 +123,6 @@ public class RecyclerViewActivity extends Activity {
         //Base 多种Item，连bean都可以不一样，你觉得屌不屌
         mBinding.rv.setAdapter(new BaseMulTypeAdapter(this, initMulTypeDatas()));
 
-
-        mBinding.rv.post(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(RecyclerViewActivity.this, ""+mBinding.rv.getChildCount(), Toast.LENGTH_SHORT).show();
-
-            }
-        });
         mBinding.setPresenter(new FirstPresenter());
     }
 
