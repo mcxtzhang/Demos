@@ -52,5 +52,7 @@ public class MainPresenter {
         testCollectionMap.put("lastName","集合也能立刻改变");
     }
 
-
+    public void onClickTest(View view){
+        Toast.makeText(mainActivity, "测试ddddddddddd点击", Toast.LENGTH_SHORT).show();
+    }
 }

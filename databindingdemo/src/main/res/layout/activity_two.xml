@@ -138,6 +138,12 @@
             android:visibility="@{  visiData.list.size()>0 ? View.VISIBLE: View.GONE }"
 
             />
+
+        <TextView
+            android:onClick="@{mainPresenter::onClickTest}"
+            android:text="测试点击"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
 
