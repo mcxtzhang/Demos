@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/coordinatordemo/coordinatordemo.iml" filepath="$PROJECT_DIR$/coordinatordemo/coordinatordemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/coordinatordemo2/coordinatordemo2.iml" filepath="$PROJECT_DIR$/coordinatordemo2/coordinatordemo2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cstnorecyclelistview/cstnorecyclelistview.iml" filepath="$PROJECT_DIR$/cstnorecyclelistview/cstnorecyclelistview.iml" />
       <module fileurl="file://$PROJECT_DIR$/cstviewdemo/cstviewdemo.iml" filepath="$PROJECT_DIR$/cstviewdemo/cstviewdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/databindingdemo/databindingdemo.iml" filepath="$PROJECT_DIR$/databindingdemo/databindingdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/decoratorpatterndemo/decoratorpatterndemo.iml" filepath="$PROJECT_DIR$/decoratorpatterndemo/decoratorpatterndemo.iml" />

@@ -9,6 +9,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.mcxtzhang.cstnorecyclelistview.R;
+import com.mcxtzhang.cstnorecyclelistview.ZxtCstLM2;
 import com.mcxtzhang.cstnorecyclelistview.bean.NestBean;
 import com.mcxtzhang.cstnorecyclelistview.bean.TestBean;
 import com.mcxtzhang.zxtcommonlib.recyclerview.CommonAdapter;
@@ -39,7 +40,7 @@ public class NestRecyclerViewActivity extends Activity {
                         .load(testBean.getUrl())
                         .into((ImageView) holder.getView(R.id.iv));
                 RecyclerView nestRv = holder.getView(R.id.nestRv);
-                nestRv.setLayoutManager(new LinearLayoutManager(nestRv.getContext()));
+                nestRv.setLayoutManager(new ZxtCstLM2());
                 nestRv.setAdapter(new CommonAdapter<NestBean>(nestRv.getContext(), R.layout.item_nest_rv_2, testBean.getNest()) {
                     @Override
                     public void convert(ViewHolder holder, NestBean nestBean) {
