@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import com.android.databinding.library.baseAdapters.BR;
 import com.mcxtzhang.databindingdemo.R;
-import com.mcxtzhang.zxtcommonlib.databinding.base.BaseBindingViewHolder;
+import com.mcxtzhang.zxtcommonlib.databinding.base.BaseBindingVH;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ import java.util.List;
  * 时间： 16/09/25.
  */
 
-public class MulTypeAdapter<K> extends RecyclerView.Adapter<BaseBindingViewHolder> {
+public class MulTypeAdapter<K> extends RecyclerView.Adapter<BaseBindingVH> {
     private Context mContext;
     private List<MulTypeBean> mDatas;
     private LayoutInflater mInfalter;
@@ -37,18 +37,18 @@ public class MulTypeAdapter<K> extends RecyclerView.Adapter<BaseBindingViewHolde
     }
 
     @Override
-    public BaseBindingViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public BaseBindingVH onCreateViewHolder(ViewGroup parent, int viewType) {
         switch (viewType) {
             case 1:
-                return new BaseBindingViewHolder(DataBindingUtil.inflate(mInfalter, R.layout.item_mul_type_1, parent, false));
+                return new BaseBindingVH(DataBindingUtil.inflate(mInfalter, R.layout.item_mul_type_1, parent, false));
             case 0:
-                return new BaseBindingViewHolder(DataBindingUtil.inflate(mInfalter, R.layout.item_first_rv, parent, false));
+                return new BaseBindingVH(DataBindingUtil.inflate(mInfalter, R.layout.item_first_rv, parent, false));
         }
         return null;
     }
 
     @Override
-    public void onBindViewHolder(BaseBindingViewHolder holder, int position) {
+    public void onBindViewHolder(BaseBindingVH holder, int position) {
         switch (getItemViewType(position)) {
             case 1:
                 holder.getBinding().setVariable(BR.data, mDatas.get(position));

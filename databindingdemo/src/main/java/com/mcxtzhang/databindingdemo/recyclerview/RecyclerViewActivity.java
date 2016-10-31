@@ -8,7 +8,8 @@ import com.mcxtzhang.databindingdemo.databinding.ActivityRecyclerViewBinding;
 import com.mcxtzhang.databindingdemo.recyclerview.m.FirstBindingBean;
 import com.mcxtzhang.databindingdemo.recyclerview.multype.MBean1;
 import com.mcxtzhang.databindingdemo.recyclerview.multype.MBean2;
-import com.mcxtzhang.zxtcommonlib.databinding.base.mul.BaseMulTypeAdapter;
+import com.mcxtzhang.zxtcommonlib.databinding.base.mul.BaseMulTypeBindingAdapter;
+import com.mcxtzhang.zxtcommonlib.databinding.base.mul.BaseMulTypeBindingAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +30,7 @@ public class RecyclerViewActivity extends Activity {
         mBinding.rv.setLayoutManager(new LinearLayoutManager(this));
        /* mBinding.rv.setAdapter(mAdapter = new OldBaseBindingAdapter<ItemFirstRvBinding, FirstBindingBean>(this, R.layout.item_first_rv, mDatas) {
             @Override
-            public void onBindViewHolder(BaseBindingViewHolder<ItemFirstRvBinding> holder, int position, ItemFirstRvBinding itemFirstRvBinding, final FirstBindingBean firstBindingBean) {
+            public void onBindViewHolder(BaseBindingVH<ItemFirstRvBinding> holder, int position, ItemFirstRvBinding itemFirstRvBinding, final FirstBindingBean firstBindingBean) {
                 itemFirstRvBinding.setBean(firstBindingBean);
                 //普通的加载方法 但是当数据改变时 它不会立刻改变
                 Glide.with(RecyclerViewActivity.this).load(firstBindingBean.getUrl()).into(itemFirstRvBinding.normalLoadIv);
@@ -69,7 +70,7 @@ public class RecyclerViewActivity extends Activity {
         //就一种Item：新写法 代码更少了，但是总觉得有种约束感 ：
 /*        mBinding.rv.setAdapter(new BaseBindingAdapter<FirstBindingBean, ItemMulType1Binding>(this, R.layout.item_mul_type_1, mDatas) {
             @Override
-            public void onBindViewHolder(final BaseBindingViewHolder holder, final int position) {
+            public void onBindViewHolder(final BaseBindingVH holder, final int position) {
                 super.onBindViewHolder(holder, position);
                 holder.getBinding().getRoot().setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -84,7 +85,7 @@ public class RecyclerViewActivity extends Activity {
         //2016 10 30 封装两个泛型
 /*        mBinding.rv.setAdapter(new BaseBindingAdapter<FirstBindingBean, ItemMulType1Binding>(this, R.layout.item_mul_type_1, mDatas) {
             @Override
-            public void onBindViewHolder(BaseBindingViewHolder<ItemMulType1Binding> holder, int position) {
+            public void onBindViewHolder(BaseBindingVH<ItemMulType1Binding> holder, int position) {
                 super.onBindViewHolder(holder, position);
                 final ItemMulType1Binding binding = holder.getBinding();
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -100,9 +101,9 @@ public class RecyclerViewActivity extends Activity {
         //mBinding.rv.setAdapter( new MulTypeAdapter(this, mDatas));
 
         //Base多种Item
-/*        mBinding.rv.setAdapter(new BaseMulTypeAdapter(this, mDatas) {
+/*        mBinding.rv.setAdapter(new BaseMulTypeBindingAdapter(this, mDatas) {
             @Override
-            public void onBindViewHolder(final BaseBindingViewHolder holder, final int position) {
+            public void onBindViewHolder(final BaseBindingVH holder, final int position) {
                 super.onBindViewHolder(holder, position);
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -121,7 +122,7 @@ public class RecyclerViewActivity extends Activity {
 
 
         //Base 多种Item，连bean都可以不一样，你觉得屌不屌
-        mBinding.rv.setAdapter(new BaseMulTypeAdapter(this, initMulTypeDatas()));
+        mBinding.rv.setAdapter(new BaseMulTypeBindingAdapter(this, initMulTypeDatas()));
 
         mBinding.setPresenter(new FirstPresenter());
     }

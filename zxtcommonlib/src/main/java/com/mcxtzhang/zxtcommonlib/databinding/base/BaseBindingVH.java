@@ -11,10 +11,10 @@ import android.support.v7.widget.RecyclerView;
  * 时间： 16/09/25.
  */
 
-public class BaseBindingViewHolder<T extends ViewDataBinding> extends RecyclerView.ViewHolder {
+public class BaseBindingVH<T extends ViewDataBinding> extends RecyclerView.ViewHolder {
     protected final T mBinding;
 
-    public BaseBindingViewHolder(T t) {
+    public BaseBindingVH(T t) {
         super(t.getRoot());
         mBinding = t;
     }

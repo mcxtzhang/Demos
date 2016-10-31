@@ -5,7 +5,7 @@ import android.databinding.DataBindingUtil;
 import android.view.ViewGroup;
 
 import com.mcxtzhang.zxtcommonlib.databinding.base.BaseBindingAdapter;
-import com.mcxtzhang.zxtcommonlib.databinding.base.BaseBindingViewHolder;
+import com.mcxtzhang.zxtcommonlib.databinding.base.BaseBindingVH;
 
 import java.util.List;
 
@@ -16,10 +16,10 @@ import java.util.List;
  * 时间： 16/09/25.
  */
 
-public class BaseMulTypeAdapter<T extends IBaseMulInterface> extends BaseBindingAdapter {
+public class BaseMulTypeBindingAdapter<T extends IBaseMulInterface> extends BaseBindingAdapter {
     protected List<T> mDatas;
 
-    public BaseMulTypeAdapter(Context mContext, List mDatas) {
+    public BaseMulTypeBindingAdapter(Context mContext, List mDatas) {
         super(mContext, mDatas);
         this.mDatas = mDatas;
     }
@@ -30,8 +30,8 @@ public class BaseMulTypeAdapter<T extends IBaseMulInterface> extends BaseBinding
     }
 
     @Override
-    public BaseBindingViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        BaseBindingViewHolder holder = new BaseBindingViewHolder(DataBindingUtil.inflate(mInfalter, viewType, parent, false));
+    public BaseBindingVH onCreateViewHolder(ViewGroup parent, int viewType) {
+        BaseBindingVH holder = new BaseBindingVH(DataBindingUtil.inflate(mInfalter, viewType, parent, false));
         onCreateViewHolder(holder);
         return holder;
     }

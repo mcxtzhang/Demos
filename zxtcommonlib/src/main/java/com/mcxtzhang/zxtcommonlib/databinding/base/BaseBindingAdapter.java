@@ -19,7 +19,7 @@ import java.util.List;
  * 时间： 16/09/25.
  */
 
-public class BaseBindingAdapter<D, B extends ViewDataBinding> extends RecyclerView.Adapter<BaseBindingViewHolder<B>> {
+public class BaseBindingAdapter<D, B extends ViewDataBinding> extends RecyclerView.Adapter<BaseBindingVH<B>> {
     protected Context mContext;
     protected int mLayoutId;
     protected List<D> mDatas;
@@ -40,8 +40,8 @@ public class BaseBindingAdapter<D, B extends ViewDataBinding> extends RecyclerVi
 
     @Override
 
-    public BaseBindingViewHolder<B> onCreateViewHolder(ViewGroup parent, int viewType) {
-        BaseBindingViewHolder<B> holder = new BaseBindingViewHolder<B>((B) DataBindingUtil.inflate(mInfalter, mLayoutId, parent, false));
+    public BaseBindingVH<B> onCreateViewHolder(ViewGroup parent, int viewType) {
+        BaseBindingVH<B> holder = new BaseBindingVH<B>((B) DataBindingUtil.inflate(mInfalter, mLayoutId, parent, false));
         onCreateViewHolder(holder);
         return holder;
     }
@@ -51,12 +51,12 @@ public class BaseBindingAdapter<D, B extends ViewDataBinding> extends RecyclerVi
      *
      * @param holder
      */
-    public void onCreateViewHolder(BaseBindingViewHolder holder) {
+    public void onCreateViewHolder(BaseBindingVH holder) {
 
     }
 
     @Override
-    public void onBindViewHolder(BaseBindingViewHolder<B> holder, int position) {
+    public void onBindViewHolder(BaseBindingVH<B> holder, int position) {
         holder.getBinding().setVariable(BR.data, mDatas.get(position));
         holder.getBinding().executePendingBindings();
     }
