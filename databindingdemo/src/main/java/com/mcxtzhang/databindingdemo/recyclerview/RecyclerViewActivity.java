@@ -9,7 +9,6 @@ import com.mcxtzhang.databindingdemo.recyclerview.m.FirstBindingBean;
 import com.mcxtzhang.databindingdemo.recyclerview.multype.MBean1;
 import com.mcxtzhang.databindingdemo.recyclerview.multype.MBean2;
 import com.mcxtzhang.zxtcommonlib.databinding.base.mul.BaseMulTypeBindingAdapter;
-import com.mcxtzhang.zxtcommonlib.databinding.base.mul.BaseMulTypeBindingAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +16,7 @@ import java.util.List;
 public class RecyclerViewActivity extends Activity {
     private ActivityRecyclerViewBinding mBinding;
     //private OldBaseBindingAdapter mAdapter;
-    private List<FirstBindingBean> mDatas;
+    private List<FirstBindingBean> mLists;
 
 
     @Override
@@ -28,7 +27,7 @@ public class RecyclerViewActivity extends Activity {
 
         initDatas();
         mBinding.rv.setLayoutManager(new LinearLayoutManager(this));
-       /* mBinding.rv.setAdapter(mAdapter = new OldBaseBindingAdapter<ItemFirstRvBinding, FirstBindingBean>(this, R.layout.item_first_rv, mDatas) {
+       /* mBinding.rv.setAdapter(mAdapter = new OldBaseBindingAdapter<ItemFirstRvBinding, FirstBindingBean>(this, R.layout.item_first_rv, mLists) {
             @Override
             public void onBindViewHolder(BaseBindingVH<ItemFirstRvBinding> holder, int position, ItemFirstRvBinding itemFirstRvBinding, final FirstBindingBean firstBindingBean) {
                 itemFirstRvBinding.setBean(firstBindingBean);
@@ -68,14 +67,14 @@ public class RecyclerViewActivity extends Activity {
         });*/
 
         //就一种Item：新写法 代码更少了，但是总觉得有种约束感 ：
-/*        mBinding.rv.setAdapter(new BaseBindingAdapter<FirstBindingBean, ItemMulType1Binding>(this, R.layout.item_mul_type_1, mDatas) {
+/*        mBinding.rv.setAdapter(new BaseBindingAdapter<FirstBindingBean, ItemMulType1Binding>(this, R.layout.item_mul_type_1, mLists) {
             @Override
             public void onBindViewHolder(final BaseBindingVH holder, final int position) {
                 super.onBindViewHolder(holder, position);
                 holder.getBinding().getRoot().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        mDatas.get(position).setName("变变变");
+                        mLists.get(position).setName("变变变");
                         ViewDataBinding binding = holder.getBinding();
                     }
                 });
@@ -83,7 +82,7 @@ public class RecyclerViewActivity extends Activity {
         });*/
 
         //2016 10 30 封装两个泛型
-/*        mBinding.rv.setAdapter(new BaseBindingAdapter<FirstBindingBean, ItemMulType1Binding>(this, R.layout.item_mul_type_1, mDatas) {
+/*        mBinding.rv.setAdapter(new BaseBindingAdapter<FirstBindingBean, ItemMulType1Binding>(this, R.layout.item_mul_type_1, mLists) {
             @Override
             public void onBindViewHolder(BaseBindingVH<ItemMulType1Binding> holder, int position) {
                 super.onBindViewHolder(holder, position);
@@ -98,10 +97,10 @@ public class RecyclerViewActivity extends Activity {
         });*/
 
         //普通多种item(未封装)
-        //mBinding.rv.setAdapter( new MulTypeAdapter(this, mDatas));
+        //mBinding.rv.setAdapter( new MulTypeAdapter(this, mLists));
 
         //Base多种Item
-/*        mBinding.rv.setAdapter(new BaseMulTypeBindingAdapter(this, mDatas) {
+/*        mBinding.rv.setAdapter(new BaseMulTypeBindingAdapter(this, mLists) {
             @Override
             public void onBindViewHolder(final BaseBindingVH holder, final int position) {
                 super.onBindViewHolder(holder, position);
@@ -162,29 +161,29 @@ public class RecyclerViewActivity extends Activity {
 
 
     private void initDatas() {
-        mDatas = new ArrayList<>();
+        mLists = new ArrayList<>();
         ArrayList<FirstBindingBean> nestBeen = new ArrayList<>();
-        mDatas.add(new FirstBindingBean("http://imgs.ebrun.com/resources/2016_03/2016_03_25/201603259771458878793312_origin.jpg", "张", 1));
+        mLists.add(new FirstBindingBean("http://imgs.ebrun.com/resources/2016_03/2016_03_25/201603259771458878793312_origin.jpg", "张", 1));
 
 
-        mDatas.add(new FirstBindingBean("http://p14.go007.com/2014_11_02_05/a03541088cce31b8_1.jpg", "旭童", 2));
-        mDatas.add(new FirstBindingBean("http://news.k618.cn/tech/201604/W020160407281077548026.jpg", 3));
-        mDatas.add(new FirstBindingBean("http://www.kejik.com/image/1460343965520.jpg", 1));
-        mDatas.add(new FirstBindingBean("http://cn.chinadaily.com.cn/img/attachement/jpg/site1/20160318/eca86bd77be61855f1b81c.jpg", 2));
-        mDatas.add(new FirstBindingBean("http://imgs.ebrun.com/resources/2016_04/2016_04_12/201604124411460430531500.jpg", 3));
-        mDatas.add(new FirstBindingBean("http://imgs.ebrun.com/resources/2016_04/2016_04_24/201604244971461460826484_origin.jpeg", 1));
-        mDatas.add(new FirstBindingBean("http://www.lnmoto.cn/bbs/data/attachment/forum/201408/12/074018gshshia3is1cw3sg.jpg", 2));
+        mLists.add(new FirstBindingBean("http://p14.go007.com/2014_11_02_05/a03541088cce31b8_1.jpg", "旭童", 2));
+        mLists.add(new FirstBindingBean("http://news.k618.cn/tech/201604/W020160407281077548026.jpg", 3));
+        mLists.add(new FirstBindingBean("http://www.kejik.com/image/1460343965520.jpg", 1));
+        mLists.add(new FirstBindingBean("http://cn.chinadaily.com.cn/img/attachement/jpg/site1/20160318/eca86bd77be61855f1b81c.jpg", 2));
+        mLists.add(new FirstBindingBean("http://imgs.ebrun.com/resources/2016_04/2016_04_12/201604124411460430531500.jpg", 3));
+        mLists.add(new FirstBindingBean("http://imgs.ebrun.com/resources/2016_04/2016_04_24/201604244971461460826484_origin.jpeg", 1));
+        mLists.add(new FirstBindingBean("http://www.lnmoto.cn/bbs/data/attachment/forum/201408/12/074018gshshia3is1cw3sg.jpg", 2));
     }
 
     public class FirstPresenter {
         public void onAddClick() {
-            mDatas.add(new FirstBindingBean("http://finance.gucheng.com/UploadFiles_7830/201603/2016032110220685.jpg", "add"));
-            //mAdapter.notifyItemInserted(mDatas.size());
+            mLists.add(new FirstBindingBean("http://finance.gucheng.com/UploadFiles_7830/201603/2016032110220685.jpg", "add"));
+            //mAdapter.notifyItemInserted(mLists.size());
         }
 
         public void onDelClick() {
-            mDatas.remove(mDatas.size() - 1);
-            //mAdapter.notifyItemRemoved(mDatas.size());
+            mLists.remove(mLists.size() - 1);
+            //mAdapter.notifyItemRemoved(mLists.size());
         }
     }
 
