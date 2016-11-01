@@ -12,6 +12,8 @@ import mcxtzhang.recyclerviewdemo.generalizerv.base.widget.LoadingFooter;
 
 /**
  * 介绍：封装的Rv
+ * 1 支持滑动到底部，自动触发加载更多操作,关联接口OnLoadMoreListener
+ * 2
  * 作者：zhangxutong
  * 邮箱：zhangxutong@imcoming.com
  * 时间： 2016/10/31.

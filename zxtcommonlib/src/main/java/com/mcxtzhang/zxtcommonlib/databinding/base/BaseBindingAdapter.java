@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.mcxtzhang.zxtcommonlib.BR;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -72,5 +73,64 @@ public class BaseBindingAdapter<D, B extends ViewDataBinding> extends RecyclerVi
     @Override
     public int getItemCount() {
         return null != mDatas ? mDatas.size() : 0;
+    }
+
+
+
+    /**
+     * 刷新数据，初始化数据
+     *
+     * @param list
+     */
+    public void setDatas(List<D> list) {
+        if (this.mDatas != null) {
+            if (null != list) {
+                List<D> temp = new ArrayList<D>();
+                temp.addAll(list);
+                this.mDatas.clear();
+                this.mDatas.addAll(temp);
+            } else {
+                this.mDatas.clear();
+            }
+        } else {
+            this.mDatas = list;
+        }
+        notifyDataSetChanged();
+    }
+
+    /**
+     * 删除数据
+     *
+     * @param i
+     */
+    public void remove(int i) {
+        if (null != mDatas && mDatas.size() > i && i > -1) {
+            mDatas.remove(i);
+            notifyDataSetChanged();
+        }
+    }
+
+    /**
+     * 加载更多数据
+     *
+     * @param list
+     */
+    public void addDatas(List<D> list) {
+        if (null != list) {
+            List<D> temp = new ArrayList<D>();
+            temp.addAll(list);
+            if (this.mDatas != null) {
+                this.mDatas.addAll(temp);
+            } else {
+                this.mDatas = temp;
+            }
+            notifyDataSetChanged();
+        }
+
+    }
+
+
+    public List<D> getDatas() {
+        return mDatas;
     }
 }
