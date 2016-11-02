@@ -26,12 +26,12 @@
             app:pathColor="@android:color/white"
             app:pathWidth="5dp"
             app:svg="@drawable/first_vector" />-->
+    <!--    <com.mcxtzhang.cstviewdemo.widget.FlashView
+            android:background="@color/colorAccent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />-->
 
-
-    <!--        <com.mcxtzhang.cstviewdemo.widget.FlashView
-                android:background="@color/colorAccent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />-->
+    <!--        -->
     <!--    <com.mcxtzhang.cstviewdemo.widget.RightView
             android:id="@+id/rightView"
             android:layout_width="wrap_content"
@@ -46,4 +46,10 @@
         android:layout_width="wrap_content"
         android:layout_height="100dp"
         android:padding="20dp"/>
+
+    <com.mcxtzhang.cstviewdemo.widget.PathStoneHouseAnimView
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:layout_marginTop="100dp"/>
+
 </RelativeLayout>
