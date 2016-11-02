@@ -1,5 +1,7 @@
 package com.mcxtzhang.cstviewdemo.widget;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -8,8 +10,14 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
+import android.widget.Toast;
+
+import com.mcxtzhang.cstviewdemo.widget.res.StoreHousePath;
+
+import java.util.ArrayList;
 
 /**
  * 介绍：
@@ -30,18 +38,32 @@ public class FlashView extends View {
         super(context);
     }
 
-    public FlashView(Context context, AttributeSet attrs) {
+    public FlashView(final Context context, AttributeSet attrs) {
         super(context, attrs);
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
         mPaint.setColor(Color.BLACK);
         mPaint.setStyle(Paint.Style.STROKE);
         mPath = new Path();
-        mPath.moveTo(200, 200);
+/*        mPath.moveTo(200, 200);
         mPath.lineTo(200, 500);
         mPath.lineTo(500, 500);
         mPath.lineTo(500, 200);
-        mPath.close();
+        //mPath.close();
+
+        mPath.moveTo(900, 900);
+        mPath.lineTo(900, 1000);
+        mPath.lineTo(100, 1000);
+        mPath.lineTo(900, 900);*/
+
+        ArrayList<float[]> path = StoreHousePath.getPath("AnLaiYe");
+        for (int i = 0; i < path.size(); i++) {
+            float[] floats = path.get(i);
+            mPath.moveTo(floats[0], floats[1]);
+            mPath.lineTo(floats[2], floats[3]);
+        }
+
+
         mPathMeasure = new PathMeasure();
         mPathMeasure.setPath(mPath, false);
 
@@ -52,15 +74,35 @@ public class FlashView extends View {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 fraction = (float) animation.getAnimatedValue();
+
+                //mPathMeasure.getSegment(mPathMeasure.getLength() * fraction - mPathMeasure.getLength() / 10, mPathMeasure.getLength() * fraction, mDst, true);
+                mPathMeasure.getSegment(0, mPathMeasure.getLength() * fraction, mDst, true);
                 invalidate();
             }
         });
-        valueAnimator.setDuration(10000);
+
+
+        AnimatorListenerAdapter endListener = new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mPathMeasure.nextContour();
+                Toast.makeText(context, "结束", Toast.LENGTH_SHORT).show();
+                Log.e("TAG", "onAnimationEnd: ");
+                animation.start();
+
+            }
+        };
+        valueAnimator.addListener(endListener);
+        valueAnimator.setDuration(500);
         valueAnimator.setInterpolator(new LinearInterpolator());
-        valueAnimator.setRepeatCount(ValueAnimator.INFINITE);
+        //valueAnimator.setRepeatCount(ValueAnimator.INFINITE);
         setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                mDst.reset();
+                // 硬件加速的BUG
+                mDst.lineTo(0, 0);
+                mPathMeasure.setPath(mPath, false);
                 valueAnimator.start();
             }
         });
@@ -76,10 +118,6 @@ public class FlashView extends View {
         canvas.drawPath(mPath, mPaint);
 
 
-        mDst.reset();
-        // 硬件加速的BUG
-        mDst.lineTo(0, 0);
-        mPathMeasure.getSegment(mPathMeasure.getLength() * fraction - mPathMeasure.getLength() / 10, mPathMeasure.getLength() * fraction , mDst, true);
         mPaint.setColor(Color.WHITE);
         canvas.drawPath(mDst, mPaint);
     }
