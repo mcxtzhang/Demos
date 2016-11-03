@@ -3,67 +3,48 @@ package com.mcxtzhang.cstviewdemo.widget;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
 import android.util.AttributeSet;
 import android.util.SparseArray;
-import android.view.View;
 
-import com.mcxtzhang.cstviewdemo.outpututils.AnimUtils;
 import com.mcxtzhang.cstviewdemo.widget.res.StoreHousePath;
 
 import java.util.ArrayList;
 
 /**
- * 介绍：一个路径动画的View
+ * 介绍：一个StoreHouse风格动画的View
  * 作者：zhangxutong
  * 邮箱：zhangxutong@imcoming.com
  * 时间： 2016/11/2.
  */
 
-public class PathStoneHouseAnimView extends View {
-    private Path mPath;
-    private Path mDstPath;
-    private Paint mPaint;
+public class StoreHouseAnimView extends BasePathAnimView {
 
-    public PathStoneHouseAnimView(Context context) {
+    public StoreHouseAnimView(Context context) {
         this(context, null);
     }
 
-    public PathStoneHouseAnimView(Context context, AttributeSet attrs) {
+    public StoreHouseAnimView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public PathStoneHouseAnimView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public StoreHouseAnimView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
 
-    private void init() {
-        mPaint = new Paint();
-        mPaint.setAntiAlias(true);
-        mPaint.setColor(Color.BLACK);
-        mPaint.setStyle(Paint.Style.STROKE);
-
-        mPath = new Path();
-        ArrayList<float[]> path = StoreHousePath.getPath("AnLaiYe"/*"Ultra PTR"*/);
+    @Override
+    protected Path initSourcePath() {
+        Path sPath = new Path();
+        ArrayList<float[]> path = StoreHousePath.getPath("AnLaiYe");
         for (int i = 0; i < path.size(); i++) {
             float[] floats = path.get(i);
-            mPath.moveTo(floats[0], floats[1]);
-            mPath.lineTo(floats[2], floats[3]);
+            sPath.moveTo(floats[0], floats[1]);
+            sPath.lineTo(floats[2], floats[3]);
         }
-
-        mDstPath = new Path();
-
-        setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AnimUtils.startAnim(PathStoneHouseAnimView.this, mPath, mDstPath);
-            }
-        });
+        return sPath;
     }
-
 
     private final static long MAX_LENGTH = 400;
     PathMeasure pathMeasure = new PathMeasure();
@@ -75,19 +56,18 @@ public class PathStoneHouseAnimView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
         canvas.translate(20, 20);
         setBackgroundColor(Color.BLACK);
         mPaint.setColor(Color.GRAY);
-        canvas.drawPath(mPath, mPaint);
+        canvas.drawPath(mSourcePath, mPaint);
 
 
         mPaint.setColor(Color.WHITE);
-        //高仿StoneHouse效果 ,现在的做法很挫
+        //仿StoneHouse效果 ,现在的做法很挫
         stonePath = new Path();
 
         mPathLengthArray = new ArrayList<>();//顺序存放path的length
-        pathMeasure.setPath(mDstPath, false);
+        pathMeasure.setPath(mAnimPath, false);
         while (pathMeasure.getLength() != 0) {
             mPathLengthArray.add(pathMeasure.getLength());
             pathMeasure.nextContour();
@@ -107,7 +87,7 @@ public class PathStoneHouseAnimView extends View {
             }
         }
 
-        pathMeasure.setPath(mDstPath, false);
+        pathMeasure.setPath(mAnimPath, false);
         int i = 0;
         while (pathMeasure.getLength() != 0) {
             if (mPathNeedAddArray.get(i, false)) {

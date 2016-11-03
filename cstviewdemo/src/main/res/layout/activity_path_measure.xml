@@ -26,10 +26,7 @@
             app:pathColor="@android:color/white"
             app:pathWidth="5dp"
             app:svg="@drawable/first_vector" />-->
-    <!--    <com.mcxtzhang.cstviewdemo.widget.FlashView
-            android:background="@color/colorAccent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />-->
+    <!--   -->
 
     <!--        -->
     <!--    <com.mcxtzhang.cstviewdemo.widget.RightView
@@ -42,14 +39,54 @@
     android:layout_height="100dp"
     android:layout_marginTop="150dp"/>
 
-    <com.mcxtzhang.cstviewdemo.widget.PathAnimView
+    <com.mcxtzhang.cstviewdemo.widget.LoadingPathAnimView
+        android:id="@+id/fillView1"
         android:layout_width="wrap_content"
-        android:layout_height="100dp"
-        android:padding="20dp"/>
+        android:layout_height="100dp"/>
 
-    <com.mcxtzhang.cstviewdemo.widget.PathStoneHouseAnimView
+    <com.mcxtzhang.cstviewdemo.widget.StoreHouseAnimView
+        android:id="@+id/storeView1"
         android:layout_width="wrap_content"
         android:layout_height="100dp"
-        android:layout_marginTop="100dp"/>
+        android:layout_marginTop="105dp"/>
+
+    <com.mcxtzhang.cstviewdemo.widget.LoadingPathAnimView
+        android:id="@+id/fillView2"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:layout_marginTop="210dp"/>
+
+    <com.mcxtzhang.cstviewdemo.widget.StoreHouseAnimView
+        android:id="@+id/storeView2"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:layout_marginTop="315dp"/>
+    <!--    <com.mcxtzhang.cstviewdemo.widget.FlashView
+            android:background="@color/colorAccent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />-->
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:onClick="start"
+        android:text="动起来"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="100dp"
+        android:onClick="stop"
+        android:text="控制自己"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="200dp"
+        android:onClick="reset"
+        android:text="重置"/>
 
 </RelativeLayout>

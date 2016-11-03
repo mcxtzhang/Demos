@@ -8,7 +8,7 @@ import android.graphics.Path;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.mcxtzhang.cstviewdemo.outpututils.AnimUtils;
+import com.mcxtzhang.cstviewdemo.outpututils.PathAnimHelper;
 
 public class ErrorView extends View {
 
@@ -41,7 +41,7 @@ public class ErrorView extends View {
             @Override
             public void onClick(View v) {
                 //startAnim();
-                AnimUtils.startAnim(ErrorView.this, mPath, dstPath);
+                new PathAnimHelper(ErrorView.this, mPath, dstPath).startAnim();
             }
         });
     }

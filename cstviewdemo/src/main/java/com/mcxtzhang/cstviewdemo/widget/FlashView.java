@@ -82,30 +82,72 @@ public class FlashView extends View {
         });
 
 
+
+        final boolean isInfinite = true;
         AnimatorListenerAdapter endListener = new AnimatorListenerAdapter() {
             @Override
-            public void onAnimationEnd(Animator animation) {
+            public void onAnimationCancel(Animator animation) {
+                super.onAnimationCancel(animation);
+                Log.e("TAG", "onAnimationCancel: ");
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
                 mPathMeasure.nextContour();
+                if (mPathMeasure.getLength() == 0) {
+                    if (isInfinite) {
+                        mDst.reset();
+                        // 硬件加速的BUG
+                        mDst.lineTo(0, 0);
+                        mPathMeasure.setPath(mPath, false);
+                    } else {
+                        animation.end();
+                    }
+
+                }
+                Log.e("TAG", "onAnimationRepeat: ");
+                super.onAnimationRepeat(animation);
+            }
+
+            @Override
+            public void onAnimationStart(Animator animation) {
+                Log.d("TAG", "onAnimationStart() called with: animation = [" + animation + "]");
+                super.onAnimationStart(animation);
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                //mPathMeasure.nextContour();
                 Toast.makeText(context, "结束", Toast.LENGTH_SHORT).show();
-                Log.e("TAG", "onAnimationEnd: ");
-                animation.start();
+                Log.w("TAG", "onAnimationEnd: ");
 
             }
         };
         valueAnimator.addListener(endListener);
-        valueAnimator.setDuration(500);
+        valueAnimator.setDuration(100);
         valueAnimator.setInterpolator(new LinearInterpolator());
         //valueAnimator.setRepeatCount(ValueAnimator.INFINITE);
         setOnClickListener(new OnClickListener() {
+            boolean open = true;
+
             @Override
             public void onClick(View v) {
-                mDst.reset();
-                // 硬件加速的BUG
-                mDst.lineTo(0, 0);
-                mPathMeasure.setPath(mPath, false);
-                valueAnimator.start();
+                if (open) {
+                    open =false;
+                    mDst.reset();
+                    // 硬件加速的BUG
+                    mDst.lineTo(0, 0);
+                    valueAnimator.setRepeatCount(ValueAnimator.INFINITE);
+                    mPathMeasure.setPath(mPath, false);
+                    valueAnimator.start();
+                } else {
+                    valueAnimator.setRepeatCount(0);
+                    valueAnimator.end();
+                }
             }
         });
+
+
     }
 
     private float fraction;
