@@ -181,6 +181,9 @@ public class PathAnimHelper {
             @Override
             public void onAnimationRepeat(Animator animation) {
                 //Log.w("TAG", "onAnimationRepeat: ");
+                //每段path走完后，要补一下 某些情况会出现 animPath不满的情况
+                pathMeasure.getSegment(0, pathMeasure.getLength(), animPath, true);
+
                 //绘制完一条Path之后，再绘制下一条
                 pathMeasure.nextContour();
                 //长度为0 说明一次循环结束
