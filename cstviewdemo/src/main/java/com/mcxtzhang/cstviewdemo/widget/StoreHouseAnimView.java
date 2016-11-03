@@ -19,7 +19,7 @@ import java.util.ArrayList;
  * 时间： 2016/11/2.
  */
 
-public class StoreHouseAnimView extends BasePathAnimView {
+public class StoreHouseAnimView extends PathAnimView {
 
     public StoreHouseAnimView(Context context) {
         this(context, null);
@@ -31,20 +31,16 @@ public class StoreHouseAnimView extends BasePathAnimView {
 
     public StoreHouseAnimView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init();
-    }
-
-    @Override
-    protected Path initSourcePath() {
         Path sPath = new Path();
-        ArrayList<float[]> path = StoreHousePath.getPath("AnLaiYe");
+        ArrayList<float[]> path = StoreHousePath.getPath("ZhangXuTong");
         for (int i = 0; i < path.size(); i++) {
             float[] floats = path.get(i);
             sPath.moveTo(floats[0], floats[1]);
             sPath.lineTo(floats[2], floats[3]);
         }
-        return sPath;
+        setSourcePath(sPath);
     }
+
 
     private final static long MAX_LENGTH = 400;
     PathMeasure pathMeasure = new PathMeasure();

@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * 时间： 2016/11/3.
  */
 
-public class LoadingPathAnimView extends BasePathAnimView {
+public class LoadingPathAnimView extends PathAnimView {
     public LoadingPathAnimView(Context context) {
         this(context, null);
     }
@@ -26,18 +26,13 @@ public class LoadingPathAnimView extends BasePathAnimView {
 
     public LoadingPathAnimView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init();
-    }
-
-    @Override
-    protected Path initSourcePath() {
         Path sPath = new Path();
-        ArrayList<float[]> path = StoreHousePath.getPath("AnLaiYe");
+        ArrayList<float[]> path = StoreHousePath.getPath("ZhangXuTong");
         for (int i = 0; i < path.size(); i++) {
             float[] floats = path.get(i);
             sPath.moveTo(floats[0], floats[1]);
             sPath.lineTo(floats[2], floats[3]);
         }
-        return sPath;
+        setSourcePath(sPath);
     }
 }

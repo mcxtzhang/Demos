@@ -42,25 +42,31 @@
     <com.mcxtzhang.cstviewdemo.widget.LoadingPathAnimView
         android:id="@+id/fillView1"
         android:layout_width="wrap_content"
-        android:layout_height="100dp"/>
+        android:layout_height="60dp"/>
 
     <com.mcxtzhang.cstviewdemo.widget.StoreHouseAnimView
         android:id="@+id/storeView1"
         android:layout_width="wrap_content"
-        android:layout_height="100dp"
-        android:layout_marginTop="105dp"/>
+        android:layout_height="60dp"
+        android:layout_marginTop="65dp"/>
 
     <com.mcxtzhang.cstviewdemo.widget.LoadingPathAnimView
         android:id="@+id/fillView2"
         android:layout_width="wrap_content"
-        android:layout_height="100dp"
-        android:layout_marginTop="210dp"/>
+        android:layout_height="60dp"
+        android:layout_marginTop="130dp"/>
 
     <com.mcxtzhang.cstviewdemo.widget.StoreHouseAnimView
         android:id="@+id/storeView2"
         android:layout_width="wrap_content"
-        android:layout_height="100dp"
-        android:layout_marginTop="315dp"/>
+        android:layout_height="60dp"
+        android:layout_marginTop="195dp"/>
+
+    <com.mcxtzhang.cstviewdemo.widget.PathAnimView
+        android:id="@+id/pathAnimView1"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_marginTop="260dp"/>
     <!--    <com.mcxtzhang.cstviewdemo.widget.FlashView
             android:background="@color/colorAccent"
             android:layout_width="wrap_content"

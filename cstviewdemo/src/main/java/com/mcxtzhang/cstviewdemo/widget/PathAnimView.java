@@ -11,30 +11,32 @@ import android.view.View;
 import com.mcxtzhang.cstviewdemo.outpututils.PathAnimHelper;
 
 /**
- * 介绍：一个路径动画的BaseView
+ * 介绍：一个路径动画的View
  * 利用源Path绘制“底”
  * 利用动画Path 绘制 填充动画
+ * <p>
+ * 一个SourcePath 内含多段Path，循环取出每段Path，并做一个动画,
  * <p>
  * 作者：zhangxutong
  * 邮箱：zhangxutong@imcoming.com
  * 时间： 2016/11/2.
  */
 
-public abstract class BasePathAnimView extends View {
-    protected Path mSourcePath;//源Path
+public class PathAnimView extends View {
+    protected Path mSourcePath;//需要做动画的源Path
     protected Path mAnimPath;//用于绘制动画的Path
     protected Paint mPaint;
     protected PathAnimHelper mPathAnimHelper;//Path动画工具类
 
-    public BasePathAnimView(Context context) {
+    public PathAnimView(Context context) {
         this(context, null);
     }
 
-    public BasePathAnimView(Context context, AttributeSet attrs) {
+    public PathAnimView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public BasePathAnimView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public PathAnimView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
@@ -46,8 +48,14 @@ public abstract class BasePathAnimView extends View {
         return mSourcePath;
     }
 
-    public BasePathAnimView setSourcePath(Path sourcePath) {
+    /**
+     * 这个方法可能会经常用到，用于设置源Path
+     * @param sourcePath
+     * @return
+     */
+    public PathAnimView setSourcePath(Path sourcePath) {
         mSourcePath = sourcePath;
+        initAnimHelper();
         return this;
     }
 
@@ -55,7 +63,7 @@ public abstract class BasePathAnimView extends View {
         return mPaint;
     }
 
-    public BasePathAnimView setPaint(Paint paint) {
+    public PathAnimView setPaint(Paint paint) {
         mPaint = paint;
         return this;
     }
@@ -64,8 +72,9 @@ public abstract class BasePathAnimView extends View {
         return mPathAnimHelper;
     }
 
-    public BasePathAnimView setPathAnimHelper(PathAnimHelper pathAnimHelper) {
+    public PathAnimView setPathAnimHelper(PathAnimHelper pathAnimHelper) {
         mPathAnimHelper = pathAnimHelper;
+        initAnimHelper();
         return this;
     }
 
@@ -78,24 +87,21 @@ public abstract class BasePathAnimView extends View {
         mPaint.setAntiAlias(true);
         mPaint.setStyle(Paint.Style.STROKE);
 
-        //源路径 通过 abstract函数返回
-        mSourcePath = initSourcePath();
-
         //动画路径只要初始化即可
         mAnimPath = new Path();
 
         //初始化动画帮助类
-        mPathAnimHelper = new PathAnimHelper(this, mSourcePath, mAnimPath);
-        //mPathAnimHelper = new PathAnimHelper(this, mSourcePath, mAnimPath, 1500, true);
+        initAnimHelper();
 
     }
 
     /**
-     * 返回需要做动画的SourcePath
-     *
-     * @return
+     * //初始化动画帮助类
      */
-    protected abstract Path initSourcePath();
+    private void initAnimHelper() {
+        mPathAnimHelper = new PathAnimHelper(this, mSourcePath, mAnimPath);
+        //mPathAnimHelper = new PathAnimHelper(this, mSourcePath, mAnimPath, 1500, true);
+    }
 
     /**
      * draw FUNC
@@ -117,7 +123,7 @@ public abstract class BasePathAnimView extends View {
     /**
      * 设置动画 循环
      */
-    public BasePathAnimView setAnimInfinite(boolean infinite) {
+    public PathAnimView setAnimInfinite(boolean infinite) {
         mPathAnimHelper.setInfinite(infinite);
         return this;
     }
@@ -125,7 +131,7 @@ public abstract class BasePathAnimView extends View {
     /**
      * 设置动画 总时长
      */
-    public BasePathAnimView setAnimTime(long animTime) {
+    public PathAnimView setAnimTime(long animTime) {
         mPathAnimHelper.setAnimTime(animTime);
         return this;
     }
