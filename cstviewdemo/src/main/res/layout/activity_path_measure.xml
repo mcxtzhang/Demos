@@ -67,6 +67,12 @@
         android:layout_width="wrap_content"
         android:layout_height="60dp"
         android:layout_marginTop="260dp"/>
+
+    <com.mcxtzhang.cstviewdemo.widget.StoreHouseAnimView
+        android:id="@+id/storeView3"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_marginTop="325dp"/>
     <!--    <com.mcxtzhang.cstviewdemo.widget.FlashView
             android:background="@color/colorAccent"
             android:layout_width="wrap_content"

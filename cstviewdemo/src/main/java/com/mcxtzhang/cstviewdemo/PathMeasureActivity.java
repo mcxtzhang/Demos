@@ -15,6 +15,7 @@ public class PathMeasureActivity extends AppCompatActivity {
     StoreHouseAnimView storeView1;
     StoreHouseAnimView storeView2;
     PathAnimView pathAnimView1;
+    StoreHouseAnimView storeView3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,16 @@ public class PathMeasureActivity extends AppCompatActivity {
         sPath.moveTo(0, 0);
         sPath.addCircle(40, 40, 30, Path.Direction.CW);
         pathAnimView1.setSourcePath(sPath);
+
+        storeView3 = (StoreHouseAnimView) findViewById(R.id.storeView3);
+        sPath = new Path();
+        for (int i = 1; i < 20; i=i+2) {
+            sPath.moveTo(5 * i, 5 * i);
+            sPath.lineTo(50 * i, 5 * i);
+            sPath.moveTo(55 * i, 5 * i);
+            sPath.lineTo(100 * i, 5 * i);
+        }
+        storeView3.setSourcePath(sPath);
     }
 
     public void start(View view) {
@@ -39,6 +50,7 @@ public class PathMeasureActivity extends AppCompatActivity {
         storeView1.startAnim();
         storeView2.setAnimTime(1000).startAnim();
         pathAnimView1.startAnim();
+        storeView3.setAnimTime(10000).startAnim();
     }
 
     public void stop(View view) {
@@ -47,6 +59,7 @@ public class PathMeasureActivity extends AppCompatActivity {
         storeView1.stopAnim();
         storeView2.stopAnim();
         pathAnimView1.stopAnim();
+        storeView3.stopAnim();
     }
 
     public void reset(View view) {
@@ -55,5 +68,6 @@ public class PathMeasureActivity extends AppCompatActivity {
         storeView1.resetAnim();
         storeView2.resetAnim();
         pathAnimView1.resetAnim();
+        storeView3.resetAnim();
     }
 }
