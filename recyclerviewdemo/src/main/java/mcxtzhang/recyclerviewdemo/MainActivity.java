@@ -3,6 +3,7 @@ package mcxtzhang.recyclerviewdemo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         mRv.setLayoutManager(new FlowLayoutManager());//自己写的流式布局
 
         mRv.setLayoutManager(new LinearLayoutManager(this/*,LinearLayoutManager.HORIZONTAL,false*/));
+        new LinearSnapHelper().attachToRecyclerView(mRv);
         //mRv.setLayoutManager(new CstSysLM(this));
 
         mRv.addOnItemTouchListener(new OnItemTouchListener<ViewHolder, TestBean>(this, mRv, mDatas) {

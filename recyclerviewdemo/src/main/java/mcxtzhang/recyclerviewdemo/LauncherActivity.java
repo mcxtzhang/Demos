@@ -8,6 +8,7 @@ import android.view.View;
 
 import mcxtzhang.recyclerviewdemo.databinding.ActivityLauncherBinding;
 import mcxtzhang.recyclerviewdemo.generalizerv.BaseRecyclerViewActivity;
+import mcxtzhang.recyclerviewdemo.nestrv.ViewPagerNestRvActivity;
 
 public class LauncherActivity extends AppCompatActivity {
     ActivityLauncherBinding mBinding;
@@ -20,6 +21,12 @@ public class LauncherActivity extends AppCompatActivity {
         public void onCstLmRv(View view) {
             startActivity(new Intent(LauncherActivity.this, MainActivity.class));
         }
+
+        public void onVpNestRv(View view) {
+            startActivity(new Intent(LauncherActivity.this, ViewPagerNestRvActivity.class));
+        }
+
+
     }
 
     @Override
