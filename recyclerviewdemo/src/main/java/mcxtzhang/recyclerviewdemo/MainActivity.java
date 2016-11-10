@@ -3,6 +3,7 @@ package mcxtzhang.recyclerviewdemo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -38,7 +39,11 @@ public class MainActivity extends AppCompatActivity {
         //mRv.setLayoutManager(new ZxtCstLM2());//自己的第一个成品
         mRv.setLayoutManager(new FlowLayoutManager());//自己写的流式布局
 
-        mRv.setLayoutManager(new LinearLayoutManager(this/*,LinearLayoutManager.HORIZONTAL,false*/));
+        mRv.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+
+        LinearSnapHelper mLinearSnapHelper = new LinearSnapHelper();
+        mLinearSnapHelper.attachToRecyclerView(mRv);
+
         //mRv.setLayoutManager(new CstSysLM(this));
 
         mRv.addOnItemTouchListener(new OnItemTouchListener<ViewHolder, TestBean>(this, mRv, mDatas) {
@@ -56,11 +61,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         mRv.setAdapter(mAdapter = new CommonAdapter<TestBean>(this, R.layout.item_rv_1, mDatas) {
-
-            @Override
-            public int getItemViewType(int position) {
-                return position;
-            }
 
             private int lastHeight = 0;
 

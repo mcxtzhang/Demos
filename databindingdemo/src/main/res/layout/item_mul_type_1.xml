@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
-        <import type="com.mcxtzhang.databindingdemo.recyclerview.m.FirstBindingBean" />
+        <import type="com.mcxtzhang.databindingdemo.recyclerview.m.FirstBindingBean"/>
 
         <variable
             name="data"
-            type="FirstBindingBean" />
+            type="FirstBindingBean"/>
+
+        <variable
+            name="presenter"
+            type="com.mcxtzhang.databindingdemo.recyclerview.RecyclerViewActivity.ItemPresenter"/>
     </data>
 
 
@@ -18,25 +22,28 @@
         android:layout_height="wrap_content"
         android:layout_margin="1dp"
         android:background="#123456"
+
         android:orientation="horizontal">
 
         <ImageView
+            android:clickable="true"
+            android:onClick="@{presenter::OnItemClick}"
             android:layout_width="200dp"
             android:layout_height="200dp"
             app:netUrl="@{data.url}"
-            tools:src="@mipmap/ic_launcher" />
+            tools:src="@mipmap/ic_launcher"/>
 
         <TextView
             android:id="@+id/tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{data.name}"
-            tools:text="测试多种" />
+            tools:text="测试多种"/>
 
         <CheckBox
             android:id="@+id/cb"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 </layout>

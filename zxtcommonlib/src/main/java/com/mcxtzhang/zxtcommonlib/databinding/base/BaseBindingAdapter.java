@@ -67,6 +67,7 @@ public class BaseBindingAdapter<D, B extends ViewDataBinding> extends RecyclerVi
     @Override
     public void onBindViewHolder(BaseBindingVH<B> holder, int position) {
         holder.getBinding().setVariable(BR.data, mDatas.get(position));
+        holder.getBinding().setVariable(BR.presenter,getItemPresenter());
         holder.getBinding().executePendingBindings();
     }
 
@@ -75,7 +76,16 @@ public class BaseBindingAdapter<D, B extends ViewDataBinding> extends RecyclerVi
         return null != mDatas ? mDatas.size() : 0;
     }
 
+    private Object mItemPresenter;
 
+    public Object getItemPresenter() {
+        return mItemPresenter;
+    }
+
+    public BaseBindingAdapter setItemPresenter(Object itemPresenter) {
+        mItemPresenter = itemPresenter;
+        return this;
+    }
 
     /**
      * 刷新数据，初始化数据

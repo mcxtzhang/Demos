@@ -11,4 +11,10 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.mcxtzhang.github.jobscheduler.JobSchedulerActivity">
 
+    <com.mcxtzhang.pathanimlib.StoreHouseAnimView
+        android:id="@+id/pathAnimView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/black"
+        android:padding="5dp"/>
 </RelativeLayout>

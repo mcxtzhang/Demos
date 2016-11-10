@@ -41,5 +41,6 @@ public class ZhengZeClass {
         String s2= new String("a");
         System.out.print("s1:"+s1/*.toUpperCase()*/);
         System.out.print("s2:"+s2.toUpperCase());
+
     }
 }
