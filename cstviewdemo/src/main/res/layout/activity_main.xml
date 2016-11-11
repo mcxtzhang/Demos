@@ -3,7 +3,6 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/ic_add_black_24dp"
                 tools:context="com.mcxtzhang.cstviewdemo.MainActivity">
     <!--
         <com.mcxtzhang.cstviewdemo.widget.CanvasView
@@ -15,7 +14,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>-->
 
-    <com.mcxtzhang.cstviewdemo.widget.FontView
+    <!--    <com.mcxtzhang.cstviewdemo.widget.FontView
+            android:background="#88123456"
+            android:layout_width="wrap_content"
+            android:layout_height="300dp"/>-->
+    <!--<com.mcxtzhang.cstviewdemo.widget.MaskFilterView
         android:layout_width="wrap_content"
-        android:layout_height="60dp"/>
+        android:layout_height="wrap_content"/>-->
+
+    <com.mcxtzhang.cstviewdemo.widget.PathPainterEffect
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
 </RelativeLayout>
