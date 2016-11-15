@@ -302,6 +302,55 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+
+        findViewById(R.id.tv).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Observable.just(1, 2)
+                        .subscribeOn(Schedulers.io())
+                        .map(new Func1<Integer, String>() {
+                            @Override
+                            public String call(Integer integer) {
+                                Log.e(TAG, "map1: " + integer + " map1"+", xiancheng:"+Thread.currentThread());
+                                return integer + " map1";
+                            }
+                        })
+                        .observeOn(Schedulers.io())
+                        .map(new Func1<String, String>() {
+                            @Override
+                            public String call(String s) {
+                                Log.e(TAG, "map2: " + s + " map2"+", xiancheng:"+Thread.currentThread());
+                                return s + " map2";
+                            }
+                        })
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .map(new Func1<String, String>() {
+                            @Override
+                            public String call(String s) {
+                                Log.e(TAG, "map3: " + s + " map3"+", xiancheng:"+Thread.currentThread());
+                                return s + " map3";
+                            }
+                        })
+/*                        .subscribeOn(Schedulers.io())
+                        .observeOn(Schedulers.io())*/
+                        .subscribe(new Subscriber<String>() {
+                            @Override
+                            public void onCompleted() {
+                                Log.e(TAG, "onCompleted: "+", xiancheng:"+Thread.currentThread());
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                Log.e(TAG, "onError: "+", xiancheng:"+Thread.currentThread());
+                            }
+
+                            @Override
+                            public void onNext(String s) {
+                                Log.e(TAG, "onNext: "+s+", xiancheng:"+Thread.currentThread());
+                            }
+                        });
+            }
+        });
     }
 
 
