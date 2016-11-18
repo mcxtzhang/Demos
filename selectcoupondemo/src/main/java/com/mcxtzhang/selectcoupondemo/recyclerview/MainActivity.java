@@ -2,9 +2,9 @@ package com.mcxtzhang.selectcoupondemo.recyclerview;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 
 import com.mcxtzhang.selectcoupondemo.R;
 import com.mcxtzhang.selectcoupondemo.TestBean;
@@ -22,12 +22,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mRv = (RecyclerView) findViewById(R.id.rv);
-        //mRv.setLayoutManager(new LinearLayoutManager(this));
-        mRv.setLayoutManager(mStaggeredGridLayoutManager = new StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL));
+        mRv.setLayoutManager(new LinearLayoutManager(this));
+        //mRv.setLayoutManager(mStaggeredGridLayoutManager = new StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL));
         mRv.setAdapter(new CouponAdapter(initDatas(), this, mRv));
 
 
-        mRv.post(new Runnable() {
+/*        mRv.post(new Runnable() {
             @Override
             public void run() {
                 int[] firstVisibleItemPositions = mStaggeredGridLayoutManager.findFirstVisibleItemPositions(null);
@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Log.d("zxt", "onCreate() called with: lastVisibleItemPositions = [" + lastVisibleItemPositions[lastVisibleItemPositions.length - 1] + "]");
             }
-        });
+        });*/
     }
 
     public List<TestBean> initDatas() {
