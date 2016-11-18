@@ -1,0 +1,22 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="mcxtzhang.recyclerviewdemo.nestrv.NestRvFragment1">
+
+        <mcxtzhang.recyclerviewdemo.nestrv.BugR
+            android:id="@+id/rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></mcxtzhang.recyclerviewdemo.nestrv.BugR>
+
+<!--        <mcxtzhang.recyclerviewdemo.nestrv.CstViewForBug
+            android:focusable="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>-->
+
+    </FrameLayout>
+</layout>
+
+

@@ -51,7 +51,7 @@ public class PathPainterEffect extends View implements View.OnClickListener{
 
         mAnimator = ValueAnimator.ofFloat(1, 0);
         mAnimator.setInterpolator(/*new AccelerateDecelerateInterpolator()*/ new LinearInterpolator());
-        mAnimator.setDuration(500);
+        mAnimator.setDuration(5000);
         mAnimator.setRepeatCount(ValueAnimator.INFINITE);
         mAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -73,7 +73,9 @@ public class PathPainterEffect extends View implements View.OnClickListener{
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        mEffect = new DashPathEffect(new float[]{100, 100},  200*fraction);
+        //第二个参数表示先吞掉多少
+        //第一个参数的 数组里 表示实线和虚线
+        mEffect = new DashPathEffect(new float[]{mPathMeasure.getLength(), 200},  mPathMeasure.getLength()*0.5f);
         mPaint.setPathEffect(mEffect);
 
         canvas.drawPath(mPath, mPaint);

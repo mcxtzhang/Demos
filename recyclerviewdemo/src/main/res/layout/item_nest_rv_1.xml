@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="data"
+            type="mcxtzhang.recyclerviewdemo.nestrv.TestBean"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{data.name}"/>
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                bind:url="@{data.url}"/>
+
+            <mcxtzhang.recyclerviewdemo.nestrv.BugR
+                android:id="@+id/nestRv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </mcxtzhang.recyclerviewdemo.nestrv.BugR>
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            bind:url="@{data.name}"/>
+    </LinearLayout>
+
+
+</layout>
