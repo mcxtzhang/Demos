@@ -41,5 +41,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:layout_marginTop="10dp"
+        android:background="@color/colorAccent"
         android:padding="5dp"/>
 </RelativeLayout>
