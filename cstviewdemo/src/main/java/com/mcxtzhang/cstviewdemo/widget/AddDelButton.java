@@ -1,5 +1,8 @@
 package com.mcxtzhang.cstviewdemo.widget;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -133,9 +136,6 @@ public class AddDelButton extends View {
         setMeasuredDimension(wSize, hSize);
     }
 
-    private float mAnimOffset = 0;
-    private int mAnimAlpha = 255;
-    private int mAnimRotate = 0;
 
     private int mLeft, mTop;
     private int mWidth, mHeight;
@@ -148,6 +148,12 @@ public class AddDelButton extends View {
         mWidth = w;
         mHeight = h;
     }
+
+    private float mAnimOffset = 0;
+    private int mAnimAlpha = 255;
+    private int mAnimRotate = 0;
+
+    private float mAnimFraction;
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -185,7 +191,19 @@ public class AddDelButton extends View {
 
 
         //数量
+        canvas.save();
+        //平移动画
+        canvas.translate(mAnimFraction * (mGap + mRadius), 0);
+        //旋转动画,旋转中心点，x 是绘图中心,y 是控件中心
+        canvas.rotate(360 * mAnimFraction,
+                /*mAnimFraction * (mGap + mRadius) +*/mGap + mLeft + mRadius * 2 + mTextPaint.measureText(mCount + "") / 2,
+                mTop + mRadius);
+        //透明度动画
+        mTextPaint.setAlpha((int) (255 * (1 - mAnimFraction)));
+        //是没有动画的普通写法,x left, y baseLine
         canvas.drawText(mCount + "", mGap + mLeft + mRadius * 2, mTop + mRadius - (mFontMetrics.top + mFontMetrics.bottom) / 2, mTextPaint);
+        canvas.restore();
+
 
         //右边
         if (mCount < mMaxCount) {
@@ -251,10 +269,9 @@ public class AddDelButton extends View {
     private void onCountChangedListener() {
         if (mCount == 0) {
             //动画
-
-            ValueAnimator valueAnimator = ValueAnimator.ofFloat(0, mRadius * 2 + mGap * 2 + mTextPaint.measureText(mCount + ""));
-            valueAnimator.setDuration(350);
-            valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            AnimatorSet animatorSet = new AnimatorSet();
+            ValueAnimator translateDel = ValueAnimator.ofFloat(0, mRadius * 2 + mGap * 2 + mTextPaint.measureText(mCount + ""));
+            translateDel.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
                     //透明度 旋转 位移
@@ -263,10 +280,8 @@ public class AddDelButton extends View {
                     invalidate();
                 }
             });
-
-            ValueAnimator alpha = ValueAnimator.ofInt(255, 0);
-            alpha.setDuration(350);
-            alpha.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            ValueAnimator alphaDel = ValueAnimator.ofInt(255, 0);
+            alphaDel.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
                     //透明度 旋转 位移
@@ -275,10 +290,8 @@ public class AddDelButton extends View {
                     invalidate();
                 }
             });
-
-            ValueAnimator rotate = ValueAnimator.ofInt(0, 360);
-            rotate.setDuration(350);
-            rotate.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            ValueAnimator rotateDel = ValueAnimator.ofInt(0, 360);
+            rotateDel.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
                     //透明度 旋转 位移
@@ -287,9 +300,24 @@ public class AddDelButton extends View {
                     invalidate();
                 }
             });
-            rotate.start();
-            alpha.start();
-            valueAnimator.start();
+
+            ValueAnimator animDel = ValueAnimator.ofFloat(0, 1);
+            animDel.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    mAnimFraction = (float) animation.getAnimatedValue();
+                    invalidate();
+                }
+            });
+            animatorSet.playTogether(translateDel, alphaDel, rotateDel, animDel);
+            animatorSet.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+
+                }
+            });
+            animatorSet.setDuration(1700);
+            animatorSet.start();
 
         } else {
             mAnimRotate = 0;
