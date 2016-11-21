@@ -254,7 +254,7 @@ public class AddDelButton extends View {
     private void onDelClick() {
         if (mCount > 0) {
             mCount--;
-            onCountChangedListener();
+            onCountDelListener();
         }
 
     }
@@ -262,11 +262,72 @@ public class AddDelButton extends View {
     private void onAddClick() {
         if (mCount < mMaxCount) {
             mCount++;
-            onCountChangedListener();
+            onCountAddListener();
         }
     }
 
-    private void onCountChangedListener() {
+    private void onCountAddListener() {
+        if (mCount == 1) {
+            //动画
+            AnimatorSet animatorSet = new AnimatorSet();
+            ValueAnimator translateDel = ValueAnimator.ofFloat(mRadius * 2 + mGap * 2 + mTextPaint.measureText(mCount + ""),0);
+            translateDel.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    //透明度 旋转 位移
+                    mAnimOffset = (float) animation.getAnimatedValue();
+                    Log.d("TAG", "mAnimOffset() called with: animation = [" + mAnimOffset + "]");
+                    invalidate();
+                }
+            });
+            ValueAnimator alphaDel = ValueAnimator.ofInt(0, 255);
+            alphaDel.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    //透明度 旋转 位移
+                    mAnimAlpha = (int) animation.getAnimatedValue();
+                    Log.d("TAG", "mAnimAlpha() called with: animation = [" + mAnimAlpha + "]");
+                    invalidate();
+                }
+            });
+            ValueAnimator rotateDel = ValueAnimator.ofInt(360, 0);
+            rotateDel.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    //透明度 旋转 位移
+                    mAnimRotate = (int) animation.getAnimatedValue();
+                    Log.d("TAG", "mAnimRotate() called with: animation = [" + mAnimRotate + "]");
+                    invalidate();
+                }
+            });
+
+            ValueAnimator animDel = ValueAnimator.ofFloat(1, 0);
+            animDel.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    mAnimFraction = (float) animation.getAnimatedValue();
+                    invalidate();
+                }
+            });
+            animatorSet.playTogether(translateDel, alphaDel, rotateDel, animDel);
+            animatorSet.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+
+                }
+            });
+            animatorSet.setDuration(350);
+            animatorSet.start();
+
+        } else {
+            mAnimRotate = 0;
+            mAnimAlpha = 255;
+            mAnimOffset = 0;
+            invalidate();
+        }
+    }
+
+    private void onCountDelListener() {
         if (mCount == 0) {
             //动画
             AnimatorSet animatorSet = new AnimatorSet();
@@ -316,7 +377,7 @@ public class AddDelButton extends View {
 
                 }
             });
-            animatorSet.setDuration(1700);
+            animatorSet.setDuration(350);
             animatorSet.start();
 
         } else {
