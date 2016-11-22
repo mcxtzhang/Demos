@@ -1,8 +1,5 @@
-package com.mcxtzhang.cstviewdemo.widget;
+package com.mcxtzhang.cstviewdemo.widget.adddelview;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.AnimatorSet;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -10,7 +7,6 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Region;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
@@ -23,12 +19,19 @@ import android.view.View;
  * 时间： 2016/11/18.
  */
 
-public class AddDelButton extends View {
+public class AddDelView extends View implements IAddDelViewInterface {
+    private static final String TAG = "zxt/" + AddDelView.class.getName();
+    //控件 paddingLeft paddingTop
+    private int mLeft, mTop;
+    //宽高
+    private int mWidth, mHeight;
+
     //加减的圆的Path的Region
     private Region mAddRegion, mDelRegion;
     private Path mAddPath, mDelPath;
 
     private Paint mPaint;
+    //可用、不可用 颜色
     private int mEnableColor;
     private int mDisableColor;
 
@@ -50,16 +53,23 @@ public class AddDelButton extends View {
     private Paint mTextPaint;
     private Paint.FontMetrics mFontMetrics;
 
+    //动画的基准值 动画：减 0~1, 加 1~0 ,
+    // 普通状态下都显示时是0
+    private ValueAnimator mAnimAdd, mAniDel;
+    private float mAnimFraction;
 
-    public AddDelButton(Context context) {
+    //点击回调
+    private IAddDelViewInterface.onAddDelListener mOnAddDelListener;
+
+    public AddDelView(Context context) {
         this(context, null);
     }
 
-    public AddDelButton(Context context, AttributeSet attrs) {
+    public AddDelView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public AddDelButton(Context context, AttributeSet attrs, int defStyleAttr) {
+    public AddDelView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs, defStyleAttr);
     }
@@ -68,8 +78,29 @@ public class AddDelButton extends View {
         return mCount;
     }
 
-    public AddDelButton setCount(int count) {
+    /**
+     * 设置当前数量
+     *
+     * @param count
+     * @return
+     */
+    public AddDelView setCount(int count) {
         mCount = count;
+        return this;
+    }
+
+    public onAddDelListener getOnAddDelListener() {
+        return mOnAddDelListener;
+    }
+
+    /**
+     * 设置加减监听器
+     *
+     * @param onAddDelListener
+     * @return
+     */
+    public AddDelView setOnAddDelListener(onAddDelListener onAddDelListener) {
+        mOnAddDelListener = onAddDelListener;
         return this;
     }
 
@@ -99,6 +130,28 @@ public class AddDelButton extends View {
         mTextPaint.setTextSize(mTestSize);
         mFontMetrics = mTextPaint.getFontMetrics();
 
+
+        //动画
+        mAnimAdd = ValueAnimator.ofFloat(1, 0);
+        mAnimAdd.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                mAnimFraction = (float) animation.getAnimatedValue();
+                invalidate();
+            }
+        });
+        mAnimAdd.setDuration(350);
+
+        //动画
+        mAniDel = ValueAnimator.ofFloat(0, 1);
+        mAniDel.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                mAnimFraction = (float) animation.getAnimatedValue();
+                invalidate();
+            }
+        });
+        mAniDel.setDuration(350);
     }
 
     @Override
@@ -136,10 +189,6 @@ public class AddDelButton extends View {
         setMeasuredDimension(wSize, hSize);
     }
 
-
-    private int mLeft, mTop;
-    private int mWidth, mHeight;
-
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
@@ -149,26 +198,27 @@ public class AddDelButton extends View {
         mHeight = h;
     }
 
-    private float mAnimOffset = 0;
-    private int mAnimAlpha = 255;
-    private int mAnimRotate = 0;
-
-    private float mAnimFraction;
-
     @Override
     protected void onDraw(Canvas canvas) {
+        //动画 mAnimFraction ：减 0~1, 加 1~0 ,
+        //动画位移Max,
+        float animOffsetMax = (mRadius * 2 + mGap * 2 + mTextPaint.measureText(mCount + ""));
+        //透明度动画的基准
+        int animAlphaMax = 255;
+        int animRotateMax = 360;
+
         //左边
         if (mCount > 0) {
             mPaint.setColor(mEnableColor);
         } else {
-            //mPaint.setColor(Color.TRANSPARENT);
+            mPaint.setColor(mDisableColor);
         }
-        mPaint.setAlpha(mAnimAlpha);
+        mPaint.setAlpha((int) (animAlphaMax * (1 - mAnimFraction)));
 
 
         mPaint.setStrokeWidth(mCircleWidth);
         mDelPath.reset();
-        mDelPath.addCircle(mAnimOffset + mLeft + mRadius, mTop + mRadius, mRadius, Path.Direction.CW);
+        mDelPath.addCircle(animOffsetMax * mAnimFraction + mLeft + mRadius, mTop + mRadius, mRadius, Path.Direction.CW);
         mDelRegion.setPath(mDelPath, new Region(mLeft, mTop, mWidth - getPaddingRight(), mHeight - getPaddingBottom()));
         //canvas.drawCircle(mAnimOffset + mLeft + mRadius, mTop + mRadius, mRadius, mPaint);
         canvas.drawPath(mDelPath, mPaint);
@@ -179,8 +229,8 @@ public class AddDelButton extends View {
 
         //旋转动画
         canvas.save();
-        canvas.translate(mAnimOffset + mLeft + mRadius, mTop + mRadius);
-        canvas.rotate(mAnimRotate);
+        canvas.translate(animOffsetMax * mAnimFraction + mLeft + mRadius, mTop + mRadius);
+        canvas.rotate((int) (animRotateMax * (1 - mAnimFraction)));
         /*canvas.drawLine(mAnimOffset + mLeft + mRadius / 2, mTop + mRadius,
                 mAnimOffset + mLeft + mRadius / 2 + mRadius, mTop + mRadius,
                 mPaint);*/
@@ -255,6 +305,13 @@ public class AddDelButton extends View {
         if (mCount > 0) {
             mCount--;
             onCountDelListener();
+            if (null != mOnAddDelListener) {
+                mOnAddDelListener.onDelSuccess(mCount);
+            }
+        } else {
+            if (null != mOnAddDelListener) {
+                mOnAddDelListener.onDelFaild(mCount, onAddDelListener.FailType.COUNT_MIN);
+            }
         }
 
     }
@@ -263,127 +320,36 @@ public class AddDelButton extends View {
         if (mCount < mMaxCount) {
             mCount++;
             onCountAddListener();
+            if (null != mOnAddDelListener) {
+                mOnAddDelListener.onAddSuccess(mCount);
+            }
+        } else {
+            if (null != mOnAddDelListener) {
+                mOnAddDelListener.onAddFailed(mCount, onAddDelListener.FailType.COUNT_MAX);
+            }
         }
     }
 
     private void onCountAddListener() {
         if (mCount == 1) {
-            //动画
-            AnimatorSet animatorSet = new AnimatorSet();
-            ValueAnimator translateDel = ValueAnimator.ofFloat(mRadius * 2 + mGap * 2 + mTextPaint.measureText(mCount + ""),0);
-            translateDel.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    //透明度 旋转 位移
-                    mAnimOffset = (float) animation.getAnimatedValue();
-                    Log.d("TAG", "mAnimOffset() called with: animation = [" + mAnimOffset + "]");
-                    invalidate();
-                }
-            });
-            ValueAnimator alphaDel = ValueAnimator.ofInt(0, 255);
-            alphaDel.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    //透明度 旋转 位移
-                    mAnimAlpha = (int) animation.getAnimatedValue();
-                    Log.d("TAG", "mAnimAlpha() called with: animation = [" + mAnimAlpha + "]");
-                    invalidate();
-                }
-            });
-            ValueAnimator rotateDel = ValueAnimator.ofInt(360, 0);
-            rotateDel.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    //透明度 旋转 位移
-                    mAnimRotate = (int) animation.getAnimatedValue();
-                    Log.d("TAG", "mAnimRotate() called with: animation = [" + mAnimRotate + "]");
-                    invalidate();
-                }
-            });
-
-            ValueAnimator animDel = ValueAnimator.ofFloat(1, 0);
-            animDel.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    mAnimFraction = (float) animation.getAnimatedValue();
-                    invalidate();
-                }
-            });
-            animatorSet.playTogether(translateDel, alphaDel, rotateDel, animDel);
-            animatorSet.addListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-
-                }
-            });
-            animatorSet.setDuration(350);
-            animatorSet.start();
-
+            if (mAniDel != null && mAniDel.isRunning()) {
+                mAniDel.end();
+            }
+            mAnimAdd.start();
         } else {
-            mAnimRotate = 0;
-            mAnimAlpha = 255;
-            mAnimOffset = 0;
+            mAnimFraction = 0;
             invalidate();
         }
     }
 
     private void onCountDelListener() {
         if (mCount == 0) {
-            //动画
-            AnimatorSet animatorSet = new AnimatorSet();
-            ValueAnimator translateDel = ValueAnimator.ofFloat(0, mRadius * 2 + mGap * 2 + mTextPaint.measureText(mCount + ""));
-            translateDel.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    //透明度 旋转 位移
-                    mAnimOffset = (float) animation.getAnimatedValue();
-                    Log.d("TAG", "mAnimOffset() called with: animation = [" + mAnimOffset + "]");
-                    invalidate();
-                }
-            });
-            ValueAnimator alphaDel = ValueAnimator.ofInt(255, 0);
-            alphaDel.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    //透明度 旋转 位移
-                    mAnimAlpha = (int) animation.getAnimatedValue();
-                    Log.d("TAG", "mAnimAlpha() called with: animation = [" + mAnimAlpha + "]");
-                    invalidate();
-                }
-            });
-            ValueAnimator rotateDel = ValueAnimator.ofInt(0, 360);
-            rotateDel.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    //透明度 旋转 位移
-                    mAnimRotate = (int) animation.getAnimatedValue();
-                    Log.d("TAG", "mAnimRotate() called with: animation = [" + mAnimRotate + "]");
-                    invalidate();
-                }
-            });
-
-            ValueAnimator animDel = ValueAnimator.ofFloat(0, 1);
-            animDel.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    mAnimFraction = (float) animation.getAnimatedValue();
-                    invalidate();
-                }
-            });
-            animatorSet.playTogether(translateDel, alphaDel, rotateDel, animDel);
-            animatorSet.addListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-
-                }
-            });
-            animatorSet.setDuration(350);
-            animatorSet.start();
-
+            if (mAnimAdd != null && mAnimAdd.isRunning()) {
+                mAnimAdd.end();
+            }
+            mAniDel.start();
         } else {
-            mAnimRotate = 0;
-            mAnimAlpha = 255;
-            mAnimOffset = 0;
+            mAnimFraction = 0;
             invalidate();
         }
     }
