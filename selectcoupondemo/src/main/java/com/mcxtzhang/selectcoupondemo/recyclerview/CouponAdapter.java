@@ -81,19 +81,22 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponVH> 
                 }*/
 
                 //实现单选方法三： RecyclerView另一种定向刷新方法：不会有白光一闪动画 也不会重复onBindVIewHolder
-/*                CouponVH couponVH = (CouponVH) mRv.findViewHolderForLayoutPosition(mSelectedPos);
+                CouponVH couponVH = (CouponVH) mRv.findViewHolderForLayoutPosition(mSelectedPos);
                 if (couponVH != null) {//还在屏幕里
                     couponVH.ivSelect.setSelected(false);
+                }else {//add by 2016 11 22 for 一些极端情况，holder被缓存在Recycler的cacheView里，
+                    //此时拿不到ViewHolder，但是也不会回调onBindViewHolder方法。所以add一个异常处理
+                    notifyItemChanged(mSelectedPos);
                 }
                 mDatas.get(mSelectedPos).setSelected(false);//不管在不在屏幕里 都需要改变数据
                 //设置新Item的勾选状态
                 mSelectedPos = position;
                 mDatas.get(mSelectedPos).setSelected(true);
-                holder.ivSelect.setSelected(true);*/
+                holder.ivSelect.setSelected(true);
 
 
                 //实现单选方法四：
-                if (mSelectedPos != position) {
+/*                if (mSelectedPos != position) {
                     //先取消上个item的勾选状态
                     mDatas.get(mSelectedPos).setSelected(false);
                     //传递一个payload
@@ -106,7 +109,7 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponVH> 
                     Bundle payloadNew = new Bundle();
                     payloadNew.putBoolean("KEY_BOOLEAN", true);
                     notifyItemChanged(mSelectedPos, payloadNew);
-                }
+                }*/
 
             }
         });
