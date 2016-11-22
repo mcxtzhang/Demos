@@ -1,4 +1,4 @@
-package com.mcxtzhang.cstviewdemo.widget.adddelview;
+package com.mcxtzhang.cstviewdemo.adddelview.widget;
 
 /**
  * 介绍：加减View的接口

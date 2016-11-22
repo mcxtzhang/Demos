@@ -1,4 +1,4 @@
-package com.mcxtzhang.cstviewdemo.widget.adddelview;
+package com.mcxtzhang.cstviewdemo.adddelview.widget;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
@@ -21,7 +21,7 @@ import android.view.View;
 
 public class AddDelView extends View implements IAddDelViewInterface {
     private static final String TAG = "zxt/" + AddDelView.class.getName();
-    //控件 paddingLeft paddingTop
+    //控件 paddingLeft paddingTop + paint的width
     private int mLeft, mTop;
     //宽高
     private int mWidth, mHeight;
@@ -86,11 +86,36 @@ public class AddDelView extends View implements IAddDelViewInterface {
      */
     public AddDelView setCount(int count) {
         mCount = count;
+        //复用机制的处理
+        if (mCount == 0) {
+            if (mAnimAdd != null && mAnimAdd.isRunning()) {
+                mAnimAdd.end();
+            }
+            if (mAniDel != null && mAniDel.isRunning()) {
+                mAniDel.end();
+            }
+            mAnimFraction = 1;
+        }
         return this;
     }
 
     public onAddDelListener getOnAddDelListener() {
         return mOnAddDelListener;
+    }
+
+    public int getMaxCount() {
+        return mMaxCount;
+    }
+
+    /**
+     * 设置最大数量
+     *
+     * @param maxCount
+     * @return
+     */
+    public AddDelView setMaxCount(int maxCount) {
+        mMaxCount = maxCount;
+        return this;
     }
 
     /**
@@ -164,11 +189,11 @@ public class AddDelView extends View implements IAddDelViewInterface {
             case MeasureSpec.EXACTLY:
                 break;
             case MeasureSpec.AT_MOST:
-                int computeSize = (int) (getPaddingLeft() + mRadius * 2 + mGap * 2 + mTextPaint.measureText(mCount + "") + mRadius * 2 + getPaddingRight());
+                int computeSize = (int) (getPaddingLeft() + mRadius * 2 + mGap * 2 + mTextPaint.measureText(mCount + "") + mRadius * 2 + getPaddingRight() + mCircleWidth * 2);
                 wSize = computeSize < wSize ? computeSize : wSize;
                 break;
             case MeasureSpec.UNSPECIFIED:
-                computeSize = (int) (getPaddingLeft() + mRadius * 2 + mGap * 2 + mTextPaint.measureText(mCount + "") + mRadius * 2 + getPaddingRight());
+                computeSize = (int) (getPaddingLeft() + mRadius * 2 + mGap * 2 + mTextPaint.measureText(mCount + "") + mRadius * 2 + getPaddingRight() + mCircleWidth * 2);
                 wSize = computeSize;
                 break;
         }
@@ -176,11 +201,11 @@ public class AddDelView extends View implements IAddDelViewInterface {
             case MeasureSpec.EXACTLY:
                 break;
             case MeasureSpec.AT_MOST:
-                int computeSize = (int) (getPaddingTop() + mRadius * 2 + getPaddingBottom());
+                int computeSize = (int) (getPaddingTop() + mRadius * 2 + getPaddingBottom() + mCircleWidth * 2);
                 hSize = computeSize < hSize ? computeSize : hSize;
                 break;
             case MeasureSpec.UNSPECIFIED:
-                computeSize = (int) (getPaddingTop() + mRadius * 2 + getPaddingBottom());
+                computeSize = (int) (getPaddingTop() + mRadius * 2 + getPaddingBottom() + mCircleWidth * 2);
                 hSize = computeSize;
                 break;
         }
@@ -192,8 +217,8 @@ public class AddDelView extends View implements IAddDelViewInterface {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        mLeft = getPaddingLeft();
-        mTop = getPaddingTop();
+        mLeft = (int) (getPaddingLeft() + mCircleWidth);
+        mTop = (int) (getPaddingTop() + mCircleWidth);
         mWidth = w;
         mHeight = h;
     }

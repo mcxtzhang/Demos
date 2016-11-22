@@ -4,8 +4,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.mcxtzhang.cstviewdemo.widget.adddelview.AddDelView;
-import com.mcxtzhang.cstviewdemo.widget.adddelview.IAddDelViewInterface;
+import com.mcxtzhang.cstviewdemo.adddelview.widget.AddDelView;
+import com.mcxtzhang.cstviewdemo.adddelview.widget.IAddDelViewInterface;
 
 public class MainActivity extends AppCompatActivity {
 
