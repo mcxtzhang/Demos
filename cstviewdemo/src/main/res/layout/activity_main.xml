@@ -42,9 +42,15 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:layout_marginTop="10dp"
-        android:padding="5dp"/>
+        android:padding="5dp"
+        android:visibility="gone"/>
 
     <com.mcxtzhang.cstviewdemo.widget.RegionClickView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
+
+    <com.mcxtzhang.cstviewdemo.widget.AvoidXfermodeView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 </RelativeLayout>
