@@ -4,6 +4,9 @@
     <data>
 
         <variable
+            name="presenter"
+            type="java.lang.Object"/>
+        <variable
             name="data"
             type="java.lang.Class" />
     </data>

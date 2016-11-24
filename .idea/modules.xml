@@ -21,6 +21,7 @@
       <module fileurl="file://$PROJECT_DIR$/recyclerviewdemo/recyclerviewdemo.iml" filepath="$PROJECT_DIR$/recyclerviewdemo/recyclerviewdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/retrofitdemo/retrofitdemo.iml" filepath="$PROJECT_DIR$/retrofitdemo/retrofitdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/rxjavademo/rxjavademo.iml" filepath="$PROJECT_DIR$/rxjavademo/rxjavademo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/searchdemo/searchdemo.iml" filepath="$PROJECT_DIR$/searchdemo/searchdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/selectcoupondemo/selectcoupondemo.iml" filepath="$PROJECT_DIR$/selectcoupondemo/selectcoupondemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/spandemos/spandemos.iml" filepath="$PROJECT_DIR$/spandemos/spandemos.iml" />
       <module fileurl="file://$PROJECT_DIR$/zandemo/zandemo.iml" filepath="$PROJECT_DIR$/zandemo/zandemo.iml" />
