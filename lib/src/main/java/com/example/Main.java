@@ -32,5 +32,6 @@ public class Main {
         System.out.println(generator.next());
         System.out.println(generator.next());
         System.out.println(generator.next());
+
     }
 }
