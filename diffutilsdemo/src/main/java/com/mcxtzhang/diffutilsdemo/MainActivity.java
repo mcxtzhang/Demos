@@ -32,21 +32,21 @@ public class MainActivity extends AppCompatActivity {
             for (TestBean bean : mDatas) {
                 newDatas.add(bean.clone());
             }
-            newDatas.add(new TestBean("赵子龙", "帅", R.drawable.pic6));
+            /*newDatas.add(new TestBean("赵子龙", "帅", R.drawable.pic6));
             newDatas.get(0).setDesc("Android+");
-            newDatas.get(0).setPic(R.drawable.pic7);
+            newDatas.get(0).setPic(R.drawable.pic7);*/
             TestBean testBean = newDatas.get(1);
-            newDatas.remove(testBean);
-            newDatas.add(testBean);
+            //newDatas.remove(testBean);
+            newDatas.add(1,testBean);
 
             //新宠
-            //DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DiffCallBack(mDatas, newDatas), true);
-            //diffResult.dispatchUpdatesTo(mAdapter);
+            DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DiffCallBack(mDatas, newDatas), true);
+            diffResult.dispatchUpdatesTo(mAdapter);
             //别忘了将新数据给Adapter
             mDatas = newDatas;
             mAdapter.setDatas(mDatas);
 
-            mAdapter.notifyDataSetChanged();//以前我们只能这样，现在我们有新宠了  ，实验二 验证notifyDataSetChanged getAdapterPosition为-1，也用的上
+            //mAdapter.notifyDataSetChanged();//以前我们只能这样，现在我们有新宠了  ，实验二 验证notifyDataSetChanged getAdapterPosition为-1，也用的上
 
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
