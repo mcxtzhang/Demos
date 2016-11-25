@@ -9,15 +9,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
+
         </activity>
         <activity android:name=".PathMeasureActivity">
         </activity>
         <activity android:name=".SvgActivity">
         </activity>
         <activity android:name=".adddelview.AddDelViewDemoActivity">
-
         </activity>
         <activity android:name=".matrix.MatrixActivity">
+        </activity>
+        <activity android:name=".xfermode.XfermodeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

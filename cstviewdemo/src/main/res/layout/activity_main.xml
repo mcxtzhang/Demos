@@ -47,4 +47,8 @@
     <com.mcxtzhang.cstviewdemo.widget.RegionClickView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+    <com.mcxtzhang.cstviewdemo.widget.CircleImageView
+        android:src="@drawable/flower"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 </RelativeLayout>
