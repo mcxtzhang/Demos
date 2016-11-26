@@ -11,14 +11,17 @@
         <activity android:name=".MainActivity">
         </activity>
         <activity android:name=".ColorActivity">
-
         </activity>
         <activity android:name=".TestInterpolatorActivity">
+        </activity>
+        <activity android:name=".LauncherActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+        <activity android:name=".ui.WaterWaveActivity">
         </activity>
     </application>
 
