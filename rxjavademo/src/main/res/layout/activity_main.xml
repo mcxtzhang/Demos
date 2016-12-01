@@ -24,9 +24,32 @@
         android:layout_height="wrap_content"/>
 
 
-
     <ImageView
         android:id="@+id/iv2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/btnInterval"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="定时的"/>
+
+    <Button
+        android:id="@+id/btnJust"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Just"/>
+
+    <Button
+        android:id="@+id/btnRange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="范围"/>
+
+    <Button
+        android:id="@+id/btnFilter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="过滤Filter"/>
 </LinearLayout>

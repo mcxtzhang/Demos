@@ -22,6 +22,8 @@ import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
+import static rx.Observable.interval;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "RxJava";
@@ -302,7 +304,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
         findViewById(R.id.tv).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -311,7 +312,7 @@ public class MainActivity extends AppCompatActivity {
                         .map(new Func1<Integer, String>() {
                             @Override
                             public String call(Integer integer) {
-                                Log.e(TAG, "map1: " + integer + " map1"+", xiancheng:"+Thread.currentThread());
+                                Log.e(TAG, "map1: " + integer + " map1" + ", xiancheng:" + Thread.currentThread());
                                 return integer + " map1";
                             }
                         })
@@ -319,7 +320,7 @@ public class MainActivity extends AppCompatActivity {
                         .map(new Func1<String, String>() {
                             @Override
                             public String call(String s) {
-                                Log.e(TAG, "map2: " + s + " map2"+", xiancheng:"+Thread.currentThread());
+                                Log.e(TAG, "map2: " + s + " map2" + ", xiancheng:" + Thread.currentThread());
                                 return s + " map2";
                             }
                         })
@@ -327,7 +328,7 @@ public class MainActivity extends AppCompatActivity {
                         .map(new Func1<String, String>() {
                             @Override
                             public String call(String s) {
-                                Log.e(TAG, "map3: " + s + " map3"+", xiancheng:"+Thread.currentThread());
+                                Log.e(TAG, "map3: " + s + " map3" + ", xiancheng:" + Thread.currentThread());
                                 return s + " map3";
                             }
                         })
@@ -336,21 +337,135 @@ public class MainActivity extends AppCompatActivity {
                         .subscribe(new Subscriber<String>() {
                             @Override
                             public void onCompleted() {
-                                Log.e(TAG, "onCompleted: "+", xiancheng:"+Thread.currentThread());
+                                Log.e(TAG, "onCompleted: " + ", xiancheng:" + Thread.currentThread());
                             }
 
                             @Override
                             public void onError(Throwable e) {
-                                Log.e(TAG, "onError: "+", xiancheng:"+Thread.currentThread());
+                                Log.e(TAG, "onError: " + ", xiancheng:" + Thread.currentThread());
                             }
 
                             @Override
                             public void onNext(String s) {
-                                Log.e(TAG, "onNext: "+s+", xiancheng:"+Thread.currentThread());
+                                Log.e(TAG, "onNext: " + s + ", xiancheng:" + Thread.currentThread());
                             }
                         });
             }
         });
+
+
+        findViewById(R.id.btnJust).setOnClickListener(new View.OnClickListener() {
+            String TAG = "zxt";
+
+            @Override
+            public void onClick(View v) {
+                Integer[] array1 = new Integer[]{1, 2, 3, 4, 5, 6};
+                Integer[] array2 = new Integer[]{11, 12, 13, 14, 15, 16};
+                Observable<Integer[]> observable1 = Observable.just(array1, array2);
+                observable1.subscribe(new Subscriber<Integer[]>() {
+                    @Override
+                    public void onStart() {
+                        super.onStart();
+                    }
+
+                    @Override
+                    public void onCompleted() {
+                        Log.d(TAG, "onCompleted() called");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d(TAG, "onError() called with: e = [" + e + "]");
+                    }
+
+                    @Override
+                    public void onNext(Integer[] integers) {
+                        Log.d(TAG, "onNext() called with: integers = [" + integers + "]");
+                    }
+                });
+            }
+        });
+
+
+        findViewById(R.id.btnInterval).setOnClickListener(new View.OnClickListener() {
+            String TAG = "zxt";
+
+            @Override
+            public void onClick(View v) {
+                Observable.just(1, 2, 3, 4)
+                        .interval(3, 3, TimeUnit.SECONDS).
+                        subscribe(new Action1<Long>() {
+                            @Override
+                            public void call(Long aLong) {
+                                Log.d(TAG, "call() called with: aLong = [" + aLong + "]");
+                            }
+                        });
+            }
+        });
+
+        findViewById(R.id.btnRange).setOnClickListener(new View.OnClickListener() {
+            String TAG = "zxt";
+
+            @Override
+            public void onClick(View v) {
+                Observable.range(5, 10).subscribe(new Subscriber<Integer>() {
+                    @Override
+                    public void onCompleted() {
+                        Log.d(TAG, "onCompleted() called");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d(TAG, "onError() called with: e = [" + e + "]");
+                    }
+
+                    @Override
+                    public void onNext(Integer integer) {
+                        Log.d(TAG, "onNext() called with: integer = [" + integer + "]");
+                    }
+                });
+            }
+        });
+
+        findViewById(R.id.btnFilter).setOnClickListener(new View.OnClickListener() {
+            String TAG = "zxt";
+
+            @Override
+            public void onClick(View v) {
+                Observable.create(new Observable.OnSubscribe<Integer>() {
+                    @Override
+                    public void call(Subscriber<? super Integer> subscriber) {
+                        if (!subscriber.isUnsubscribed()) {
+                            subscriber.onNext(1);
+                            subscriber.onNext(50);
+                            subscriber.onNext(25);
+                            subscriber.onCompleted();
+                        }
+                    }
+                }).filter(new Func1<Integer, Boolean>() {
+                    @Override
+                    public Boolean call(Integer integer) {
+                        return (integer&1)  == 0 ;
+                    }
+                }).subscribe(new Subscriber<Integer>() {
+                    @Override
+                    public void onCompleted() {
+                        Log.d(TAG, "onCompleted() called");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d(TAG, "onError() called with: e = [" + e + "]");
+                    }
+
+                    @Override
+                    public void onNext(Integer integer) {
+                        Log.d(TAG, "onNext() called with: integer = [" + integer + "]");
+                    }
+                });
+            }
+        });
+
     }
 
 
