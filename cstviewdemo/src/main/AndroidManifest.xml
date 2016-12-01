@@ -3,14 +3,13 @@
           package="com.mcxtzhang.cstviewdemo">
 
     <application
-        android:hardwareAccelerated="false"
         android:allowBackup="true"
+        android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
-
         </activity>
         <activity android:name=".PathMeasureActivity">
         </activity>
@@ -21,6 +20,9 @@
         <activity android:name=".matrix.MatrixActivity">
         </activity>
         <activity android:name=".xfermode.XfermodeActivity">
+
+        </activity>
+        <activity android:name=".shader.ShaderActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
