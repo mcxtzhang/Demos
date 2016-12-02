@@ -57,8 +57,8 @@ public class BrickView extends View {
          * 手指移动时获取触摸点坐标并刷新视图 
          */
         if (event.getAction() == MotionEvent.ACTION_MOVE) {
-            posX = event.getX();
-            posY = event.getY();
+            posX = event.getRawX();
+            posY = event.getRawY();
 
             invalidate();
         }
@@ -69,23 +69,44 @@ public class BrickView extends View {
     protected void onDraw(Canvas canvas) {
         // 设置画笔背景色  
         canvas.drawColor(Color.DKGRAY);
-        canvas.drawRect(getPaddingLeft(), getPaddingTop(), getWidth() - getPaddingRight(), getHeight() - getPaddingBottom(), mFillPaint);
+        Bitmap b1 = BitmapFactory.decodeResource(getResources(), R.drawable.flower);
+        BitmapShader bs1 = new BitmapShader(b1, Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
+        Paint p1 = new Paint();;
+        p1.setShader(bs1);
+
+        canvas.drawRect(getPaddingLeft(), getPaddingTop(), getWidth() - getPaddingRight(), getHeight() - getPaddingBottom(), p1);
   
         /* 
          * 绘制圆和描边 
          */
         canvas.save();
-        float scale = 1.2f;
-        canvas.scale(scale, scale);
+        canvas.translate(posX,posY);
+/*        float scale = 1.2f;
+        canvas.scale(scale, scale);*/
+
+        Bitmap b2 = BitmapFactory.decodeResource(getResources(), R.drawable.flower);
+        BitmapShader bm2 = new BitmapShader(b2, Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
+
         // ▼ 获得当前矩阵的逆矩阵
         Matrix invertMatrix = new Matrix();
         canvas.getMatrix().invert(invertMatrix);
+        bm2.setLocalMatrix(invertMatrix);
+
+        Paint p2 = new Paint();
+        p2.setShader(bm2);
+
+        canvas.drawCircle(0,0,300,p2);
+        canvas.drawCircle(0,0,300,mStrokePaint);
+        canvas.restore();
+
+/*
+
+
         float[] pts = {posX, posY};
         //invertMatrix.mapPoints(pts);
-
         canvas.drawCircle(pts[0]/scale, pts[1]/scale, 300, mFillPaint);
-        canvas.drawCircle(pts[0]/scale, pts[1]/scale, 300, mStrokePaint);
-        canvas.restore();
+        canvas.drawCircle(pts[0]/scale, pts[1]/scale, 300, mStrokePaint);*/
+
 
 
     }
