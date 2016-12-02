@@ -304,11 +304,40 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+        //※线程切换 看这里
+        //一个重点是 map内部会保持顺序，而map之间不一定保持顺序
+        //例如下面 map 1 2 3 ，内部又 5 9 。
+        //也就是说 只能保证 5 是按 map 1 2 3  顺序走
+        //不一定保证  51 91 52 92 53 93 的顺序
+        /**
+         * 12-02 02:54:03.967 9062-9115/com.mcxtzhang.rxjavademo E/RxJava: before onCompleted():Thread[RxIoScheduler-5,5,main]
+         12-02 02:54:03.967 9062-9062/com.mcxtzhang.rxjavademo E/RxJava: map1: 5 map1, xiancheng:Thread[main,5,main]
+         12-02 02:54:03.967 9062-9062/com.mcxtzhang.rxjavademo E/RxJava: map1: 9 map1, xiancheng:Thread[main,5,main]
+         12-02 02:54:03.967 9062-9114/com.mcxtzhang.rxjavademo E/RxJava: map2: 5 map1 map2, xiancheng:Thread[RxIoScheduler-4,5,main]
+         12-02 02:54:03.968 9062-9062/com.mcxtzhang.rxjavademo E/RxJava: map3: 5 map1 map2 map3, xiancheng:Thread[main,5,main]
+         12-02 02:54:03.968 9062-9114/com.mcxtzhang.rxjavademo E/RxJava: map2: 9 map1 map2, xiancheng:Thread[RxIoScheduler-4,5,main]
+         12-02 02:54:03.968 9062-9062/com.mcxtzhang.rxjavademo E/RxJava: map3: 9 map1 map2 map3, xiancheng:Thread[main,5,main]
+         */
         findViewById(R.id.tv).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Observable.just(1, 2)
+                Observable.create(new Observable.OnSubscribe<Integer>() {
+                    @Override
+                    public void call(Subscriber<? super Integer> subscriber) {
+                        Log.e(TAG, "before onNext(5):" + Thread.currentThread());
+                        subscriber.onNext(5);
+                        Log.e(TAG, "before onNext(9):" + Thread.currentThread());
+                        subscriber.onNext(9);
+                        Log.e(TAG, "before onCompleted():" + Thread.currentThread());
+                        subscriber.onCompleted();
+                    }
+                })
+                        //这句话改变的应该是Obervable的执行线程
                         .subscribeOn(Schedulers.io())
+                        //这句话不会改变map的执行线程,也不会改变Observable的执行线程
+                        .subscribeOn(AndroidSchedulers.mainThread())
+                        //改变的临近的一个map Subscriber 的执行线程
+                        .observeOn(AndroidSchedulers.mainThread())
                         .map(new Func1<Integer, String>() {
                             @Override
                             public String call(Integer integer) {
@@ -333,7 +362,8 @@ public class MainActivity extends AppCompatActivity {
                             }
                         })
 /*                        .subscribeOn(Schedulers.io())
-                        .observeOn(Schedulers.io())*/
+                        */
+                        .observeOn(Schedulers.io())
                         .subscribe(new Subscriber<String>() {
                             @Override
                             public void onCompleted() {
@@ -392,6 +422,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                //定时器的just 没有任何卵用，他只是timer的作用。  我也不太清楚要如何停止 才不会内存泄漏
                 Observable.just(1, 2, 3, 4)
                         .interval(3, 3, TimeUnit.SECONDS).
                         subscribe(new Action1<Long>() {
@@ -408,6 +439,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                //从5 开始，数10个，即5-14
                 Observable.range(5, 10).subscribe(new Subscriber<Integer>() {
                     @Override
                     public void onCompleted() {
@@ -445,7 +477,7 @@ public class MainActivity extends AppCompatActivity {
                 }).filter(new Func1<Integer, Boolean>() {
                     @Override
                     public Boolean call(Integer integer) {
-                        return (integer&1)  == 0 ;
+                        return (integer & 1) == 0;
                     }
                 }).subscribe(new Subscriber<Integer>() {
                     @Override
