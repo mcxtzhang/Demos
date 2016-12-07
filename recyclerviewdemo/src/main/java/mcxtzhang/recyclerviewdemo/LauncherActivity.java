@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import mcxtzhang.recyclerviewdemo.anyview.AnyViewActivity;
 import mcxtzhang.recyclerviewdemo.databinding.ActivityLauncherBinding;
 import mcxtzhang.recyclerviewdemo.generalizerv.BaseRecyclerViewActivity;
 import mcxtzhang.recyclerviewdemo.nestrv.ViewPagerNestRvActivity;
@@ -24,6 +25,10 @@ public class LauncherActivity extends AppCompatActivity {
 
         public void onVpNestRv(View view) {
             startActivity(new Intent(LauncherActivity.this, ViewPagerNestRvActivity.class));
+        }
+
+        public void onAnyViewRv(View view){
+            startActivity(new Intent(LauncherActivity.this, AnyViewActivity.class));
         }
 
 

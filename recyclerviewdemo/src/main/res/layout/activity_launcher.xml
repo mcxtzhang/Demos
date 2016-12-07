@@ -35,6 +35,12 @@
             android:layout_height="wrap_content"
             android:onClick="@{p::onVpNestRv}"
             android:text="嵌套Rv+Vp"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{p::onAnyViewRv}"
+            android:text="任意复杂视图"/>
     </LinearLayout>
 </layout>
 

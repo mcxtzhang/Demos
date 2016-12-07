@@ -28,6 +28,7 @@ public class ViewPagerNestRvActivity extends AppCompatActivity {
         mFragmentDatas.add(new NestRvFragment1());
         mFragmentDatas.add(new NestRvFragment1());
 
+        
         mBinding.vp.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {

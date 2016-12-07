@@ -18,8 +18,6 @@ import mcxtzhang.recyclerviewdemo.R;
 import mcxtzhang.recyclerviewdemo.databinding.FragmentNestRv1Binding;
 import mcxtzhang.recyclerviewdemo.databinding.ItemNestRv1Binding;
 
-import static mcxtzhang.recyclerviewdemo.R.id.nestRv;
-
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -80,28 +78,32 @@ public class NestRvFragment1 extends Fragment {
         binding.rv.setLayoutManager(new LinearLayoutManager(getActivity()));
         initDatas();
         binding.rv.setFocusable(false);
-        binding.rv.setAdapter(new BaseBindingAdapter<TestBean, ItemNestRv1Binding>(getActivity(), R.layout.item_nest_rv_1, mDatas) {
+        BaseBindingAdapter<TestBean, ItemNestRv1Binding> baseBindingAdapter = new BaseBindingAdapter<TestBean, ItemNestRv1Binding>(getActivity(), R.layout.item_nest_rv_1, mDatas) {
             @Override
             public void onBindViewHolder(BaseBindingVH<ItemNestRv1Binding> holder, int position) {
 
                 holder.getBinding().nestRv.setFocusable(false);
                 //官方的bug 嵌套RecyclerView
-                if (holder.getBinding().nestRv.getLayoutManager()==null){
+                if (holder.getBinding().nestRv.getLayoutManager() == null) {
                     holder.getBinding().nestRv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
                 }
-                if (holder.getBinding().nestRv.getAdapter()==null){
-                    holder.getBinding().nestRv.setAdapter(new BaseBindingAdapter(getActivity(), R.layout.item_nest_rv_1, mDatas){
+                if (holder.getBinding().nestRv.getAdapter() == null) {
+                    BaseBindingAdapter baseBindingAdapter1 = new BaseBindingAdapter(getActivity(), R.layout.item_nest_rv_1, mDatas) {
                         @Override
                         public void onBindViewHolder(BaseBindingVH holder, int position) {
                             super.onBindViewHolder(holder, position);
                         }
-                    });
+                    };
+                    baseBindingAdapter1.setHasStableIds(true);
+                    holder.getBinding().nestRv.setAdapter(baseBindingAdapter1);
                 }
 
 
                 super.onBindViewHolder(holder, position);
             }
-        });
+        };
+        baseBindingAdapter.setHasStableIds(true);
+        binding.rv.setAdapter(baseBindingAdapter);
 
         return binding.getRoot();
     }

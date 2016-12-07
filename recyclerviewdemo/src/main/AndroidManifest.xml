@@ -23,6 +23,8 @@
         </activity>
         <activity android:name=".nestrv.ViewPagerNestRvActivity">
         </activity>
+        <activity android:name=".anyview.AnyViewActivity">
+        </activity>
     </application>
 
 </manifest>
