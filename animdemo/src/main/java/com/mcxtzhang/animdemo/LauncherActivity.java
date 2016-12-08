@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.mcxtzhang.animdemo.databinding.ActivityLauncherBinding;
-import com.mcxtzhang.animdemo.ui.TaobaoVipAnimActivity;
+import com.mcxtzhang.animdemo.vipclub.TaobaoVipAnimActivity;
 import com.mcxtzhang.animdemo.ui.WaterWaveActivity;
 
 public class LauncherActivity extends AppCompatActivity {

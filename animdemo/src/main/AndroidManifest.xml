@@ -23,7 +23,7 @@
         </activity>
         <activity android:name=".ui.WaterWaveActivity">
         </activity>
-        <activity android:name=".ui.TaobaoVipAnimActivity">
+        <activity android:name=".vipclub.TaobaoVipAnimActivity">
         </activity>
     </application>
 

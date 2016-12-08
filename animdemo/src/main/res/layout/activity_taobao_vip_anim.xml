@@ -9,36 +9,30 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.mcxtzhang.animdemo.ui.TaobaoVipAnimActivity">
+    tools:context="com.mcxtzhang.animdemo.vipclub.TaobaoVipAnimActivity">
 
     <HorizontalScrollView
+        android:id="@+id/hsv"
         android:layout_width="wrap_content"
-        android:layout_height="60dp">
+        android:layout_height="wrap_content">
 
         <LinearLayout
+            android:id="@+id/llContainer"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <ProgressBar
-                android:id="@+id/pb1"
-                style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
-                android:layout_width="50dp"
-                android:layout_height="20dp"/>
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@mipmap/ic_launcher"/>
-
-            <ProgressBar
-                android:id="@+id/pb2"
-                style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
-                android:layout_width="50dp"
-                android:layout_height="20dp"/>
         </LinearLayout>
 
 
     </HorizontalScrollView>
+
+
+    <Button
+        android:id="@+id/btnAnim"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="播放动画"/>
 </RelativeLayout>
