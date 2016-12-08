@@ -126,11 +126,25 @@ public class TaobaoVipAnimActivity extends AppCompatActivity {
         int screenWidth = getResources().getDisplayMetrics().widthPixels;
         Log.d(TAG, "beginAnim() called with: screenWidth = [" + screenWidth);
 
+        //最后的实验
+
+        target = 0;
+        for (int i = 0; i < datas.size(); i++) {
+            if (datas.get(i).isCurrent()) {
+                target = target + avatar.getLeft() + avatar.getMeasuredWidth() / 2;
+                break;
+            } else {
+                target = target + mLlcontainer.getChildAt(i).getMeasuredWidth();
+                Log.d(TAG, "mLlcontainer.getChildAt(i).getMeasuredWidth() = [" + mLlcontainer.getChildAt(i).getMeasuredWidth());
+            }
+        }
+
+
         ValueAnimator valueAnimator = ValueAnimator.ofInt(0, target - screenWidth / 2);
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                mScrollView.scrollTo((Integer) animation.getAnimatedValue(),0);
+                mScrollView.scrollTo((Integer) animation.getAnimatedValue(), 0);
             }
         });
         valueAnimator.setDuration(curLevel * perAnimTime);
