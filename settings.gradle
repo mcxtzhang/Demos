@@ -1,4 +1,4 @@
-include ':app', ':lib', ':zxtcommonlib', ':cstviewdemo', ':retrofitdemo', ':animdemo', ':databindingdemo', ':libannotation', ':rxjavademo', ':recyclerviewdemo', ':selectcoupondemo', ':coordinatordemo', ':libfactorypattern', ':decoratorpatterndemo', ':libadapterpattern', ':searchdemo', ':okhttpdemo', 'layoutmanager', 'cstnorecyclelistview'
+include ':app', ':lib', ':zxtcommonlib', ':cstviewdemo', ':retrofitdemo', ':animdemo', ':databindingdemo', ':libannotation', ':rxjavademo', ':recyclerviewdemo', ':selectcoupondemo', ':coordinatordemo', ':libfactorypattern', ':decoratorpatterndemo', ':libadapterpattern', ':searchdemo', ':okhttpdemo', 'layoutmanager'
 
 //include ':diffutilsdemo'
 //include ':coordinatordemo2'
@@ -7,6 +7,7 @@ include ':app', ':lib', ':zxtcommonlib', ':cstviewdemo', ':retrofitdemo', ':anim
 //include ':picdemo'
 //include 'spandemos'
 //include ':zandemo'
+//include ':cstnorecyclelistview'
 
 
 

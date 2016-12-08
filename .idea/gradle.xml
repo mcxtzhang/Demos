@@ -5,14 +5,13 @@
       <GradleProjectSettings>
         <option name="distributionType" value="LOCAL" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleHome" value="E:\android tools\android-studio-ide-145.3200535-windows\android-studio\gradle\gradle-2.14.1" />
+        <option name="gradleHome" value="$APPLICATION_HOME_DIR$/gradle/gradle-2.14.1" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/animdemo" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/coordinatordemo" />
-            <option value="$PROJECT_DIR$/cstnorecyclelistview" />
             <option value="$PROJECT_DIR$/cstviewdemo" />
             <option value="$PROJECT_DIR$/databindingdemo" />
             <option value="$PROJECT_DIR$/decoratorpatterndemo" />

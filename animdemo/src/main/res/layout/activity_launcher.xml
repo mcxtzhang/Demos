@@ -22,6 +22,13 @@
             android:layout_height="wrap_content"
             android:onClick="@{p::toWaterWave}"
             android:text="水波纹"/>
+
+        <Button
+            android:id="@+id/taobaoVipAnim"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{p::taobaoVipAnim}"
+            android:text="淘宝会员俱乐部积分动画"/>
     </LinearLayout>
 </layout>
 
