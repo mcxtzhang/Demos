@@ -13,6 +13,7 @@
       <module fileurl="file://$PROJECT_DIR$/libadapterpattern/libadapterpattern.iml" filepath="$PROJECT_DIR$/libadapterpattern/libadapterpattern.iml" />
       <module fileurl="file://$PROJECT_DIR$/libannotation/libannotation.iml" filepath="$PROJECT_DIR$/libannotation/libannotation.iml" />
       <module fileurl="file://$PROJECT_DIR$/libfactorypattern/libfactorypattern.iml" filepath="$PROJECT_DIR$/libfactorypattern/libfactorypattern.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libproxypattern/libproxypattern.iml" filepath="$PROJECT_DIR$/libproxypattern/libproxypattern.iml" />
       <module fileurl="file://$PROJECT_DIR$/okhttpdemo/okhttpdemo.iml" filepath="$PROJECT_DIR$/okhttpdemo/okhttpdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/recyclerviewdemo/recyclerviewdemo.iml" filepath="$PROJECT_DIR$/recyclerviewdemo/recyclerviewdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/retrofitdemo/retrofitdemo.iml" filepath="$PROJECT_DIR$/retrofitdemo/retrofitdemo.iml" />

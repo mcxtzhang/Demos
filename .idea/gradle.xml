@@ -20,6 +20,7 @@
             <option value="$PROJECT_DIR$/libadapterpattern" />
             <option value="$PROJECT_DIR$/libannotation" />
             <option value="$PROJECT_DIR$/libfactorypattern" />
+            <option value="$PROJECT_DIR$/libproxypattern" />
             <option value="$PROJECT_DIR$/okhttpdemo" />
             <option value="$PROJECT_DIR$/recyclerviewdemo" />
             <option value="$PROJECT_DIR$/retrofitdemo" />
