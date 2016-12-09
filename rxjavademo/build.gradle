@@ -11,7 +11,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        jackOptions{
+        jackOptions {
             enabled true
         }
 
@@ -22,7 +22,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    compileOptions{
+    compileOptions {
         sourceCompatibility org.gradle.api.JavaVersion.VERSION_1_8
         targetCompatibility org.gradle.api.JavaVersion.VERSION_1_8
     }

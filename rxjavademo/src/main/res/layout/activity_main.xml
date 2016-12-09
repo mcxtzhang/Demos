@@ -52,4 +52,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="过滤Filter"/>
+    <Button
+        android:id="@+id/btnFlatMap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="flatMap"/>
+
+    <Button
+        android:id="@+id/btndoOnSubscribe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="doOnSubscribe"/>
 </LinearLayout>

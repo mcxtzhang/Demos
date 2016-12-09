@@ -22,8 +22,6 @@ import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
-import static rx.Observable.interval;
-
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "RxJava";
@@ -183,46 +181,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //flatmap使用：
-        List<Student> students = new ArrayList<>();
-        students.add(new Student());
-        students.add(new Student());
-        students.add(new Student());
-        students.add(new Student());
-        students.add(new Student());
-
-        Subscriber<Course> courseSubscriber = new Subscriber<Course>() {
-            @Override
-            public void onCompleted() {
-                Log.d(TAG, "course onCompleted() called");
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Log.d(TAG, "course onError() called with: e = [" + e + "]");
-            }
-
-            @Override
-            public void onNext(Course course) {
-                Log.d(TAG, "onNext() called with: course = [" + course.getScroe() + "]");
-            }
-        };
-
-        Observable.from(students).flatMap(new Func1<Student, Observable<Course>>() {
-            @Override
-            public Observable<Course> call(Student student) {
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                return Observable.from(student.getCourse());
-            }
-        }).subscribeOn(Schedulers.io())//加上这句话  Observable的动作都在io线程里
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(courseSubscriber);
-
-
         final Observable<String> throttleFirst = Observable.just("什么鬼")
                 .throttleFirst(500, TimeUnit.MILLISECONDS);//500秒不会重复发出事件;
         findViewById(android.R.id.content).setOnClickListener(new View.OnClickListener() {
@@ -244,15 +202,28 @@ public class MainActivity extends AppCompatActivity {
         final TextView tv = (TextView) findViewById(R.id.tv);
         tv.setText("切换前");
 
-        new Thread(new Runnable() {
+        findViewById(R.id.iv2).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void run() {
-                Log.d(TAG, "run() called" + Thread.currentThread());
-                tv.setText("变化之前ddddddd");
+            public void onClick(View view) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                    Log.d(TAG, "run() called" + Thread.currentThread());
+                        func();
+                    }
+                }).start();
+
+                //func();
+            }
+
+
+            public void func() {
+                Log.d(TAG, "func() called" + Thread.currentThread());
+
                 Observable.create(new Observable.OnSubscribe<String>() {
                     @Override
                     public void call(Subscriber<? super String> subscriber) {
-                        Log.d(TAG, "处理时 called" + Thread.currentThread());
+                        Log.d(TAG, "Observable called" + Thread.currentThread());
                         subscriber.onNext("呵呵哒");
                         subscriber.onCompleted();
                     }
@@ -262,21 +233,21 @@ public class MainActivity extends AppCompatActivity {
                         .doOnSubscribe(new Action0() {//可以设置start所在现成的onStart方法
                             @Override
                             public void call() {
-                                Log.d(TAG, "变化之前 called" + Thread.currentThread());
-                                tv.setText("变化之前");
+                                Log.d(TAG, "doOnSubscribe called" + Thread.currentThread());
+                                tv.setText("doOnSubscribe");
                             }
                         })
-                        .subscribeOn(Schedulers.io())//改变doOnSubscribe的线程，这离doOnSubscribe这句话最近
-                        .subscribeOn(AndroidSchedulers.mainThread())//即使重复写 但是以上面那个为准
+                        //         .subscribeOn(Schedulers.io())//改变doOnSubscribe的线程，这离doOnSubscribe这句话最近
+                        //       .subscribeOn(AndroidSchedulers.mainThread())//即使重复写 但是以上面那个为准
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Action1<String>() {
                             @Override
                             public void call(String s) {
-                                Log.d(TAG, "call() called with: s = [" + s + "]" + Thread.currentThread());
+                                Log.d(TAG, "subscribe call() called with: s = [" + s + "]" + Thread.currentThread());
                             }
                         });
             }
-        }).start();
+        });
 
 
         Observable.just("On", "Off", "On", "Off")
@@ -321,9 +292,33 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.tv).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Subscriber<String> subscriber1 = new Subscriber<String>() {
+                    @Override
+                    public void onStart() {
+                        Log.d(TAG, "onStart() called" + ", xiancheng:" + Thread.currentThread());
+                    }
+
+                    @Override
+                    public void onCompleted() {
+                        Log.e(TAG, "onCompleted: " + ", xiancheng:" + Thread.currentThread());
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(TAG, "onError: " + ", xiancheng:" + Thread.currentThread());
+                    }
+
+                    @Override
+                    public void onNext(String s) {
+                        Log.d(TAG, "onNext() called with: Subscriber = [" + this + "]");
+                        Log.e(TAG, "onNext: " + s + ", xiancheng:" + Thread.currentThread());
+                    }
+                };
+                Log.d(TAG, "onClick() called with: subscriber1 = [" + subscriber1 + "]");
                 Observable.create(new Observable.OnSubscribe<Integer>() {
                     @Override
                     public void call(Subscriber<? super Integer> subscriber) {
+                        Log.d(TAG, "call() called with: subscriber = [" + subscriber + "]");
                         Log.e(TAG, "before onNext(5):" + Thread.currentThread());
                         subscriber.onNext(5);
                         Log.e(TAG, "before onNext(9):" + Thread.currentThread());
@@ -364,22 +359,7 @@ public class MainActivity extends AppCompatActivity {
 /*                        .subscribeOn(Schedulers.io())
                         */
                         .observeOn(Schedulers.io())
-                        .subscribe(new Subscriber<String>() {
-                            @Override
-                            public void onCompleted() {
-                                Log.e(TAG, "onCompleted: " + ", xiancheng:" + Thread.currentThread());
-                            }
-
-                            @Override
-                            public void onError(Throwable e) {
-                                Log.e(TAG, "onError: " + ", xiancheng:" + Thread.currentThread());
-                            }
-
-                            @Override
-                            public void onNext(String s) {
-                                Log.e(TAG, "onNext: " + s + ", xiancheng:" + Thread.currentThread());
-                            }
-                        });
+                        .subscribe(subscriber1);
             }
         });
 
@@ -495,6 +475,106 @@ public class MainActivity extends AppCompatActivity {
                         Log.d(TAG, "onNext() called with: integer = [" + integer + "]");
                     }
                 });
+            }
+        });
+
+
+        //flatMap Demo
+        findViewById(R.id.btnFlatMap).setOnClickListener(new View.OnClickListener() {
+            String TAG = "zxt";
+
+            @Override
+            public void onClick(View view) {
+//flatmap使用：
+                List<Student> students = new ArrayList<>();
+                students.add(new Student());
+                students.add(new Student());
+                students.add(new Student());
+                students.add(new Student());
+                students.add(new Student());
+
+                Subscriber<Course> courseSubscriber = new Subscriber<Course>() {
+                    @Override
+                    public void onCompleted() {
+                        Log.d(TAG, "course onCompleted() called");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d(TAG, "course onError() called with: e = [" + e + "]");
+                    }
+
+                    @Override
+                    public void onNext(Course course) {
+                        Log.d(TAG, "onNext() called with: course = [" + course.getScroe() + "]");
+                    }
+                };
+
+                Observable.from(students).flatMap(new Func1<Student, Observable<Course>>() {
+                    @Override
+                    public Observable<Course> call(Student student) {
+                        try {
+                            Thread.sleep(2000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        return Observable.from(student.getCourse());
+                    }
+                }).subscribeOn(Schedulers.io())//加上这句话  Observable的动作都在io线程里
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(courseSubscriber);
+
+            }
+        });
+
+
+        //doOnSubscribe 实例：
+        findViewById(R.id.btndoOnSubscribe).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Observable.create(new Observable.OnSubscribe<String>() {
+                    @Override
+                    public void call(Subscriber<? super String> subscriber) {
+                        if (!subscriber.isUnsubscribed()) {
+                            Log.d(TAG, "subscriber.onNext(\"测试\");" + ", xiancheng:" + Thread.currentThread());
+                            subscriber.onNext("测试");
+                            subscriber.onCompleted();
+                        }
+                    }
+                })
+                        .subscribeOn(Schedulers.computation())
+                        .doOnSubscribe(new Action0() {
+                            @Override
+                            public void call() {
+                                Log.d(TAG, "doOnSubscribe" + ", xiancheng:" + Thread.currentThread());
+                            }
+                        })
+                        .subscribeOn(Schedulers.io())
+
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .observeOn(Schedulers.io())
+                        .subscribe(new Subscriber<String>() {
+                            @Override
+                            public void onStart() {
+                                Log.d(TAG, "onStart() called" + Thread.currentThread());
+                                super.onStart();
+                            }
+
+                            @Override
+                            public void onCompleted() {
+
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+
+                            }
+
+                            @Override
+                            public void onNext(String s) {
+
+                            }
+                        });
             }
         });
 
