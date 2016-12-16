@@ -5,9 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.mcxtzhang.zxtcommonlib.databinding.base.BaseBindingVH;
-import com.mcxtzhang.zxtcommonlib.databinding.base.mul.BaseMulTypeBindingAdapter;
-import com.mcxtzhang.zxtcommonlib.databinding.base.mul.IBaseMulInterface;
+import com.mcxtzhang.commonadapter.databinding.rv.BaseBindingVH;
+import com.mcxtzhang.commonadapter.databinding.rv.mul.BaseMulTypeBindingAdapter;
+import com.mcxtzhang.commonadapter.databinding.rv.mul.IBaseMulInterface;
 
 import java.util.ArrayList;
 import java.util.List;

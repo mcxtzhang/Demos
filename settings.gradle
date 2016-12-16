@@ -5,7 +5,7 @@ include ':app', ':lib', ':zxtcommonlib', ':cstviewdemo', ':retrofitdemo', ':anim
 //include ':learnannotationdemo'
 //include ':mediademo'
 //include ':picdemo'
-//include 'spandemos'
+include 'spandemos'
 //include ':zandemo'
 //include ':cstnorecyclelistview'
 

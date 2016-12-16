@@ -1,0 +1,46 @@
+
+    <!--    <LinearLayout
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+
+                      android:background="@color/colorPrimary"
+                      android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:orientation="horizontal">-->
+
+    <LinearLayout     xmlns:android="http://schemas.android.com/apk/res/android"
+                      xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:id="@+id/iv"
+            android:layout_width="100dp"
+            android:layout_height="50dp"/>
+    </LinearLayout>
+    <!--
+            </LinearLayout>
+        </LinearLayout>-->
+
+
+<!--
+    <Button
+        android:id="@+id/btnUnRead"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:background="#ecd50a"
+        android:clickable="true"
+        android:text="标记未读"
+        android:textColor="@android:color/white"/>
+-->

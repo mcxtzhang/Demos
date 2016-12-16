@@ -8,9 +8,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
-import com.mcxtzhang.zxtcommonlib.databinding.base.BaseBindingAdapter;
-import com.mcxtzhang.zxtcommonlib.recyclerview.HeaderRecyclerAndFooterWrapperAdapter;
-import com.mcxtzhang.zxtcommonlib.recyclerview.ViewHolder;
+import com.mcxtzhang.commonadapter.databinding.rv.BaseBindingAdapter;
+import com.mcxtzhang.commonadapter.rv.HeaderRecyclerAndFooterWrapperAdapter;
+import com.mcxtzhang.commonadapter.rv.ViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +20,8 @@ import mcxtzhang.recyclerviewdemo.R;
 import mcxtzhang.recyclerviewdemo.TestBean;
 import mcxtzhang.recyclerviewdemo.databinding.ActivityBaseRecyclerViewBinding;
 import mcxtzhang.recyclerviewdemo.databinding.ItemBaseIv1Binding;
-import mcxtzhang.recyclerviewdemo.generalizerv.base.widget.LoadingFooter;
 import mcxtzhang.recyclerviewdemo.generalizerv.base.ZRecyclerView;
+import mcxtzhang.recyclerviewdemo.generalizerv.base.widget.LoadingFooter;
 
 public class BaseRecyclerViewActivity extends AppCompatActivity {
     ActivityBaseRecyclerViewBinding mBinding;
@@ -35,7 +35,7 @@ public class BaseRecyclerViewActivity extends AppCompatActivity {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_base_recycler_view);
         mBinding.setP(new Presenter());
 
-        mInnerAdapter = new BaseBindingAdapter<>(this, R.layout.item_base_iv_1, initDatas());
+        mInnerAdapter = new BaseBindingAdapter<>(this, initDatas(), R.layout.item_base_iv_1);
         mBinding.rv.setAdapter(mWrapperAdapter = new HeaderRecyclerAndFooterWrapperAdapter(mInnerAdapter) {
             @Override
             protected void onBindHeaderHolder(ViewHolder holder, int headerPos, int layoutId, Object o) {

@@ -83,6 +83,25 @@ public class ZxtUtils {
 
 
     /**
+     * 给src 部分文字着色
+     *
+     * @param src
+     * @param start
+     * @param end
+     * @param color
+     * @return
+     */
+    public static SpannableString getTextWithPartSpecialColor(String src, int start, int end, int color) {
+        if (src == null) {
+            src = "";
+        }
+        SpannableString spannableString = new SpannableString(src);//构建Span
+        spannableString.setSpan(new ForegroundColorSpan(color), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return spannableString;
+    }
+
+
+    /**
      * 判断是否是手机号
      *
      * @param phone

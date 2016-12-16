@@ -9,8 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.mcxtzhang.zxtcommonlib.databinding.base.BaseBindingAdapter;
-import com.mcxtzhang.zxtcommonlib.databinding.base.BaseBindingVH;
+import com.mcxtzhang.commonadapter.databinding.rv.BaseBindingAdapter;
+import com.mcxtzhang.commonadapter.databinding.rv.BaseBindingVH;
 
 import java.util.ArrayList;
 
@@ -78,7 +78,7 @@ public class NestRvFragment1 extends Fragment {
         binding.rv.setLayoutManager(new LinearLayoutManager(getActivity()));
         initDatas();
         binding.rv.setFocusable(false);
-        BaseBindingAdapter<TestBean, ItemNestRv1Binding> baseBindingAdapter = new BaseBindingAdapter<TestBean, ItemNestRv1Binding>(getActivity(), R.layout.item_nest_rv_1, mDatas) {
+        BaseBindingAdapter<TestBean, ItemNestRv1Binding> baseBindingAdapter = new BaseBindingAdapter<TestBean, ItemNestRv1Binding>(getActivity(), mDatas, R.layout.item_nest_rv_1) {
             @Override
             public void onBindViewHolder(BaseBindingVH<ItemNestRv1Binding> holder, int position) {
 
@@ -88,7 +88,7 @@ public class NestRvFragment1 extends Fragment {
                     holder.getBinding().nestRv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
                 }
                 if (holder.getBinding().nestRv.getAdapter() == null) {
-                    BaseBindingAdapter baseBindingAdapter1 = new BaseBindingAdapter(getActivity(), R.layout.item_nest_rv_1, mDatas) {
+                    BaseBindingAdapter baseBindingAdapter1 = new BaseBindingAdapter(getActivity(), mDatas, R.layout.item_nest_rv_1) {
                         @Override
                         public void onBindViewHolder(BaseBindingVH holder, int position) {
                             super.onBindViewHolder(holder, position);

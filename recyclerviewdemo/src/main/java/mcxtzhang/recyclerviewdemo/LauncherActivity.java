@@ -9,6 +9,7 @@ import android.view.View;
 import mcxtzhang.recyclerviewdemo.anyview.AnyViewActivity;
 import mcxtzhang.recyclerviewdemo.databinding.ActivityLauncherBinding;
 import mcxtzhang.recyclerviewdemo.generalizerv.BaseRecyclerViewActivity;
+import mcxtzhang.recyclerviewdemo.itemtouchhelper.TestItemHelperActivity;
 import mcxtzhang.recyclerviewdemo.nestrv.ViewPagerNestRvActivity;
 
 public class LauncherActivity extends AppCompatActivity {
@@ -27,8 +28,12 @@ public class LauncherActivity extends AppCompatActivity {
             startActivity(new Intent(LauncherActivity.this, ViewPagerNestRvActivity.class));
         }
 
-        public void onAnyViewRv(View view){
+        public void onAnyViewRv(View view) {
             startActivity(new Intent(LauncherActivity.this, AnyViewActivity.class));
+        }
+
+        public void onItemTouchHelperClick(View view) {
+            startActivity(new Intent(LauncherActivity.this, TestItemHelperActivity.class));
         }
 
 

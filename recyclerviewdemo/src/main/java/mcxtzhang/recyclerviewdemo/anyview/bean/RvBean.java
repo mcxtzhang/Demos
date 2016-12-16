@@ -1,6 +1,7 @@
 package mcxtzhang.recyclerviewdemo.anyview.bean;
 
-import com.mcxtzhang.zxtcommonlib.databinding.base.mul.IBaseMulInterface;
+
+import com.mcxtzhang.commonadapter.databinding.rv.mul.IBaseMulInterface;
 
 import mcxtzhang.recyclerviewdemo.R;
 

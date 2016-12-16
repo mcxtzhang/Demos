@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.mcxtzhang.spandemos.MainActivity">
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                tools:context="com.mcxtzhang.spandemos.MainActivity">
 
     <TextView
         android:id="@+id/tv"
@@ -24,5 +24,12 @@
 守望先锋
 守望先锋
 在危机被终结后莫里森升任守望先锋指挥官，莱耶斯则负责“暗影守望”——一个潜伏在暗处的秘密行动组织，而且该组织不受官方明文制约。[4]
-随着岁月的流逝，守望先锋掌握的资源和能量日益增加，组织招收了更多的成员，并从突击组织转化成一个世界性维和组织，一些有才华的人加入了守望先锋。" />
+随着岁月的流逝，守望先锋掌握的资源和能量日益增加，组织招收了更多的成员，并从突击组织转化成一个世界性维和组织，一些有才华的人加入了守望先锋。"
+        android:visibility="gone"/>
+
+    <EditText
+        android:id="@+id/et"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:hint="@string/app_name"/>
 </RelativeLayout>

@@ -15,7 +15,7 @@ import mcxtzhang.recyclerviewdemo.R;
  */
 
 public class LoadImgUtils {
-    @BindingAdapter("bind:url")
+    @BindingAdapter("url")
     public static void LoadImg(ImageView imageView, String url) {
         Glide.with(imageView.getContext()).load(url).error(R.mipmap.ic_launcher).into(imageView);
     }

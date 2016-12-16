@@ -8,8 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
-import com.mcxtzhang.zxtcommonlib.recyclerview.CommonAdapter;
-import com.mcxtzhang.zxtcommonlib.recyclerview.ViewHolder;
+import com.mcxtzhang.commonadapter.rv.CommonAdapter;
+import com.mcxtzhang.commonadapter.rv.ViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        mRv.setAdapter(mAdapter = new CommonAdapter<TestBean>(this, R.layout.item_rv_1, mDatas) {
+        mRv.setAdapter(mAdapter = new CommonAdapter<TestBean>(this, mDatas, R.layout.item_rv_1) {
 
             @Override
             public int getItemViewType(int position) {

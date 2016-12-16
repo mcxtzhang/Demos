@@ -25,6 +25,8 @@
         </activity>
         <activity android:name=".anyview.AnyViewActivity">
         </activity>
+        <activity android:name=".itemtouchhelper.TestItemHelperActivity">
+        </activity>
     </application>
 
 </manifest>

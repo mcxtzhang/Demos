@@ -7,6 +7,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.mcxtzhang.zxtcommonlib.ZxtUtils;
@@ -52,6 +53,9 @@ public class MainActivity extends AppCompatActivity {
         spannableString1.setSpan(new ForegroundColorSpan(Color.parseColor("#66aaaa")), 4, source2.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //设置前景色为洋红
 */
         mTv.setText(getBfGoodsNameIsActSpannableString(source2, true));
+
+        EditText et = (EditText) findViewById(R.id.et);
+        et.setHint(ZxtUtils.getTextWithPartSpecialColor(source2, 0,2,Color.BLUE));
 
     }
 
