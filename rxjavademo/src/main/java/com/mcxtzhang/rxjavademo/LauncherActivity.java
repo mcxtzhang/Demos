@@ -17,5 +17,7 @@ public class LauncherActivity extends AppCompatActivity {
         findViewById(R.id.btnDemo).setOnClickListener(v -> startActivity(new Intent(LauncherActivity.this, MainActivity.class)));
         findViewById(R.id.btnAync).setOnClickListener(v -> startActivity(new Intent(LauncherActivity.this, MockAsyncActivity.class)));
         findViewById(R.id.btnNetwork).setOnClickListener(a -> startActivity(new Intent(a.getContext(), NetworkActivity.class)));
+
+
     }
 }
