@@ -14,7 +14,21 @@
 
     <Button
         android:id="@+id/btnInterval"
-        android:text="定时 和 取消"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:text="定时 和 取消"/>
+
+
+    <Button
+        android:id="@+id/btnLeak"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="测试内存泄漏"/>
+
+
+    <Button
+        android:id="@+id/btnStop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="停止"/>
 </LinearLayout>
