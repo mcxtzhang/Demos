@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_juejin"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.mcxtzhang.coordinatordemo.juejin.JuejinActivity">
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nestSv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/large_text"/>
+    </android.support.v4.widget.NestedScrollView>
+
+    <LinearLayout
+        android:id="@+id/bottomLayout"
+
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:background="@color/colorAccent"
+        android:gravity="center"
+        app:layout_behavior=".juejin.CstBottomBehavior">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="假装自己是底边导航栏"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/headerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="top"
+        android:background="@color/colorAccent"
+        android:gravity="center"
+        app:layout_behavior=".zhihu.CstHeaderBehavior">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="假装自己是头部边导航栏"/>
+    </LinearLayout>
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="80dp"
+        android:layout_marginRight="15dp"
+        android:src="@android:drawable/ic_dialog_email"
+        app:backgroundTint="#455aa1"
+        app:layout_behavior=".zhihu.CstZHFABBehavior"
+        />
+</android.support.design.widget.CoordinatorLayout>

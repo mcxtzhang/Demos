@@ -9,18 +9,23 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
+        </activity>
+        <activity android:name=".CstBehavior1Activity">
+        </activity>
+        <activity android:name=".ScrollingActivity"/>
+        <activity android:name=".TestInsetEdgeActivity"/>
+        <activity
+            android:name=".juejin.JuejinActivity"
+            android:label="@string/juejin">
 
         </activity>
-
-        <activity android:name=".CstBehavior1Activity">
+        <activity android:name=".zhihu.ZhihuActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ScrollingActivity"></activity>
-        <activity android:name=".TestInsetEdgeActivity"></activity>
     </application>
 
 </manifest>
