@@ -13,11 +13,7 @@
         <activity android:name=".TestNewASActivity">
         </activity>
         <activity android:name=".jobscheduler.JobSchedulerActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
 
         <service
@@ -28,6 +24,14 @@
             android:enabled="true"
             android:exported="true">
         </service>
+
+        <activity android:name=".RxActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

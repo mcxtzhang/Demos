@@ -1,5 +1,6 @@
 package com.mcxtzhang.rxjavademo;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -208,7 +209,7 @@ public class MainActivity extends AppCompatActivity {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                    Log.d(TAG, "run() called" + Thread.currentThread());
+                        Log.d(TAG, "run() called" + Thread.currentThread());
                         func();
                     }
                 }).start();
@@ -578,7 +579,51 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        findViewById(R.id.btnLoop).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mTestLeak = new Subscriber<String>() {
+                    @Override
+                    public void onCompleted() {
+                        Log.d(TAG, "onCompleted() called");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d(TAG, "onError() called with: e = [" + e + "]");
+                    }
+
+                    @Override
+                    public void onNext(String s) {
+                        Log.d(TAG, "onNext() called with: s = [" + s + "]");
+                    }
+                };
+
+
+                Observable.create(new Observable.OnSubscribe<String>() {
+                    @Override
+                    public void call(Subscriber<? super String> subscriber) {
+                        int i = 0;
+                        while (true) {
+                            Log.d(TAG, "call() called with: i = [" + i + "]");
+                            subscriber.onNext(i++ + "");
+                        }
+                    }
+                }).subscribe(mTestLeak);
+            }
+        });
+
+        findViewById(R.id.btnStop).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mTestLeak.unsubscribe();
+            }
+        });
+
     }
+
+    private Subscriber mTestLeak;
 
 
 }

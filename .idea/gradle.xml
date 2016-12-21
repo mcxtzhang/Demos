@@ -5,7 +5,7 @@
       <GradleProjectSettings>
         <option name="distributionType" value="LOCAL" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleHome" value="C:\devtools\android-studio-ide-143.2664576-windows\android-studio\gradle\gradle-3.2" />
+        <option name="gradleHome" value="E:\android tools\android-studio-ide-145.3200535-windows\android-studio\gradle\gradle-2.14.1" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
@@ -14,21 +14,13 @@
             <option value="$PROJECT_DIR$/coordinatordemo" />
             <option value="$PROJECT_DIR$/cstviewdemo" />
             <option value="$PROJECT_DIR$/databindingdemo" />
-            <option value="$PROJECT_DIR$/decoratorpatterndemo" />
             <option value="$PROJECT_DIR$/layoutmanager" />
             <option value="$PROJECT_DIR$/lib" />
-            <option value="$PROJECT_DIR$/libadapterpattern" />
-            <option value="$PROJECT_DIR$/libannotation" />
-            <option value="$PROJECT_DIR$/libfactorypattern" />
-            <option value="$PROJECT_DIR$/libproxypattern" />
             <option value="$PROJECT_DIR$/okhttpdemo" />
             <option value="$PROJECT_DIR$/recyclerviewdemo" />
             <option value="$PROJECT_DIR$/retrofitdemo" />
             <option value="$PROJECT_DIR$/rxjava2demo" />
             <option value="$PROJECT_DIR$/rxjavademo" />
-            <option value="$PROJECT_DIR$/searchdemo" />
-            <option value="$PROJECT_DIR$/selectcoupondemo" />
-            <option value="$PROJECT_DIR$/spandemos" />
             <option value="$PROJECT_DIR$/zxtcommonlib" />
           </set>
         </option>
