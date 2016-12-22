@@ -8,11 +8,17 @@ import android.util.Log;
 import android.view.View;
 
 import com.mcxtzhang.coordinatordemo.util.ViewOffsetBehavior;
+import com.mcxtzhang.coordinatordemo.util.ViewOffsetHelper;
 
 public class CstTopBehavior extends ViewOffsetBehavior<CstTopLayout> {
     private static final String TAG = "zxt/CstTopBehavior";
 
+    //开始被隐藏View的高度
     protected int mTopHeight;
+    //它完全出现，offset的距离
+    protected int mMoveDistance;
+
+    protected ViewOffsetHelper mTopViewHelper;
 
     public CstTopBehavior() {
     }
@@ -26,12 +32,25 @@ public class CstTopBehavior extends ViewOffsetBehavior<CstTopLayout> {
     @Override
     public boolean onLayoutChild(CoordinatorLayout parent, CstTopLayout child, int layoutDirection) {
         super.onLayoutChild(parent, child, layoutDirection);
-        mTopHeight = child.getChildAt(0).getMeasuredHeight();
+        View hideView = child.getChildAt(1);
+        mTopHeight = hideView.getMeasuredHeight();
+        initTopViewHelper(hideView);
+        mTopViewHelper.setTopAndBottomOffset(-mTopHeight);
+        mMoveDistance = child.getBottom() + mTopHeight;
 /*        Log.d(TAG, "onLayoutChild() called with: parent = [" + mTopHeight + "], child = [" + child + "], layoutDirection = [" + layoutDirection + "]");
         child.layout(child.getLeft(), -mTopHeight
                 , child.getLeft() + child.getMeasuredWidth(), -mTopHeight + child.getMeasuredHeight());*/
-        setTopAndBottomOffset(-mTopHeight);
+        //setTopAndBottomOffset(-mTopHeight);
+
+
         return true;
+    }
+
+    private void initTopViewHelper(View topView) {
+        if (mTopViewHelper == null) {
+            mTopViewHelper = new ViewOffsetHelper(topView);
+        }
+        mTopViewHelper.onViewLayout();
     }
 
     @Override
@@ -64,6 +83,10 @@ public class CstTopBehavior extends ViewOffsetBehavior<CstTopLayout> {
             if (dy != 0) {
                 setTopAndBottomOffset(getTopAndBottomOffset() - dy);
                 consumed[1] = dy;
+
+                int temp = (int) (-getTopAndBottomOffset() * 1.0f / (child.getHeight() - mTopHeight) * mMoveDistance);
+                Log.e(TAG, "onNestedPreScroll: temp:" + temp);
+                mTopViewHelper.setTopAndBottomOffset(temp);
             }
         } else {
             //展开 enter

@@ -9,11 +9,24 @@
     tools:context="com.mcxtzhang.coordinatordemo.uc.UcActivity">
 
     <com.mcxtzhang.coordinatordemo.uc.CstTopLayout
-        app:layout_behavior=".uc.CstTopBehavior"
         android:id="@+id/TopLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_behavior=".uc.CstTopBehavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:background="@color/colorPrimaryDark"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="内容一大坨"
+                android:textColor="@android:color/white"/>
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/hideHeader"
@@ -29,26 +42,14 @@
                 android:textColor="@android:color/white"/>
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:background="@color/colorPrimary">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="内容一大坨"
-                android:textColor="@android:color/white"/>
-        </LinearLayout>
-
     </com.mcxtzhang.coordinatordemo.uc.CstTopLayout>
 
 
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/content"
-        app:layout_behavior=".uc.CstNestContentBehavior"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:layout_behavior=".uc.CstNestContentBehavior"
         >
 
         <TextView

@@ -3,7 +3,7 @@ package com.mcxtzhang.coordinatordemo.uc;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
 
 /**
  * 介绍：
@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
  * 时间： 2016/12/22.
  */
 
-public class CstTopLayout extends LinearLayout {
+public class CstTopLayout extends FrameLayout {
     private static final String TAG = "zxt/CstTopLayout";
     private int mBeginOffset;
 
