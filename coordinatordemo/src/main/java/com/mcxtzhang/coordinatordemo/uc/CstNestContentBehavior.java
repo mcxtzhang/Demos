@@ -6,6 +6,8 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
+import com.mcxtzhang.coordinatordemo.util.ViewOffsetBehavior;
+
 /**
  * 介绍：
  * 作者：zhangxutong
@@ -14,7 +16,7 @@ import android.view.View;
  * 时间： 2016/12/22.
  */
 
-public class CstNestContentBehavior extends CoordinatorLayout.Behavior<View> {
+public class CstNestContentBehavior extends ViewOffsetBehavior<View> {
     private static final String TAG = "zxt/内容Behavior";
 
     public CstNestContentBehavior() {
@@ -30,7 +32,7 @@ public class CstNestContentBehavior extends CoordinatorLayout.Behavior<View> {
         Log.d(TAG, "layoutDependsOn() called with: parent = [" + parent + "], child = [" + child + "], dependency = [" + dependency + "]");
         boolean flag = dependency instanceof CstTopLayout;
         if (flag) {
-            child.setTop(dependency.getBottom());
+           // child.setTop(dependency.getBottom());
         }
         return flag;
     }
@@ -38,8 +40,9 @@ public class CstNestContentBehavior extends CoordinatorLayout.Behavior<View> {
     @Override
     public boolean onDependentViewChanged(CoordinatorLayout parent, View child, View dependency) {
         Log.d(TAG, "onDependentViewChanged() called with: parent = [" + parent + "], child = [" + child + "], dependency = [" + dependency + "]");
-
-
+        setTopAndBottomOffset(dependency.getBottom());
         return super.onDependentViewChanged(parent, child, dependency);
     }
+
+
 }

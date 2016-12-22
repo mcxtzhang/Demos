@@ -7,7 +7,9 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
-public class CstTopBehavior extends CoordinatorLayout.Behavior<CstTopLayout> {
+import com.mcxtzhang.coordinatordemo.util.ViewOffsetBehavior;
+
+public class CstTopBehavior extends ViewOffsetBehavior<CstTopLayout> {
     private static final String TAG = "zxt/CstTopBehavior";
 
     protected int mTopHeight;
@@ -23,10 +25,12 @@ public class CstTopBehavior extends CoordinatorLayout.Behavior<CstTopLayout> {
 
     @Override
     public boolean onLayoutChild(CoordinatorLayout parent, CstTopLayout child, int layoutDirection) {
+        super.onLayoutChild(parent, child, layoutDirection);
         mTopHeight = child.getChildAt(0).getMeasuredHeight();
-        Log.d(TAG, "onLayoutChild() called with: parent = [" + mTopHeight + "], child = [" + child + "], layoutDirection = [" + layoutDirection + "]");
+/*        Log.d(TAG, "onLayoutChild() called with: parent = [" + mTopHeight + "], child = [" + child + "], layoutDirection = [" + layoutDirection + "]");
         child.layout(child.getLeft(), -mTopHeight
-                , child.getLeft() + child.getMeasuredWidth(), -mTopHeight + child.getMeasuredHeight());
+                , child.getLeft() + child.getMeasuredWidth(), -mTopHeight + child.getMeasuredHeight());*/
+        setTopAndBottomOffset(-mTopHeight);
         return true;
     }
 
@@ -51,13 +55,46 @@ public class CstTopBehavior extends CoordinatorLayout.Behavior<CstTopLayout> {
             target.setTop(target.getTop() - dy);
             consumed[1] = dy;
         }*/
-        ViewCompat.offsetTopAndBottom(child, 20);
+        if (dy > 0) {//显示底端 折叠exit
+            if (child.getBottom() - dy >= mTopHeight) {
+
+            } else {
+                dy = child.getBottom() - mTopHeight;
+            }
+            if (dy != 0) {
+                setTopAndBottomOffset(getTopAndBottomOffset() - dy);
+                consumed[1] = dy;
+            }
+        } else {
+            //展开 enter
+/*            if (child.getTop() - dy <= -mTopHeight) {
+
+            } else {
+                dy = child.getTop() + mTopHeight;
+            }*/
+        }
+        /*setTopAndBottomOffset(getTopAndBottomOffset() - dy);
+        consumed[1] = dy;*/
+
         super.onNestedPreScroll(coordinatorLayout, child, target, dx, dy, consumed);
     }
 
     @Override
     public void onNestedScroll(CoordinatorLayout coordinatorLayout, CstTopLayout child, View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
         super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed);
+        if (dyConsumed == 0 && dyUnconsumed < 0) {
+            //展开 enter
+            if (child.getTop() - dyUnconsumed <= -mTopHeight) {
+
+            } else {
+                dyUnconsumed = child.getTop() + mTopHeight;
+            }
+            if (dyUnconsumed != 0) {
+                setTopAndBottomOffset(getTopAndBottomOffset() - dyUnconsumed);
+            }
+
+        }
+
     }
 
     @Override
