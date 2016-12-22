@@ -17,14 +17,21 @@
         <activity
             android:name=".juejin.JuejinActivity"
             android:label="@string/juejin">
-
         </activity>
         <activity android:name=".zhihu.ZhihuActivity">
+        </activity>
+        <activity android:name=".LauncherActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+        <activity android:name=".parallex.ParallexActivity">
+        </activity>
+        <activity android:name=".alipay.AlipayMainActivity">
+        </activity>
+        <activity android:name=".uc.UcActivity">
         </activity>
     </application>
 
