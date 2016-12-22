@@ -47,11 +47,11 @@ public class CstTopBehavior extends CoordinatorLayout.Behavior<CstTopLayout> {
     @Override
     public void onNestedPreScroll(CoordinatorLayout coordinatorLayout, CstTopLayout child, View target, int dx, int dy, int[] consumed) {
         Log.d(TAG, "onNestedPreScroll() called with: coordinatorLayout = [" + coordinatorLayout + "], child = [" + child + "], target = [" + target + "], dx = [" + dx + "], dy = [" + dy + "], consumed = [" + consumed + "]");
-        if (dy > 0) {
+/*        if (dy > 0) {
             target.setTop(target.getTop() - dy);
             consumed[1] = dy;
-        }
-
+        }*/
+        ViewCompat.offsetTopAndBottom(child, 20);
         super.onNestedPreScroll(coordinatorLayout, child, target, dx, dy, consumed);
     }
 
