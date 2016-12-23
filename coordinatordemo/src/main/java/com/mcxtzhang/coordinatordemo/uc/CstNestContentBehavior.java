@@ -18,6 +18,10 @@ import com.mcxtzhang.coordinatordemo.util.ViewOffsetBehavior;
 
 public class CstNestContentBehavior extends ViewOffsetBehavior<View> {
     private static final String TAG = "zxt/内容Behavior";
+    //它完全出现，SecondView Topoffset的距离
+    protected int mFirstViewTopOffsetMax;
+
+    protected int mMoveDistance;
 
     public CstNestContentBehavior() {
         super();
@@ -30,9 +34,10 @@ public class CstNestContentBehavior extends ViewOffsetBehavior<View> {
     @Override
     public boolean layoutDependsOn(CoordinatorLayout parent, View child, View dependency) {
         Log.d(TAG, "layoutDependsOn() called with: parent = [" + parent + "], child = [" + child + "], dependency = [" + dependency + "]");
-        boolean flag = dependency instanceof CstTopLayout;
+        boolean flag = dependency == parent.getChildAt(0);
         if (flag) {
-           // child.setTop(dependency.getBottom());
+            mMoveDistance = (dependency.getHeight() - parent.getChildAt(1).getHeight() - parent.getChildAt(2).getHeight());
+            mFirstViewTopOffsetMax = -(dependency.getHeight() - parent.getChildAt(1).getHeight());
         }
         return flag;
     }
@@ -40,8 +45,10 @@ public class CstNestContentBehavior extends ViewOffsetBehavior<View> {
     @Override
     public boolean onDependentViewChanged(CoordinatorLayout parent, View child, View dependency) {
         Log.d(TAG, "onDependentViewChanged() called with: parent = [" + parent + "], child = [" + child + "], dependency = [" + dependency + "]");
-        setTopAndBottomOffset(dependency.getBottom());
-        return super.onDependentViewChanged(parent, child, dependency);
+        float fraction = dependency.getTop() * 1.0f / mFirstViewTopOffsetMax;
+
+        setTopAndBottomOffset((int) (mMoveDistance * (1 - fraction)) +parent.getChildAt(1).getHeight() +parent.getChildAt(2).getHeight() );
+        return true;
     }
 
 

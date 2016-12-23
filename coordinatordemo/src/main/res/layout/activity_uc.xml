@@ -8,47 +8,66 @@
     android:layout_height="match_parent"
     tools:context="com.mcxtzhang.coordinatordemo.uc.UcActivity">
 
-    <com.mcxtzhang.coordinatordemo.uc.CstTopLayout
-        android:id="@+id/TopLayout"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:background="@color/colorPrimaryDark"
+        android:orientation="vertical"
+        app:layout_behavior=".uc.CstCollapsedBehavior"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="内容一大坨"
+            android:textColor="@android:color/white"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            android:text="最底下"
+            android:textColor="@android:color/white"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/hideHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_behavior=".uc.CstTopBehavior">
+        android:background="@drawable/shader_drawable"
+        android:orientation="horizontal"
+        app:layout_behavior=".uc.CstDelayEnterBehavior">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:background="@color/colorPrimaryDark"
-            >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="内容一大坨"
-                android:textColor="@android:color/white"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/hideHeader"
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/colorAccent"
-            android:orientation="horizontal">
+            android:text="一开始我是隐藏的 上啦显示"
+            android:textColor="@android:color/white"/>
+    </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="一开始我是隐藏的 上啦显示"
-                android:textColor="@android:color/white"/>
-        </LinearLayout>
+    <LinearLayout
+        android:id="@+id/hideListHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#78978a"
+        android:orientation="horizontal"
+        app:layout_behavior=".uc.CstListHeaderBehavior">
 
-    </com.mcxtzhang.coordinatordemo.uc.CstTopLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="一开始我是隐藏的 我假装自己是四个标题"
+            android:textColor="@android:color/white"/>
+    </LinearLayout>
 
 
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#fd7e06"
         app:layout_behavior=".uc.CstNestContentBehavior"
         >
 

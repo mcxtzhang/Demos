@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         lp.setBehavior(new CstAppBehavior());
 /*        TextView tvHeader1 = (TextView) findViewById(R.id.tvHeader1);
         CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams)tvHeader1.getLayoutParams();
-        lp.setBehavior(new AppBarLayout.CstTopBehavior());*/
+        lp.setBehavior(new AppBarLayout.CstCollapsedBehavior());*/
         appBarLayout.post(new Runnable() {
             @Override
             public void run() {
