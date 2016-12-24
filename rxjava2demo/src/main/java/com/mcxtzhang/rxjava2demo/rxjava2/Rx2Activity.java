@@ -16,6 +16,7 @@ import io.reactivex.Observer;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
 
 public class Rx2Activity extends AppCompatActivity {
@@ -101,6 +102,14 @@ public class Rx2Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 mCompositeDisposable.dispose();
+
+                Observable.just(1,2,3,4)
+                        .filter(new Predicate<Integer>() {
+                            @Override
+                            public boolean test(Integer integer) throws Exception {
+                                return false;
+                            }
+                        });
             }
         });
 

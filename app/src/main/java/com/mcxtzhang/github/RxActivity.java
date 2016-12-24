@@ -69,6 +69,23 @@ public class RxActivity extends AppCompatActivity {
         });
 
 
+        a();
+
+    }
+
+    void a() {
+        b();
+    }
+
+    void b() {
+        StringBuffer err = new StringBuffer();
+        StackTraceElement[] stack = Thread.currentThread().getStackTrace();
+        for (int i = 0; i < stack.length; i++) {
+            err.append("\tat ");
+            err.append(stack[i].toString());
+            err.append("\n");
+        }
+        Log.e("TAG", err.toString());
     }
 
 
