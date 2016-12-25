@@ -31,4 +31,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="停止"/>
+
+    <Button
+        android:id="@+id/btnZipDemo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="测试合并打包后error最后接受是否会出错"/>
 </LinearLayout>
