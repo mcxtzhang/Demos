@@ -8,11 +8,13 @@ import android.view.View;
 import com.mcxtzhang.rxjava2demo.R;
 
 import java.util.EmptyStackException;
+import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -181,7 +183,54 @@ public class Rx2Activity extends AppCompatActivity {
 
             }
         });
+
+        deferValue = 1;
+        final Observable<Integer> o1 = /*Observable.create(new ObservableOnSubscribe<Integer>() {
+            @Override
+            public void subscribe(ObservableEmitter<Integer> e) throws Exception {
+                e.onNext(deferValue);
+                e.onComplete();
+            }
+        })*/Observable.fromArray(deferValue).subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread());
+        final Observable<Integer> o2 = Observable.defer(new Callable<ObservableSource<Integer>>() {
+            @Override
+            public ObservableSource<Integer> call() throws Exception {
+                return Observable.create(new ObservableOnSubscribe<Integer>() {
+                    @Override
+                    public void subscribe(ObservableEmitter<Integer> e) throws Exception {
+                        e.onNext(deferValue);
+                        e.onComplete();
+                    }
+                });
+            }
+        }).subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread());
+        findViewById(R.id.btnDefer).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deferValue += 1;
+                o1.subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
+                        Log.d(TAG, "accept() called with: integer = [" + integer + "]");
+                    }
+                });
+                o2.subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
+                        Log.d(TAG, "accept() called with: integer = [" + integer + "]");
+                    }
+                });
+
+
+            }
+        });
+
+
     }
+
+    private int deferValue,value;
 
     @Override
     protected void onDestroy() {
