@@ -3,6 +3,7 @@ package com.mcxtzhang.cstviewdemo.adddelview.widget;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Region;
@@ -26,16 +27,42 @@ public class AddDelView extends View implements IAddDelViewInterface {
     //宽高
     private int mWidth, mHeight;
 
+    /**
+     * 没有删除按钮(xml)
+     */
+    private boolean isNoDelFunc;
+
     //加减的圆的Path的Region
     private Region mAddRegion, mDelRegion;
     private Path mAddPath, mDelPath;
 
-    private Paint mPaint;
-    //可用、不可用 颜色
-    private int mEnableColor;
-    private int mDisableColor;
+    /**
+     * 加按钮
+     */
+    private Paint mAddPaint;
+    //加按钮是否开启fill模式 默认是stroke(xml)
+    private boolean isAddFillMode;
+    //加按钮的背景色前景色(xml)
+    private int mAddEnableBgColor;
+    private int mAddEnableFgColor;
+    //加按钮不可用时的背景色前景色(xml)
+    private int mAddDisableBgColor;
+    private int mAddDisableFgColor;
 
-    //最大数量和当前数量
+    /**
+     * 减按钮
+     */
+    private Paint mDelPaint;
+    //按钮是否开启fill模式 默认是stroke(xml)
+    private boolean isDelFillMode;
+    //按钮的背景色前景色(xml)
+    private int mDelEnableBgColor;
+    private int mDelEnableFgColor;
+    //按钮不可用时的背景色前景色(xml)
+    private int mDelDisableBgColor;
+    private int mDelDisableFgColor;
+
+    //最大数量和当前数量(xml)
     private int mMaxCount;
     private int mCount;
 
@@ -47,8 +74,10 @@ public class AddDelView extends View implements IAddDelViewInterface {
     private float mLineWidth;
 
 
-    //文字和圆的间距
-    private float mGap;
+    /**
+     * 两个圆之间的间距(xml)
+     */
+    private float mGapBetweenCircle;
     private float mTestSize;
     private Paint mTextPaint;
     private Paint.FontMetrics mFontMetrics;
@@ -129,26 +158,59 @@ public class AddDelView extends View implements IAddDelViewInterface {
         return this;
     }
 
+    public boolean isNoDelFunc() {
+        return isNoDelFunc;
+    }
+
+    public AddDelView setNoDelFunc(boolean noDelFunc) {
+        isNoDelFunc = noDelFunc;
+        return this;
+    }
+
     private void init(Context context, AttributeSet attrs, int defStyleAttr) {
+
+        //模拟参数传入
+        mGapBetweenCircle = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 34, context.getResources().getDisplayMetrics());
+
+        isAddFillMode = true;
+        mAddEnableBgColor = 0xFFFFDC5B;
+        mAddEnableFgColor = Color.BLACK;
+        mAddDisableBgColor = 0xff979797;
+        mAddDisableFgColor = Color.BLACK;
+
+        isDelFillMode = false;
+        mDelEnableBgColor = 0xff979797;
+        mDelEnableFgColor = 0xff979797;
+        mDelDisableBgColor = 0xff979797;
+        mDelDisableFgColor = 0xff979797;
+
+        mMaxCount = 4;
+        mCount = 1;
+
+
         mAddRegion = new Region();
         mDelRegion = new Region();
         mAddPath = new Path();
         mDelPath = new Path();
 
-        mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPaint.setStyle(Paint.Style.STROKE);
-
-        mEnableColor = 0xff000000;
-        mDisableColor = 0xff9c9c9c;
-        mMaxCount = 4;
-        mCount = 1;
+        mAddPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        if (isAddFillMode) {
+            mAddPaint.setStyle(Paint.Style.FILL);
+        } else {
+            mAddPaint.setStyle(Paint.Style.STROKE);
+        }
+        mDelPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        if (isDelFillMode) {
+            mDelPaint.setStyle(Paint.Style.FILL);
+        } else {
+            mDelPaint.setStyle(Paint.Style.STROKE);
+        }
 
 
         mRadius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 12.5f, getResources().getDisplayMetrics());
         mCircleWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1f, getResources().getDisplayMetrics());
         mLineWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2f, getResources().getDisplayMetrics());
 
-        mGap = mRadius / 3;
 
         mTestSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 14.5f, getResources().getDisplayMetrics());
         mTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -189,11 +251,11 @@ public class AddDelView extends View implements IAddDelViewInterface {
             case MeasureSpec.EXACTLY:
                 break;
             case MeasureSpec.AT_MOST:
-                int computeSize = (int) (getPaddingLeft() + mRadius * 2 + mGap * 2 + mTextPaint.measureText(mCount + "") + mRadius * 2 + getPaddingRight() + mCircleWidth * 2);
+                int computeSize = (int) (getPaddingLeft() + mRadius * 2 +/* mGap * 2 + mTextPaint.measureText(mCount + "")*/mGapBetweenCircle + mRadius * 2 + getPaddingRight() + mCircleWidth * 2);
                 wSize = computeSize < wSize ? computeSize : wSize;
                 break;
             case MeasureSpec.UNSPECIFIED:
-                computeSize = (int) (getPaddingLeft() + mRadius * 2 + mGap * 2 + mTextPaint.measureText(mCount + "") + mRadius * 2 + getPaddingRight() + mCircleWidth * 2);
+                computeSize = (int) (getPaddingLeft() + mRadius * 2 + /*mGap * 2 + mTextPaint.measureText(mCount + "")*/mGapBetweenCircle + mRadius * 2 + getPaddingRight() + mCircleWidth * 2);
                 wSize = computeSize;
                 break;
         }
@@ -225,78 +287,90 @@ public class AddDelView extends View implements IAddDelViewInterface {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        //动画 mAnimFraction ：减 0~1, 加 1~0 ,
-        //动画位移Max,
-        float animOffsetMax = (mRadius * 2 + mGap * 2 + mTextPaint.measureText(mCount + ""));
-        //透明度动画的基准
-        int animAlphaMax = 255;
-        int animRotateMax = 360;
 
-        //左边
-        if (mCount > 0) {
-            mPaint.setColor(mEnableColor);
-        } else {
-            mPaint.setColor(mDisableColor);
-        }
-        mPaint.setAlpha((int) (animAlphaMax * (1 - mAnimFraction)));
+        //如果没有删除按钮
+        if (!isNoDelFunc) {
+            //动画 mAnimFraction ：减 0~1, 加 1~0 ,
+            //动画位移Max,
+            float animOffsetMax = (mRadius * 2 + /*mGap * 2 + mTextPaint.measureText(mCount + "")*/mGapBetweenCircle);
+            //透明度动画的基准
+            int animAlphaMax = 255;
+            int animRotateMax = 360;
 
+            //左边
+            //背景 圆
+            if (mCount > 0) {
+                mDelPaint.setColor(mDelEnableBgColor);
+            } else {
+                mDelPaint.setColor(mDelDisableBgColor);
+            }
+            mDelPaint.setAlpha((int) (animAlphaMax * (1 - mAnimFraction)));
 
-        mPaint.setStrokeWidth(mCircleWidth);
-        mDelPath.reset();
-        mDelPath.addCircle(animOffsetMax * mAnimFraction + mLeft + mRadius, mTop + mRadius, mRadius, Path.Direction.CW);
-        mDelRegion.setPath(mDelPath, new Region(mLeft, mTop, mWidth - getPaddingRight(), mHeight - getPaddingBottom()));
-        //canvas.drawCircle(mAnimOffset + mLeft + mRadius, mTop + mRadius, mRadius, mPaint);
-        canvas.drawPath(mDelPath, mPaint);
+            mDelPaint.setStrokeWidth(mCircleWidth);
+            mDelPath.reset();
+            mDelPath.addCircle(animOffsetMax * mAnimFraction + mLeft + mRadius, mTop + mRadius, mRadius, Path.Direction.CW);
+            mDelRegion.setPath(mDelPath, new Region(mLeft, mTop, mWidth - getPaddingRight(), mHeight - getPaddingBottom()));
+            //canvas.drawCircle(mAnimOffset + mLeft + mRadius, mTop + mRadius, mRadius, mPaint);
+            canvas.drawPath(mDelPath, mDelPaint);
 
-
-        mPaint.setStrokeWidth(mLineWidth);
-
-
-        //旋转动画
-        canvas.save();
-        canvas.translate(animOffsetMax * mAnimFraction + mLeft + mRadius, mTop + mRadius);
-        canvas.rotate((int) (animRotateMax * (1 - mAnimFraction)));
+            //前景 +
+            if (mCount > 0) {
+                mDelPaint.setColor(mDelEnableFgColor);
+            } else {
+                mDelPaint.setColor(mDelDisableFgColor);
+            }
+            mDelPaint.setStrokeWidth(mLineWidth);
+            //旋转动画
+            canvas.save();
+            canvas.translate(animOffsetMax * mAnimFraction + mLeft + mRadius, mTop + mRadius);
+            canvas.rotate((int) (animRotateMax * (1 - mAnimFraction)));
         /*canvas.drawLine(mAnimOffset + mLeft + mRadius / 2, mTop + mRadius,
                 mAnimOffset + mLeft + mRadius / 2 + mRadius, mTop + mRadius,
                 mPaint);*/
-        canvas.drawLine(-mRadius / 2, 0,
-                +mRadius / 2, 0,
-                mPaint);
-        canvas.restore();
+            canvas.drawLine(-mRadius / 2, 0,
+                    +mRadius / 2, 0,
+                    mDelPaint);
+            canvas.restore();
+        }
 
 
         //数量
         canvas.save();
         //平移动画
-        canvas.translate(mAnimFraction * (mGap + mRadius), 0);
+        canvas.translate(mAnimFraction * (/*mGap*/mGapBetweenCircle / 2 - mTextPaint.measureText(mCount + "") / 2 + mRadius), 0);
         //旋转动画,旋转中心点，x 是绘图中心,y 是控件中心
         canvas.rotate(360 * mAnimFraction,
-                /*mAnimFraction * (mGap + mRadius) +*/mGap + mLeft + mRadius * 2 + mTextPaint.measureText(mCount + "") / 2,
+                /*mGap*/ mGapBetweenCircle / 2 + mLeft + mRadius * 2 /*+ mTextPaint.measureText(mCount + "") / 2*/,
                 mTop + mRadius);
         //透明度动画
         mTextPaint.setAlpha((int) (255 * (1 - mAnimFraction)));
         //是没有动画的普通写法,x left, y baseLine
-        canvas.drawText(mCount + "", mGap + mLeft + mRadius * 2, mTop + mRadius - (mFontMetrics.top + mFontMetrics.bottom) / 2, mTextPaint);
+        canvas.drawText(mCount + "", /*mGap*/ mGapBetweenCircle / 2 - mTextPaint.measureText(mCount + "") / 2 + mLeft + mRadius * 2, mTop + mRadius - (mFontMetrics.top + mFontMetrics.bottom) / 2, mTextPaint);
         canvas.restore();
 
-
         //右边
+        //背景 圆
         if (mCount < mMaxCount) {
-            mPaint.setColor(mEnableColor);
+            mAddPaint.setColor(mAddEnableBgColor);
         } else {
-            mPaint.setColor(mDisableColor);
+            mAddPaint.setColor(mAddDisableBgColor);
         }
-        mPaint.setStrokeWidth(mCircleWidth);
-        float left = mLeft + mRadius * 2 + mGap * 2 + mTextPaint.measureText(mCount + "");
+        mAddPaint.setStrokeWidth(mCircleWidth);
+        float left = mLeft + mRadius * 2 + /*mGap * 2 + mTextPaint.measureText(mCount + "")*/ mGapBetweenCircle;
         mAddPath.reset();
         mAddPath.addCircle(left + mRadius, mTop + mRadius, mRadius, Path.Direction.CW);
         mAddRegion.setPath(mAddPath, new Region(mLeft, mTop, mWidth - getPaddingRight(), mHeight - getPaddingBottom()));
         //canvas.drawCircle(left + mRadius, mTop + mRadius, mRadius, mPaint);
-        canvas.drawPath(mAddPath, mPaint);
-
-        mPaint.setStrokeWidth(mLineWidth);
-        canvas.drawLine(left + mRadius / 2, mTop + mRadius, left + mRadius / 2 + mRadius, mTop + mRadius, mPaint);
-        canvas.drawLine(left + mRadius, mTop + mRadius / 2, left + mRadius, mTop + mRadius / 2 + mRadius, mPaint);
+        canvas.drawPath(mAddPath, mAddPaint);
+        //前景 +
+        if (mCount < mMaxCount) {
+            mAddPaint.setColor(mAddEnableFgColor);
+        } else {
+            mAddPaint.setColor(mAddDisableFgColor);
+        }
+        mAddPaint.setStrokeWidth(mLineWidth);
+        canvas.drawLine(left + mRadius / 2, mTop + mRadius, left + mRadius / 2 + mRadius, mTop + mRadius, mAddPaint);
+        canvas.drawLine(left + mRadius, mTop + mRadius / 2, left + mRadius, mTop + mRadius / 2 + mRadius, mAddPaint);
     }
 
 

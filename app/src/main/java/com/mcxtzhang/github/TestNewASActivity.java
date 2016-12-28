@@ -13,7 +13,7 @@ public class TestNewASActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test_new_as);
+        setContentView(R.layout.test);
 
         //http://www.cnblogs.com/whoislcj/p/5887859.html
 

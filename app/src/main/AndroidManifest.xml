@@ -11,6 +11,11 @@
         <activity android:name=".MainActivity">
         </activity>
         <activity android:name=".TestNewASActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity android:name=".jobscheduler.JobSchedulerActivity">
 
@@ -26,11 +31,7 @@
         </service>
 
         <activity android:name=".RxActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
     </application>
 

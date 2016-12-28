@@ -49,6 +49,11 @@ public class AddDelViewDemoActivity extends AppCompatActivity {
 
                     }
                 });
+/*                if (holder.getLayoutPosition() == 1) {
+                    addDelView.setNoDelFunc(true);
+                }else {
+                    addDelView.setNoDelFunc(false);
+                }*/
             }
         });
     }
