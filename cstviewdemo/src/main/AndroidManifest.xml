@@ -25,10 +25,8 @@
         <activity android:name=".matrix.MatrixActivity">
         </activity>
         <activity android:name=".xfermode.XfermodeActivity">
-
         </activity>
         <activity android:name=".shader.ShaderActivity">
-
         </activity>
     </application>
 

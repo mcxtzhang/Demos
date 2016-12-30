@@ -227,10 +227,22 @@ public class Rx2Activity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.btnRangeRepeat).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Observable.range(5, 9).repeat(2).subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
+                        Log.d(TAG, "accept() called with: integer = [" + integer + "]");
+                    }
+                });
+            }
+        });
+
 
     }
 
-    private int deferValue,value;
+    private int deferValue, value;
 
     @Override
     protected void onDestroy() {

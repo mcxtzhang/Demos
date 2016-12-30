@@ -43,4 +43,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Defer是否延迟了Ob数据的创建"/>
+
+    <Button
+        android:id="@+id/btnRangeRepeat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Range + Repeat"/>
 </LinearLayout>

@@ -1,13 +1,17 @@
 package com.mcxtzhang.cstviewdemo.adddelview.widget;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.RectF;
 import android.graphics.Region;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
@@ -78,7 +82,7 @@ public class AddDelView extends View implements IAddDelViewInterface {
      * 两个圆之间的间距(xml)
      */
     private float mGapBetweenCircle;
-    private float mTestSize;
+    private float mTextSize;
     private Paint mTextPaint;
     private Paint.FontMetrics mFontMetrics;
 
@@ -86,6 +90,26 @@ public class AddDelView extends View implements IAddDelViewInterface {
     // 普通状态下都显示时是0
     private ValueAnimator mAnimAdd, mAniDel;
     private float mAnimFraction;
+
+    //展开 加入购物车动画
+    private ValueAnimator mAnimExpandHint;
+    private ValueAnimator mAnimReduceHint;
+    private float mAnimExpandHintFraction;
+    //是否处于HintMode下 count = 0 时，且第一段收缩动画做完了，是true
+    private boolean isHintMode;
+    //展开动画结束后 才显示文字
+    private boolean isShowHintText;
+
+    //hint文字 背景色前景色(xml) 大小
+    private Paint mHintPaint;
+    private int mHintBgColor;
+    private int mHingTextSize;
+    private String mHintText;
+    private int mHintFgColor;
+    /**
+     * 圆角值(xml)
+     */
+    private int mHintBgRoundValue;
 
     //点击回调
     private IAddDelViewInterface.onAddDelListener mOnAddDelListener;
@@ -118,10 +142,10 @@ public class AddDelView extends View implements IAddDelViewInterface {
         //复用机制的处理
         if (mCount == 0) {
             if (mAnimAdd != null && mAnimAdd.isRunning()) {
-                mAnimAdd.end();
+                mAnimAdd.cancel();
             }
             if (mAniDel != null && mAniDel.isRunning()) {
-                mAniDel.end();
+                mAniDel.cancel();
             }
             mAnimFraction = 1;
         }
@@ -187,6 +211,13 @@ public class AddDelView extends View implements IAddDelViewInterface {
         mMaxCount = 4;
         mCount = 1;
 
+        mHintText = "加入购物车";
+        mHintBgColor = mAddEnableBgColor;
+        mHintFgColor = mAddEnableFgColor;
+        mHingTextSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, context.getResources().getDisplayMetrics());
+        mHintBgRoundValue = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, context.getResources().getDisplayMetrics());
+        //end
+
 
         mAddRegion = new Region();
         mDelRegion = new Region();
@@ -206,19 +237,22 @@ public class AddDelView extends View implements IAddDelViewInterface {
             mDelPaint.setStyle(Paint.Style.STROKE);
         }
 
+        mHintPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mHintPaint.setStyle(Paint.Style.FILL);
+        mHintPaint.setTextSize(mHingTextSize);
 
         mRadius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 12.5f, getResources().getDisplayMetrics());
         mCircleWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1f, getResources().getDisplayMetrics());
         mLineWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2f, getResources().getDisplayMetrics());
 
 
-        mTestSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 14.5f, getResources().getDisplayMetrics());
+        mTextSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 14.5f, getResources().getDisplayMetrics());
         mTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mTextPaint.setTextSize(mTestSize);
+        mTextPaint.setTextSize(mTextSize);
         mFontMetrics = mTextPaint.getFontMetrics();
 
 
-        //动画
+        //动画 +
         mAnimAdd = ValueAnimator.ofFloat(1, 0);
         mAnimAdd.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -227,9 +261,49 @@ public class AddDelView extends View implements IAddDelViewInterface {
                 invalidate();
             }
         });
+        mAnimAdd.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+            }
+        });
         mAnimAdd.setDuration(350);
 
-        //动画
+        //提示语收缩动画 0-1
+        mAnimReduceHint = ValueAnimator.ofFloat(0, 1);
+        mAnimReduceHint.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                mAnimExpandHintFraction = (float) animation.getAnimatedValue();
+                invalidate();
+            }
+        });
+        mAnimReduceHint.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                if (mCount == 1) {
+                    //然后底色也不显示了
+                    isHintMode = false;
+                }
+                if (mCount == 1) {
+                    Log.d(TAG, "现在还是1 开始收缩动画");
+                    if (mAnimAdd != null && !mAnimAdd.isRunning()) {
+                        mAnimAdd.start();
+                    }
+                }
+            }
+
+            @Override
+            public void onAnimationStart(Animator animation) {
+                if (mCount == 1) {
+                    //先不显示文字了
+                    isShowHintText = false;
+                }
+            }
+        });
+        mAnimReduceHint.setDuration(350);
+
+
+        //动画 -
         mAniDel = ValueAnimator.ofFloat(0, 1);
         mAniDel.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -238,7 +312,45 @@ public class AddDelView extends View implements IAddDelViewInterface {
                 invalidate();
             }
         });
+        //1-0的动画
+        mAniDel.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                if (mCount == 0) {
+                    Log.d(TAG, "现在还是0onAnimationEnd() called with: animation = [" + animation + "]");
+                    if (mAnimExpandHint != null && !mAnimExpandHint.isRunning()) {
+                        mAnimExpandHint.start();
+                    }
+                }
+            }
+        });
         mAniDel.setDuration(350);
+        //提示语展开动画
+        //分析这个动画，最初是个圆。 就是left 不断减小
+        mAnimExpandHint = ValueAnimator.ofFloat(1, 0);
+        mAnimExpandHint.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                mAnimExpandHintFraction = (float) animation.getAnimatedValue();
+                invalidate();
+            }
+        });
+        mAnimExpandHint.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                if (mCount == 0) {
+                    isShowHintText = true;
+                }
+            }
+
+            @Override
+            public void onAnimationStart(Animator animation) {
+                if (mCount == 0) {
+                    isHintMode = true;
+                }
+            }
+        });
+        mAnimExpandHint.setDuration(350);
     }
 
     @Override
@@ -274,6 +386,14 @@ public class AddDelView extends View implements IAddDelViewInterface {
 
 
         setMeasuredDimension(wSize, hSize);
+
+        if (mCount == 0) {
+            isHintMode = true;
+            isShowHintText = true;
+        } else {
+            isHintMode = false;
+            isShowHintText = false;
+        }
     }
 
     @Override
@@ -287,90 +407,108 @@ public class AddDelView extends View implements IAddDelViewInterface {
 
     @Override
     protected void onDraw(Canvas canvas) {
-
-        //如果没有删除按钮
-        if (!isNoDelFunc) {
-            //动画 mAnimFraction ：减 0~1, 加 1~0 ,
-            //动画位移Max,
-            float animOffsetMax = (mRadius * 2 + /*mGap * 2 + mTextPaint.measureText(mCount + "")*/mGapBetweenCircle);
-            //透明度动画的基准
-            int animAlphaMax = 255;
-            int animRotateMax = 360;
-
-            //左边
-            //背景 圆
-            if (mCount > 0) {
-                mDelPaint.setColor(mDelEnableBgColor);
-            } else {
-                mDelPaint.setColor(mDelDisableBgColor);
+        if (isHintMode) {
+            //add hint 展开动画
+            //if (mCount == 0) {
+            //背景
+            mHintPaint.setColor(mHintBgColor);
+            RectF rectF = new RectF((mWidth - mRadius * 2) * mAnimExpandHintFraction, 0, getWidth(), getHeight());
+            canvas.drawRoundRect(rectF, mHintBgRoundValue, mHintBgRoundValue, mHintPaint);
+            if (isShowHintText) {
+                //前景文字
+                mHintPaint.setColor(mHintFgColor);
+                // 计算Baseline绘制的起点X轴坐标
+                int baseX = (int) (mWidth / 2 - mHintPaint.measureText(mHintText) / 2);
+                // 计算Baseline绘制的Y坐标
+                int baseY = (int) ((mHeight / 2) - ((mHintPaint.descent() + mHintPaint.ascent()) / 2));
+                canvas.drawText(mHintText, baseX, baseY, mHintPaint);
             }
-            mDelPaint.setAlpha((int) (animAlphaMax * (1 - mAnimFraction)));
+            //}
+        } else {
+            //如果没有删除按钮
+            if (!isNoDelFunc) {
+                //动画 mAnimFraction ：减 0~1, 加 1~0 ,
+                //动画位移Max,
+                float animOffsetMax = (mRadius * 2 + /*mGap * 2 + mTextPaint.measureText(mCount + "")*/mGapBetweenCircle);
+                //透明度动画的基准
+                int animAlphaMax = 255;
+                int animRotateMax = 360;
 
-            mDelPaint.setStrokeWidth(mCircleWidth);
-            mDelPath.reset();
-            mDelPath.addCircle(animOffsetMax * mAnimFraction + mLeft + mRadius, mTop + mRadius, mRadius, Path.Direction.CW);
-            mDelRegion.setPath(mDelPath, new Region(mLeft, mTop, mWidth - getPaddingRight(), mHeight - getPaddingBottom()));
-            //canvas.drawCircle(mAnimOffset + mLeft + mRadius, mTop + mRadius, mRadius, mPaint);
-            canvas.drawPath(mDelPath, mDelPaint);
+                //左边
+                //背景 圆
+                if (mCount > 0) {
+                    mDelPaint.setColor(mDelEnableBgColor);
+                } else {
+                    mDelPaint.setColor(mDelDisableBgColor);
+                }
+                mDelPaint.setAlpha((int) (animAlphaMax * (1 - mAnimFraction)));
 
-            //前景 +
-            if (mCount > 0) {
-                mDelPaint.setColor(mDelEnableFgColor);
-            } else {
-                mDelPaint.setColor(mDelDisableFgColor);
-            }
-            mDelPaint.setStrokeWidth(mLineWidth);
-            //旋转动画
-            canvas.save();
-            canvas.translate(animOffsetMax * mAnimFraction + mLeft + mRadius, mTop + mRadius);
-            canvas.rotate((int) (animRotateMax * (1 - mAnimFraction)));
+                mDelPaint.setStrokeWidth(mCircleWidth);
+                mDelPath.reset();
+                mDelPath.addCircle(animOffsetMax * mAnimFraction + mLeft + mRadius, mTop + mRadius, mRadius, Path.Direction.CW);
+                mDelRegion.setPath(mDelPath, new Region(mLeft, mTop, mWidth - getPaddingRight(), mHeight - getPaddingBottom()));
+                //canvas.drawCircle(mAnimOffset + mLeft + mRadius, mTop + mRadius, mRadius, mPaint);
+                canvas.drawPath(mDelPath, mDelPaint);
+
+                //前景 +
+                if (mCount > 0) {
+                    mDelPaint.setColor(mDelEnableFgColor);
+                } else {
+                    mDelPaint.setColor(mDelDisableFgColor);
+                }
+                mDelPaint.setStrokeWidth(mLineWidth);
+                //旋转动画
+                canvas.save();
+                canvas.translate(animOffsetMax * mAnimFraction + mLeft + mRadius, mTop + mRadius);
+                canvas.rotate((int) (animRotateMax * (1 - mAnimFraction)));
         /*canvas.drawLine(mAnimOffset + mLeft + mRadius / 2, mTop + mRadius,
                 mAnimOffset + mLeft + mRadius / 2 + mRadius, mTop + mRadius,
                 mPaint);*/
-            canvas.drawLine(-mRadius / 2, 0,
-                    +mRadius / 2, 0,
-                    mDelPaint);
-            canvas.restore();
-        }
+                canvas.drawLine(-mRadius / 2, 0,
+                        +mRadius / 2, 0,
+                        mDelPaint);
+                canvas.restore();
+            }
 
 
-        //数量
-        canvas.save();
-        //平移动画
-        canvas.translate(mAnimFraction * (/*mGap*/mGapBetweenCircle / 2 - mTextPaint.measureText(mCount + "") / 2 + mRadius), 0);
-        //旋转动画,旋转中心点，x 是绘图中心,y 是控件中心
-        canvas.rotate(360 * mAnimFraction,
+            //数量
+            canvas.save();
+            //平移动画
+            canvas.translate(mAnimFraction * (/*mGap*/mGapBetweenCircle / 2 - mTextPaint.measureText(mCount + "") / 2 + mRadius), 0);
+            //旋转动画,旋转中心点，x 是绘图中心,y 是控件中心
+            canvas.rotate(360 * mAnimFraction,
                 /*mGap*/ mGapBetweenCircle / 2 + mLeft + mRadius * 2 /*+ mTextPaint.measureText(mCount + "") / 2*/,
-                mTop + mRadius);
-        //透明度动画
-        mTextPaint.setAlpha((int) (255 * (1 - mAnimFraction)));
-        //是没有动画的普通写法,x left, y baseLine
-        canvas.drawText(mCount + "", /*mGap*/ mGapBetweenCircle / 2 - mTextPaint.measureText(mCount + "") / 2 + mLeft + mRadius * 2, mTop + mRadius - (mFontMetrics.top + mFontMetrics.bottom) / 2, mTextPaint);
-        canvas.restore();
+                    mTop + mRadius);
+            //透明度动画
+            mTextPaint.setAlpha((int) (255 * (1 - mAnimFraction)));
+            //是没有动画的普通写法,x left, y baseLine
+            canvas.drawText(mCount + "", /*mGap*/ mGapBetweenCircle / 2 - mTextPaint.measureText(mCount + "") / 2 + mLeft + mRadius * 2, mTop + mRadius - (mFontMetrics.top + mFontMetrics.bottom) / 2, mTextPaint);
+            canvas.restore();
 
-        //右边
-        //背景 圆
-        if (mCount < mMaxCount) {
-            mAddPaint.setColor(mAddEnableBgColor);
-        } else {
-            mAddPaint.setColor(mAddDisableBgColor);
+            //右边
+            //背景 圆
+            if (mCount < mMaxCount) {
+                mAddPaint.setColor(mAddEnableBgColor);
+            } else {
+                mAddPaint.setColor(mAddDisableBgColor);
+            }
+            mAddPaint.setStrokeWidth(mCircleWidth);
+            float left = mLeft + mRadius * 2 + /*mGap * 2 + mTextPaint.measureText(mCount + "")*/ mGapBetweenCircle;
+            mAddPath.reset();
+            mAddPath.addCircle(left + mRadius, mTop + mRadius, mRadius, Path.Direction.CW);
+            mAddRegion.setPath(mAddPath, new Region(mLeft, mTop, mWidth - getPaddingRight(), mHeight - getPaddingBottom()));
+            //canvas.drawCircle(left + mRadius, mTop + mRadius, mRadius, mPaint);
+            canvas.drawPath(mAddPath, mAddPaint);
+            //前景 +
+            if (mCount < mMaxCount) {
+                mAddPaint.setColor(mAddEnableFgColor);
+            } else {
+                mAddPaint.setColor(mAddDisableFgColor);
+            }
+            mAddPaint.setStrokeWidth(mLineWidth);
+            canvas.drawLine(left + mRadius / 2, mTop + mRadius, left + mRadius / 2 + mRadius, mTop + mRadius, mAddPaint);
+            canvas.drawLine(left + mRadius, mTop + mRadius / 2, left + mRadius, mTop + mRadius / 2 + mRadius, mAddPaint);
         }
-        mAddPaint.setStrokeWidth(mCircleWidth);
-        float left = mLeft + mRadius * 2 + /*mGap * 2 + mTextPaint.measureText(mCount + "")*/ mGapBetweenCircle;
-        mAddPath.reset();
-        mAddPath.addCircle(left + mRadius, mTop + mRadius, mRadius, Path.Direction.CW);
-        mAddRegion.setPath(mAddPath, new Region(mLeft, mTop, mWidth - getPaddingRight(), mHeight - getPaddingBottom()));
-        //canvas.drawCircle(left + mRadius, mTop + mRadius, mRadius, mPaint);
-        canvas.drawPath(mAddPath, mAddPaint);
-        //前景 +
-        if (mCount < mMaxCount) {
-            mAddPaint.setColor(mAddEnableFgColor);
-        } else {
-            mAddPaint.setColor(mAddDisableFgColor);
-        }
-        mAddPaint.setStrokeWidth(mLineWidth);
-        canvas.drawLine(left + mRadius / 2, mTop + mRadius, left + mRadius / 2 + mRadius, mTop + mRadius, mAddPaint);
-        canvas.drawLine(left + mRadius, mTop + mRadius / 2, left + mRadius, mTop + mRadius / 2 + mRadius, mAddPaint);
     }
 
 
@@ -379,13 +517,18 @@ public class AddDelView extends View implements IAddDelViewInterface {
         int action = event.getAction();
         switch (action) {
             case MotionEvent.ACTION_DOWN:
-
-                if (mAddRegion.contains((int) event.getX(), (int) event.getY())) {
+                //文字模式
+                if (isHintMode) {
                     onAddClick();
                     return true;
-                } else if (mDelRegion.contains((int) event.getX(), (int) event.getY())) {
-                    onDelClick();
-                    return true;
+                } else {
+                    if (mAddRegion.contains((int) event.getX(), (int) event.getY())) {
+                        onAddClick();
+                        return true;
+                    } else if (mDelRegion.contains((int) event.getX(), (int) event.getY())) {
+                        onDelClick();
+                        return true;
+                    }
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
@@ -432,9 +575,9 @@ public class AddDelView extends View implements IAddDelViewInterface {
     private void onCountAddListener() {
         if (mCount == 1) {
             if (mAniDel != null && mAniDel.isRunning()) {
-                mAniDel.end();
+                mAniDel.cancel();
             }
-            mAnimAdd.start();
+            mAnimReduceHint.start();
         } else {
             mAnimFraction = 0;
             invalidate();
@@ -444,7 +587,7 @@ public class AddDelView extends View implements IAddDelViewInterface {
     private void onCountDelListener() {
         if (mCount == 0) {
             if (mAnimAdd != null && mAnimAdd.isRunning()) {
-                mAnimAdd.end();
+                mAnimAdd.cancel();
             }
             mAniDel.start();
         } else {
