@@ -28,4 +28,13 @@ dependencies {
     compile 'io.reactivex.rxjava2:rxjava:2.0.1'
     //RxAndroid的依赖包
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+
+    compile 'com.squareup.retrofit2:retrofit:2.0.0-beta4'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0-beta4'
+    compile 'com.google.code.gson:gson:2.6.2'
+    compile 'com.jakewharton:butterknife:7.0.1'
+
+
+
 }

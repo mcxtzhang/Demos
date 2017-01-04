@@ -21,4 +21,14 @@
         android:layout_below="@+id/btnAync"
         android:layout_marginTop="11dp"
         android:text="Rx2Demo"/>
+
+    <Button
+        android:id="@+id/btnRetrofit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/btnAync"
+        android:layout_marginTop="11dp"
+        android:text="搭配Retrofit"/>
 </LinearLayout>
