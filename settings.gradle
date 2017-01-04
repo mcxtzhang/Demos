@@ -1,7 +1,7 @@
-include ':app', ':lib', ':zxtcommonlib', ':cstviewdemo', ':retrofitdemo', ':animdemo', ':databindingdemo', ':rxjavademo', ':recyclerviewdemo',  ':coordinatordemo',  ':okhttpdemo', 'layoutmanager'
+include ':app', ':lib', ':zxtcommonlib', ':cstviewdemo', ':retrofitdemo', ':animdemo', ':databindingdemo', ':rxjavademo', ':recyclerviewdemo', ':coordinatordemo', ':okhttpdemo', ':viewpagerdemo', 'layoutmanager'
 
 
-include  ':rxjava2demo'
+include ':rxjava2demo'
 //include ':diffutilsdemo'
 //include ':coordinatordemo2'
 //include ':learnannotationdemo'
@@ -13,8 +13,6 @@ include  ':rxjava2demo'
 //include ':searchdemo'
 //include  ':libannotation'
 //include ':selectcoupondemo'
-
-
 
 //include ':libfactorypattern'
 //include  ':decoratorpatterndemo'
