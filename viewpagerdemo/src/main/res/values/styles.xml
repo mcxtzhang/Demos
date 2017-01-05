@@ -8,7 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="Transparent">
+    <style name="Transparent" parent="AppTheme">
         　　
         　　
         <item name="android:windowBackground">@color/transparent</item>
