@@ -1,7 +1,14 @@
-include ':app', ':lib', ':zxtcommonlib', ':cstviewdemo', ':retrofitdemo', ':animdemo', ':databindingdemo', ':rxjavademo', ':recyclerviewdemo', ':coordinatordemo', ':okhttpdemo', ':viewpagerdemo', 'layoutmanager'
+include ':app', ':lib', ':zxtcommonlib', ':cstviewdemo', ':animdemo', ':recyclerviewdemo', ':coordinatordemo', ':okhttpdemo'
 
 
 include ':rxjava2demo'
+//incldue  ':rxjavademo'
+//include ':retrofitdemo'
+
+//include ':viewpagerdemo'
+//include ':databindingdemo'
+//include  'layoutmanager'
+
 //include ':diffutilsdemo'
 //include ':coordinatordemo2'
 //include ':learnannotationdemo'

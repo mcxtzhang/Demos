@@ -1,4 +1,4 @@
-package com.mcxtzhang.rxjava2demo.retrofit;
+package com.mcxtzhang.rxjava2demo.retrofit.model.bean;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -12,7 +12,24 @@ import java.util.List;
  * 时间： 2016/12/30.
  */
 
-public class DouBanBean {
+public class DouBanMovieBean {
+    @Override
+    public String toString() {
+        return "DouBanMovieBean{" +
+                "rating=" + rating +
+                ", title='" + title + '\'' +
+                ", collectCount=" + collectCount +
+                ", originalTitle='" + originalTitle + '\'' +
+                ", subtype='" + subtype + '\'' +
+                ", year='" + year + '\'' +
+                ", images=" + images +
+                ", alt='" + alt + '\'' +
+                ", id='" + id + '\'' +
+                ", genres=" + genres +
+                ", casts=" + casts +
+                ", directors=" + directors +
+                '}';
+    }
 
     /**
      * rating : {"max":10,"average":9.6,"stars":"50","min":0}
