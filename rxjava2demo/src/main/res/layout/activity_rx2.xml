@@ -49,4 +49,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Range + Repeat"/>
+
+
+    <Button
+        android:id="@+id/btnSubject"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="subject"/>
+
+    <Button
+        android:id="@+id/btnFlatmap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Flatmap"/>
+
+    <Button
+        android:id="@+id/btnTimer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Timer"/>
 </LinearLayout>

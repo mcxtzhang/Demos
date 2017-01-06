@@ -7,7 +7,9 @@ import android.view.View;
 
 import com.mcxtzhang.rxjava2demo.R;
 
+import java.util.ArrayList;
 import java.util.EmptyStackException;
+import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
@@ -21,8 +23,10 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subjects.ReplaySubject;
 
 public class Rx2Activity extends AppCompatActivity {
 
@@ -239,6 +243,111 @@ public class Rx2Activity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.btnSubject).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ReplaySubject<String> subject = ReplaySubject.create();
+                String a = "一开始没变化之前";
+
+                subject.onNext("a");
+                Log.d(TAG, "onClick() called with: view = [" + subject.getValues() + "]");
+                subject.onNext("b");
+                subject.onNext(a);
+                Log.d(TAG, "onClick() called with: view = [" + subject.getValues() + "]");
+                subject.onComplete();
+                a = "厉害了";
+
+                subject.subscribe(new Observer<String>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        mCompositeDisposable.add(d);
+                        Log.d(TAG, "onSubscribe() called with: d = [" + d + "]" + Thread.currentThread());
+                    }
+
+                    @Override
+                    public void onNext(String value) {
+                        Log.d(TAG, "onNext() called with: value = [" + value + "]" + Thread.currentThread());
+                        mCompositeDisposable.dispose();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d(TAG, "onError() called with: e = [" + e + "]" + Thread.currentThread());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Log.d(TAG, "onComplete() called" + Thread.currentThread());
+                    }
+                });
+            }
+        });
+
+        findViewById(R.id.btnFlatmap).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                query("查询")
+                        .flatMap(new Function<List<String>, ObservableSource<String>>() {
+                            @Override
+                            public ObservableSource<String> apply(List<String> strings) throws Exception {
+                                return Observable.fromIterable(strings);
+                            }
+                        })
+                        .flatMap(new Function<String, ObservableSource<String>>() {
+                            @Override
+                            public ObservableSource<String> apply(String s) throws Exception {
+                                return getTitle(s);
+                            }
+                        })
+
+                        .subscribeOn(Schedulers.io())
+
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .doOnNext(new Consumer<String>() {
+                            @Override
+                            public void accept(String s) throws Exception {
+                                Log.d(TAG, "doOnNext() called with: s = [" + s + "]" + Thread.currentThread());
+                            }
+                        })
+                        .subscribe(new Consumer<String>() {
+                            @Override
+                            public void accept(String s) throws Exception {
+                                Log.d(TAG, "subscribe() called with: s = [" + s + "]" + Thread.currentThread());
+                            }
+                        });
+
+            }
+        });
+
+
+        findViewById(R.id.btnTimer).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Observable.timer(1, TimeUnit.SECONDS)
+                        .subscribe(new Observer<Long>() {
+                            @Override
+                            public void onSubscribe(Disposable d) {
+                                Log.d(TAG, "onSubscribe() called with: d = [" + d + "]");
+                            }
+
+                            @Override
+                            public void onNext(Long value) {
+                                Log.d(TAG, "onNext() called with: value = [" + value + "]");
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                Log.d(TAG, "onError() called with: e = [" + e + "]");
+                            }
+
+                            @Override
+                            public void onComplete() {
+                                Log.d(TAG, "onComplete() called");
+                            }
+                        });
+            }
+        });
+
 
     }
 
@@ -252,4 +361,38 @@ public class Rx2Activity extends AppCompatActivity {
         mCompositeDisposable.dispose();
 
     }
+
+
+    //Flatmap
+    //这个方法根据输入的字符串返回一个网站的url列表
+    Observable<List<String>> query(final String text) {
+        return Observable.create(new ObservableOnSubscribe<List<String>>() {
+            @Override
+            public void subscribe(ObservableEmitter<List<String>> e) throws Exception {
+                if (!e.isDisposed()) {
+                    Log.d(TAG, "subscribe() called with: e = [" + e + "]" + Thread.currentThread());
+                    List<String> result = new ArrayList<String>();
+                    result.add(text + "A");
+                    result.add(text + "B");
+                    result.add(text + "C");
+                    e.onNext(result);
+                    e.onComplete();
+                }
+
+            }
+        });
+    }
+
+    // 返回网站的标题，如果404了就返回null
+    Observable<String> getTitle(final String URL) {
+        return Observable.create(new ObservableOnSubscribe<String>() {
+            @Override
+            public void subscribe(ObservableEmitter<String> e) throws Exception {
+                e.onNext("标题:" + URL);
+                e.onComplete();
+            }
+        });
+    }
+
+
 }

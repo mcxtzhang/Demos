@@ -33,5 +33,20 @@ public class Main {
         System.out.println(generator.next());
         System.out.println(generator.next());
 
+
+        System.out.println(isNummber(""));
+
+
+    }
+
+    private static int isNummber(String numberString) {
+        int k = 1;
+        try {
+            k = 2;
+            return k;
+        } finally {
+            k = 3;
+            return k;
+        }
     }
 }
