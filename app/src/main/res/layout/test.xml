@@ -3,6 +3,7 @@
           xmlns:tools="http://schemas.android.com/tools"
           android:layout_width="120dp"
           android:layout_height="60dp"
+          android:foreground="@drawable/shape_round_fg_cate_list"
           android:background="@drawable/shape_round_bg_cate_list"
           android:gravity="center"
           android:padding="20dp"

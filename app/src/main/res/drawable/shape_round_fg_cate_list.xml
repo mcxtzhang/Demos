@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item>
+        <inset android:drawable="@drawable/test_fg" android:inset="20dp"/>
+        <!--
+                <shape android:shape="rectangle" >
+                    <padding android:bottom="15dp"
+                             android:left="15dp" android:right="15dp" android:top="15dp"/>
+                    <solid android:color="#ff4a57"/>
+
+                    <corners android:radius="30dp"/>
+                </shape>
+        -->
+    </item>
+
+</selector>

@@ -16,6 +16,7 @@
         android:layout_width="165dp"
         android:layout_height="167dp"
         android:text="Button"
+        android:foreground="@color/colorAccent"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp" />
 

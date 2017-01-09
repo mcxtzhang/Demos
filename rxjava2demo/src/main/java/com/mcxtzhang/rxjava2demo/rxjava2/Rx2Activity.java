@@ -404,6 +404,36 @@ public class Rx2Activity extends AppCompatActivity {
         });
 
 
+        Observable.just(1,2,3,2,1)
+                .takeUntil(new Predicate<Integer>() {
+                    @Override
+                    public boolean test(Integer integer) throws Exception {
+                        Log.d(TAG, "test() called with: integer = [" + integer + "]");
+                        return integer>1;
+                    }
+                }).subscribe(new Observer<Integer>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                Log.d(TAG, "onSubscribe() called with: d = [" + d + "]");
+            }
+
+            @Override
+            public void onNext(Integer value) {
+                Log.d(TAG, "onNext() called with: value = [" + value + "]");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.d(TAG, "onError() called with: e = [" + e + "]");
+            }
+
+            @Override
+            public void onComplete() {
+                Log.d(TAG, "onComplete() called");
+            }
+        });
+
+
     }
 
     private int deferValue, value;
