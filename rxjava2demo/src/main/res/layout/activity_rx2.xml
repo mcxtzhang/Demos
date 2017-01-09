@@ -68,4 +68,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Timer"/>
+
+
+    <Button
+        android:id="@+id/btnTakeUntil"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TakeUntil"/>
+
+    <Button
+        android:id="@+id/btnTakeWhile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TakeWhile"/>
+
 </LinearLayout>

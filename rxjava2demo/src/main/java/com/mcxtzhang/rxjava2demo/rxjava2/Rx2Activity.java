@@ -348,6 +348,61 @@ public class Rx2Activity extends AppCompatActivity {
             }
         });
 
+        final Observable<Integer> testTakeOb = Observable.just(1, 2, 3, 4, 5, 6, 7, 1)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+
+        final Observer<Integer> testTaskObserver = new Observer<Integer>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                Log.w(TAG, "onSubscribe() called with: d = [" + d + "]");
+            }
+
+            @Override
+            public void onNext(Integer value) {
+                Log.d(TAG, "onNext() called with: value = [" + value + "]");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.e(TAG, "onError() called with: e = [" + e + "]");
+            }
+
+            @Override
+            public void onComplete() {
+                Log.e(TAG, "onComplete() called");
+            }
+        };
+
+        findViewById(R.id.btnTakeUntil).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                testTakeOb
+                        .takeUntil(new Predicate<Integer>() {
+                            @Override
+                            public boolean test(Integer integer) throws Exception {
+                                Log.i(TAG, "takeUntil() called with: integer = [" + integer + "]");
+                                return integer > 2;
+                            }
+                        })
+                        .subscribe(testTaskObserver);
+
+            }
+        });
+
+        findViewById(R.id.btnTakeWhile).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                testTakeOb.takeWhile(new Predicate<Integer>() {
+                    @Override
+                    public boolean test(Integer integer) throws Exception {
+                        Log.d(TAG, "takeWhile() called with: integer = [" + integer + "]");
+                        return integer<2;
+                    }
+                }).subscribe(testTaskObserver);
+            }
+        });
+
 
     }
 
