@@ -1,4 +1,4 @@
-include ':app', ':lib', ':zxtcommonlib', ':cstviewdemo', ':animdemo', ':recyclerviewdemo', ':coordinatordemo', ':okhttpdemo'
+include ':app', ':lib', ':zxtcommonlib', ':cstviewdemo', ':animdemo', ':recyclerviewdemo', ':coordinatordemo', ':okhttpdemo', ':dbflowdemo'
 
 
 include ':rxjava2demo'
@@ -7,8 +7,6 @@ include ':rxjava2demo'
 
 //*********database library:*********
 //include  ':realmdemo'
-
-
 
 //include ':viewpagerdemo'
 //include ':databindingdemo'
