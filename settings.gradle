@@ -5,6 +5,11 @@ include ':rxjava2demo'
 //incldue  ':rxjavademo'
 //include ':retrofitdemo'
 
+//*********database library:*********
+//include  ':realmdemo'
+
+
+
 //include ':viewpagerdemo'
 //include ':databindingdemo'
 //include  'layoutmanager'
