@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">DBFlowDemo</string>
+    <string name="save">存</string>
+    <string name="get">取</string>
 </resources>
