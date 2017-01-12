@@ -18,9 +18,9 @@
         <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:title=" "
             app:contentScrim="#a10fa6"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|enterAlways">
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|enterAlways"
+            app:title=" ">
 
             <ImageView
                 android:id="@+id/iv_news_detail"
@@ -37,11 +37,11 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="#00000000"
 
-                app:title="折叠吗"
-
                 app:layout_collapseMode="pin"
+
                 app:popupTheme="@style/Theme.AppCompat.Light"
-                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:title="折叠吗"/>
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
@@ -63,6 +63,7 @@
     </android.support.v4.widget.NestedScrollView>
 
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
@@ -72,4 +73,10 @@
         app:layout_anchor="@id/appBar"
         app:layout_anchorGravity="bottom|right|end"/>
 
+
+    <Button
+        android:id="@+id/btnShow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="显示位置"/>
 </android.support.design.widget.CoordinatorLayout>

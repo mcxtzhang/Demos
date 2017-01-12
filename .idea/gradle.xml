@@ -9,14 +9,9 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/animdemo" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/coordinatordemo" />
-            <option value="$PROJECT_DIR$/cstviewdemo" />
-            <option value="$PROJECT_DIR$/dbflowdemo" />
             <option value="$PROJECT_DIR$/lib" />
-            <option value="$PROJECT_DIR$/okhttpdemo" />
-            <option value="$PROJECT_DIR$/recyclerviewdemo" />
             <option value="$PROJECT_DIR$/rxjava2demo" />
             <option value="$PROJECT_DIR$/zxtcommonlib" />
           </set>

@@ -1,7 +1,7 @@
 include ':app', ':lib', ':zxtcommonlib'
 
 
-//, ':cstviewdemo', ':animdemo', ':recyclerviewdemo', ':coordinatordemo', ':okhttpdemo'
+//, ':cstviewdemo', ':animdemo', ':recyclerviewdemo', ':okhttpdemo'
 
 include ':rxjava2demo'
 //incldue  ':rxjavademo'
@@ -10,6 +10,8 @@ include ':rxjava2demo'
 //*********database library:*********
 //include  ':realmdemo'
 //include  ':dbflowdemo'
+
+include  ':coordinatordemo'
 
 //include ':viewpagerdemo'
 //include ':databindingdemo'
