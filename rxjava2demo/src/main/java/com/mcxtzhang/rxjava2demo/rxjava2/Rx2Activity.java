@@ -9,7 +9,9 @@ import com.mcxtzhang.rxjava2demo.R;
 
 import java.util.ArrayList;
 import java.util.EmptyStackException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
@@ -18,6 +20,7 @@ import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
+import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -25,12 +28,18 @@ import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
+import io.reactivex.observers.DisposableMaybeObserver;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.ReplaySubject;
+import io.reactivex.subjects.Subject;
 
 public class Rx2Activity extends AppCompatActivity {
 
     private static final String TAG = "zxt/Rx2";
+
+    //▲ 统一管理 Disposable，统一注销
     CompositeDisposable mCompositeDisposable;
 
     @Override
@@ -87,7 +96,7 @@ public class Rx2Activity extends AppCompatActivity {
                             //Thread.sleep(500);
                         }*/
                         e.onNext(5);
-                        e.onError(new Exception("dadasdas"));
+                        e.onError(new Exception("abc"));
 
                     }
                 }).subscribeOn(Schedulers.computation())
@@ -397,39 +406,205 @@ public class Rx2Activity extends AppCompatActivity {
                     @Override
                     public boolean test(Integer integer) throws Exception {
                         Log.d(TAG, "takeWhile() called with: integer = [" + integer + "]");
-                        return integer<2;
+                        return integer < 2;
                     }
                 }).subscribe(testTaskObserver);
+
+
+                Observable.just(1, 2, 3, 2, 1)
+                        .takeUntil(new Predicate<Integer>() {
+                            @Override
+                            public boolean test(Integer integer) throws Exception {
+                                Log.d(TAG, "test() called with: integer = [" + integer + "]");
+                                return integer > 1;
+                            }
+                        }).subscribe(new Observer<Integer>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        Log.d(TAG, "onSubscribe() called with: d = [" + d + "]");
+                    }
+
+                    @Override
+                    public void onNext(Integer value) {
+                        Log.d(TAG, "onNext() called with: value = [" + value + "]");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d(TAG, "onError() called with: e = [" + e + "]");
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Log.d(TAG, "onComplete() called");
+                    }
+                });
             }
         });
 
 
-        Observable.just(1,2,3,2,1)
-                .takeUntil(new Predicate<Integer>() {
-                    @Override
-                    public boolean test(Integer integer) throws Exception {
-                        Log.d(TAG, "test() called with: integer = [" + integer + "]");
-                        return integer>1;
-                    }
-                }).subscribe(new Observer<Integer>() {
+        final DisposableObserver observer = new DisposableObserver() {
             @Override
-            public void onSubscribe(Disposable d) {
-                Log.d(TAG, "onSubscribe() called with: d = [" + d + "]");
-            }
-
-            @Override
-            public void onNext(Integer value) {
-                Log.d(TAG, "onNext() called with: value = [" + value + "]");
+            public void onNext(Object value) {
+                Log.v(TAG, "onNext() called with: value = [" + value + "]");
             }
 
             @Override
             public void onError(Throwable e) {
-                Log.d(TAG, "onError() called with: e = [" + e + "]");
+                Log.e(TAG, "onError() called with: e = [" + e + "]");
             }
 
             @Override
             public void onComplete() {
-                Log.d(TAG, "onComplete() called");
+                Log.w(TAG, "onComplete() called");
+            }
+        };
+
+
+        findViewById(R.id.btnReduce).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+/*                Observable.just(4, 2, 3, 4, 5, 7)
+                        .reduce(new BiFunction<Integer, Integer, Integer>() {
+                            @Override
+                            public Integer apply(Integer integer, Integer integer2) throws Exception {
+                                Log.i(TAG, "apply() called with: integer = [" + integer + "], integer2 = [" + integer2 + "]");
+                                return integer>integer2?integer:integer2;
+                            }
+                        })
+                        .subscribeWith(new DisposableMaybeObserver<Integer>() {
+                            @Override
+                            public void onSuccess(Integer value) {
+                                Log.d(TAG, "onSuccess() called with: value = [" + value + "]");
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                Log.d(TAG, "onError() called with: e = [" + e + "]");
+                            }
+
+                            @Override
+                            public void onComplete() {
+                                Log.d(TAG, "onComplete() called");
+                            }
+                        });
+//                01-12 22:29:30.879 27202-27202/com.mcxtzhang.rxjava2demo I/zxt/Rx2: apply() called with: integer = [4], integer2 = [2]
+//                01-12 22:29:30.879 27202-27202/com.mcxtzhang.rxjava2demo I/zxt/Rx2: apply() called with: integer = [4], integer2 = [3]
+//                01-12 22:29:30.879 27202-27202/com.mcxtzhang.rxjava2demo I/zxt/Rx2: apply() called with: integer = [4], integer2 = [4]
+//                01-12 22:29:30.879 27202-27202/com.mcxtzhang.rxjava2demo I/zxt/Rx2: apply() called with: integer = [4], integer2 = [5]
+//                01-12 22:29:30.879 27202-27202/com.mcxtzhang.rxjava2demo I/zxt/Rx2: apply() called with: integer = [5], integer2 = [7]
+//                01-12 22:29:30.885 27202-27202/com.mcxtzhang.rxjava2demo D/zxt/Rx2: onSuccess() called with: value = [7]*/
+
+
+                DisposableMaybeObserver<Integer> maybeObserver = new DisposableMaybeObserver<Integer>() {
+                    @Override
+                    public void onSuccess(Integer value) {
+                        Log.d(TAG, "onSuccess() called with: value = [" + value + "]");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d(TAG, "onError() called with: e = [" + e + "]");
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Log.d(TAG, "onComplete() called");
+                    }
+                };
+                Observable.just(4, 2, 3, 4, 5, 7).reduce("a", new BiFunction<String, Integer, String>() {
+                    @Override
+                    public String apply(String s, Integer integer) throws Exception {
+                        Log.d(TAG, "apply() called with: s = [" + s + "], integer = [" + integer + "]");
+                        return s + integer;
+                    }
+                }).subscribeWith(new DisposableSingleObserver<String>() {
+                    @Override
+                    public void onSuccess(String value) {
+                        Log.d(TAG, "onSuccess() called with: value = [" + value + "]");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d(TAG, "onError() called with: e = [" + e + "]");
+                    }
+                });
+
+//                01-12 22:35:17.808 28076-28076/com.mcxtzhang.rxjava2demo D/zxt/Rx2: apply() called with: s = [a], integer = [4]
+//                01-12 22:35:17.808 28076-28076/com.mcxtzhang.rxjava2demo D/zxt/Rx2: apply() called with: s = [a4], integer = [2]
+//                01-12 22:35:17.808 28076-28076/com.mcxtzhang.rxjava2demo D/zxt/Rx2: apply() called with: s = [a42], integer = [3]
+//                01-12 22:35:17.808 28076-28076/com.mcxtzhang.rxjava2demo D/zxt/Rx2: apply() called with: s = [a423], integer = [4]
+//                01-12 22:35:17.809 28076-28076/com.mcxtzhang.rxjava2demo D/zxt/Rx2: apply() called with: s = [a4234], integer = [5]
+//                01-12 22:35:17.809 28076-28076/com.mcxtzhang.rxjava2demo D/zxt/Rx2: apply() called with: s = [a42345], integer = [7]
+//                01-12 22:35:17.809 28076-28076/com.mcxtzhang.rxjava2demo D/zxt/Rx2: onSuccess() called with: value = [a423457]
+
+
+            }
+        });
+
+        findViewById(R.id.btnToMap).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //即使不指定用新的map 订阅两次 也是两个hashmap对象
+                Single<Map<Integer, String>> mapSingle = Observable.just(1, 2, 3, 4, 5)
+                        .toMap(new Function<Integer, Integer>() {
+                            @Override
+                            public Integer apply(Integer integer) throws Exception {
+
+                                return integer;
+                            }
+                        }, new Function<Integer, String>() {
+                            @Override
+                            public String apply(Integer integer) throws Exception {
+
+                                return "" + integer;
+                            }
+                        }/*, new Callable<Map<Integer, String>>() {
+                            @Override
+                            public Map<Integer, String> call() throws Exception {
+                                return new HashMap<Integer, String>();
+                            }
+                        }*/);
+
+                Single<Map<Integer, String>> mapSingle1 = Subject.just(1, 2, 3, 4, 5, 6, 7)
+                        .toMap(new Function<Integer, Integer>() {
+                            @Override
+                            public Integer apply(Integer integer) throws Exception {
+                                Log.e(TAG, "apply() called with: integer = [" + integer + "]");
+                                return integer;
+                            }
+                        }, new Function<Integer, String>() {
+                            @Override
+                            public String apply(Integer integer) throws Exception {
+                                Log.w(TAG, "apply() called with: integer = [" + integer + "]");
+                                return "" + integer;
+                            }
+                        });
+
+
+                mapSingle1.subscribeWith(new DisposableSingleObserver<Map<Integer, String>>() {
+                            @Override
+                            public void onSuccess(Map<Integer, String> value) {
+                                Log.d(TAG, "onSuccess() called with: value = [" + value + "]");
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                Log.d(TAG, "onError() called with: e = [" + e + "]");
+                            }
+                        });
+
+                mapSingle1.subscribeWith(new DisposableSingleObserver<Map<Integer, String>>() {
+                    @Override
+                    public void onSuccess(Map<Integer, String> value) {
+                        Log.d(TAG, "onSuccess() called with: value = [" + value + "]");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d(TAG, "onError() called with: e = [" + e + "]");
+                    }
+                });
             }
         });
 

@@ -11,7 +11,7 @@ include ':rxjava2demo'
 //include  ':realmdemo'
 //include  ':dbflowdemo'
 
-include  ':coordinatordemo'
+//include  ':coordinatordemo'
 
 //include ':viewpagerdemo'
 //include ':databindingdemo'

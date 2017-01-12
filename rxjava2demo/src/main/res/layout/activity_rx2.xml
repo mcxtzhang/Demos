@@ -1,85 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_rx2"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.mcxtzhang.rxjava2demo.rxjava2.Rx2Activity">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/btnInterval"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="定时 和 取消"/>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/activity_rx2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context="com.mcxtzhang.rxjava2demo.rxjava2.Rx2Activity">
 
-
-    <Button
-        android:id="@+id/btnLeak"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="测试内存泄漏"/>
+        <Button
+            android:id="@+id/btnInterval"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="定时 和 取消"/>
 
 
-    <Button
-        android:id="@+id/btnStop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="停止"/>
-
-    <Button
-        android:id="@+id/btnZipDemo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="测试合并打包后error最后接受是否会出错"/>
-
-    <Button
-        android:id="@+id/btnDefer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Defer是否延迟了Ob数据的创建"/>
-
-    <Button
-        android:id="@+id/btnRangeRepeat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Range + Repeat"/>
+        <Button
+            android:id="@+id/btnLeak"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="测试内存泄漏"/>
 
 
-    <Button
-        android:id="@+id/btnSubject"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="subject"/>
+        <Button
+            android:id="@+id/btnStop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="停止"/>
 
-    <Button
-        android:id="@+id/btnFlatmap"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Flatmap"/>
+        <Button
+            android:id="@+id/btnZipDemo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="测试合并打包后error最后接受是否会出错"/>
 
-    <Button
-        android:id="@+id/btnTimer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Timer"/>
+        <Button
+            android:id="@+id/btnDefer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Defer是否延迟了Ob数据的创建"/>
+
+        <Button
+            android:id="@+id/btnRangeRepeat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Range + Repeat"/>
 
 
-    <Button
-        android:id="@+id/btnTakeUntil"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TakeUntil"/>
+        <Button
+            android:id="@+id/btnSubject"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="subject"/>
 
-    <Button
-        android:id="@+id/btnTakeWhile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TakeWhile"/>
+        <Button
+            android:id="@+id/btnFlatmap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Flatmap"/>
 
-</LinearLayout>
+        <Button
+            android:id="@+id/btnTimer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Timer"/>
+
+
+        <Button
+            android:id="@+id/btnTakeUntil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TakeUntil"/>
+
+        <Button
+            android:id="@+id/btnTakeWhile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TakeWhile"/>
+
+        <Button
+            android:id="@+id/btnReduce"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reduce"/>
+
+
+        <Button
+            android:id="@+id/btnToMap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="toMap"/>
+
+    </LinearLayout>
+</ScrollView>
+
