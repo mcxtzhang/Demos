@@ -9,7 +9,6 @@ import com.mcxtzhang.rxjava2demo.R;
 
 import java.util.ArrayList;
 import java.util.EmptyStackException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -583,16 +582,16 @@ public class Rx2Activity extends AppCompatActivity {
 
 
                 mapSingle1.subscribeWith(new DisposableSingleObserver<Map<Integer, String>>() {
-                            @Override
-                            public void onSuccess(Map<Integer, String> value) {
-                                Log.d(TAG, "onSuccess() called with: value = [" + value + "]");
-                            }
+                    @Override
+                    public void onSuccess(Map<Integer, String> value) {
+                        Log.d(TAG, "onSuccess() called with: value = [" + value + "]");
+                    }
 
-                            @Override
-                            public void onError(Throwable e) {
-                                Log.d(TAG, "onError() called with: e = [" + e + "]");
-                            }
-                        });
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d(TAG, "onError() called with: e = [" + e + "]");
+                    }
+                });
 
                 mapSingle1.subscribeWith(new DisposableSingleObserver<Map<Integer, String>>() {
                     @Override
@@ -607,6 +606,40 @@ public class Rx2Activity extends AppCompatActivity {
                 });
             }
         });
+
+        //cast/ofType(强转类型的)
+        findViewById(R.id.btnCast).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TestCastBaseBean testCastBaseBean = new TestCastChildBean();
+                TestCastBaseBean testCastBaseBean1 = new TestCastBaseBean();
+                TestCastBaseBean testCastBaseBean2 = new TestCastChildBean();
+                Observable.just(testCastBaseBean, testCastBaseBean1, testCastBaseBean2)
+                        .ofType(TestCastChildBean.class)
+                        .subscribe(new Consumer<TestCastChildBean>() {
+                            @Override
+                            public void accept(TestCastChildBean testCastChildBean) throws Exception {
+                                Log.d(TAG, "accept() called with: testCastChildBean = [" + testCastChildBean.father + "]");
+                            }
+                        }, new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
+                                Log.e(TAG, "accept() called with: throwable = [" + throwable + "]");
+                            }
+                        });
+            }
+        });
+
+        //empty(测试empty会回调观察者里那些方法)
+        findViewById(R.id.btnEmpty).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Observable.empty().subscribe(observer);
+                //01-13 11:35:03.816 4130-4130/com.mcxtzhang.rxjava2demo W/zxt/Rx2: onComplete() called
+            }
+        });
+
+
 
 
     }
