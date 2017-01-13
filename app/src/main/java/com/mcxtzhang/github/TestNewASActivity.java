@@ -10,8 +10,11 @@ import java.io.InputStreamReader;
 
 public class TestNewASActivity extends AppCompatActivity {
 
+    private static final String TAG = "zxt/lifecycle";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate() called with: savedInstanceState = [" + savedInstanceState + "]");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test);
 
@@ -51,6 +54,7 @@ public class TestNewASActivity extends AppCompatActivity {
 
         Log.i("TAG", Base64.encodeToString(getFromAssets("cc.png").getBytes(), Base64.DEFAULT));
 
+        finish();
     }
 
 
@@ -67,6 +71,37 @@ public class TestNewASActivity extends AppCompatActivity {
             e.printStackTrace();
             return null;
         }
+    }
+
+
+    @Override
+    protected void onStart() {
+        Log.d(TAG, "onStart() called");
+        super.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        Log.d(TAG, "onResume() called");
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        Log.d(TAG, "onPause() called");
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        Log.d(TAG, "onStop() called");
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        Log.d(TAG, "onDestroy() called");
+        super.onDestroy();
     }
 
 
