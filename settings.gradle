@@ -1,5 +1,6 @@
 include ':app', ':lib', ':zxtcommonlib'
 
+include ':viewpagerdemo'
 
 //, ':cstviewdemo', ':animdemo', ':recyclerviewdemo', ':okhttpdemo'
 
@@ -13,7 +14,7 @@ include ':rxjava2demo'
 
 //include  ':coordinatordemo'
 
-//include ':viewpagerdemo'
+
 //include ':databindingdemo'
 //include  'layoutmanager'
 
