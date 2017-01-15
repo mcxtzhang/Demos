@@ -1,4 +1,4 @@
-include ':app', ':lib', ':zxtcommonlib'
+include ':app', ':lib', ':zxtcommonlib', ':library', ':compiler'
 
 include ':viewpagerdemo'
 
@@ -13,7 +13,6 @@ include ':rxjava2demo'
 //include  ':dbflowdemo'
 
 //include  ':coordinatordemo'
-
 
 //include ':databindingdemo'
 //include  'layoutmanager'
