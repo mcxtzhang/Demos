@@ -640,7 +640,7 @@ public class Rx2Activity extends AppCompatActivity {
         });
 
 
-
+        Log.d(TAG, "onCreate() called with: savedInstanceState = [" + getWindow() + "]");
 
     }
 
@@ -687,5 +687,13 @@ public class Rx2Activity extends AppCompatActivity {
         });
     }
 
+
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume() called + getWindow()"+ getWindow());
+    }
 
 }
