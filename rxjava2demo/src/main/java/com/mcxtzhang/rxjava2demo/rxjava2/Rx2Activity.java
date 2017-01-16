@@ -27,6 +27,7 @@ import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
+import io.reactivex.observables.ConnectableObservable;
 import io.reactivex.observers.DisposableMaybeObserver;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -642,7 +643,49 @@ public class Rx2Activity extends AppCompatActivity {
 
         Log.d(TAG, "onCreate() called with: savedInstanceState = [" + getWindow() + "]");
 
+        findViewById(R.id.btnPublish).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cold = Observable.interval(200, TimeUnit.MILLISECONDS).publish();
+                d0 = cold.connect();
+                d1 = cold.subscribe(new Consumer<Long>() {
+                    @Override
+                    public void accept(Long aLong) throws Exception {
+                        Log.w(TAG, "11111() called with: aLong = [" + aLong + "]");
+                    }
+                });
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                d2 = cold.subscribe(new Consumer<Long>() {
+                    @Override
+                    public void accept(Long aLong) throws Exception {
+                        Log.e(TAG, "22222() called with: aLong = [" + aLong + "]");
+                    }
+                });
+
+            }
+        });
+        findViewById(R.id.btnStopHot).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (d0.isDisposed()) {
+                    // useless i don't know why
+                    d0 = cold.connect();
+                } else {
+                    d0.dispose();
+                }
+            }
+        });
+
     }
+
+    //for test hot cold Observable
+    Disposable d0, d1, d2;
+    ConnectableObservable<Long> cold;
+
 
     private int deferValue, value;
 
@@ -688,12 +731,10 @@ public class Rx2Activity extends AppCompatActivity {
     }
 
 
-
-
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d(TAG, "onResume() called + getWindow()"+ getWindow());
+        Log.d(TAG, "onResume() called + getWindow()" + getWindow());
     }
 
 }

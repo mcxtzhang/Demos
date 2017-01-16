@@ -111,6 +111,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="empty(测试empty会回调观察者里那些方法)"/>
+
+        <Button
+            android:id="@+id/btnPublish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="冷热数据源(publish方法)"/>
+
+        <Button
+            android:id="@+id/btnStopHot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="停止 热数据源(publish方法)"/>
     </LinearLayout>
 </ScrollView>
 
