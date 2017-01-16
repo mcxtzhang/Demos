@@ -5,9 +5,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
 
+import com.example.TestHelloWorld;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
+@TestHelloWorld("haha")
 public class TestNewASActivity extends AppCompatActivity {
 
     private static final String TAG = "zxt/lifecycle";
