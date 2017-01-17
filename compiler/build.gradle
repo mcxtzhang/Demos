@@ -3,11 +3,15 @@ apply plugin: 'java'
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     dependencies {
+        //AutoService 帮助我们生成对 META-INF 的配置信息。不用我们自己手写了 很方便
         compile 'com.google.auto.service:auto-service:1.0-rc2'
+        //javapoet 是封装了写文件的一些操作，让我们使用更方便
         compile 'com.squareup:javapoet:1.7.0'
+        //别忘了依赖我们定义注解的那个module
         compile project(':library')
     }
 }
 
+//定义编译的jdk版本为1.7，这个很重要，不写会报错。
 sourceCompatibility = "1.7"
 targetCompatibility = "1.7"

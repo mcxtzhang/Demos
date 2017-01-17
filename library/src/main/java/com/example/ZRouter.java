@@ -6,16 +6,16 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Intro:
+ * Intro: Used in Class, to get path
  * Author: zhangxutong
  * E-mail: mcxtzhang@163.com
  * Home Page: http://blog.csdn.net/zxt0601
- * Created:   2017/1/16.
+ * Created:   2017/1/17.
  * History:
  */
 
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.CLASS)
-public @interface TestHelloWorld {
-    String value();
+public @interface ZRouter {
+    public String path() default "";
 }

@@ -1,15 +1,13 @@
 package com.example;
 
 import com.google.auto.service.AutoService;
+import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
-import com.sun.java.browser.net.ProxyInfo;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.LinkedHashSet;
-import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.processing.AbstractProcessor;
@@ -29,7 +27,6 @@ import javax.tools.Diagnostic;
 
 @AutoService(Processor.class)
 public class AutoParcelProcessor extends AbstractProcessor {
-    //如果没有其他处理器需要继续处理该注解，则 process() 返回 true。
 
     private Filer mFileUtils;
     private Elements mElementUtils;
@@ -57,8 +54,6 @@ public class AutoParcelProcessor extends AbstractProcessor {
     }
 
 
-    private Map<String, ProxyInfo> mProxyMap = new HashMap<String, ProxyInfo>();
-
     @Override
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnvironment) {
         Set<? extends Element> set2 = roundEnvironment.getElementsAnnotatedWith(TestHelloWorld.class);
@@ -75,9 +70,39 @@ public class AutoParcelProcessor extends AbstractProcessor {
                     .addParameter(String[].class, "args")
                     .addStatement("$T.out.println($S)", System.class, "u input value is :" + annotation.value())
                     .build();
+
+            MethodSpec register = MethodSpec.methodBuilder("register")
+                    .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                    .returns(void.class)
+                    .addParameter(String.class, "where")
+                    .addStatement("android.util.Log.e(\"zxt\", \"Auto created by apt = [\" + $S + \"]\")", annotation.value())
+                    .build();
+
+            MethodSpec jump = MethodSpec.methodBuilder("jump")
+                    .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                    .returns(void.class)
+                    .addParameter(String.class, "where")
+                    .addStatement("android.util.Log.w(\"zxt\", \"Func name:[jump],Auto created by apt, value = [\" + where + \"]\")")
+                    .build();
+
+            //First router method, params is Class
+            MethodSpec zJump = MethodSpec.methodBuilder("zJump")
+                    .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                    .returns(void.class)
+                    .addParameter(ClassName.get(element.asType()), "context")
+                    .addParameter(Class.class, "aClass")
+                    .addStatement("android.util.Log.e(\"zxt\", \"Auto created by apt = [\" + $S + \"], begin first zJump \" )", annotation.value())
+                    .addStatement("context.startActivity(new android.content.Intent(context,aClass ));")
+                    .build();
+
+            //bindViewMethodSpecBuilder.addStatement(String.format("activity.%s = (%s) activity.findViewById(%s)", item.getSimpleName(), ClassName.get(item.asType()).toString(), diView.value()));
+
+
             TypeSpec helloWorld = TypeSpec.classBuilder("HelloWorld")
                     .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                     .addMethod(main)
+                    .addMethod(jump)
+                    .addMethod(zJump)
                     .build();
             JavaFile javaFile = JavaFile.builder("com.mcxtzhang", helloWorld)
                     .build();

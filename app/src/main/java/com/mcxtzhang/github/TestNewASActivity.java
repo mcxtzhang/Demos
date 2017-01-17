@@ -1,11 +1,13 @@
 package com.mcxtzhang.github;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Base64;
 import android.util.Log;
 
 import com.example.TestHelloWorld;
+import com.mcxtzhang.HelloWorld;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -55,9 +57,22 @@ public class TestNewASActivity extends AppCompatActivity {
         }*/
 
 
-        Log.i("TAG", Base64.encodeToString(getFromAssets("cc.png").getBytes(), Base64.DEFAULT));
+        //Log.i("TAG", Base64.encodeToString(getFromAssets("cc.png").getBytes(), Base64.DEFAULT));
 
-        finish();
+        //finish();
+
+        HelloWorld.main(null);
+        HelloWorld.jump("旋转跳跃");
+        Log.d(TAG, "onCreate() called with: savedInstanceState = [" + savedInstanceState + "]");
+
+
+        HelloWorld.zJump(this, MainActivity.class);
+    }
+
+
+    private static void jump(Context context, Class aClass) {
+        Log.d(TAG, "jump() called with: context = [" + context + "], aClass = [" + aClass + "]");
+        context.startActivity(new Intent(context, aClass));
     }
 
 
