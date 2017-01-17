@@ -1,5 +1,6 @@
 package com.mcxtzhang.rxjava2demo.rxjava2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -677,6 +678,36 @@ public class Rx2Activity extends AppCompatActivity {
                 } else {
                     d0.dispose();
                 }
+            }
+        });
+
+        findViewById(R.id.btnScan).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Observable<String> values = Observable.just("一", "二", "三");
+                // 这里第一个默认值的数据 会先发出去，然后再进入apply
+                Observable<Indexed<String>> scan = values.scan(new Indexed<String>(10, null)
+                        , new BiFunction<Indexed<String>, String, Indexed<String>>() {
+                            @Override
+                            public Indexed<String> apply(Indexed<String> stringIndexed, String s) throws Exception {
+                                Log.e(TAG, "scan() called with: stringIndexed = [" + stringIndexed + "], s = [" + s + "]");
+                                return new Indexed<String>(stringIndexed.index + 1, s);
+                            }
+                        });
+                scan.subscribe(new Consumer<Indexed<String>>() {
+                    @Override
+                    public void accept(Indexed<String> stringIndexed) throws Exception {
+                        Log.d(TAG, "111accept() called with: stringIndexed = [" + stringIndexed + "]");
+                    }
+                });
+                scan.subscribe(new Consumer<Indexed<String>>() {
+                    @Override
+                    public void accept(Indexed<String> stringIndexed) throws Exception {
+                        Log.d(TAG, "222accept() called with: stringIndexed = [" + stringIndexed + "]");
+                    }
+                });
+
+
             }
         });
 
