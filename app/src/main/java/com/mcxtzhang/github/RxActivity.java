@@ -6,12 +6,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.ZRouter;
+
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
-
+@ZRouter(path = "second")
 public class RxActivity extends AppCompatActivity {
 
     private static final String TAG = "RxJava";

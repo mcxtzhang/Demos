@@ -68,9 +68,9 @@ public class ZRouterProcessor extends AbstractProcessor {
         MethodSpec.Builder constructorBuilder = MethodSpec.constructorBuilder()
                 .addModifiers(Modifier.PRIVATE)
                 .addStatement("routerMap = new $T()", HashMap.class);
-
         //traverse annotation named ZRtouer
-
+        constructorBuilder
+                .beginControlFlow("try");
         Set<? extends Element> elements = roundEnvironment.getElementsAnnotatedWith(ZRouter.class);
         for (Element element : elements) {
             TypeElement typeElement;
@@ -80,11 +80,48 @@ public class ZRouterProcessor extends AbstractProcessor {
                 return false;
             }
             ZRouter zRouter = typeElement.getAnnotation(ZRouter.class);
-            ClassName className = ClassName.get(typeElement);
+            constructorBuilder.addStatement("routerMap.put($S, Class.forName($S))", zRouter.path(), typeElement.getQualifiedName().toString());
 
-            constructorBuilder.addStatement("routerMap.put($S, $L)", zRouter.path(), className.getClass());
         }
+        constructorBuilder.endControlFlow()
+                .beginControlFlow("catch (ClassNotFoundException e)")
+                .addStatement("e.printStackTrace()")
+                .endControlFlow();
         MethodSpec constructor = constructorBuilder
+                .build();
+
+        //inner class
+        ClassName className = ClassName.bestGuess("ZRouter");
+        FieldSpec INSTANCE = FieldSpec.builder(className, "INSTANCE")
+                .addModifiers(Modifier.PRIVATE, Modifier.STATIC)
+                .initializer("new $T();", className)
+                .build();
+
+        TypeSpec innerClass = TypeSpec.classBuilder("InnerClass")
+                .addModifiers(Modifier.PRIVATE, Modifier.STATIC)
+                .addField(INSTANCE)
+                .build();
+
+        //getInstance method
+        MethodSpec methodGetInstance = MethodSpec.methodBuilder("getInstance")
+                .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                .returns(className)
+                .addStatement("return $N.INSTANCE", innerClass)
+                .build();
+
+
+        //jump method:
+        ClassName contextClass = ClassName.get("android.content", "Context");
+        ClassName intentClass = ClassName.get("android.content", "Intent");
+
+        MethodSpec jump = MethodSpec.methodBuilder("jump")
+                .addModifiers(Modifier.PUBLIC)
+                .addParameter(contextClass, "context")
+                .addParameter(String.class, "where")
+                .addStatement("Class aClass = routerMap.get(where)")
+                .beginControlFlow("if (null != aClass)")
+                .addStatement("context.startActivity(new $T(context, aClass))", intentClass)
+                .endControlFlow()
                 .build();
 
 
@@ -94,7 +131,11 @@ public class ZRouterProcessor extends AbstractProcessor {
                 .addField(TAG)
                 .addField(routerMap)
                 .addMethod(constructor)
+                .addType(innerClass)
+                .addMethod(methodGetInstance)
+                .addMethod(jump)
                 .build();
+
         try {
             JavaFile.builder("com.mcxtzhang.router", hello)
                     .build()

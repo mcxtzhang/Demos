@@ -25,16 +25,21 @@ public class RManager {
 
     private RManager() {
         routerMap = new HashMap<>();
-        routerMap.put("router1", MainActivity.class);
+        //routerMap.put("router1", MainActivity.class);
+        try {
+            routerMap.put("router1", Class.forName("com.mcxtzhang.github.MainActivity"));
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
-    private static class InnerRManager {
+/*    private static class InnerRManager {
         private static RManager INSTANCE = new RManager();
     }
 
     public static RManager getInstance() {
         return InnerRManager.INSTANCE;
-    }
+    }*/
 
     public void jump(Context context, String where) {
         Class aClass = routerMap.get(where);

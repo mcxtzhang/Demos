@@ -3,6 +3,7 @@ package com.example.javapoet;
 
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
@@ -119,10 +120,35 @@ public class TestJavaPoet {
                 .addParameter(LogRecord.class, "logRecord")
                 .returns(LogReceipt.class)
                 .build();
-        TypeSpec helloWorld = TypeSpec.classBuilder("HelloWorld")
-                .addModifiers(Modifier.ABSTRACT)
-                .addMethod(logRecord)
+
+
+        //inner class
+        ClassName className = ClassName.bestGuess("HelloWorld");
+        FieldSpec INSTANCE = FieldSpec.builder(className, "INSTANCE")
+                .addModifiers(Modifier.PRIVATE, Modifier.STATIC)
+                .initializer("new $T()", className)
                 .build();
+
+        TypeSpec innerClass = TypeSpec.classBuilder("InnerClass")
+                .addModifiers(Modifier.PRIVATE, Modifier.STATIC)
+                .addField(INSTANCE)
+                .build();
+
+        //getInstance method
+        MethodSpec methodGetInstance = MethodSpec.methodBuilder("getInstance")
+                .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                .returns(className)
+                .addStatement("return $N.INSTANCE", innerClass)
+                .build();
+
+
+        TypeSpec helloWorld = TypeSpec.classBuilder("HelloWorld")
+                .addModifiers(Modifier.PUBLIC)
+                //.addMethod(logRecord)
+                .addMethod(methodGetInstance)
+                .addType(innerClass)
+                .build();
+
 
         JavaFile.builder("com.example.helloworld", helloWorld)
                 .build()
@@ -178,7 +204,7 @@ public class TestJavaPoet {
                 + "  }\n"
                 + "}\n")) {
             System.out.println("checks passed ");
-        }else {
+        } else {
             System.out.println("checks failed");
         }
         ;

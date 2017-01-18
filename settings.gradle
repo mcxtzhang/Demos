@@ -1,6 +1,6 @@
 include ':app', ':lib', ':zxtcommonlib', ':library', ':compiler'
 
-include ':viewpagerdemo'
+//include ':viewpagerdemo'
 
 //, ':cstviewdemo', ':animdemo', ':recyclerviewdemo', ':okhttpdemo'
 

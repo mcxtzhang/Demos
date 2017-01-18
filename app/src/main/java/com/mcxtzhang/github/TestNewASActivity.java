@@ -9,6 +9,7 @@ import android.util.Log;
 import com.example.TestHelloWorld;
 import com.mcxtzhang.HelloWorld;
 import com.mcxtzhang.github.routerexample.RManager;
+import com.mcxtzhang.router.ZRouter;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -69,7 +70,11 @@ public class TestNewASActivity extends AppCompatActivity {
 
         //HelloWorld.zJump(this, MainActivity.class);
 
-        RManager.getInstance().jump(this,"router1");
+        //RManager.getInstance().jump(this,"router1");
+
+        ///new ZRouter().jump(this,"second");
+
+        ZRouter.getInstance().jump(this,"first");
     }
 
 
