@@ -63,6 +63,7 @@ public class AutoParcelProcessor extends AbstractProcessor {
             }
             TestHelloWorld annotation = element.getAnnotation(TestHelloWorld.class);
 
+            ClassName classLog = ClassName.get("android.util", "Log");
 
             MethodSpec main = MethodSpec.methodBuilder("main")
                     .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
@@ -82,7 +83,7 @@ public class AutoParcelProcessor extends AbstractProcessor {
                     .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                     .returns(void.class)
                     .addParameter(String.class, "where")
-                    .addStatement("android.util.Log.w(\"zxt\", \"Func name:[jump],Auto created by apt, value = [\" + where + \"]\")")
+                    .addStatement("$T.i($S, $S+ $N)", classLog, "zxt/test2","由于$S里的字符串会被自动追加转移字符和引号，所以参数不要在$S里写, get the params is : [","where")
                     .build();
 
             //First router method, params is Class
@@ -91,7 +92,7 @@ public class AutoParcelProcessor extends AbstractProcessor {
                     .returns(void.class)
                     .addParameter(ClassName.get(element.asType()), "context")
                     .addParameter(Class.class, "aClass")
-                    .addStatement("android.util.Log.e(\"zxt\", \"Auto created by apt = [\" + $S + \"], begin first zJump \" )", annotation.value())
+                    .addStatement("$T.e(\"zxt\", \"Auto created22222 by apt = [\" + $S + \"], begin first zJump \" )", classLog, annotation.value())
                     .addStatement("context.startActivity(new android.content.Intent(context,aClass ));")
                     .build();
 

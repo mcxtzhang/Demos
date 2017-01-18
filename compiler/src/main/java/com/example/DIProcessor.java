@@ -28,7 +28,6 @@ public class DIProcessor extends AbstractProcessor {
 
     @Override
     public Set<String> getSupportedAnnotationTypes() {
-        // 规定需要处理的注解
         return Collections.singleton(DIActivity.class.getCanonicalName());
     }
 

@@ -5,6 +5,8 @@ tasks.withType(JavaCompile) {
 dependencies {
     compile 'com.google.code.gson:gson:2.4'
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    //javapoet 是封装了写文件的一些操作，让我们使用更方便
+    compile 'com.squareup:javapoet:1.7.0'
 }
 
 sourceCompatibility = "1.7"

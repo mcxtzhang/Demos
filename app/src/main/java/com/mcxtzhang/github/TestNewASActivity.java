@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.example.TestHelloWorld;
 import com.mcxtzhang.HelloWorld;
+import com.mcxtzhang.github.routerexample.RManager;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -66,12 +67,14 @@ public class TestNewASActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate() called with: savedInstanceState = [" + savedInstanceState + "]");
 
 
-        HelloWorld.zJump(this, MainActivity.class);
+        //HelloWorld.zJump(this, MainActivity.class);
+
+        RManager.getInstance().jump(this,"router1");
     }
 
 
     private static void jump(Context context, Class aClass) {
-        Log.d(TAG, "jump() called with: context = [" + context + "], aClass = [" + aClass + "]");
+        Log.d(TAG, "jump() called with: context = [" + context);
         context.startActivity(new Intent(context, aClass));
     }
 
