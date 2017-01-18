@@ -1,14 +1,15 @@
-package com.example;
+package com.example.javapoet;
 
 
-import com.example.javapoet.Header;
-import com.example.javapoet.HeaderList;
-import com.example.javapoet.LogReceipt;
 import com.squareup.javapoet.AnnotationSpec;
+import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.ParameterizedTypeName;
+import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 
+import java.util.Collections;
 import java.util.logging.LogRecord;
 
 import javax.lang.model.element.Modifier;
@@ -113,7 +114,7 @@ public class TestJavaPoet {
                                 .addMember("name", "$S", "User-Agent")
                                 .addMember("value", "$S", "Square Cash")
                                 .build())
-                        .addMember("name","test")
+                        .addMember("name", "test")
                         .build())
                 .addParameter(LogRecord.class, "logRecord")
                 .returns(LogReceipt.class)
@@ -127,6 +128,60 @@ public class TestJavaPoet {
                 .build()
                 .writeTo(System.out);
 
+        importStaticReadmeExample();
+
+    }
+
+
+    public static void importStaticReadmeExample() {
+        ClassName hoverboard = ClassName.get("com.mattel", "Hoverboard");
+        ClassName namedBoards = ClassName.get("com.mattel", "Hoverboard", "Boards");
+        ClassName list = ClassName.get("java.util", "List");
+        ClassName arrayList = ClassName.get("java.util", "ArrayList");
+        TypeName listOfHoverboards = ParameterizedTypeName.get(list, hoverboard);
+        MethodSpec beyond = MethodSpec.methodBuilder("beyond")
+                .returns(listOfHoverboards)
+                .addStatement("$T result = new $T<>()", listOfHoverboards, arrayList)
+                .addStatement("result.add($T.createNimbus(2000))", hoverboard)
+                .addStatement("result.add($T.createNimbus(\"2001\"))", hoverboard)
+                .addStatement("result.add($T.createNimbus($T.THUNDERBOLT))", hoverboard, namedBoards)
+                .addStatement("$T.sort(result)", Collections.class)
+                .addStatement("return result.isEmpty() ? $T.emptyList() : result", Collections.class)
+                .build();
+        TypeSpec hello = TypeSpec.classBuilder("HelloWorld")
+                .addMethod(beyond)
+                .build();
+        JavaFile example = JavaFile.builder("com.example.helloworld", hello)
+                .addStaticImport(hoverboard, "createNimbus")
+                .addStaticImport(namedBoards, "*")
+                .addStaticImport(Collections.class, "*")
+                .build();
+        if ((example.toString()).equals(""
+                + "package com.example.helloworld;\n"
+                + "\n"
+                + "import static com.mattel.Hoverboard.Boards.*;\n"
+                + "import static com.mattel.Hoverboard.createNimbus;\n"
+                + "import static java.util.Collections.*;\n"
+                + "\n"
+                + "import com.mattel.Hoverboard;\n"
+                + "import java.util.ArrayList;\n"
+                + "import java.util.List;\n"
+                + "\n"
+                + "class HelloWorld {\n"
+                + "  List<Hoverboard> beyond() {\n"
+                + "    List<Hoverboard> result = new ArrayList<>();\n"
+                + "    result.add(createNimbus(2000));\n"
+                + "    result.add(createNimbus(\"2001\"));\n"
+                + "    result.add(createNimbus(THUNDERBOLT));\n"
+                + "    sort(result);\n"
+                + "    return result.isEmpty() ? emptyList() : result;\n"
+                + "  }\n"
+                + "}\n")) {
+            System.out.println("checks passed ");
+        }else {
+            System.out.println("checks failed");
+        }
+        ;
     }
 
     private static MethodSpec whatsMyName(String name) {
