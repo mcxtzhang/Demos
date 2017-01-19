@@ -129,6 +129,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Scan"/>
+
+        <Button
+            android:id="@+id/btnErrorReturn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="onErrorReturn(测试是否发生错误 后面onNext不再执行)"/>
+
+        <Button
+            android:id="@+id/btnOnErrorResumeNext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="onErrorResumeNext"/>
+
+        <Button
+            android:id="@+id/btnRetry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Retry"/>
+
+        <Button
+            android:id="@+id/btnRetryWhen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="RetryWhen"/>
     </LinearLayout>
 </ScrollView>
 

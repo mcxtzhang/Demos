@@ -1,6 +1,5 @@
 package com.mcxtzhang.rxjava2demo.rxjava2;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -710,6 +709,88 @@ public class Rx2Activity extends AppCompatActivity {
 
             }
         });
+
+
+        //onErrorReturn(测试结果：发生错误 后面onNext不再执行)
+        findViewById(R.id.btnErrorReturn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Observable.create(new ObservableOnSubscribe<Integer>() {
+                    @Override
+                    public void subscribe(ObservableEmitter<Integer> e) throws Exception {
+                        if (!e.isDisposed()) {
+                            e.onNext(1);
+                            e.onNext(2);
+                            e.onError(new Exception("测试错误"));
+                            e.onNext(3);
+                            e.onComplete();
+                        }
+                    }
+                }).onErrorReturn(new Function<Throwable, Integer>() {
+                    @Override
+                    public Integer apply(Throwable throwable) throws Exception {
+                        return 5;
+                    }
+                }).subscribeWith(observer);
+            }
+        });
+/*        01-19 19:11:29.866 25188-25188/com.mcxtzhang.rxjava2demo V/zxt/Rx2: onNext() called with: value = [1]
+        01-19 19:11:29.866 25188-25188/com.mcxtzhang.rxjava2demo V/zxt/Rx2: onNext() called with: value = [2]
+        01-19 19:11:29.866 25188-25188/com.mcxtzhang.rxjava2demo V/zxt/Rx2: onNext() called with: value = [5]
+        01-19 19:11:29.866 25188-25188/com.mcxtzhang.rxjava2demo W/zxt/Rx2: onComplete() called*/
+
+        final Observable<Integer> testError = Observable.create(new ObservableOnSubscribe<Integer>() {
+            @Override
+            public void subscribe(ObservableEmitter<Integer> e) throws Exception {
+                if (!e.isDisposed()) {
+                    e.onNext(1);
+                    e.onNext(2);
+                    e.onError(new Exception("测试错误"));
+                    e.onNext(3);
+                    e.onComplete();
+                }
+            }
+        });
+
+        findViewById(R.id.btnOnErrorResumeNext).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+/*                testError
+                        .onErrorResumeNext(new Function<Throwable, ObservableSource<? extends Integer>>() {
+                            @Override
+                            public ObservableSource<? extends Integer> apply(Throwable throwable) throws Exception {
+                                return Observable.just(5, 6, 7);
+                            }
+                        }).subscribeWith(observer);*/
+
+                testError
+                        .onErrorResumeNext(Observable.just(8, 9, 0))
+                        .subscribeWith(observer);
+            }
+        });
+
+
+        findViewById(R.id.btnRetry).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                testError.retry(2).subscribeWith(observer);
+            }
+        });
+        findViewById(R.id.btnRetryWhen).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                testError.retryWhen(new Function<Observable<Throwable>, ObservableSource<?>>() {
+                    @Override
+                    public ObservableSource<?> apply(Observable<Throwable> throwableObservable) throws Exception {
+                        return throwableObservable
+                                .take(6)
+                                .delay(100, TimeUnit.MICROSECONDS);
+                    }
+                }).subscribeWith(observer);
+            }
+        });
+
 
     }
 
