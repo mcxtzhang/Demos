@@ -142,10 +142,32 @@ public class TestJavaPoet {
                 .build();
 
 
+        ClassName contextClass = ClassName.get("android.content", "Context");
+        ClassName intentClass = ClassName.get("android.content", "Intent");
+        ClassName conponentNameClass = ClassName.get("android.content", "ComponentName");
+        MethodSpec jump = MethodSpec.methodBuilder("jump")
+                .addModifiers(Modifier.PUBLIC)
+                .addParameter(String.class, "context")
+                .addParameter(String.class, "where")
+                .addStatement("String clsFullName = routerMap.get(where)")
+                .beginControlFlow("if (TextUtils.isEmpty(clsFullName))")
+                // TODO: 2017/1/19 log statement
+                .endControlFlow()
+                .beginControlFlow("else")
+                .addStatement("$T intent = new $T()", intentClass, intentClass)
+                .addStatement("intent.setComponent(new $T(context.getPackageName(), clsFullName))", conponentNameClass)
+                .addStatement("context.startActivity(intent)")
+                // TODO: 2017/1/19 log statement
+                .addStatement("String clsFullName = routerMap.get(where)")
+                .endControlFlow()
+                .build();
+
+
         TypeSpec helloWorld = TypeSpec.classBuilder("HelloWorld")
                 .addModifiers(Modifier.PUBLIC)
                 //.addMethod(logRecord)
                 .addMethod(methodGetInstance)
+                .addMethod(jump)
                 .addType(innerClass)
                 .build();
 
@@ -154,7 +176,7 @@ public class TestJavaPoet {
                 .build()
                 .writeTo(System.out);
 
-        importStaticReadmeExample();
+        //importStaticReadmeExample();
 
     }
 

@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@ZRouter(path = "first")
+@ZRouter(path = "main")
 @DIActivity
 public class MainActivity extends Activity {
 

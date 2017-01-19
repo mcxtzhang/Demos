@@ -13,7 +13,7 @@ import rx.Subscriber;
 import rx.Subscription;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
-@ZRouter(path = "second")
+@ZRouter(path = "rx")
 public class RxActivity extends AppCompatActivity {
 
     private static final String TAG = "RxJava";

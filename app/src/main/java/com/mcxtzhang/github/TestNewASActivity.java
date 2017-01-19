@@ -5,11 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 
+import com.apt.ZRouter;
 import com.example.TestHelloWorld;
 import com.mcxtzhang.HelloWorld;
-import com.mcxtzhang.github.routerexample.RManager;
-import com.mcxtzhang.router.ZRouter;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -74,7 +74,23 @@ public class TestNewASActivity extends AppCompatActivity {
 
         ///new ZRouter().jump(this,"second");
 
-        ZRouter.getInstance().jump(this,"first");
+
+        findViewById(R.id.tv).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ZRouter.getInstance().jump(TestNewASActivity.this, "main");
+
+            }
+        });
+
+        findViewById(R.id.tv).setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                ZRouter.getInstance().jump(TestNewASActivity.this, "rx");
+                //RManager2.getInstance().jump(TestNewASActivity.this, "rx");
+                return true;
+            }
+        });
     }
 
 
