@@ -39,12 +39,12 @@ public class RManager2 {
     public void jump(Context context, String where) {
         String clsFullName = routerMap.get(where);
         if (TextUtils.isEmpty(clsFullName)) {
-            Log.e(TAG, "Error jump() called with: where = [" + where + "] not found in routerMap!");
+            Log.e(TAG, "Error in jump() where = [" + where + "] not found in routerMap!");
         } else {
             Intent intent = new Intent();
             intent.setComponent(new ComponentName(context.getPackageName(), clsFullName));
             context.startActivity(intent);
-            Log.d(TAG, "jump success:" + where);
+            Log.d(TAG, "ump success:" + where);
         }
     }
 }

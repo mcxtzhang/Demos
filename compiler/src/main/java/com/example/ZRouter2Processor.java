@@ -89,7 +89,7 @@ public class ZRouter2Processor extends AbstractProcessor {
         //inner class
         ClassName className = ClassName.get(AptUtils.PKG_NAME, "ZRouter");
         FieldSpec INSTANCE = FieldSpec.builder(className, "INSTANCE")
-                .addModifiers(Modifier.PRIVATE, Modifier.STATIC)
+                .addModifiers(Modifier.PRIVATE, Modifier.STATIC, Modifier.FINAL)
                 .initializer("new $T()", className)
                 .build();
         TypeSpec innerClass = TypeSpec.classBuilder("InnerClass")
@@ -110,20 +110,27 @@ public class ZRouter2Processor extends AbstractProcessor {
         ClassName intentClass = ClassName.get("android.content", "Intent");
         ClassName conponentNameClass = ClassName.get("android.content", "ComponentName");
         ClassName textUtilsClass = ClassName.get("android.text", "TextUtils");
+        ClassName logClass = ClassName.get("android.util", "Log");
+
 
         MethodSpec jump = MethodSpec.methodBuilder("jump")
                 .addModifiers(Modifier.PUBLIC)
                 .addParameter(contextClass, "context")
                 .addParameter(String.class, "where")
                 .addStatement("String clsFullName = routerMap.get(where)")
-                .beginControlFlow("if ($T.isEmpty(clsFullName))", textUtilsClass)
-                // TODO: 2017/1/19 log statement
+                .beginControlFlow("if ($T.isEmpty(clsFullName))"
+                        , textUtilsClass)
+                .addStatement("$T.e(TAG, \"Error in jump() where = [\" + where + \"] not found in routerMap!\")"
+                        , logClass)
                 .endControlFlow()
                 .beginControlFlow("else")
-                .addStatement("$T intent = new $T()", intentClass, intentClass)
-                .addStatement("intent.setComponent(new $T(context.getPackageName(), clsFullName))", conponentNameClass)
+                .addStatement("$T intent = new $T()"
+                        , intentClass, intentClass)
+                .addStatement("intent.setComponent(new $T(context.getPackageName(), clsFullName))"
+                        , conponentNameClass)
                 .addStatement("context.startActivity(intent)")
-                // TODO: 2017/1/19 log statement
+                .addStatement("$T.d(TAG, \"Jump success:\" + where)"
+                        , logClass)
                 .endControlFlow()
                 .build();
 
