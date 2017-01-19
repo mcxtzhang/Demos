@@ -106,7 +106,7 @@ public class ZRouter2Processor extends AbstractProcessor {
 
 
         //jump method:
-        ClassName activityClass = ClassName.get("android.content", "Context");
+        ClassName activityClass = ClassName.get("android.app", "Activity");
         ClassName intentClass = ClassName.get("android.content", "Intent");
         ClassName componentNameClass = ClassName.get("android.content", "ComponentName");
         ClassName bundleClass = ClassName.get("android.os", "Bundle");
@@ -141,6 +141,34 @@ public class ZRouter2Processor extends AbstractProcessor {
                 .build();
 
 
+        //for result
+        MethodSpec jump2 = MethodSpec.methodBuilder("jump")
+                .addModifiers(Modifier.PUBLIC)
+                .addParameter(activityClass, "activity")
+                .addParameter(String.class, "where")
+                .addParameter(bundleClass, "bundle")
+                .addParameter(int.class, "requestCode")
+                .addStatement("String clsFullName = routerMap.get(where)")
+                .beginControlFlow("if ($T.isEmpty(clsFullName))"
+                        , textUtilsClass)
+                .addStatement("$T.e(TAG, \"Error in jump() where = [\" + where + \"] not found in routerMap!\")"
+                        , logClass)
+                .endControlFlow()
+                .beginControlFlow("else")
+                .addStatement("$T intent = new $T()"
+                        , intentClass, intentClass)
+                .addStatement("intent.setComponent(new $T(activity.getPackageName(), clsFullName))"
+                        , componentNameClass)
+                .beginControlFlow("if (null != bundle)")
+                .addStatement("intent.putExtras(bundle)")
+                .endControlFlow()
+                .addStatement("activity.startActivityForResult(intent, requestCode)")
+                .addStatement("$T.d(TAG, \"Jump success:\" + where)"
+                        , logClass)
+                .endControlFlow()
+                .build();
+
+
         //class
         TypeSpec hello = TypeSpec.classBuilder("ZRouter")
                 .addModifiers(Modifier.PUBLIC)
@@ -150,6 +178,7 @@ public class ZRouter2Processor extends AbstractProcessor {
                 .addType(innerClass)
                 .addMethod(methodGetInstance)
                 .addMethod(jump)
+                .addMethod(jump2)
                 .build();
 
         try {

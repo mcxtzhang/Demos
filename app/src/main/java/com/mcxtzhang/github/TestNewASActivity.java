@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.apt.ZRouter;
 import com.example.TestHelloWorld;
@@ -78,7 +79,7 @@ public class TestNewASActivity extends AppCompatActivity {
         findViewById(R.id.tv).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ZRouter.getInstance().jump(TestNewASActivity.this, "main", null);
+                ZRouter.getInstance().jump(TestNewASActivity.this, "main", null, 100);
 
             }
         });
@@ -89,7 +90,7 @@ public class TestNewASActivity extends AppCompatActivity {
                 Bundle bundle = new Bundle();
                 bundle.putString("key-string", "jump params in bundle");
 
-                ZRouter.getInstance().jump(TestNewASActivity.this, "rx", bundle);
+                ZRouter.getInstance().jump(TestNewASActivity.this, "rx", bundle, 101);
 
                 //RManager2.getInstance().jump(TestNewASActivity.this, "rx", bundle);
                 return true;
@@ -103,6 +104,12 @@ public class TestNewASActivity extends AppCompatActivity {
         context.startActivity(new Intent(context, aClass));
     }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Toast.makeText(this, "resultCode:" + resultCode + ",requestCode:" + requestCode, Toast.LENGTH_SHORT).show();
+    }
 
     public String getFromAssets(String fileName) {
         try {

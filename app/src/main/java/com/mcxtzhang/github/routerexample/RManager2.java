@@ -12,6 +12,9 @@ import java.util.Map;
 
 /**
  * Intro: routerMap store Path-ComponentName
+ * It has a problem: startActivity and startActivityForResult 's codes is copied.
+ * It is inconvenient in modification.
+ * <p>
  * Author: zhangxutong
  * E-mail: mcxtzhang@163.com
  * Home Page: http://blog.csdn.net/zxt0601
@@ -48,6 +51,21 @@ public class RManager2 {
                 intent.putExtras(bundle);
             }
             activity.startActivity(intent);
+            Log.d(TAG, "ump success:" + where);
+        }
+    }
+
+    public void jump(Activity activity, String where, Bundle bundle, int requestCode) {
+        String clsFullName = routerMap.get(where);
+        if (TextUtils.isEmpty(clsFullName)) {
+            Log.e(TAG, "Error in jump() where = [" + where + "] not found in routerMap!");
+        } else {
+            Intent intent = new Intent();
+            intent.setComponent(new ComponentName(activity.getPackageName(), clsFullName));
+            if (null != bundle) {
+                intent.putExtras(bundle);
+            }
+            activity.startActivityForResult(intent, requestCode);
             Log.d(TAG, "ump success:" + where);
         }
     }
