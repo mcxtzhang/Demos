@@ -1,5 +1,6 @@
 package com.mcxtzhang.rxjava2demo.rxjava2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -788,6 +789,21 @@ public class Rx2Activity extends AppCompatActivity {
                                 .delay(100, TimeUnit.MICROSECONDS);
                     }
                 }).subscribeWith(observer);
+            }
+        });
+
+
+        findViewById(R.id.btnSwitchOnNext).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Observable.switchOnNext(new Observable<ObservableSource<?>>() {
+                    @Override
+                    protected void subscribeActual(Observer<? super ObservableSource<?>> observer) {
+                        observer.onNext(Observable.just(1, 2, 3));
+                        observer.onNext(Observable.just(11, 22, 33));
+                        observer.onComplete();
+                    }
+                }).subscribe(observer);
             }
         });
 
