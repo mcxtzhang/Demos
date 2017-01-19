@@ -1,5 +1,6 @@
 package com.mcxtzhang.github;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -13,6 +14,7 @@ import rx.Subscriber;
 import rx.Subscription;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
+
 @ZRouter(path = "rx")
 public class RxActivity extends AppCompatActivity {
 
@@ -23,6 +25,12 @@ public class RxActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rx);
+
+        Intent intent = getIntent();
+        if (null != intent) {
+            String stringExtra = intent.getStringExtra("key-string");
+            Toast.makeText(this, "接受到参数：" + stringExtra, Toast.LENGTH_SHORT).show();
+        }
 
         this.msubscription = new CompositeSubscription();
 
@@ -47,7 +55,7 @@ public class RxActivity extends AppCompatActivity {
                 };
 
 
-                Subscription i=Observable.create(new Observable.OnSubscribe<String>() {
+                Subscription i = Observable.create(new Observable.OnSubscribe<String>() {
                     @Override
                     public void call(Subscriber<? super String> subscriber) {
                         int i = 0;
@@ -66,7 +74,7 @@ public class RxActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(RxActivity.this, "蒂娜及", Toast.LENGTH_SHORT).show();
-                msubscription.unsubscribe   ();
+                msubscription.unsubscribe();
             }
         });
 
@@ -95,7 +103,7 @@ public class RxActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         //在activity结束生命周期的时候取消订阅，解除对context的引用
-        if(msubscription != null){
+        if (msubscription != null) {
             this.msubscription.unsubscribe();
         }
     }

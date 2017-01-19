@@ -106,17 +106,20 @@ public class ZRouter2Processor extends AbstractProcessor {
 
 
         //jump method:
-        ClassName contextClass = ClassName.get("android.content", "Context");
+        ClassName activityClass = ClassName.get("android.content", "Context");
         ClassName intentClass = ClassName.get("android.content", "Intent");
-        ClassName conponentNameClass = ClassName.get("android.content", "ComponentName");
+        ClassName componentNameClass = ClassName.get("android.content", "ComponentName");
+        ClassName bundleClass = ClassName.get("android.os", "Bundle");
+
         ClassName textUtilsClass = ClassName.get("android.text", "TextUtils");
         ClassName logClass = ClassName.get("android.util", "Log");
 
 
         MethodSpec jump = MethodSpec.methodBuilder("jump")
                 .addModifiers(Modifier.PUBLIC)
-                .addParameter(contextClass, "context")
+                .addParameter(activityClass, "activity")
                 .addParameter(String.class, "where")
+                .addParameter(bundleClass, "bundle")
                 .addStatement("String clsFullName = routerMap.get(where)")
                 .beginControlFlow("if ($T.isEmpty(clsFullName))"
                         , textUtilsClass)
@@ -126,9 +129,12 @@ public class ZRouter2Processor extends AbstractProcessor {
                 .beginControlFlow("else")
                 .addStatement("$T intent = new $T()"
                         , intentClass, intentClass)
-                .addStatement("intent.setComponent(new $T(context.getPackageName(), clsFullName))"
-                        , conponentNameClass)
-                .addStatement("context.startActivity(intent)")
+                .addStatement("intent.setComponent(new $T(activity.getPackageName(), clsFullName))"
+                        , componentNameClass)
+                .beginControlFlow("if (null != bundle)")
+                .addStatement("intent.putExtras(bundle)")
+                .endControlFlow()
+                .addStatement("activity.startActivity(intent)")
                 .addStatement("$T.d(TAG, \"Jump success:\" + where)"
                         , logClass)
                 .endControlFlow()

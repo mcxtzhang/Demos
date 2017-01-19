@@ -78,7 +78,7 @@ public class TestNewASActivity extends AppCompatActivity {
         findViewById(R.id.tv).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ZRouter.getInstance().jump(TestNewASActivity.this, "main");
+                ZRouter.getInstance().jump(TestNewASActivity.this, "main", null);
 
             }
         });
@@ -86,8 +86,12 @@ public class TestNewASActivity extends AppCompatActivity {
         findViewById(R.id.tv).setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                ZRouter.getInstance().jump(TestNewASActivity.this, "rx");
-                //RManager2.getInstance().jump(TestNewASActivity.this, "rx");
+                Bundle bundle = new Bundle();
+                bundle.putString("key-string", "jump params in bundle");
+
+                ZRouter.getInstance().jump(TestNewASActivity.this, "rx", bundle);
+
+                //RManager2.getInstance().jump(TestNewASActivity.this, "rx", bundle);
                 return true;
             }
         });
