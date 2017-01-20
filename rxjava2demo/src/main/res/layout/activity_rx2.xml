@@ -159,6 +159,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="SwitchOnNext"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@color/colorAccent"/>
+
+        <Button
+            android:id="@+id/btnBuffer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Buffer(测试缓存2个，输出的是数组还是Int)"/>
     </LinearLayout>
 </ScrollView>
 

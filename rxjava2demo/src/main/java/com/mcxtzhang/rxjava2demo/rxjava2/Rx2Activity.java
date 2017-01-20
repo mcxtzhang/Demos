@@ -1,6 +1,5 @@
 package com.mcxtzhang.rxjava2demo.rxjava2;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -804,6 +803,43 @@ public class Rx2Activity extends AppCompatActivity {
                         observer.onComplete();
                     }
                 }).subscribe(observer);
+            }
+        });
+
+
+        //▲ 使用buffer后，数据成为List类型
+        findViewById(R.id.btnBuffer).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+/*                DisposableObserver disposableObserver = Observable.interval(0, 100, TimeUnit.MILLISECONDS)
+                        .buffer(2)
+                        .subscribeWith(observer);
+                mCompositeDisposable.add(disposableObserver);*/
+
+                //when oble1/obelBuffer2 onSubscribe ,
+                Observable<Integer> oble1 = Observable.create(new ObservableOnSubscribe<Integer>() {
+                    @Override
+                    public void subscribe(ObservableEmitter<Integer> e) throws Exception {
+                        Log.d(TAG, "subscribe() called with: e = [" + e + "]");
+                        e.onNext(1);
+                        e.onNext(2);
+                        e.onComplete();
+                    }
+                });
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Log.d(TAG, "begin buffer");
+                Observable<List<Integer>> oberBuffer2 = oble1.buffer(1);
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Log.d(TAG, "after buffer and subscribe with");
+                oberBuffer2.subscribeWith(observer);
             }
         });
 
