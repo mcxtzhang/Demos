@@ -711,7 +711,7 @@ public class Rx2Activity extends AppCompatActivity {
         });
 
 
-        //onErrorReturn(测试结果：发生错误 后面onNext不再执行)
+        //▲ onErrorReturn(测试结果：发生错误 后面onNext不再执行)
         findViewById(R.id.btnErrorReturn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
