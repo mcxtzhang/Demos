@@ -843,6 +843,39 @@ public class Rx2Activity extends AppCompatActivity {
             }
         });
 
+        //▲ 使用window后，数据成为Observable类型
+        //再merge到一起 就和以前没经过window的一样了
+        findViewById(R.id.btnWindow).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Observable.merge(Observable.range(0, 5)
+                        .window(3, 1))
+                        .subscribe(new Consumer<Integer>() {
+                            @Override
+                            public void accept(Integer integer) throws Exception {
+                                Log.d(TAG, "accept() called with: integer = [" + integer + "]");
+                            }
+                        });
+
+
+            }
+        });
+
+        findViewById(R.id.btnConcatFirst).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Observable.concat(Observable.range(0, 5), Observable.range(6, 10))
+                        //加上只取第一个 0 ，不加上输出15个数字
+                        //.firstElement()
+                        .subscribe(new Consumer<Integer>() {
+                            @Override
+                            public void accept(Integer integer) throws Exception {
+                                Log.d(TAG, "accept() called with: integer = [" + integer + "]");
+                            }
+                        });
+            }
+        });
 
     }
 

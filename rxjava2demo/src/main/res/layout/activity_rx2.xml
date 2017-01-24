@@ -170,6 +170,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Buffer(测试缓存2个，输出的是数组还是Int)"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@color/colorAccent"/>
+
+        <Button
+            android:id="@+id/btnWindow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Window(Window输出的是 Observable )"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@color/colorAccent"/>
+
+        <Button
+            android:id="@+id/btnConcatFirst"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ConcatFirst(测试First,2.0要么返回complete，要么返回默认值)"/>
     </LinearLayout>
 </ScrollView>
 
