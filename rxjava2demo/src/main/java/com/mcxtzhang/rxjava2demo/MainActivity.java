@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.mcxtzhang.rxjava2demo.retrofit.RetrofitDemoActivity;
+import com.mcxtzhang.rxjava2demo.retrofit.model.gayhub.GayHubActivity;
 import com.mcxtzhang.rxjava2demo.rxjava2.Rx2Activity;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,11 +32,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         Log.d(TAG, "onCreate() called with: savedInstanceState = [" + getWindow() + "]");
+
+        findViewById(R.id.btnRetrofitGayhub).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, GayHubActivity.class));
+            }
+        });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d(TAG, "onResume() called + getWindow()"+ getWindow());
+        Log.d(TAG, "onResume() called + getWindow()" + getWindow());
     }
 }

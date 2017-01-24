@@ -1,7 +1,7 @@
-package com.mcxtzhang.rxjava2demo.retrofit.model;
+package com.mcxtzhang.rxjava2demo.retrofit.model.douban;
 
-import com.mcxtzhang.rxjava2demo.retrofit.model.bean.Base.HttpResult;
-import com.mcxtzhang.rxjava2demo.retrofit.model.bean.DouBanMovieBean;
+import com.mcxtzhang.rxjava2demo.retrofit.model.douban.bean.Base.HttpResult;
+import com.mcxtzhang.rxjava2demo.retrofit.model.douban.bean.DouBanMovieBean;
 
 import java.util.List;
 

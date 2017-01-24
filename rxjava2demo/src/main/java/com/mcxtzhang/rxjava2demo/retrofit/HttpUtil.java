@@ -1,9 +1,9 @@
 package com.mcxtzhang.rxjava2demo.retrofit;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import com.mcxtzhang.rxjava2demo.retrofit.model.MovieService;
-import com.mcxtzhang.rxjava2demo.retrofit.model.bean.Base.HttpResult;
-import com.mcxtzhang.rxjava2demo.retrofit.model.bean.DouBanMovieBean;
+import com.mcxtzhang.rxjava2demo.retrofit.model.douban.MovieService;
+import com.mcxtzhang.rxjava2demo.retrofit.model.douban.bean.Base.HttpResult;
+import com.mcxtzhang.rxjava2demo.retrofit.model.douban.bean.DouBanMovieBean;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;

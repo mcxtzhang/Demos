@@ -1,4 +1,4 @@
-package com.mcxtzhang.rxjava2demo.retrofit.model.bean.Base;
+package com.mcxtzhang.rxjava2demo.retrofit.model.douban.bean.Base;
 
 import com.google.gson.annotations.SerializedName;
 
