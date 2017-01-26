@@ -1,4 +1,4 @@
-package com.mcxtzhang.github;
+﻿package com.mcxtzhang.github;
 
 import android.app.Activity;
 import android.graphics.Rect;
@@ -36,7 +36,7 @@ public class MainActivity extends Activity {
 
 
         DIMainActivity.bindView(this);
-        mTvInject.setText("成功了");
+        mTvInject.setText("APT注解绑定成功");
 
 
         findViewById(R.id.btnHAHA).setOnClickListener(new View.OnClickListener() {
