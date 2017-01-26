@@ -1,0 +1,17 @@
+<svg width="580" height="400" xmlns="http://www.w3.org/2000/svg">
+ <!-- Created with Method Draw - http://github.com/duopixel/Method-Draw/ -->
+ <g>
+  <title>background</title>
+  <rect fill="#fff" id="canvas_background" height="402" width="582" y="-1" x="-1"/>
+  <g display="none" overflow="visible" y="0" x="0" height="100%" width="100%" id="canvasGrid">
+   <rect fill="url(#gridpattern)" stroke-width="0" y="0" x="0" height="100%" width="100%"/>
+  </g>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <path stroke="#000" d="m115,137.278519c0,-1.806458 0.292892,-2.335556 1,-3.6129c1.414215,-2.554718 4,0 8,0c6,0 15.014893,2.533066 27,3.6129c10.037399,0.904358 26.902603,0.375092 40,-1.806458c31.880386,-5.310089 32.033432,-1.299026 50,-5.419357c14.029526,-3.217445 30.07666,-4.184624 42,-7.225822c15.14682,-3.863411 25.021851,-7.03389 35,-10.838722c9.020752,-3.439781 25.580475,-11.178627 35,-28.903275c4.993958,-9.397102 7.493469,-19.651619 8,-25.290363c0.640717,-7.132515 2.249847,-20.706654 -1,-25.290363c-0.788208,-1.111713 -1.07843,-1.426826 -4,-3.612911c-2.065857,-1.545792 -14.326477,-10.059071 -40,-1.806454c-47.062408,15.127953 -99.977783,48.618301 -133,106.580826c-19.509857,34.244843 -19.186081,54.114517 -19,74.064636c0.135818,14.562027 4.195755,34.126999 8,46.967804c5.275528,17.807007 12.406769,32.006531 28,54.193634c6.757782,9.615448 17.149155,23.535858 39,37.935547c22.330261,14.715668 32.818207,16.15097 46,19.871002c11.897278,3.357513 35.01828,1.926025 46,-3.612915c7.011932,-3.536652 15.385864,-9.625275 21,-16.258087c6.536438,-7.722473 10.725067,-17.09549 15,-28.903259c3.671722,-10.141663 5.069824,-25.270111 6,-36.12912c1.081299,-12.623291 1,-18.064514 1,-25.290344l0,-3.6129l-1,-3.612915l-1,-3.612915" id="svg_1" stroke-width="1.5" fill="none"/>
+  <text xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="24" id="svg_3" y="224.5" x="100" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#000000">android</text>
+  <rect id="svg_4" height="257" width="458" y="62.5" x="41" stroke-opacity="null" stroke-width="1.5" stroke="#000" fill="#7AD6CA"/>
+  <text xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="24" id="svg_5" y="152.5" x="130" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#000000">Hello Android</text>
+ </g>
+</svg>
