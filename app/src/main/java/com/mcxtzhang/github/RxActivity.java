@@ -1,12 +1,13 @@
 package com.mcxtzhang.github;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.ZParams;
 import com.example.ZRouter;
 
 import rx.Observable;
@@ -21,16 +22,23 @@ public class RxActivity extends AppCompatActivity {
     private static final String TAG = "RxJava";
     private CompositeSubscription msubscription;//管理所有的订阅
 
+    Button mBtnTest;
+
+    @ZParams(key = "key-string")
+    String mWhatString;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rx);
 
-        Intent intent = getIntent();
+        ZParamsRxActivityBinding.bindParams(this);
+        Toast.makeText(this, "接受到参数???????????：" + mWhatString, Toast.LENGTH_SHORT).show();
+        /*Intent intent = getIntent();
         if (null != intent) {
             String stringExtra = intent.getStringExtra("key-string");
             Toast.makeText(this, "接受到参数：" + stringExtra, Toast.LENGTH_SHORT).show();
-        }
+        }*/
 
         this.msubscription = new CompositeSubscription();
 

@@ -18,6 +18,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
-        mTv.setText("BN厉害");
+        mTv.setText("BN厉害dddddddddddd");
     }
 }

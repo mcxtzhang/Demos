@@ -12,6 +12,7 @@ import com.squareup.javapoet.TypeSpec;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -31,6 +32,7 @@ import javax.lang.model.util.Elements;
  * Home Page:http://blog.csdn.net/zxt0601
  * Created:  2017/1/17.
  * History:
+ * 2017/02/04 add : Auto bind params in bundle for target Activity/Fragment.
  */
 
 @AutoService(Processor.class)
@@ -82,6 +84,38 @@ public class ZRouter2Processor extends AbstractProcessor {
             ZRouter zRouter = typeElement.getAnnotation(ZRouter.class);
             String className = typeElement.getQualifiedName().toString();
             constructorBuilder.addStatement("routerMap.put($S, $S)", zRouter.path(), className);
+
+            //2017 02 04 add auto bind params value in bundle for target activity
+            List<? extends Element> members = mElementUtils.getAllMembers(typeElement);
+            MethodSpec.Builder bindViewMethodSpecBuilder = MethodSpec.methodBuilder("bindParams")
+                    .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                    .returns(TypeName.VOID)
+                    //RxActivity activity
+                    .addParameter(ClassName.get(typeElement.asType()), "activity")
+                    .addStatement("$T intent = activity.getIntent()", ClassName.get("android.content", "Intent"))
+                    .beginControlFlow("if (null != intent)");
+            for (Element item : members) {
+                ZParams diView = item.getAnnotation(ZParams.class);
+                if (diView == null) {
+                    continue;
+                }
+                bindViewMethodSpecBuilder.addStatement(String.format("activity.%s = intent.getStringExtra(\"%s\")", item.getSimpleName(), diView.key()));
+            }
+            bindViewMethodSpecBuilder.endControlFlow();
+
+            TypeSpec typeSpec = TypeSpec.classBuilder("ZParams" + element.getSimpleName() + "Binding")
+                    //extends xxx
+/*                    .superclass(TypeName.get(typeElement.asType()))*/
+                    .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
+                    .addMethod(bindViewMethodSpecBuilder.build())
+                    .build();
+            JavaFile javaFile = JavaFile.builder(AptUtils.getPkgName(mElementUtils, typeElement), typeSpec).build();
+            try {
+                javaFile.writeTo(processingEnv.getFiler());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         }
         MethodSpec constructor = constructorBuilder
                 .build();

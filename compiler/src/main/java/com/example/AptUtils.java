@@ -16,12 +16,15 @@ import javax.lang.model.util.Elements;
 public class AptUtils {
     public static final String PKG_NAME = "com.apt";
 
-    private String getPkgName(Elements element, TypeElement type) throws Exception {
+    public static String getPkgName(Elements element, TypeElement type) /*throws Exception */{
+
         PackageElement pkg = element.getPackageOf(type);
         if (null != pkg && !pkg.isUnnamed()) {
             return pkg.getQualifiedName().toString();
         } else {
-            throw new Exception("Error in get package name of " + type.toString() + "");
+            // TODO: 2017/2/4
+            return null;
+            //throw new Exception("Error in get package name of " + type.toString() + "");
         }
     }
 }
