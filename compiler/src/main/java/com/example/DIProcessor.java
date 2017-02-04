@@ -50,9 +50,9 @@ public class DIProcessor extends AbstractProcessor {
                 }
                 bindViewMethodSpecBuilder.addStatement(String.format("activity.%s = (%s) activity.findViewById(%s)", item.getSimpleName(), ClassName.get(item.asType()).toString(), diView.value()));
             }
-            TypeSpec typeSpec = TypeSpec.classBuilder("DI" + element.getSimpleName())
+            TypeSpec typeSpec = TypeSpec.classBuilder("ZBind" + element.getSimpleName())
                     //extends xxx
-                    .superclass(TypeName.get(typeElement.asType()))
+/*                    .superclass(TypeName.get(typeElement.asType()))*/
                     .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                     .addMethod(bindViewMethodSpecBuilder.build())
                     .build();

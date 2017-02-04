@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.mcxtzhang.github.MainActivity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,6 +17,7 @@ import java.util.Map;
  * History:
  */
 
+@Deprecated
 public class RManager {
     private static final String TAG = "zxt/RManager";
 
@@ -25,7 +25,6 @@ public class RManager {
 
     private RManager() {
         routerMap = new HashMap<>();
-        //routerMap.put("router1", MainActivity.class);
         try {
             routerMap.put("router1", Class.forName("com.mcxtzhang.github.MainActivity"));
         } catch (ClassNotFoundException e) {

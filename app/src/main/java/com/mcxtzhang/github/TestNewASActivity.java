@@ -6,19 +6,30 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.apt.ZRouter;
+import com.example.DIActivity;
+import com.example.DIView;
 import com.example.TestHelloWorld;
 import com.mcxtzhang.HelloWorld;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
+@DIActivity
 @TestHelloWorld("haha")
 public class TestNewASActivity extends AppCompatActivity {
 
     private static final String TAG = "zxt/lifecycle";
+
+    @DIView(R.id.editText)
+    EditText mEt;
+
+    @DIView(R.id.tv)
+    TextView mTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,12 +75,16 @@ public class TestNewASActivity extends AppCompatActivity {
 
         //finish();
 
+        ZBindTestNewASActivity.bindView(this);
+        mEt.setText("绑定成功");
+        mTv.setText("绑定成功");
+
+
         HelloWorld.main(null);
         HelloWorld.jump("旋转跳跃");
         Log.d(TAG, "onCreate() called with: savedInstanceState = [" + savedInstanceState + "]");
 
 
-        //HelloWorld.zJump(this, MainActivity.class);
 
         //RManager.getInstance().jump(this,"router1");
 
