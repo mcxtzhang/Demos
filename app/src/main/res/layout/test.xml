@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          android:id="@+id/tv"
-          android:layout_width="120dp"
-          android:layout_height="60dp"
-          android:background="@drawable/shape_round_bg_cate_list"
-          android:foreground="@drawable/shape_round_fg_cate_list"
-          android:gravity="center"
-          android:padding="20dp"
-          android:text="每日爆款"
-          android:textColor="@drawable/shape_text_color_white_gray666">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-</TextView>
+    <TextView
+        android:id="@+id/tv"
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:background="@drawable/shape_round_bg_cate_list"
+        android:foreground="@drawable/shape_round_fg_cate_list"
+        android:gravity="center"
+        android:padding="20dp"
+        android:text="每日爆款"
+        android:textColor="@drawable/shape_text_color_white_gray666">
+
+    </TextView>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:singleLine="true"/>
+</LinearLayout>

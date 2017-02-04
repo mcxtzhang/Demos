@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.example.DIActivity;
 import com.example.DIView;
 import com.example.ZRouter;
+import com.mcxtzhang.github.R;
 import com.mcxtzhang.github.bean.EnumInfoBean;
 
 import java.util.ArrayList;

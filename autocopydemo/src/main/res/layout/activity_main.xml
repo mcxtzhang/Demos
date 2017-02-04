@@ -11,8 +11,15 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.mcxtzhang.autocopydemo.MainActivity">
 
-    <TextView
+
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"/>
+        android:hint="@string/app_name"
+        android:maxLines="1"
+        />
 </RelativeLayout>
+<!--
+    android:maxLines="1"-->
+
+<!--    android:inputType="textImeMultiLine"-->
