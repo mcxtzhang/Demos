@@ -20,7 +20,7 @@
             android:layout_height="match_parent"
             app:contentScrim="#a10fa6"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|enterAlways"
-            app:title=" ">
+            app:title="ddddddddd ">
 
             <ImageView
                 android:id="@+id/iv_news_detail"
@@ -31,7 +31,7 @@
                 app:layout_collapseMode="parallax"
                 app:layout_collapseParallaxMultiplier="0.8"/>
 
-            <android.support.v7.widget.Toolbar
+<!--            <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar_newsDetail"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
@@ -41,7 +41,15 @@
 
                 app:popupTheme="@style/Theme.AppCompat.Light"
                 app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                app:title="折叠吗"/>
+                app:title="折叠吗"/>-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="#123454"
+
+                app:layout_collapseMode="pin"
+                ></LinearLayout>
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
