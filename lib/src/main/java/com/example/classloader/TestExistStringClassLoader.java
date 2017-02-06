@@ -1,7 +1,7 @@
 package com.example.classloader;
 
 /**
- * Intro:
+ * Intro: Java 基本数据类型由BootStrap加载  get是null
  * Author: zhangxutong
  * E-mail: mcxtzhang@163.com
  * Home Page: http://blog.csdn.net/zxt0601
