@@ -20,9 +20,11 @@ import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
 import io.reactivex.Single;
+import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.BiConsumer;
 import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
@@ -165,32 +167,57 @@ public class Rx2Activity extends AppCompatActivity {
                         e.onComplete();
                     }
                 });
-                Observable.zip(ob1, ob2, new BiFunction<String, String, String>() {
+                Observable<String> zip = Observable.zip(ob1, ob2, new BiFunction<String, String, String>() {
                     @Override
                     public String apply(String s, String s2) throws Exception {
                         return s + s2;
                     }
+                });
+
+                Single<List<String>> collect = ob1.flatMap(new Function<String, ObservableSource<String>>() {
+                    @Override
+                    public ObservableSource<String> apply(String s) throws Exception {
+                        return Observable.just(s);
+                    }
+                }).filter(new Predicate<String>() {
+                    @Override
+                    public boolean test(String s) throws Exception {
+                        return true;
+                    }
+                }).collect(new Callable<List<String>>() {
+                    @Override
+                    public List<String> call() throws Exception {
+                        return new ArrayList<String>();
+                    }
+                }, new BiConsumer<List<String>, String>() {
+                    @Override
+                    public void accept(List<String> strings, String s) throws Exception {
+                        strings.add(s);
+                    }
+                });
+                
+                Single.zip(Single.fromObservable(zip), collect, new BiFunction<String, List<String>, String>() {
+                    @Override
+                    public String apply(String s, List<String> strings) throws Exception {
+
+                        return s;
+                    }
                 }).subscribeOn(Schedulers.computation())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Observer<String>() {
+                        .subscribe(new SingleObserver<String>() {
                             @Override
                             public void onSubscribe(Disposable d) {
-
+                                Log.d(TAG, "onSubscribe() called with: d = [" + d + "]");
                             }
 
                             @Override
-                            public void onNext(String value) {
-                                Log.d(TAG, "onNext() called with: value = [" + value + "]");
+                            public void onSuccess(String value) {
+                                Log.d(TAG, "onSuccess() called with: value = [" + value + "]");
                             }
 
                             @Override
                             public void onError(Throwable e) {
-                                Log.e(TAG, "onError: " + e);
-                            }
-
-                            @Override
-                            public void onComplete() {
-
+                                Log.d(TAG, "onError() called with: e = [" + e + "]");
                             }
                         });
 
