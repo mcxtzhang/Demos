@@ -24,6 +24,7 @@ import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
 import io.reactivex.functions.BiConsumer;
 import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Consumer;
@@ -195,7 +196,7 @@ public class Rx2Activity extends AppCompatActivity {
                         strings.add(s);
                     }
                 });
-                
+
                 Single.zip(Single.fromObservable(zip), collect, new BiFunction<String, List<String>, String>() {
                     @Override
                     public String apply(String s, List<String> strings) throws Exception {
@@ -901,6 +902,153 @@ public class Rx2Activity extends AppCompatActivity {
                                 Log.d(TAG, "accept() called with: integer = [" + integer + "]");
                             }
                         });
+            }
+        });
+
+
+        findViewById(R.id.btnCache).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Observable<Long> cacheObservable = Observable.interval(200, 100, TimeUnit.MILLISECONDS)
+                        .take(5)
+                        .doOnNext(new Consumer<Long>() {
+                            @Override
+                            public void accept(Long aLong) throws Exception {
+                                Log.d(TAG, "doOnNext() called with: aLong = [" + aLong + "]");
+                            }
+                        })
+                        .cache()
+                        .doOnSubscribe(new Consumer<Disposable>() {
+                            @Override
+                            public void accept(Disposable disposable) throws Exception {
+                                Log.d(TAG, "doOnSubscribe() called with: disposable = [" + disposable + "]");
+                            }
+                        })
+                        .doOnDispose(new Action() {
+                            @Override
+                            public void run() throws Exception {
+                                Log.d(TAG, "doOnDispose() called");
+                            }
+                        });
+                Disposable subscribe = cacheObservable.subscribe(new Consumer<Long>() {
+                    @Override
+                    public void accept(Long aLong) throws Exception {
+                        Log.d(TAG, "subscribe() called with: aLong = [" + aLong + "]");
+                    }
+                });
+                mCompositeDisposable.add(subscribe);
+
+                try {
+                    Thread.sleep(250);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                mCompositeDisposable.clear();
+
+
+            }
+        });
+
+
+        //▲Replay(取消订阅后，Replay内部默认继续走，但是如果把connect返回后的Disposable 加入 管理，取消 就可以了)
+        findViewById(R.id.btnReplay).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ConnectableObservable<Long> cacheObservable = Observable.interval(200, 100, TimeUnit.MILLISECONDS)
+                        .take(5)
+                        .doOnNext(new Consumer<Long>() {
+                            @Override
+                            public void accept(Long aLong) throws Exception {
+                                Log.d(TAG, "doOnNext() called with: aLong = [" + aLong + "]");
+                            }
+                        })
+                        .replay(4);
+                //Replay(取消订阅后，Replay内部默认继续走，但是如果把connect返回后的Disposable 加入 管理，取消 就可以了)
+                Disposable cacheConnect = cacheObservable.connect();
+                mCompositeDisposable.add(cacheConnect);
+                Observable<Long> wraperCacheOb = cacheObservable.doOnSubscribe(new Consumer<Disposable>() {
+                    @Override
+                    public void accept(Disposable disposable) throws Exception {
+                        Log.d(TAG, "doOnSubscribe() called with: disposable = [" + disposable + "]");
+                    }
+                })
+                        .doOnDispose(new Action() {
+                            @Override
+                            public void run() throws Exception {
+                                Log.d(TAG, "doOnDispose() called");
+                            }
+                        }).subscribeOn(Schedulers.computation())
+                        .observeOn(AndroidSchedulers.mainThread());
+
+
+                Disposable subscribe1 = wraperCacheOb.subscribe(new Consumer<Long>() {
+                    @Override
+                    public void accept(Long aLong) throws Exception {
+                        Log.d(TAG, "subscribe1() called with: aLong = [" + aLong + "]");
+                    }
+                });
+                mCompositeDisposable.add(subscribe1);
+
+                try {
+                    Thread.sleep(450);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                Disposable subscribe2 = wraperCacheOb.subscribe(new Consumer<Long>() {
+                    @Override
+                    public void accept(Long aLong) throws Exception {
+                        Log.d(TAG, "subscribe2() called with: aLong = [" + aLong + "]");
+                    }
+                });
+                //mCompositeDisposable.clear();
+            }
+        });
+
+        findViewById(R.id.btnReplayCompare).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Observable<Long> longObservable = Observable.interval(200, 100, TimeUnit.MILLISECONDS)
+                        .take(5)
+                        .doOnNext(new Consumer<Long>() {
+                            @Override
+                            public void accept(Long aLong) throws Exception {
+                                Log.d(TAG, "doOnNext() called with: aLong = [" + aLong + "]");
+                            }
+                        }).doOnSubscribe(new Consumer<Disposable>() {
+                            @Override
+                            public void accept(Disposable disposable) throws Exception {
+                                Log.d(TAG, "doOnSubscribe() called with: disposable = [" + disposable + "]");
+                            }
+                        })
+                        .doOnDispose(new Action() {
+                            @Override
+                            public void run() throws Exception {
+                                Log.d(TAG, "doOnDispose() called");
+                            }
+                        }).subscribeOn(Schedulers.computation())
+                        .observeOn(AndroidSchedulers.mainThread());
+
+                longObservable.subscribe(new Consumer<Long>() {
+                    @Override
+                    public void accept(Long aLong) throws Exception {
+                        Log.d(TAG, "accept111111111() called with: aLong = [" + aLong + "]");
+                    }
+                });
+
+                try {
+                    Thread.sleep(450);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                longObservable.subscribe(new Consumer<Long>() {
+                    @Override
+                    public void accept(Long aLong) throws Exception {
+                        Log.d(TAG, "accept22222222222222222222() called with: aLong = [" + aLong + "]");
+                    }
+                });
+
             }
         });
 

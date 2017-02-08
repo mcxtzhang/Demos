@@ -192,6 +192,31 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="ConcatFirst(测试First,2.0要么返回complete，要么返回默认值)"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@color/colorAccent"/>
+
+        <Button
+            android:id="@+id/btnCache"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cache(取消订阅后，Cache内部还是会继续走)"/>
+
+
+        <Button
+            android:id="@+id/btnReplay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Replay(取消订阅后，Replay内部默认继续走，但是如果把connect返回后的Disposable 加入 管理，取消 就可以了)"/>
+
+
+        <Button
+            android:id="@+id/btnReplayCompare"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="和Replay 对比，普通的Observable 订阅多次 会执行多次doOnNext"/>
     </LinearLayout>
 </ScrollView>
 
