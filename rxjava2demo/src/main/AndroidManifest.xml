@@ -23,6 +23,8 @@
         </activity>
         <activity android:name=".retrofit.model.gayhub.GayHubActivity">
         </activity>
+        <activity android:name=".retrofit.AlyTestActivity">
+        </activity>
     </application>
 
 </manifest>

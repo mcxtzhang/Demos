@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
+import com.mcxtzhang.rxjava2demo.retrofit.AlyTestActivity;
 import com.mcxtzhang.rxjava2demo.retrofit.RetrofitDemoActivity;
 import com.mcxtzhang.rxjava2demo.retrofit.model.gayhub.GayHubActivity;
 import com.mcxtzhang.rxjava2demo.rxjava2.Rx2Activity;
@@ -37,6 +38,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, GayHubActivity.class));
+            }
+        });
+
+        findViewById(R.id.btnRetrofitAly).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, AlyTestActivity.class));
             }
         });
     }
