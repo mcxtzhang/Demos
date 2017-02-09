@@ -16,7 +16,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".jobscheduler.JobSchedulerActivity">
-
         </activity>
 
         <service
@@ -29,7 +28,8 @@
         </service>
 
         <activity android:name=".RxActivity">
-
+        </activity>
+        <activity android:name=".SparseArrayOrderTestActivity">
         </activity>
     </application>
 

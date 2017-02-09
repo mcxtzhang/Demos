@@ -37,6 +37,13 @@ public class TestNewASActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test);
 
+        findViewById(R.id.btnSparseArray).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ZRouter.getInstance().jump(TestNewASActivity.this, SparseArrayOrderTestActivity.TAG, null);
+            }
+        });
+
         //http://www.cnblogs.com/whoislcj/p/5887859.html
 
 /*        String encodedString = Base64.encodeToString("whoislcj".getBytes(), Base64.DEFAULT);
@@ -83,7 +90,6 @@ public class TestNewASActivity extends AppCompatActivity {
         HelloWorld.main(null);
         HelloWorld.jump("旋转跳跃");
         Log.d(TAG, "onCreate() called with: savedInstanceState = [" + savedInstanceState + "]");
-
 
 
         //RManager.getInstance().jump(this,"router1");

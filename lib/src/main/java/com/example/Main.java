@@ -17,6 +17,7 @@ public class Main {
 
     public static class FruitGenerator implements Generator<String> {
 
+
         private String[] fruits = new String[]{"Apple", "Banana", "Pear"};
 
         @Override
@@ -36,6 +37,8 @@ public class Main {
 
         System.out.println(isNummber(""));
 
+
+        System.out.println(~555555555);
 
     }
 
