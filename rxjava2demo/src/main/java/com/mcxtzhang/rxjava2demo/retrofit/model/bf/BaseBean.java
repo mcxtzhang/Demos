@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by zhangxutong .
  * Date: 16/04/10
  */
-public class BaseBean {
+public class BaseBean<T> {
 
     /**
      *
@@ -16,7 +16,7 @@ public class BaseBean {
      */
 
     @SerializedName("flag")
-    private int flag;
+    private String flag;
     @SerializedName("message")
     private String message;
     @SerializedName("result")
@@ -27,21 +27,21 @@ public class BaseBean {
      */
 
     @SerializedName("data")
-    private Class data;
+    private T data;
 
-    public Class getData() {
+    public T getData() {
         return data;
     }
 
-    public void setData(Class data) {
+    public void setData(T data) {
         this.data = data;
     }
 
-    public int getFlag() {
+    public String getFlag() {
         return flag;
     }
 
-    public void setFlag(int flag) {
+    public void setFlag(String flag) {
         this.flag = flag;
     }
 

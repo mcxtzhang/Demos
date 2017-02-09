@@ -10,6 +10,7 @@
       <module fileurl="file://$PROJECT_DIR$/lib/lib.iml" filepath="$PROJECT_DIR$/lib/lib.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
       <module fileurl="file://$PROJECT_DIR$/proxylib/proxylib.iml" filepath="$PROJECT_DIR$/proxylib/proxylib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/proxylib/proxylib.iml" filepath="$PROJECT_DIR$/proxylib/proxylib.iml" />
       <module fileurl="file://$PROJECT_DIR$/rxjava2demo/rxjava2demo.iml" filepath="$PROJECT_DIR$/rxjava2demo/rxjava2demo.iml" />
       <module fileurl="file://$PROJECT_DIR$/zxt_github.iml" filepath="$PROJECT_DIR$/zxt_github.iml" />
       <module fileurl="file://$PROJECT_DIR$/zxt_github_proj.iml" filepath="$PROJECT_DIR$/zxt_github_proj.iml" />
