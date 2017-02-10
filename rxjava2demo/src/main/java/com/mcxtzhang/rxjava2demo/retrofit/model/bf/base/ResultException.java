@@ -12,4 +12,12 @@ public class ResultException extends RuntimeException {
     public String getErrCode() {
         return errCode;
     }
+
+    @Override
+    public String toString() {
+
+        return "ResultException{" + super.toString() +
+                "errCode='" + errCode + '\'' +
+                '}';
+    }
 }

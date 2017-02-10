@@ -9,6 +9,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.mcxtzhang.rxjava2demo.R;
+import com.mcxtzhang.rxjava2demo.retrofit.bendan.RemoveWrapper;
 import com.mcxtzhang.rxjava2demo.retrofit.model.bf.BaseBean;
 import com.mcxtzhang.rxjava2demo.retrofit.model.bf.BfService;
 import com.mcxtzhang.rxjava2demo.retrofit.model.bf.PostBean;
@@ -135,9 +136,11 @@ public class AlyTestActivity extends AppCompatActivity {
 
                 //Call<String> baseBeanCall = movieService.testWithAnnotationURL(baseUrl + pathUrl, body);
 
-                Observable<BaseBean<WxPayBean>> stringObservable = movieService.testRxjava(/*baseUrl + pathUrl*/ httpsCreateOrder, body);
-                stringObservable.subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
+                Observable<BaseBean<WxPayBean>> stringObservable = movieService.testRxjava(/*baseUrl + pathUrl*/ httpsCreateOrder, body)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread());
+                //1 Gson工厂不剥离，所以返回带BaseBean的
+/*                stringObservable
                         .subscribe(new Observer<BaseBean<WxPayBean>>() {
                             @Override
                             public void onSubscribe(Disposable d) {
@@ -155,6 +158,31 @@ public class AlyTestActivity extends AppCompatActivity {
                                 Toast.makeText(AlyTestActivity.this, "" + throwable.getMessage(), Toast.LENGTH_SHORT).show();
 
                                 Log.d(TAG, "onError() called with: e = [" + throwable.getMessage() + "]");
+                            }
+
+                            @Override
+                            public void onComplete() {
+                                Log.d(TAG, "onComplete() called");
+                            }
+                        });*/
+                //1 Gson 工厂不剥离，返回带BaseBean 利用map剥离
+                stringObservable
+                        .map(new RemoveWrapper())
+                        .subscribe(new Observer<WxPayBean>() {
+                            @Override
+                            public void onSubscribe(Disposable d) {
+                                Log.d(TAG, "onSubscribe() called with: d = [" + d + "]");
+                            }
+
+                            @Override
+                            public void onNext(WxPayBean value) {
+                                Log.d(TAG, "onNext() called with: value = [" + value + "]");
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                Log.d(TAG, "onError() called with: e = [" + e + "]");
+                                Toast.makeText(AlyTestActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
 
                             @Override

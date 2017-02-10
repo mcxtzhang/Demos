@@ -20,7 +20,7 @@ import retrofit2.http.Url;
 
 public interface BfService {
 
-    String httpsParams = "{\"address\":\"提提\",\"address_id\":\"779950\",\"consignee\":\"洗香香\",\"consignee_tel\":\"18616328542\",\"floor_id\":\"102179\",\"gender\":0,\"notice_way\":1,\"order_list\":[{\"comment\":\"\",\"delivery_date\":\"20170211\",\"goods\":[{\"goods_sale_id\":\"3734\",\"number\":\"1\",\"price\":0.02}],\"notice_way\":1}],\"payway\":3,\"user_coupon_id\":\"-1\"}";
+    String httpsParams = "{\"address\":\"提提\",\"address_id\":\"779950\",\"consignee\":\"洗香香\",\"consignee_tel\":\"18616328542\",\"floor_id\":\"102179\",\"gender\":0,\"notice_way\":1,\"order_list\":[{\"comment\":\"\",\"delivery_date\":\"20170211\",\"goods\":[{\"goods_sale_id\":\"3740\",\"number\":\"1\",\"price\":0.01}],\"notice_way\":1}],\"payway\":3,\"user_coupon_id\":\"-1\"}";
 
     String httpsCreateOrder = "https://breakfast.anlaiye.com.cn/breakfast/order/info";
 
