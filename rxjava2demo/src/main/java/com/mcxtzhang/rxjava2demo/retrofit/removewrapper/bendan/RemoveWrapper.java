@@ -1,4 +1,4 @@
-package com.mcxtzhang.rxjava2demo.retrofit.bendan;
+package com.mcxtzhang.rxjava2demo.retrofit.removewrapper.bendan;
 
 import com.mcxtzhang.rxjava2demo.retrofit.model.bf.BaseBean;
 import com.mcxtzhang.rxjava2demo.retrofit.model.bf.base.ResultException;

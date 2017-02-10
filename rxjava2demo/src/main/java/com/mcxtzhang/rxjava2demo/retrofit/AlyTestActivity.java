@@ -9,7 +9,6 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.mcxtzhang.rxjava2demo.R;
-import com.mcxtzhang.rxjava2demo.retrofit.bendan.RemoveWrapper;
 import com.mcxtzhang.rxjava2demo.retrofit.model.bf.BaseBean;
 import com.mcxtzhang.rxjava2demo.retrofit.model.bf.BfService;
 import com.mcxtzhang.rxjava2demo.retrofit.model.bf.PostBean;
@@ -109,6 +108,10 @@ public class AlyTestActivity extends AppCompatActivity {
 
         //"https://breakfast.anlaiye.com.cn"
         final String baseUrl = /*"http://breakfast.imcoming.com.cn"*/    "https://breakfast.anlaiye.com.cn";
+
+        //自动剥离方法3： 构造一个特殊的gson (没学会)
+        //Gson gson1 = (new GsonBuilder()).registerTypeAdapterFactory(new ItemTypeAdapterFactory()).create();
+
         final Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 //gson 自动解析实体
@@ -116,7 +119,8 @@ public class AlyTestActivity extends AppCompatActivity {
 
                 //注册自定义的工厂类
                 .addConverterFactory(AlyGsonConverterFactory.create())
-
+                //自动剥离方法3： 构造一个特殊的gson (没学会)
+                //.addConverterFactory(AlyGsonConverterFactory.create(gson1))
 
                 //可以自动转成rxjava的Observable
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -140,7 +144,7 @@ public class AlyTestActivity extends AppCompatActivity {
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread());
                 //1 Gson工厂不剥离，所以返回带BaseBean的
-/*                stringObservable
+                stringObservable
                         .subscribe(new Observer<BaseBean<WxPayBean>>() {
                             @Override
                             public void onSubscribe(Disposable d) {
@@ -164,9 +168,9 @@ public class AlyTestActivity extends AppCompatActivity {
                             public void onComplete() {
                                 Log.d(TAG, "onComplete() called");
                             }
-                        });*/
+                        });
                 //1 Gson 工厂不剥离，返回带BaseBean 利用map剥离
-                stringObservable
+/*                stringObservable
                         .map(new RemoveWrapper())
                         .subscribe(new Observer<WxPayBean>() {
                             @Override
@@ -189,7 +193,7 @@ public class AlyTestActivity extends AppCompatActivity {
                             public void onComplete() {
                                 Log.d(TAG, "onComplete() called");
                             }
-                        });
+                        });*/
 
 
 /*                Observable<WxPayBean> testRxjavaNoBaseWrapper = movieService.testRxjavaNoBaseWrapper(httpsCreateOrder, body);

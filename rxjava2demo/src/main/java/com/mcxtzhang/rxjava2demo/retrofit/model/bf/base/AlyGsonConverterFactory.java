@@ -49,7 +49,9 @@ public final class AlyGsonConverterFactory extends Converter.Factory {
                                                             Retrofit retrofit) {
     /*TypeAdapter<?> adapter = gson.getAdapter(TypeToken.get(type));
     return new GsonEntityResponseBodyConverter<>(gson, adapter);*/
+        //方法 1  自动剥离
         //return new GsonEntityResponseBodyConverter<>(gson, type);
+        //方法 2  不自动剥离 但是通过map一个函数去完成
         return new GsonAllResponseBodyConverter<>(gson, type);
     }
 
