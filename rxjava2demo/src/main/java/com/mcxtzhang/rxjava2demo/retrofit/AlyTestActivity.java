@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -13,6 +12,7 @@ import com.mcxtzhang.rxjava2demo.retrofit.model.bf.BaseBean;
 import com.mcxtzhang.rxjava2demo.retrofit.model.bf.BfService;
 import com.mcxtzhang.rxjava2demo.retrofit.model.bf.PostBean;
 import com.mcxtzhang.rxjava2demo.retrofit.model.bf.base.AlyGsonConverterFactory;
+import com.mcxtzhang.rxjava2demo.retrofit.removewrapper.rookie.RxHelper;
 
 import java.io.IOException;
 
@@ -143,8 +143,34 @@ public class AlyTestActivity extends AppCompatActivity {
                 Observable<BaseBean<WxPayBean>> stringObservable = movieService.testRxjava(/*baseUrl + pathUrl*/ httpsCreateOrder, body)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread());
-                //1 Gson工厂不剥离，所以返回带BaseBean的
+                // gson工厂不剥离，但是compose 剥离
                 stringObservable
+                        .compose(RxHelper.<WxPayBean>helper())
+                        .subscribe(new Observer<WxPayBean>() {
+                            @Override
+                            public void onSubscribe(Disposable d) {
+
+                            }
+
+                            @Override
+                            public void onNext(WxPayBean value) {
+                                Log.d(TAG, "gson工厂不剥离，但是compose 剥离 onNext() called with: value = [" + value + "]");
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                Log.d(TAG, "gson工厂不剥离，但是compose 剥离 onError() called with: e = [" + e + "]");
+                            }
+
+                            @Override
+                            public void onComplete() {
+
+                            }
+                        });
+
+
+                //1 Gson工厂不剥离，所以返回带BaseBean的
+/*                stringObservable
                         .subscribe(new Observer<BaseBean<WxPayBean>>() {
                             @Override
                             public void onSubscribe(Disposable d) {
@@ -168,7 +194,7 @@ public class AlyTestActivity extends AppCompatActivity {
                             public void onComplete() {
                                 Log.d(TAG, "onComplete() called");
                             }
-                        });
+                        });*/
                 //1 Gson 工厂不剥离，返回带BaseBean 利用map剥离
 /*                stringObservable
                         .map(new RemoveWrapper())
