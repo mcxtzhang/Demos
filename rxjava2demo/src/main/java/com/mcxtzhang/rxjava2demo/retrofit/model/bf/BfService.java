@@ -1,5 +1,7 @@
 package com.mcxtzhang.rxjava2demo.retrofit.model.bf;
 
+import com.mcxtzhang.rxjava2demo.retrofit.WxPayBean;
+
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -17,7 +19,14 @@ import retrofit2.http.Url;
  */
 
 public interface BfService {
+
+    String httpsParams = "{\"address\":\"提提\",\"address_id\":\"779950\",\"consignee\":\"洗香香\",\"consignee_tel\":\"18616328542\",\"floor_id\":\"102179\",\"gender\":0,\"notice_way\":1,\"order_list\":[{\"comment\":\"\",\"delivery_date\":\"20170211\",\"goods\":[{\"goods_sale_id\":\"3740\",\"number\":\"1\",\"price\":0.01}],\"notice_way\":1}],\"payway\":3,\"user_coupon_id\":\"-1\"}";
+
+    String httpsPathUrl = "https://breakfast.anlaiye.com.cn/breakfast/order/info?appid=1&token=71ba067a2106caaa9589a25dd252ebe4&appver=3.1.4&appplt=aph";
+
+    //https://breakfast.anlaiye.com.cn/breakfast/order/user/delete/60160908411710001?appid=1&token=71ba067a2106caaa9589a25dd252ebe4&appver=3.1.4&appplt=aph
     public static final String pathUrl = "/breakfast/order/info?appid=1&token=a24074255a02eafbf9c11c11c258e8ed&appver=3.0.9&appplt=aph";
+
     @POST(pathUrl)
     Call<String> test1(@Body PostBean postBean);
 
@@ -28,6 +37,11 @@ public interface BfService {
     Call<String> testWithAnnotationURL(@Url String url, @Body RequestBody body);
 
 
+    //微信创建订单
     @POST
-    Observable<BaseBean<String>> testRxjava(@Url String url, @Body RequestBody body);
+    Observable<BaseBean<WxPayBean>> testRxjava(@Url String url, @Body RequestBody body);
+
+    //
+
+
 }
