@@ -58,12 +58,14 @@ public class AlyTestActivity extends AppCompatActivity {
                 //append this to request header
                 Request request = original.newBuilder()
                         .url(url)
-                        .header("appplt", "aph")
+/*                        .header("appplt", "aph")
                         .header("appid", "1")
                         .header("appver", getAppVersion())
                         .header("token", Constant.loginToken)
-                        .method(original.method(), original.body())
+                        .method(original.method(), original.body())*/
                         .build();
+
+
 
                 return chain.proceed(request);
             }
@@ -85,14 +87,17 @@ public class AlyTestActivity extends AppCompatActivity {
                         int code = proceed.code();
                         if (code != 200) {
                             Log.d(TAG, "code:" + code + ",不是200，说明有错误，我要改成200，否则Retrofit不让我通过。");
-                            Response response422 = new Response.Builder()
+                            Response adapterResponse = proceed.newBuilder()
+                                    .code(200)
+                                    .build();
+/*                            Response response422 = new Response.Builder()
                                     .code(200)
                                     .request(request)
                                     .headers(proceed.headers())
                                     .body(proceed.body())
                                     .protocol(proceed.protocol())
-                                    .build();
-                            return response422;
+                                    .build();*/
+                            return adapterResponse;
                         }
                         return proceed;
                     }
