@@ -217,6 +217,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="和Replay 对比，普通的Observable 订阅多次 会执行多次doOnNext"/>
+
+        <TextView
+            android:text="除了Flowable/Observable 之外，还有三种异步源类型"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@color/colorAccent"/>
+        <Button
+            android:text="Completable,它们要么全部成功，要么就失败"
+            android:id="@+id/btnCompletable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:text="Maybe,能会有一个数据、错误，也可能什么都没有"
+            android:id="@+id/btnMaybe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
     </LinearLayout>
 </ScrollView>
 

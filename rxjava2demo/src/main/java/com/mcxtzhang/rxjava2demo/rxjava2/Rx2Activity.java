@@ -14,6 +14,12 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Completable;
+import io.reactivex.CompletableEmitter;
+import io.reactivex.CompletableObserver;
+import io.reactivex.CompletableOnSubscribe;
+import io.reactivex.Maybe;
+import io.reactivex.MaybeObserver;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -1049,6 +1055,63 @@ public class Rx2Activity extends AppCompatActivity {
                     }
                 });
 
+            }
+        });
+
+
+        //▲ Completable **类似于返回值为 void 的方法**。 它要么成功完成但是没有数据返回，要么就抛出异常，
+        findViewById(R.id.btnCompletable).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Completable.create(new CompletableOnSubscribe() {
+                    @Override
+                    public void subscribe(CompletableEmitter e) throws Exception {
+
+                    }
+                }).subscribe(new CompletableObserver() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+                });
+            }
+        });
+
+        findViewById(R.id.btnMaybe).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Maybe.just(1)
+                        .subscribe(new MaybeObserver<Integer>() {
+                            @Override
+                            public void onSubscribe(Disposable d) {
+
+                            }
+
+                            @Override
+                            public void onSuccess(Integer value) {
+
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+
+                            }
+
+                            @Override
+                            public void onComplete() {
+
+                            }
+                        });
             }
         });
 
