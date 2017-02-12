@@ -1,4 +1,4 @@
-package com.mcxtzhang.rxjava2demo.retrofit.model.bf;
+package com.mcxtzhang.rxjava2demo.retrofit.base.wrapper;
 
 import com.google.gson.annotations.SerializedName;
 

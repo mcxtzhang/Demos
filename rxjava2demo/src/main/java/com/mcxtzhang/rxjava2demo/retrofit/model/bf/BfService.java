@@ -1,6 +1,7 @@
 package com.mcxtzhang.rxjava2demo.retrofit.model.bf;
 
 import com.mcxtzhang.rxjava2demo.retrofit.WxPayBean;
+import com.mcxtzhang.rxjava2demo.retrofit.base.wrapper.BaseBean;
 
 import io.reactivex.Observable;
 import okhttp3.RequestBody;

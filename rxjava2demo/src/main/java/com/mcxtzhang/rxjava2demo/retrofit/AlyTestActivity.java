@@ -8,11 +8,11 @@ import android.view.View;
 import com.google.gson.Gson;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.mcxtzhang.rxjava2demo.R;
-import com.mcxtzhang.rxjava2demo.retrofit.model.bf.BaseBean;
+import com.mcxtzhang.rxjava2demo.retrofit.base.wrapper.BaseBean;
 import com.mcxtzhang.rxjava2demo.retrofit.model.bf.BfService;
 import com.mcxtzhang.rxjava2demo.retrofit.model.bf.PostBean;
-import com.mcxtzhang.rxjava2demo.retrofit.model.bf.base.AlyGsonConverterFactory;
-import com.mcxtzhang.rxjava2demo.retrofit.removewrapper.rookie.RxHelper;
+import com.mcxtzhang.rxjava2demo.retrofit.base.gson.AlyGsonConverterFactory;
+import com.mcxtzhang.rxjava2demo.retrofit.base.removewrapper.rookie.RxHelper;
 
 import java.io.IOException;
 

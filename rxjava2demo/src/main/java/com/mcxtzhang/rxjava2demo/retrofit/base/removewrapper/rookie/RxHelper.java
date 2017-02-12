@@ -1,7 +1,7 @@
-package com.mcxtzhang.rxjava2demo.retrofit.removewrapper.rookie;
+package com.mcxtzhang.rxjava2demo.retrofit.base.removewrapper.rookie;
 
-import com.mcxtzhang.rxjava2demo.retrofit.model.bf.BaseBean;
-import com.mcxtzhang.rxjava2demo.retrofit.removewrapper.bendan.RemoveWrapper;
+import com.mcxtzhang.rxjava2demo.retrofit.base.wrapper.BaseBean;
+import com.mcxtzhang.rxjava2demo.retrofit.base.removewrapper.bendan.RemoveWrapper;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;

@@ -1,10 +1,10 @@
-package com.mcxtzhang.rxjava2demo.retrofit.removewrapper.air;
+package com.mcxtzhang.rxjava2demo.retrofit.base.removewrapper.air;
 
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
-import com.mcxtzhang.rxjava2demo.retrofit.model.bf.BaseBean;
+import com.mcxtzhang.rxjava2demo.retrofit.base.wrapper.BaseBean;
 
 /**
  * Intro:

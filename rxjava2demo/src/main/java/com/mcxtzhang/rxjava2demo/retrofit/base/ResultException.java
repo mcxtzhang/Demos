@@ -1,4 +1,4 @@
-package com.mcxtzhang.rxjava2demo.retrofit.model.bf.base;
+package com.mcxtzhang.rxjava2demo.retrofit.base;
 
 public class ResultException extends RuntimeException {
 

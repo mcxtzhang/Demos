@@ -1,4 +1,4 @@
-package com.mcxtzhang.rxjava2demo.retrofit.removewrapper.air;
+package com.mcxtzhang.rxjava2demo.retrofit.base.removewrapper.air;
 
 import android.util.Log;
 

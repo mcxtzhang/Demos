@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.mcxtzhang.rxjava2demo.retrofit.model.bf.base;
+package com.mcxtzhang.rxjava2demo.retrofit.base.gson;
 
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
@@ -29,6 +29,10 @@ import okhttp3.RequestBody;
 import okio.Buffer;
 import retrofit2.Converter;
 
+/**
+ * copy from source codes
+ * @param <T>
+ */
 final class GsonRequestBodyConverter<T> implements Converter<T, RequestBody> {
   private static final MediaType MEDIA_TYPE = MediaType.parse("application/json; charset=UTF-8");
   private static final Charset UTF_8 = Charset.forName("UTF-8");

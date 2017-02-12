@@ -1,4 +1,4 @@
-package com.mcxtzhang.rxjava2demo.retrofit.model.bf.base;
+package com.mcxtzhang.rxjava2demo.retrofit.base.gson;
 
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
