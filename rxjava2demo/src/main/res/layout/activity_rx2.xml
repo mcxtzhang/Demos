@@ -235,6 +235,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
+        <TextView
+            android:text="ObserserOn 切换线程后，再map 在哪个线程"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@color/colorAccent"/>
+
+        <Button
+            android:text="ObserserOn 切换线程后，再map 在哪个线程"
+            android:id="@+id/btnObserverOnAndMap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 </ScrollView>
 

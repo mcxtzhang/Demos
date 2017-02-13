@@ -1115,6 +1115,35 @@ public class Rx2Activity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.btnObserverOnAndMap).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                   Observable.just(1)
+                           .map(new Function<Integer, Integer>() {
+                               @Override
+                               public Integer apply(Integer integer) throws Exception {
+                                   Log.d(TAG, "before apply() called with: integer = [" + integer + "]"+Thread.currentThread());
+                                   return integer;
+                               }
+                           })
+                           .subscribeOn(Schedulers.io())
+                           .observeOn(AndroidSchedulers.mainThread())
+                           .map(new Function<Integer, String>() {
+                               @Override
+                               public String apply(Integer integer) throws Exception {
+                                   Log.d(TAG, "map() called with: integer = [" + integer + "]"+Thread.currentThread());
+                                   return integer+"";
+                               }
+                           })
+                           .subscribe(new Consumer<String>() {
+                               @Override
+                               public void accept(String s) throws Exception {
+                                   Log.d(TAG, "Consumer() called with: s = [" + s + "]"+Thread.currentThread());
+                               }
+                           });
+                    }
+                });
+
     }
 
     //for test hot cold Observable
