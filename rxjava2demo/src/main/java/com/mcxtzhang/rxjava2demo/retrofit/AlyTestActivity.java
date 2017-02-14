@@ -14,6 +14,7 @@ import com.mcxtzhang.rxjava2demo.retrofit.base.wrapper.BaseBean;
 import com.mcxtzhang.rxjava2demo.retrofit.model.bf.BfService;
 import com.mcxtzhang.rxjava2demo.retrofit.model.bf.PostBean;
 
+import java.io.File;
 import java.io.IOException;
 
 import io.reactivex.Observable;
@@ -21,6 +22,7 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.Cache;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
@@ -72,6 +74,32 @@ public class AlyTestActivity extends AppCompatActivity {
         };
 
 
+        Interceptor responseIntercept = new Interceptor() {
+            @Override
+            public Response intercept(Chain chain) throws IOException {
+                Request request = chain.request();
+                Log.i(TAG, "request====111111111111111111111111111111");
+                Log.i(TAG, "request header ====" + request.headers().toString());
+                Response proceed = chain.proceed(request);
+                Log.i(TAG, "Response proceed ====" + proceed.toString());
+                int code = proceed.code();
+                if (code != 200) {
+                    Log.d(TAG, "code:" + code + ",不是200，说明有错误，我要改成200，否则Retrofit不让我通过。");
+                    Response adapterResponse = proceed.newBuilder()
+                            .code(200)
+                            .build();
+/*                            Response response422 = new Response.Builder()
+                                    .code(200)
+                                    .request(request)
+                                    .headers(proceed.headers())
+                                    .body(proceed.body())
+                                    .protocol(proceed.protocol())
+                                    .build();*/
+                    return adapterResponse;
+                }
+                return proceed;
+            }
+        };
 
 
         //返回拦截器
@@ -81,37 +109,19 @@ public class AlyTestActivity extends AppCompatActivity {
             logging.setLevel(HttpLoggingInterceptor.Level.BODY);
             builder.addInterceptor(logging);
         }
+        //开启okhttp缓存
+        File httpCacheDirectory = new File(getExternalCacheDir(), "zxtokhttpcache");
+        builder.cache(new Cache(httpCacheDirectory,10 * 1024 * 1024));
+
+
         //注意添加顺序 ，按顺序处理的
         builder.addInterceptor(headerInterceptor)
-
-                .addInterceptor(new Interceptor() {
-                    @Override
-                    public Response intercept(Chain chain) throws IOException {
-                        Request request = chain.request();
-                        Log.i(TAG, "request====111111111111111111111111111111");
-                        Log.i(TAG, "request header ====" + request.headers().toString());
-                        Response proceed = chain.proceed(request);
-                        Log.i(TAG, "Response proceed ====" + proceed.toString());
-                        int code = proceed.code();
-                        if (code != 200) {
-                            Log.d(TAG, "code:" + code + ",不是200，说明有错误，我要改成200，否则Retrofit不让我通过。");
-                            Response adapterResponse = proceed.newBuilder()
-                                    .code(200)
-                                    .build();
-/*                            Response response422 = new Response.Builder()
-                                    .code(200)
-                                    .request(request)
-                                    .headers(proceed.headers())
-                                    .body(proceed.body())
-                                    .protocol(proceed.protocol())
-                                    .build();*/
-                            return adapterResponse;
-                        }
-                        return proceed;
-                    }
-                });
-
+                .addInterceptor(responseIntercept);
         OkHttpClient okHttpClient = builder.build();
+
+
+
+
 
 
         final String jsonBody = "{\"address\":\"gg\",\"address_id\":\"721866\",\"consignee\":\"gghh\",\"consignee_tel\":\"18616320845\",\"floor_id\":\"98448\",\"gender\":1,\"notice_way\":1,\"order_list\":[{\"comment\":\"\",\"delivery_date\":\"20161123\",\"goods\":[{\"goods_sale_id\":\"54\",\"number\":\"3\",\"price\":0.02},{\"goods_sale_id\":\"45\",\"number\":\"7\",\"price\":0.1}]}],\"payway\":3,\"user_coupon_id\":\"-1\"}";
