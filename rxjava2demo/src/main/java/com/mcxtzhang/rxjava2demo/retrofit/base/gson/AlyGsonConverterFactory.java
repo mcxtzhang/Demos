@@ -47,6 +47,9 @@ public final class AlyGsonConverterFactory extends Converter.Factory {
     @Override
     public Converter<ResponseBody, ?> responseBodyConverter(Type type, Annotation[] annotations,
                                                             Retrofit retrofit) {
+        //我们只关实现从ResponseBody 到 String 的转换，所以其它方法可不覆盖
+       //若其它类型我们不处理，返回null就行
+
     /*TypeAdapter<?> adapter = gson.getAdapter(TypeToken.get(type));
     return new GsonEntityResponseBodyConverter<>(gson, adapter);*/
         //方法 1  自动剥离

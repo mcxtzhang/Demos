@@ -8,11 +8,11 @@ import android.view.View;
 import com.google.gson.Gson;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.mcxtzhang.rxjava2demo.R;
+import com.mcxtzhang.rxjava2demo.retrofit.base.gson.AlyGsonConverterFactory;
+import com.mcxtzhang.rxjava2demo.retrofit.base.removewrapper.rookie.RxHelper;
 import com.mcxtzhang.rxjava2demo.retrofit.base.wrapper.BaseBean;
 import com.mcxtzhang.rxjava2demo.retrofit.model.bf.BfService;
 import com.mcxtzhang.rxjava2demo.retrofit.model.bf.PostBean;
-import com.mcxtzhang.rxjava2demo.retrofit.base.gson.AlyGsonConverterFactory;
-import com.mcxtzhang.rxjava2demo.retrofit.base.removewrapper.rookie.RxHelper;
 
 import java.io.IOException;
 
@@ -28,6 +28,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 
 import static com.mcxtzhang.rxjava2demo.retrofit.model.bf.BfService.httpsCreateOrder;
@@ -66,15 +67,22 @@ public class AlyTestActivity extends AppCompatActivity {
                         .build();
 
 
-
                 return chain.proceed(request);
             }
         };
 
+
+
+
         //返回拦截器
-        OkHttpClient.Builder builder = new OkHttpClient.Builder()
-                //注意添加顺序 ，按顺序处理的
-                .addInterceptor(headerInterceptor)
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        if (true) {
+            HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+            builder.addInterceptor(logging);
+        }
+        //注意添加顺序 ，按顺序处理的
+        builder.addInterceptor(headerInterceptor)
 
                 .addInterceptor(new Interceptor() {
                     @Override
