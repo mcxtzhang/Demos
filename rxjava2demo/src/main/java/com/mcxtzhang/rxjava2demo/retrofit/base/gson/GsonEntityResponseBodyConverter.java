@@ -38,7 +38,9 @@ class GsonEntityResponseBodyConverter<T> implements Converter<ResponseBody, T> {
             //result==0表示成功返回，继续用本来的Model类解析
             //return gson.fromJson(response, type);
             //剥离无用字段
-            return (T) result.getData();
+            T data = (T) result.getData();
+
+            return data;
         } else {
             //ErrResponse 将msg解析为异常消息文本
 /*                ErrResponse errResponse = gson.fromJson(response, ErrResponse.class);*/

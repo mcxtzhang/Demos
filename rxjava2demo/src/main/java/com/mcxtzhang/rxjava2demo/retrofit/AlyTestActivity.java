@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -40,11 +41,15 @@ public class AlyTestActivity extends AppCompatActivity {
 
     private static final String TAG = "TAG";
 
+    TextView tvResult;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aly_test);
+
+        tvResult = (TextView) findViewById(R.id.tvResult);
 
         //header 追加统一参数
         Interceptor headerInterceptor = new Interceptor() {
@@ -146,7 +151,7 @@ public class AlyTestActivity extends AppCompatActivity {
                 //.addConverterFactory(AlyGsonConverterFactory.create(gson1))
 
                 //可以自动转成rxjava的Observable
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
                 .client(okHttpClient)
                 .build();
 
@@ -163,11 +168,12 @@ public class AlyTestActivity extends AppCompatActivity {
 
                 //Call<String> baseBeanCall = movieService.testWithAnnotationURL(baseUrl + pathUrl, body);
 
-                Observable<BaseBean<WxPayBean>> stringObservable = movieService.testRxjava(/*baseUrl + pathUrl*/ httpsCreateOrder, body)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread());
+                Observable<BaseBean<WxPayBean>> stringObservable = movieService.testRxjava(/*baseUrl + pathUrl*/ httpsCreateOrder, body);
+/*                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread());*/
                 // gson工厂不剥离，但是compose 剥离
                 stringObservable
+                        .observeOn(AndroidSchedulers.mainThread())
                         .compose(RxHelper.<WxPayBean>helper())
                         .subscribe(new Observer<WxPayBean>() {
                             @Override
@@ -178,11 +184,13 @@ public class AlyTestActivity extends AppCompatActivity {
                             @Override
                             public void onNext(WxPayBean value) {
                                 Log.d(TAG, "gson工厂不剥离，但是compose 剥离 onNext() called with: value = [" + value + "]");
+                                tvResult.setText(value.toString());
                             }
 
                             @Override
                             public void onError(Throwable e) {
-                                Log.d(TAG, "gson工厂不剥离，但是compose 剥离 onError() called with: e = [" + e + "]");
+                                Log.e(TAG, "gson工厂不剥离，但是compose 剥离 onError() called with: e = [" + e + "]");
+                                tvResult.setText(e.getMessage());
                             }
 
                             @Override
