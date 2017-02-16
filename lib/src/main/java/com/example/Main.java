@@ -1,5 +1,7 @@
 package com.example;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -39,6 +41,20 @@ public class Main {
 
 
         System.out.println(~555555555);
+
+
+        List<String> list = new ArrayList<>();
+        System.out.println("list:"+list.size());
+        list.add(null);
+        System.out.println("list:"+list.size());
+        System.out.println(list == null);
+
+        List<String> list2 = new ArrayList<>();
+        list2.addAll(new ArrayList<String>());
+        System.out.println("list2:"+list2.size());
+        System.out.println("list2:"+list2.size());
+
+
 
     }
 
