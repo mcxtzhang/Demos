@@ -46,6 +46,7 @@ public class Main {
         List<String> list = new ArrayList<>();
         System.out.println("list:"+list.size());
         list.add(null);
+        list.add(null);
         System.out.println("list:"+list.size());
         System.out.println(list == null);
 
