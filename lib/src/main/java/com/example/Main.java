@@ -3,6 +3,7 @@ package com.example;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Vector;
 
 /**
  * 介绍：
@@ -55,6 +56,13 @@ public class Main {
         System.out.println("list2:"+list2.size());
         System.out.println("list2:"+list2.size());
 
+
+        Vector<String> vector = new Vector<>();
+        System.out.println("vector:"+vector.size());
+        vector.add(null);
+        vector.add(null);
+        System.out.println("vector:"+vector.size());
+        System.out.println(vector == null);
 
 
     }
