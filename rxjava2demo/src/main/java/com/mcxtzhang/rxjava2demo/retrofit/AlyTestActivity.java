@@ -52,9 +52,6 @@ public class AlyTestActivity extends AppCompatActivity {
         tvResult = (TextView) findViewById(R.id.tvResult);
         tvResult.setError("???");
 
-
-        Log.getStackTraceString(new IOException("dddd"));
-
         //header 追加统一参数
         Interceptor headerInterceptor = new Interceptor() {
             @Override
