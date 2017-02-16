@@ -50,6 +50,7 @@ public class AlyTestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_aly_test);
 
         tvResult = (TextView) findViewById(R.id.tvResult);
+        tvResult.setError("???");
 
         //header 追加统一参数
         Interceptor headerInterceptor = new Interceptor() {
