@@ -15,9 +15,11 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".c1.LifeCycleTestActivity">
+        <activity android:name=".c1.LifeCycleTestActivity"  android:taskAffinity="aaa.bbb.ccc">
         </activity>
-        <activity android:name=".c1.LifeCycleTest2Activity">
+        <activity
+            android:name=".c1.LifeCycleTest2Activity"
+            android:launchMode="singleInstance">
         </activity>
     </application>
 
