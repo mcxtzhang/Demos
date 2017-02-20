@@ -10,7 +10,6 @@ import com.google.gson.Gson;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.mcxtzhang.rxjava2demo.R;
 import com.mcxtzhang.rxjava2demo.retrofit.base.gson.AlyGsonConverterFactory;
-import com.mcxtzhang.rxjava2demo.retrofit.base.removewrapper.rookie.RxHelper;
 import com.mcxtzhang.rxjava2demo.retrofit.base.wrapper.BaseBean;
 import com.mcxtzhang.rxjava2demo.retrofit.model.bf.BfService;
 import com.mcxtzhang.rxjava2demo.retrofit.model.bf.PostBean;
@@ -19,9 +18,7 @@ import java.io.File;
 import java.io.IOException;
 
 import io.reactivex.Observable;
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.Cache;
 import okhttp3.HttpUrl;
@@ -170,10 +167,24 @@ public class AlyTestActivity extends AppCompatActivity {
                 //Call<String> baseBeanCall = movieService.testWithAnnotationURL(baseUrl + pathUrl, body);
 
                 Observable<BaseBean<WxPayBean>> stringObservable = movieService.testRxjava(/*baseUrl + pathUrl*/ httpsCreateOrder, body);
+
+                Observable<String> hha = movieService.testField("http://breakfast.anlaiye.com.cn/aaaa", "张旭童");
+                hha.subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String s) throws Exception {
+                        Log.d(TAG, "accept() called with: s = [" + s + "]");
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        Log.d(TAG, "accept() called with: throwable = [" + throwable + "]");
+                    }
+                });
+
 /*                        .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread());*/
                 // gson工厂不剥离，但是compose 剥离
-                stringObservable
+/*                stringObservable
                         .observeOn(AndroidSchedulers.mainThread())
                         .compose(RxHelper.<WxPayBean>helper())
                         .subscribe(new Observer<WxPayBean>() {
@@ -198,7 +209,7 @@ public class AlyTestActivity extends AppCompatActivity {
                             public void onComplete() {
 
                             }
-                        });
+                        });*/
 
 
                 //1 Gson工厂不剥离，所以返回带BaseBean的

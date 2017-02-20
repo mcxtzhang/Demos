@@ -7,6 +7,8 @@ import io.reactivex.Observable;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 import retrofit2.http.Url;
 
@@ -46,5 +48,10 @@ public interface BfService {
     //微信创建订单
     @POST
     Observable<WxPayBean> testRxjavaNoBaseWrapper(@Url String url, @Body RequestBody body);
+
+
+    @FormUrlEncoded
+    @POST
+    Observable<String> testField(@Url String url, @Field("field1") String field1);
 
 }
