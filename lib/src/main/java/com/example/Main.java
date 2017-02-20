@@ -1,9 +1,18 @@
 package com.example;
 
+import com.google.gson.Gson;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Vector;
+
+import static com.example.Key.APP_CLIENT_TYPE;
+import static com.example.Key.APP_SIGN_KEY;
 
 /**
  * 介绍：
@@ -65,7 +74,73 @@ public class Main {
         System.out.println(vector == null);
 
 
+
+
+
+
+
+
+        Map<String, Object> mapParems = new HashMap<>();
+        mapParems.put("type", "android");
+
+        mapParems.put("password", "975421366");
+        mapParems.put("mp", "18616320845");
+
+        Map<String, Object> body1 = getBody(mapParems);
+
+        System.out.println(body1);
+
+        try {
+            String new1 = URLEncoder.encode(body1.get("data").toString(), "utf-8");
+            System.out.println(new1);
+
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
     }
+
+    public static Map<String, Object> getBody(Map<String, Object> map) {
+        String encodeData = toJsonFormMap(map);
+        Map<String, Object> tmp = new HashMap<>();
+        long time = System.currentTimeMillis() / 1000;
+        try {
+            encodeData = URLEncoder.encode(encodeData.toString(), "utf-8");
+            encodeData = encodeData.replaceAll("\\+", "%20");
+            encodeData = URLEncoder.encode(encodeData.toString(), "utf-8");
+            encodeData = encodeData.replaceAll("\\+", "%20");
+
+            String appVersion = "3.1.4";
+            String deviceId = "862561035025574";
+            String sign = MD5.getMD5((appVersion + APP_CLIENT_TYPE + encodeData +
+                    deviceId + time + APP_SIGN_KEY).getBytes());
+            tmp.put("app_version", appVersion);
+            tmp.put("client_type", APP_CLIENT_TYPE + "");
+            tmp.put("data", encodeData);
+            tmp.put("device_id", deviceId);
+            tmp.put("time", time + "");
+            tmp.put("sign", sign);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return tmp;
+    }
+
+    protected static final String JSON_BEAN = "jsonBean";
+
+    public static String toJsonFormMap(Map<String, Object> map) {
+        if (map == null) {
+            map = new HashMap<>();
+        }
+
+        if (map.size() == 1 && map.containsKey(JSON_BEAN)) {
+            Object o = map.get(JSON_BEAN);
+            return new Gson().toJson(o);
+        }
+        return new Gson().toJson(map);
+    }
+
+
 
     private static int isNummber(String numberString) {
         int k = 1;
