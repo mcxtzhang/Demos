@@ -93,7 +93,6 @@ public class Main {
         try {
             String new1 = URLEncoder.encode(body1.get("data").toString(), "utf-8");
             System.out.println(new1);
-
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
