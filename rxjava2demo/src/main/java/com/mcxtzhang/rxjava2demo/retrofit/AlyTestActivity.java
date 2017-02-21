@@ -10,6 +10,8 @@ import com.google.gson.Gson;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.mcxtzhang.rxjava2demo.R;
 import com.mcxtzhang.rxjava2demo.retrofit.base.gson.AlyGsonConverterFactory;
+import com.mcxtzhang.rxjava2demo.retrofit.base.removewrapper.rookie.RxHelper;
+import com.mcxtzhang.rxjava2demo.retrofit.base.request.FileRequestBodyConverterFactory;
 import com.mcxtzhang.rxjava2demo.retrofit.base.wrapper.BaseBean;
 import com.mcxtzhang.rxjava2demo.retrofit.model.bf.BfService;
 import com.mcxtzhang.rxjava2demo.retrofit.model.bf.PostBean;
@@ -18,6 +20,9 @@ import java.io.File;
 import java.io.IOException;
 
 import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.Cache;
@@ -120,6 +125,16 @@ public class AlyTestActivity extends AppCompatActivity {
         //注意添加顺序 ，按顺序处理的
         builder.addInterceptor(headerInterceptor)
                 .addInterceptor(responseIntercept);
+
+
+        //Log信息拦截器
+        // Log信息拦截器
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        //设置 Debug Log 模式
+        builder.addInterceptor(loggingInterceptor);
+
+
         OkHttpClient okHttpClient = builder.build();
 
 
@@ -144,6 +159,7 @@ public class AlyTestActivity extends AppCompatActivity {
                 //.addConverterFactory(GsonConverterFactory.create())
 
                 //注册自定义的工厂类
+                .addConverterFactory(new FileRequestBodyConverterFactory())
                 .addConverterFactory(AlyGsonConverterFactory.create())
                 //自动剥离方法3： 构造一个特殊的gson (没学会)
                 //.addConverterFactory(AlyGsonConverterFactory.create(gson1))
@@ -184,7 +200,7 @@ public class AlyTestActivity extends AppCompatActivity {
 /*                        .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread());*/
                 // gson工厂不剥离，但是compose 剥离
-/*                stringObservable
+                stringObservable
                         .observeOn(AndroidSchedulers.mainThread())
                         .compose(RxHelper.<WxPayBean>helper())
                         .subscribe(new Observer<WxPayBean>() {
@@ -209,7 +225,7 @@ public class AlyTestActivity extends AppCompatActivity {
                             public void onComplete() {
 
                             }
-                        });*/
+                        });
 
 
                 //1 Gson工厂不剥离，所以返回带BaseBean的
