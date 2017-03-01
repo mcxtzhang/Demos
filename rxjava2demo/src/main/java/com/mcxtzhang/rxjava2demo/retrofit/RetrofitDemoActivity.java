@@ -99,7 +99,7 @@ public class RetrofitDemoActivity extends AppCompatActivity {
                 .subscribe(new Consumer<HttpResult<List<DouBanMovieBean>>>() {
                     @Override
                     public void accept(HttpResult<List<DouBanMovieBean>> listHttpResult) throws Exception {
-                        resultTV.setText(listHttpResult.getData().get(0).getTitle());
+                        resultTV.setText(listHttpResult.getData().get(1).getTitle());
                     }
                 });
     }

@@ -5,7 +5,7 @@ import com.mcxtzhang.rxjava2demo.retrofit.model.douban.bean.DouBanMovieBean;
 
 import java.util.List;
 
-import io.reactivex.Observable;
+import io.reactivex.Single;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -25,5 +25,5 @@ public interface MovieService {
 
     //Observable<RawMovieBean>
     @GET("top250")
-    Observable<HttpResult<List<DouBanMovieBean>>> getDoubanTopMovie(@Query("start") int start, @Query("count") int count);
+    Single<HttpResult<List<DouBanMovieBean>>> getDoubanTopMovie(@Query("start") int start, @Query("count") int count);
 }

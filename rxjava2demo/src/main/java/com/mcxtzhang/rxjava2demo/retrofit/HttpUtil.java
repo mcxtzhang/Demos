@@ -8,7 +8,7 @@ import com.mcxtzhang.rxjava2demo.retrofit.model.douban.bean.DouBanMovieBean;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import io.reactivex.Observable;
+import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
@@ -55,10 +55,9 @@ public class HttpUtil {
 
     //暴漏的接口
 
-    public Observable<HttpResult<List<DouBanMovieBean>>> getDoubanTopMovie(int start, int count) {
+    public Single<HttpResult<List<DouBanMovieBean>>> getDoubanTopMovie(int start, int count) {
         return mMovieService.getDoubanTopMovie(start, count)
                 .subscribeOn(Schedulers.io())
-                .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 }
