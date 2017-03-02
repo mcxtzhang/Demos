@@ -1144,6 +1144,42 @@ public class Rx2Activity extends AppCompatActivity {
                     }
                 });
 
+
+        final Observable<String> just = Observable.just(getJustData());
+        findViewById(R.id.btnWhenJust).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        just.subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(new Observer<String>() {
+                                    @Override
+                                    public void onSubscribe(Disposable d) {
+                                        Log.d(TAG, "onSubscribe() called with: d = [" + d + "]");
+                                    }
+
+                                    @Override
+                                    public void onNext(String value) {
+                                        Log.d(TAG, "onNext() called with: value = [" + value + "]");
+                                    }
+
+                                    @Override
+                                    public void onError(Throwable e) {
+                                        Log.d(TAG, "onError() called with: e = [" + e + "]");
+                                    }
+
+                                    @Override
+                                    public void onComplete() {
+                                        Log.d(TAG, "onComplete() called");
+                                    }
+                                });
+                    }
+                });
+
+    }
+
+    private String getJustData() {
+        Log.d(TAG, "getJustData() called");
+        return "btnWhenJust";
     }
 
     //for test hot cold Observable

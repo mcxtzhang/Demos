@@ -3,7 +3,9 @@ package com.mcxtzhang.rxjava2demo.retrofit;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -49,7 +51,11 @@ public class AlyTestActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_aly_test);
+        //setContentView(R.layout.activity_aly_test);
+        ViewGroup decorView = (ViewGroup) getWindow().getDecorView();
+        decorView.removeAllViews();
+        LayoutInflater.from(this).inflate(R.layout.activity_aly_test, decorView);
+        //().addView());
 
         tvResult = (TextView) findViewById(R.id.tvResult);
         tvResult.setError("???");

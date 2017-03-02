@@ -219,33 +219,41 @@
             android:text="和Replay 对比，普通的Observable 订阅多次 会执行多次doOnNext"/>
 
         <TextView
-            android:text="除了Flowable/Observable 之外，还有三种异步源类型"
             android:layout_width="match_parent"
             android:layout_height="5dp"
-            android:background="@color/colorAccent"/>
+            android:background="@color/colorAccent"
+            android:text="除了Flowable/Observable 之外，还有三种异步源类型"/>
+
         <Button
-            android:text="Completable,它们要么全部成功，要么就失败"
             android:id="@+id/btnCompletable"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text="Completable,它们要么全部成功，要么就失败"/>
 
         <Button
-            android:text="Maybe,能会有一个数据、错误，也可能什么都没有"
             android:id="@+id/btnMaybe"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text="Maybe,能会有一个数据、错误，也可能什么都没有"/>
 
         <TextView
-            android:text="ObserserOn 切换线程后，再map 在哪个线程"
             android:layout_width="match_parent"
             android:layout_height="5dp"
-            android:background="@color/colorAccent"/>
+            android:background="@color/colorAccent"
+            android:text="ObserserOn 切换线程后，再map 在哪个线程"/>
 
         <Button
-            android:text="ObserserOn 切换线程后，再map 在哪个线程"
             android:id="@+id/btnObserverOnAndMap"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text="ObserserOn 切换线程后，再map 在哪个线程"/>
+
+
+        <Button
+            android:id="@+id/btnWhenJust"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Just里的函数，何时执行"/>
     </LinearLayout>
 </ScrollView>
 
