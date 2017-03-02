@@ -1116,64 +1116,69 @@ public class Rx2Activity extends AppCompatActivity {
         });
 
         findViewById(R.id.btnObserverOnAndMap).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                   Observable.just(1)
-                           .map(new Function<Integer, Integer>() {
-                               @Override
-                               public Integer apply(Integer integer) throws Exception {
-                                   Log.d(TAG, "before apply() called with: integer = [" + integer + "]"+Thread.currentThread());
-                                   return integer;
-                               }
-                           })
-                           .subscribeOn(Schedulers.io())
-                           .observeOn(AndroidSchedulers.mainThread())
-                           .map(new Function<Integer, String>() {
-                               @Override
-                               public String apply(Integer integer) throws Exception {
-                                   Log.d(TAG, "map() called with: integer = [" + integer + "]"+Thread.currentThread());
-                                   return integer+"";
-                               }
-                           })
-                           .subscribe(new Consumer<String>() {
-                               @Override
-                               public void accept(String s) throws Exception {
-                                   Log.d(TAG, "Consumer() called with: s = [" + s + "]"+Thread.currentThread());
-                               }
-                           });
-                    }
-                });
+            @Override
+            public void onClick(View view) {
+                Observable.just(1)
+                        .map(new Function<Integer, Integer>() {
+                            @Override
+                            public Integer apply(Integer integer) throws Exception {
+                                Log.d(TAG, "before apply() called with: integer = [" + integer + "]" + Thread.currentThread());
+                                return integer;
+                            }
+                        })
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .map(new Function<Integer, String>() {
+                            @Override
+                            public String apply(Integer integer) throws Exception {
+                                Log.d(TAG, "map() called with: integer = [" + integer + "]" + Thread.currentThread());
+                                return integer + "";
+                            }
+                        })
+                        .subscribe(new Consumer<String>() {
+                            @Override
+                            public void accept(String s) throws Exception {
+                                Log.d(TAG, "Consumer() called with: s = [" + s + "]" + Thread.currentThread());
+                            }
+                        });
+            }
+        });
 
 
-        final Observable<String> just = Observable.just(getJustData());
+        final Observable<String> just = Observable.defer(new Callable<ObservableSource<String>>() {
+            @Override
+            public ObservableSource<String> call() throws Exception {
+                return Observable.just(getJustData());
+            }
+        });
         findViewById(R.id.btnWhenJust).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        just.subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(new Observer<String>() {
-                                    @Override
-                                    public void onSubscribe(Disposable d) {
-                                        Log.d(TAG, "onSubscribe() called with: d = [" + d + "]");
-                                    }
+            @Override
+            public void onClick(View view) {
+                just.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Observer<String>() {
+                            @Override
+                            public void onSubscribe(Disposable d) {
+                                Log.d(TAG, "onSubscribe() called with: d = [" + d + "]");
+                            }
 
-                                    @Override
-                                    public void onNext(String value) {
-                                        Log.d(TAG, "onNext() called with: value = [" + value + "]");
-                                    }
+                            @Override
+                            public void onNext(String value) {
+                                Log.d(TAG, "onNext() called with: value = [" + value + "]");
+                            }
 
-                                    @Override
-                                    public void onError(Throwable e) {
-                                        Log.d(TAG, "onError() called with: e = [" + e + "]");
-                                    }
+                            @Override
+                            public void onError(Throwable e) {
+                                Log.d(TAG, "onError() called with: e = [" + e + "]");
+                            }
 
-                                    @Override
-                                    public void onComplete() {
-                                        Log.d(TAG, "onComplete() called");
-                                    }
-                                });
-                    }
-                });
+                            @Override
+                            public void onComplete() {
+                                Log.d(TAG, "onComplete() called");
+                            }
+                        });
+            }
+        });
 
     }
 
