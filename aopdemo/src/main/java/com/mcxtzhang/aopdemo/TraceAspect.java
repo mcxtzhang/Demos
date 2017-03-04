@@ -7,6 +7,8 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 
+import java.lang.reflect.Field;
+
 //这是我写的切面类
 @Aspect
 public class TraceAspect {
@@ -25,10 +27,23 @@ public class TraceAspect {
 
     @Before("createPoint()")
     public void logAfter(JoinPoint joinPoint,String s) {
-        Log.d(TAG, "After!!!ddd:" + joinPoint.toShortString()+"---------- s:"+s);
-        if (MainActivity.token.equals("a break originToken")){
+        Log.d(TAG, "After!!!aaaaaaa:" + joinPoint.toShortString()+"---------- s:"+s);
+ /*       if (MainActivity.token.equals("a break originToken")){
             MainActivity.token = "a fixed Token";
+        }*/
+        Object o= null;//获取对象
+        try {
+            o =MainActivity.class.newInstance();
+            Field f=MainActivity.class.getField("token");//根据key获取参数
+            f.set(o, "a fixed Token");
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
         }
+
     }
 
 /*    @After("createPoint(a,b)")
