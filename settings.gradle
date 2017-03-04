@@ -1,4 +1,4 @@
-include ':app', ':lib', ':zxtcommonlib', ':library', ':compiler', ':autocopydemo', ':bndemo', ':hotfixdemo', ':proxylib', ':artdemo'
+include ':app', ':lib', ':zxtcommonlib', ':library', ':compiler', ':autocopydemo', ':bndemo', ':hotfixdemo', ':proxylib', ':artdemo', ':daggerdemo'
 
 //include ':viewpagerdemo'
 
