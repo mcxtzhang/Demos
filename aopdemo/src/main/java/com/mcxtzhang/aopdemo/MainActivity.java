@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 checkAspectJ(3, 5);
-                Toast.makeText(MainActivity.this, "lalal", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, MainActivity.token, Toast.LENGTH_SHORT).show();
             }
         });
     }

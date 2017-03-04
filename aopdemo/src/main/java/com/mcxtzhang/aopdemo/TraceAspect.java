@@ -3,9 +3,6 @@ package com.mcxtzhang.aopdemo;
 import android.util.Log;
 
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.After;
-import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -16,14 +13,27 @@ public class TraceAspect {
 
     private static final String TAG = "zxt";
 
-    @Pointcut("execution(* *..checkAspectJ(..)) && args(a,b)")
-    public void createPoint(int a, int b) {
-        Log.d(TAG, "createPoint() called with: a = [" + a + "], b = [" + b + "]");
+
+
+
+
+    //@Pointcut("execution(* *..checkAspectJ(..)) && args(a,b)")
+    @Pointcut("get(* *..token)")
+    public void createPoint(String s) {
+
     }
 
-    @After("createPoint(a,b)")
+    @Before("createPoint()")
+    public void logAfter(JoinPoint joinPoint,String s) {
+        Log.d(TAG, "After!!!ddd:" + joinPoint.toShortString()+"---------- s:"+s);
+        if (MainActivity.token.equals("a break originToken")){
+            MainActivity.token = "a fixed Token";
+        }
+    }
+
+/*    @After("createPoint(a,b)")
     public void logAfter(JoinPoint joinPoint, int a, int b) {
-        Log.d(TAG, "After!!!:" + joinPoint.toShortString() + "----" + a + "---" + b);
+        Log.d(TAG, "After!!!ddd:" + joinPoint.toShortString() + "----" + a + "---" + b);
     }
 
     @Before("createPoint(a,b)")
@@ -40,5 +50,5 @@ public class TraceAspect {
             throwable.printStackTrace();
         }
         return null;
-    }
+    }*/
 }
