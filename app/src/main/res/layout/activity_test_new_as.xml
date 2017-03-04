@@ -26,7 +26,5 @@
         android:layout_height="61dp"
         android:layout_marginLeft="48dp"
         android:layout_marginStart="48dp"
-        android:text="TextView"
-        app:layout_constraintLeft_toRightOf="@+id/button2"
-        app:layout_constraintBaseline_toBaselineOf="@+id/button2" />
+        android:text="TextView"/>
 </RelativeLayout>
