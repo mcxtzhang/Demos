@@ -9,6 +9,6 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.mcxtzhang.daggerdemo.Main2Activity">
+    tools:context="com.mcxtzhang.daggerdemo.chap2.Main2Activity">
 
 </RelativeLayout>

@@ -1,11 +1,11 @@
-package com.mcxtzhang.daggerdemo;
+package com.mcxtzhang.daggerdemo.chap2;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
-import com.mcxtzhang.daggerdemo.chap2.Entity2;
+import com.mcxtzhang.daggerdemo.R;
 
 import javax.inject.Inject;
 

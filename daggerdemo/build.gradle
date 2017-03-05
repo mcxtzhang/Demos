@@ -24,6 +24,8 @@ android {
     }
 }
 
+
+def dagger_version = 2.6
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -32,9 +34,9 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.2.0'
     testCompile 'junit:junit:4.12'
 
-    apt 'com.google.dagger:dagger-compiler:2.0'
-    compile 'com.google.dagger:dagger:2.0'
-
+    //dagger2
+    apt 'com.google.dagger:dagger-compiler:'+dagger_version
+    compile 'com.google.dagger:dagger:'+dagger_version
     provided 'javax.annotation:javax.annotation-api:1.2'
 
 
