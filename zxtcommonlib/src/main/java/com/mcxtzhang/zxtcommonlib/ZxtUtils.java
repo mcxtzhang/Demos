@@ -24,6 +24,7 @@ import java.util.regex.Pattern;
  * 时间： 2016/9/1.
  */
 public class ZxtUtils {
+    public static boolean isDebug = true;
 
     /**
      * 返回变成朋友蓝色的SpanString

@@ -6,12 +6,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import org.aspectj.lang.annotation.Pointcut;
+import com.mcxtzhang.zxtcommonlib.ZxtUtils;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "zxt/AOP";
 
-    public static String token = "a break originToken";
+    public static String token = /*"a break originToken"*/null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +24,10 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, MainActivity.token, Toast.LENGTH_SHORT).show();
             }
         });
+
+        //token = "token2";
+        Log.d(TAG, "onCreate() called with: token = [" + token + "]");
+        Log.d(TAG, "onCreate() called with: savedInstanceState = [" + ZxtUtils.isDebug + "]");
     }
 
     public void checkAspectJ(int a, int b) {
@@ -31,10 +35,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //对应的PointCut代码，我要找到里面的checkAspectJ方法
-    @Pointcut("execution(* *..checkAspectJ(..)) && args(a,b)")
+/*    @Pointcut("execution(* *..checkAspectJ(..)) && args(a,b)")
     public void createPoint(int a, int b) {
         Log.d(TAG, "createPoint() called with: a = [" + a + "], b = [" + b + "]");
-    }
+    }*/
 }
 
 

@@ -48,6 +48,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
 
     compile 'org.aspectj:aspectjrt:1.8.10'
+    compile project (':zxtcommonlib')
 
 }
 

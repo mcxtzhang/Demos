@@ -1,5 +1,6 @@
 package com.mcxtzhang.aopdemo;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import org.aspectj.lang.JoinPoint;
@@ -13,21 +14,21 @@ import java.lang.reflect.Field;
 @Aspect
 public class TraceAspect {
 
-    private static final String TAG = "zxt";
+    private static final String TAG = "zxt/Aspectj";
 
 
 
 
 
     //@Pointcut("execution(* *..checkAspectJ(..)) && args(a,b)")
-    @Pointcut("get(* *..token)")
+    @Pointcut("get(* *..isDebug)")
     public void createPoint(String s) {
 
     }
 
     @Before("createPoint()")
     public void logAfter(JoinPoint joinPoint,String s) {
-        Log.d(TAG, "After!!!aaaaaaa:" + joinPoint.toShortString()+"---------- s:"+s);
+        Log.d(TAG, "Before!!!  :" + joinPoint.toShortString()+"---------- s:"+s);
  /*       if (MainActivity.token.equals("a break originToken")){
             MainActivity.token = "a fixed Token";
         }*/
@@ -35,7 +36,14 @@ public class TraceAspect {
         try {
             o =MainActivity.class.newInstance();
             Field f=MainActivity.class.getField("token");//根据key获取参数
-            f.set(o, "a fixed Token");
+            String now = (String) f.get(o);
+            if (TextUtils.isEmpty(now)){
+                Log.d(TAG, "now is empty and set");
+                f.set(o, "a fixed Token");
+            }else {
+                Log.d(TAG, "now is :"+now);
+            }
+
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {

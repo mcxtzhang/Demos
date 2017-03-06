@@ -1,5 +1,6 @@
-include ':app', ':lib', ':zxtcommonlib', ':library', ':compiler', ':autocopydemo', ':bndemo', ':hotfixdemo', ':proxylib', ':artdemo', ':daggerdemo', ':aopdemo'
+include ':app', ':lib', ':zxtcommonlib', ':library', ':compiler', ':autocopydemo', ':bndemo', ':hotfixdemo', ':proxylib', ':artdemo', ':daggerdemo'
 
+include ':aopdemo'
 //include ':viewpagerdemo'
 
 //, ':cstviewdemo', ':animdemo', ':recyclerviewdemo', ':okhttpdemo'
