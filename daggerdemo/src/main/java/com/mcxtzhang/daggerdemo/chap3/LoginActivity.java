@@ -33,6 +33,6 @@ public class LoginActivity extends AppCompatActivity implements LoginConrtact.Vi
 
     @Override
     public void showData() {
-        mTv.setText("哟结果了 ???");
+        mTv.setText("哟结果了 ！！！@##¥%………………");
     }
 }

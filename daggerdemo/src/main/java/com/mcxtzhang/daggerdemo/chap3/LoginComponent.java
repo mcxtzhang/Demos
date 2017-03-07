@@ -2,6 +2,7 @@ package com.mcxtzhang.daggerdemo.chap3;
 
 import dagger.Component;
 
+
 /**
  * Intro:
  * Author: zhangxutong
@@ -12,6 +13,8 @@ import dagger.Component;
  */
 @Component(modules = LoginModule.class)
 public interface LoginComponent {
+
+    LoginConrtact.Presenter getP();
 
     void inject(LoginActivity loginActivity);
 }
