@@ -16,7 +16,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".chap2.Main2Activity">
-
+        </activity>
+        <activity android:name=".chap3.LoginActivity">
         </activity>
     </application>
 
