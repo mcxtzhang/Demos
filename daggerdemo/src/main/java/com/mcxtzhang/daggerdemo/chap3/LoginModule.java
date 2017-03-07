@@ -22,13 +22,29 @@ public class LoginModule {
         mView = view;
     }
 
+    // the params is provided by other @Provides
     @Provides
-    public LoginConrtact.Presenter provideLoginPresenter(LoginConrtact.View view) {
+    public LoginConrtact.Presenter provideLoginPresenter(/*@Named("filled")*/@WhichView("empty") LoginConrtact.View view) {
         return new LoginPresenter(view, mTag);
     }
 
+    /**
+     * 只有相同的@Named的@Inject成员变量与@Provides方法才可以被对应起来。
+     * 更常用的方法是使用注解@Qualifier来自定义注解。
+     */
+    @WhichView
+    //@Named("filled")
     @Provides
-    public LoginConrtact.View provideView(){
+    public LoginConrtact.View provideView() {
         return mView;
+    }
+
+
+    @WhichView("empty")
+    //test for @Named
+    //@Named("empty")
+    @Provides
+    public LoginConrtact.View provideEmptyView() {
+        return null;
     }
 }
