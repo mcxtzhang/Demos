@@ -1,5 +1,6 @@
 package com.mcxtzhang.github;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -18,6 +19,20 @@ public class SparseArrayOrderTestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sparce_array_order_test);
+        findViewById(R.id.btnChangeAlpha).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Drawable background = view
+                        .getBackground()
+                        /*.mutate()*/;
+                background.setAlpha(20);
+
+                //useless
+                //background.setBounds(new Rect(1,2,3,4));
+
+                findViewById(R.id.activity_sparce_array_order_test).invalidate();
+            }
+        });
 
 
     }
