@@ -14,7 +14,7 @@ import javax.lang.model.util.Elements;
  */
 
 public class AptUtils {
-    public static final String PKG_NAME = "com.apt";
+    public static final String PKG_NAME = "com.mcxzhang";
 
     public static String getPkgName(Elements element, TypeElement type) /*throws Exception */{
 
