@@ -1,5 +1,7 @@
 package com.mcxtzhang.daggerdemo.chap3;
 
+import javax.inject.Singleton;
+
 import dagger.Component;
 
 
@@ -11,6 +13,7 @@ import dagger.Component;
  * Created:   2017/3/7.
  * History:
  */
+@Singleton
 @Component(modules = LoginModule.class)
 public interface LoginComponent {
 

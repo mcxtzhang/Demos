@@ -1,5 +1,7 @@
 package com.mcxtzhang.daggerdemo.chap3;
 
+import javax.inject.Singleton;
+
 import dagger.Module;
 import dagger.Provides;
 
@@ -23,8 +25,9 @@ public class LoginModule {
     }
 
     // the params is provided by other @Provides
+    @Singleton
     @Provides
-    public LoginConrtact.Presenter provideLoginPresenter(/*@Named("filled")*/@WhichView("empty") LoginConrtact.View view) {
+    public LoginConrtact.Presenter provideLoginPresenter(/*@Named("filled")*/@WhichView("filled") LoginConrtact.View view) {
         return new LoginPresenter(view, mTag);
     }
 
@@ -32,6 +35,7 @@ public class LoginModule {
      * 只有相同的@Named的@Inject成员变量与@Provides方法才可以被对应起来。
      * 更常用的方法是使用注解@Qualifier来自定义注解。
      */
+    @Singleton
     @WhichView
     //@Named("filled")
     @Provides
@@ -39,7 +43,7 @@ public class LoginModule {
         return mView;
     }
 
-
+    @Singleton
     @WhichView("empty")
     //test for @Named
     //@Named("empty")

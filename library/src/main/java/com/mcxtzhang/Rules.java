@@ -22,7 +22,7 @@ public class Rules {
     }
 
     public static Map<String, String> getRouterMap() {
-        AModuleRouter
+
         return routerMap;
     }
 }
