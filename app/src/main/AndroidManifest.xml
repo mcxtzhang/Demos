@@ -3,6 +3,7 @@
           package="com.mcxtzhang.github">
 
     <application
+        android:name=".CstApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -29,7 +30,7 @@
 
         <activity android:name=".RxActivity">
         </activity>
-        <activity android:name=".SparseArrayOrderTestActivity">
+        <activity android:name=".SparseArrayOrderTestActivity" android:process=":other_process">
         </activity>
     </application>
 
