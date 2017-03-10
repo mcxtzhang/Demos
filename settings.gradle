@@ -15,7 +15,7 @@ include ':rxjava2demo'
 
 //include  ':coordinatordemo'
 
-//include ':databindingdemo'
+include ':databindingdemo'
 //include  'layoutmanager'
 
 //include ':diffutilsdemo'
