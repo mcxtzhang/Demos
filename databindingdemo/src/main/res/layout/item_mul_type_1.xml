@@ -11,9 +11,9 @@
             name="data"
             type="FirstBindingBean"/>
 
-        <variable
+<!--        <variable
             name="presenter"
-            type="com.mcxtzhang.databindingdemo.recyclerview.RecyclerViewActivity.ItemPresenter"/>
+            type="com.mcxtzhang.databindingdemo.recyclerview.RecyclerViewActivity.ItemPresenter"/>-->
     </data>
 
 
@@ -27,7 +27,6 @@
 
         <ImageView
             android:clickable="true"
-            android:onClick="@{presenter::OnItemClick}"
             android:layout_width="200dp"
             android:layout_height="200dp"
             app:netUrl="@{data.url}"

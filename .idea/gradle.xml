@@ -8,13 +8,13 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/aopdemo" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/artdemo" />
             <option value="$PROJECT_DIR$/autocopydemo" />
             <option value="$PROJECT_DIR$/bndemo" />
             <option value="$PROJECT_DIR$/compiler" />
             <option value="$PROJECT_DIR$/daggerdemo" />
+            <option value="$PROJECT_DIR$/databindingdemo" />
             <option value="$PROJECT_DIR$/hotfixdemo" />
             <option value="$PROJECT_DIR$/lib" />
             <option value="$PROJECT_DIR$/library" />

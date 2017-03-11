@@ -33,6 +33,9 @@ public class LauncherActivity extends AppCompatActivity {
             startActivity(new Intent(LauncherActivity.this, AnimAndCheckBoxActivity.class));
         }
 
+        public void onAdapterClick(View v) {
+            startActivity(new Intent(LauncherActivity.this, TestBindingAdapterActivity.class));
+        }
 
     }
 
