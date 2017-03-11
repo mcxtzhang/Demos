@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,11 +32,32 @@ public class TestNewASActivity extends AppCompatActivity {
     @DIView(R.id.tv)
     TextView mTv;
 
+    @DIView(R.id.root)
+    LinearLayout mRoot;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate() called with: savedInstanceState = [" + savedInstanceState + "]");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test);
+        ZBindTestNewASActivity.bindView(this);
+
+        mRoot.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Log.d(TAG, "onLongClick() called with: root = [" + v + "]");
+                return false;
+            }
+        });
+
+        findViewById(R.id.btnSparseArray).setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Log.d(TAG, "onLongClick() called with: inner = [" + v + "]");
+                return false;
+            }
+        });
 
         findViewById(R.id.btnSparseArray).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,7 +104,7 @@ public class TestNewASActivity extends AppCompatActivity {
 
         //finish();
 
-        ZBindTestNewASActivity.bindView(this);
+
         mEt.setText("绑定成功");
         mTv.setText("绑定成功");
 
