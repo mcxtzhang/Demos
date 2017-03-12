@@ -4,10 +4,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.mcxtzhang.rxjava2demo.R;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.EmptyStackException;
 import java.util.List;
@@ -34,6 +34,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.BiConsumer;
 import io.reactivex.functions.BiFunction;
+import io.reactivex.functions.Cancellable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
@@ -1183,19 +1184,26 @@ public class Rx2Activity extends AppCompatActivity {
         });
 
 
+        final Observable<String> testCreateObservable = Observable.create(new ObservableOnSubscribe<String>() {
+            @Override
+            public void subscribe(ObservableEmitter<String> e) throws Exception {
+                e.setCancellable(new Cancellable() {
+                    @Override
+                    public void cancel() throws Exception {
+                        Toast.makeText(Rx2Activity.this, "kafhklasas", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                e.onNext("1");
+                //先error后complete，complete不显示。 反之 会crash
+                //e.onError(new IOException("sb error"));
+                e.onComplete();
+//                e.onError(new IOException("sb error"));
+            }
+        });
         findViewById(R.id.btnCreate2Subscribe).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Observable.create(new ObservableOnSubscribe<String>() {
-                    @Override
-                    public void subscribe(ObservableEmitter<String> e) throws Exception {
-                        e.onNext("1");
-                        //先error后complete，complete不显示。 反之 会crash
-                        //e.onError(new IOException("sb error"));
-                        e.onComplete();
-                        e.onError(new IOException("sb error"));
-                    }
-                }).subscribe(new Observer<String>() {
+                testCreateObservable.subscribe(new Observer<String>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         Log.d(TAG, "onSubscribe() called with: d = [" + d + "]");
@@ -1219,8 +1227,42 @@ public class Rx2Activity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.btnCreate2SubscribeWith).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                d0 = testCreateObservable
+                        .subscribeWith(new DisposableObserver<String>() {
+                    @Override
+                    public void onNext(String value) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+                view.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        d0.dispose();
+                    }
+                },2000);
+            }
+        });
+
         Consumer<Throwable> errorHandler = RxJavaPlugins.getErrorHandler();
-        Log.e(TAG, "errorHandler = [" + savedInstanceState + "]");
+        BiFunction<Observable, Observer, Observer> onObservableSubscribe = RxJavaPlugins.getOnObservableSubscribe();
+        Function<Observable, Observable> onObservableAssembly = RxJavaPlugins.getOnObservableAssembly();
+
+        Log.e(TAG, "errorHandler = [" + errorHandler + "]");
+        Log.e(TAG, "onObservableSubscribe = [" + onObservableSubscribe + "]");
+        Log.e(TAG, "onObservableAssembly = [" + onObservableAssembly + "]");
 
     }
 
