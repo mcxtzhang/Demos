@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.mcxtzhang.rxjava2demo.R;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.EmptyStackException;
 import java.util.List;
@@ -40,6 +41,7 @@ import io.reactivex.observables.ConnectableObservable;
 import io.reactivex.observers.DisposableMaybeObserver;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.observers.DisposableSingleObserver;
+import io.reactivex.plugins.RxJavaPlugins;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.ReplaySubject;
 import io.reactivex.subjects.Subject;
@@ -1118,7 +1120,7 @@ public class Rx2Activity extends AppCompatActivity {
         findViewById(R.id.btnObserverOnAndMap).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Observable.just(1)
+                Observable.just(1, 2)
                         .map(new Function<Integer, Integer>() {
                             @Override
                             public Integer apply(Integer integer) throws Exception {
@@ -1179,6 +1181,46 @@ public class Rx2Activity extends AppCompatActivity {
                         });
             }
         });
+
+
+        findViewById(R.id.btnCreate2Subscribe).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Observable.create(new ObservableOnSubscribe<String>() {
+                    @Override
+                    public void subscribe(ObservableEmitter<String> e) throws Exception {
+                        e.onNext("1");
+                        //先error后complete，complete不显示。 反之 会crash
+                        //e.onError(new IOException("sb error"));
+                        e.onComplete();
+                        e.onError(new IOException("sb error"));
+                    }
+                }).subscribe(new Observer<String>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        Log.d(TAG, "onSubscribe() called with: d = [" + d + "]");
+                    }
+
+                    @Override
+                    public void onNext(String value) {
+                        Log.d(TAG, "onNext() called with: value = [" + value + "]");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d(TAG, "onError() called with: e = [" + e + "]");
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Log.d(TAG, "onComplete() called");
+                    }
+                });
+            }
+        });
+
+        Consumer<Throwable> errorHandler = RxJavaPlugins.getErrorHandler();
+        Log.e(TAG, "errorHandler = [" + savedInstanceState + "]");
 
     }
 

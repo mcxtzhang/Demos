@@ -254,6 +254,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Just里的函数，何时执行"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@color/colorAccent"
+            android:text="源码解析"/>
+
+        <Button
+            android:id="@+id/btnCreate2Subscribe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="从create->Subscribe"/>
     </LinearLayout>
 </ScrollView>
 
