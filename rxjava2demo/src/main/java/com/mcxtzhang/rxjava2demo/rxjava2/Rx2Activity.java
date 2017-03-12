@@ -1232,27 +1232,61 @@ public class Rx2Activity extends AppCompatActivity {
             public void onClick(View view) {
                 d0 = testCreateObservable
                         .subscribeWith(new DisposableObserver<String>() {
-                    @Override
-                    public void onNext(String value) {
+                            @Override
+                            public void onNext(String value) {
 
-                    }
+                            }
 
-                    @Override
-                    public void onError(Throwable e) {
+                            @Override
+                            public void onError(Throwable e) {
 
-                    }
+                            }
 
-                    @Override
-                    public void onComplete() {
+                            @Override
+                            public void onComplete() {
 
-                    }
-                });
+                            }
+                        });
                 view.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         d0.dispose();
                     }
-                },2000);
+                }, 2000);
+            }
+        });
+
+        //测试加入操作符map后
+        findViewById(R.id.btnCreate2map2Subscribe).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Observable<Integer> map = testCreateObservable.map(new Function<String, Integer>() {
+                    @Override
+                    public Integer apply(String s) throws Exception {
+                        return Integer.parseInt(s);
+                    }
+                });
+                map.subscribe(new Observer<Integer>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        Log.d(TAG, "onSubscribe() called with: d = [" + d + "]");
+                    }
+
+                    @Override
+                    public void onNext(Integer value) {
+                        Log.d(TAG, "onNext() called with: value = [" + value + "]");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d(TAG, "onError() called with: e = [" + e + "]");
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Log.d(TAG, "onComplete() called");
+                    }
+                });
             }
         });
 

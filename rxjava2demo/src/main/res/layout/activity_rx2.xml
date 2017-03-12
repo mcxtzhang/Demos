@@ -272,6 +272,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="从create->SubscribeWith"/>
+
+        <Button
+            android:id="@+id/btnCreate2map2Subscribe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="从create->map->Subscribe"/>
     </LinearLayout>
 </ScrollView>
 
