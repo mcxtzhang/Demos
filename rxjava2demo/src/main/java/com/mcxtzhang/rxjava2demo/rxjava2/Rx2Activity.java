@@ -1298,6 +1298,42 @@ public class Rx2Activity extends AppCompatActivity {
         Log.e(TAG, "onObservableSubscribe = [" + onObservableSubscribe + "]");
         Log.e(TAG, "onObservableAssembly = [" + onObservableAssembly + "]");
 
+
+        findViewById(R.id.btnCreate2flatMap2Subscribe).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Observable<Integer> flatMapObservable = Observable.just(1, 2, 3)
+                        .flatMap(new Function<Integer, ObservableSource<Integer>>() {
+                            @Override
+                            public ObservableSource<Integer> apply(Integer integer) throws Exception {
+                                return Observable.just(integer, integer, integer);
+                            }
+                        });
+                flatMapObservable.subscribe(new Observer<Integer>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Integer value) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
+            }
+        });
+
     }
 
     private String getJustData() {

@@ -278,6 +278,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="从create->map->Subscribe"/>
+
+
+        <Button
+            android:id="@+id/btnCreate2flatMap2Subscribe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="从create->flatMap->Subscribe"/>
     </LinearLayout>
 </ScrollView>
 
