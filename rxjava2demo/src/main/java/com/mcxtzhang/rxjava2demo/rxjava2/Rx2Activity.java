@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.mcxtzhang.rxjava2demo.R;
 
@@ -34,7 +33,6 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.BiConsumer;
 import io.reactivex.functions.BiFunction;
-import io.reactivex.functions.Cancellable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
@@ -1187,12 +1185,13 @@ public class Rx2Activity extends AppCompatActivity {
         final Observable<String> testCreateObservable = Observable.create(new ObservableOnSubscribe<String>() {
             @Override
             public void subscribe(ObservableEmitter<String> e) throws Exception {
-                e.setCancellable(new Cancellable() {
+                Log.d(TAG, "subscribe() called with: e = [" + e + "]" + Thread.currentThread());
+/*                e.setCancellable(new Cancellable() {
                     @Override
                     public void cancel() throws Exception {
                         Toast.makeText(Rx2Activity.this, "kafhklasas", Toast.LENGTH_SHORT).show();
                     }
-                });
+                });*/
                 e.onNext("1");
                 //先error后complete，complete不显示。 反之 会crash
                 //e.onError(new IOException("sb error"));
@@ -1331,6 +1330,60 @@ public class Rx2Activity extends AppCompatActivity {
                     }
                 });
 
+            }
+        });
+
+        findViewById(R.id.btnCreate2subscribeOn2Subscribe).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Observable.create(new ObservableOnSubscribe<String>() {
+                    @Override
+                    public void subscribe(ObservableEmitter<String> e) throws Exception {
+                        Log.d(TAG, "subscribe() called with: e = [" + e + "]" + Thread.currentThread());
+                        e.onNext("1");
+                        e.onComplete();
+                    }
+                })/*.subscribeOn(Schedulers.io())
+                        .map(new Function<String, String>() {
+                            @Override
+                            public String apply(String s) throws Exception {
+                                //依然是io线程
+                                Log.d(TAG, "apply() called with: s = [" + s + "]" + Thread.currentThread());
+                                return s;
+                            }
+                        })
+                        .subscribeOn(Schedulers.computation())*/
+                        //在上一节的基础上，增加一个ObserveOn
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Observer<String>() {
+                            @Override
+                            public void onSubscribe(Disposable d) {
+                                Log.d(TAG, "onSubscribe() called with: d = [" + d + "]" + Thread.currentThread());
+                            }
+
+                            @Override
+                            public void onNext(String value) {
+                                Log.d(TAG, "onNext() called with: value = [" + value + "]" + Thread.currentThread());
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                Log.d(TAG, "onError() called with: e = [" + e + "]" + Thread.currentThread());
+                            }
+
+                            @Override
+                            public void onComplete() {
+                                Log.d(TAG, "onComplete() called" + Thread.currentThread());
+                            }
+                        });
+
+
+/*                view.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        d0.dispose();
+                    }
+                }, 2000);*/
             }
         });
 
