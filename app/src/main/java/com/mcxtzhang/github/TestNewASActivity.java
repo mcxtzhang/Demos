@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -137,6 +138,18 @@ public class TestNewASActivity extends AppCompatActivity {
 
                 //RManager2.getInstance().jump(TestNewASActivity.this, "rx", bundle);
                 return true;
+            }
+        });
+
+
+        findViewById(R.id.image).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ImageView image = (ImageView) view;
+                Log.d(TAG, "onClick() called with: view = [" + image.getWidth() + "]");
+                Log.d(TAG, "onClick() called with: view = [" + image.getHeight() + "]");
+                Log.d(TAG, "onClick() called with: view = [" + image.getDrawable().getIntrinsicHeight() + "]");
+                Log.d(TAG, "onClick() called with: view = [" + image.getDrawable().getIntrinsicWidth() + "]");
             }
         });
     }

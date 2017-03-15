@@ -54,30 +54,24 @@ public class Main {
 
 
         List<String> list = new ArrayList<>();
-        System.out.println("list:"+list.size());
+        System.out.println("list:" + list.size());
         list.add(null);
         list.add(null);
-        System.out.println("list:"+list.size());
+        System.out.println("list:" + list.size());
         System.out.println(list == null);
 
         List<String> list2 = new ArrayList<>();
         list2.addAll(new ArrayList<String>());
-        System.out.println("list2:"+list2.size());
-        System.out.println("list2:"+list2.size());
+        System.out.println("list2:" + list2.size());
+        System.out.println("list2:" + list2.size());
 
 
         Vector<String> vector = new Vector<>();
-        System.out.println("vector:"+vector.size());
+        System.out.println("vector:" + vector.size());
         vector.add(null);
         vector.add(null);
-        System.out.println("vector:"+vector.size());
+        System.out.println("vector:" + vector.size());
         System.out.println(vector == null);
-
-
-
-
-
-
 
 
         Map<String, Object> mapParems = new HashMap<>();
@@ -96,6 +90,22 @@ public class Main {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
+
+
+        System.out.println("2e32" + ((int)2e31));
+
+
+        System.out.println("String == equlas");
+
+        String str1 = "abc";
+        String str2 = "abc";
+
+        System.out.println(str1 == str2);
+        System.out.println(str1.equals(str2));
+
+        str2 = new String("abc");
+        System.out.println(str1 == str2);
+        System.out.println(str1.equals(str2));
 
     }
 
@@ -138,7 +148,6 @@ public class Main {
         }
         return new Gson().toJson(map);
     }
-
 
 
     private static int isNummber(String numberString) {
