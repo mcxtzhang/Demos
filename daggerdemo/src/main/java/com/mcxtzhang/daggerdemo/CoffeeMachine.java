@@ -1,5 +1,7 @@
 package com.mcxtzhang.daggerdemo;
 
+import android.util.Log;
+
 import javax.inject.Inject;
 
 /**
@@ -17,5 +19,10 @@ public class CoffeeMachine {
 
     public String makeCoffee() {
         return mCoffeeMaker.makeCoffee();
+    }
+
+    @Inject
+    public void initSuccess() {
+        Log.d("Dagger", "initSuccess() called");
     }
 }

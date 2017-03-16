@@ -5,7 +5,7 @@ import android.util.Log;
 import javax.inject.Inject;
 
 public class Cooker {
-    private static final String TAG = "zxt/Cooker";
+    private static final String TAG = "Dagger";
     String name; //咖啡师名字
     String coffeeKind; //制作咖啡的类型
 
