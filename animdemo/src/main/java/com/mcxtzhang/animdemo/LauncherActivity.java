@@ -19,6 +19,13 @@ public class LauncherActivity extends AppCompatActivity {
         mBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.activity_launcher, null, false);
         setContentView(mBinding.getRoot());
         mBinding.setP(new LauncherPresenter());
+
+        findViewById(R.id.googleNewAnim).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LauncherActivity.this, NewAnim20170316Activity.class));
+            }
+        });
     }
 
     public class LauncherPresenter {
@@ -26,7 +33,7 @@ public class LauncherActivity extends AppCompatActivity {
             startActivity(new Intent(v.getContext(), WaterWaveActivity.class));
         }
 
-        public void taobaoVipAnim(View v ){
+        public void taobaoVipAnim(View v) {
             startActivity(new Intent(v.getContext(), TaobaoVipAnimActivity.class));
         }
     }

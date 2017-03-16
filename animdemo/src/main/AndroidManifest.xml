@@ -25,6 +25,8 @@
         </activity>
         <activity android:name=".vipclub.TaobaoVipAnimActivity">
         </activity>
+        <activity android:name=".NewAnim20170316Activity">
+        </activity>
     </application>
 
 </manifest>

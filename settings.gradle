@@ -3,8 +3,8 @@ include ':app', ':lib', ':zxtcommonlib', ':library', ':compiler', ':autocopydemo
 //include ':aopdemo'
 //include ':viewpagerdemo'
 
-//, ':cstviewdemo', ':animdemo', ':recyclerviewdemo', ':okhttpdemo'
-
+//, ':cstviewdemo',, ':recyclerviewdemo', ':okhttpdemo'
+//include ':animdemo'
 include ':rxjava2demo'
 //incldue  ':rxjavademo'
 //include ':retrofitdemo'

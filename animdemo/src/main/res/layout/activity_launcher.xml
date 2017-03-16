@@ -29,6 +29,12 @@
             android:layout_height="wrap_content"
             android:onClick="@{p::taobaoVipAnim}"
             android:text="淘宝会员俱乐部积分动画"/>
+
+        <Button
+            android:id="@+id/googleNewAnim"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="谷歌新动画"/>
     </LinearLayout>
 </layout>
 
