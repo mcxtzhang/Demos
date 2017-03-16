@@ -13,6 +13,8 @@ public class MainActivity extends AppCompatActivity {
 
     public static String token = /*"a break originToken"*/null;
 
+
+    @DebugLog
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate() called with: savedInstanceState = [" + ZxtUtils.isDebug + "]");
     }
 
+    @DebugLog
     public void checkAspectJ(int a, int b) {
         Log.d(TAG, String.valueOf(a + b));
     }

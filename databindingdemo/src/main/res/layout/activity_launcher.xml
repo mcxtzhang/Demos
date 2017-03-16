@@ -27,6 +27,17 @@
             android:onClick="@{p::onMainClick}"
             android:text="MainActivity"/>
 
+        <TextView
+            android:text="展位的"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{p::onRvClick}"
+            android:text="RecyclerViewActivity"/>
+
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
