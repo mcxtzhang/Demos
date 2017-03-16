@@ -146,10 +146,22 @@ public class TestNewASActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 ImageView image = (ImageView) view;
-                Log.d(TAG, "onClick() called with: view = [" + image.getWidth() + "]");
-                Log.d(TAG, "onClick() called with: view = [" + image.getHeight() + "]");
-                Log.d(TAG, "onClick() called with: view = [" + image.getDrawable().getIntrinsicHeight() + "]");
-                Log.d(TAG, "onClick() called with: view = [" + image.getDrawable().getIntrinsicWidth() + "]");
+                Log.d(TAG, "onClick() called with: getWidth = [" + image.getWidth() + "]");
+                Log.d(TAG, "onClick() called with: getHeight= [" + image.getHeight() + "]");
+                Log.d(TAG, "onClick() called with: getWidth = [" + image.getDrawable().getIntrinsicHeight() + "]");
+                Log.d(TAG, "onClick() called with: getHeight= [" + image.getDrawable().getIntrinsicWidth() + "]");
+            }
+        });
+
+        findViewById(R.id.image2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ImageView image = (ImageView) view;
+                Log.d(TAG, "onClick() called with: getWidth = [" + image.getWidth() + "]");
+                Log.d(TAG, "onClick() called with: getHeight = [" + image.getHeight() + "]");
+                Log.d(TAG, "onClick() called with: getWidth = [" + image.getDrawable().getIntrinsicWidth() + "]");
+                Log.d(TAG, "onClick() called with: getHeight = [" + image.getDrawable().getIntrinsicHeight() + "]");
+
             }
         });
     }
