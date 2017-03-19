@@ -1341,9 +1341,16 @@ public class Rx2Activity extends AppCompatActivity {
                     public void subscribe(ObservableEmitter<String> e) throws Exception {
                         Log.d(TAG, "subscribe() called with: e = [" + e + "]" + Thread.currentThread());
                         e.onNext("1");
+                        e.onNext("2");
+                        e.onNext("3");
+                        e.onNext("4");
+                        e.onNext("5");
+                        e.onNext("6");
+                        e.onNext("7");
+
                         e.onComplete();
                     }
-                })/*.subscribeOn(Schedulers.io())
+                }).subscribeOn(Schedulers.io())/*.subscribeOn(Schedulers.io())
                         .map(new Function<String, String>() {
                             @Override
                             public String apply(String s) throws Exception {
