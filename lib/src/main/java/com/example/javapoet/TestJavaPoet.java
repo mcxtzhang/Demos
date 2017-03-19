@@ -55,7 +55,7 @@ public class TestJavaPoet {
                 .addStatement("result.add($T.createNimbus(2000))", hoverboard)
                 .addStatement("result.add($T.createNimbus(\"2001\"))", hoverboard)
                 .addStatement("result.add($T.createNimbus($T.THUNDERBOLT))", hoverboard, namedBoards)
-                .addStatement("$T.sort(result)", Collections.class)
+                .addStatement("$T.selectionSort(result)", Collections.class)
                 .addStatement("return result.isEmpty() ? $T.emptyList() : result", Collections.class)
                 .build();
 
@@ -100,7 +100,7 @@ public class TestJavaPoet {
         TypeSpec helloWorld = TypeSpec.classBuilder("HelloWorld")
                 .addMethod(MethodSpec.methodBuilder("sortByLength")
                         .addParameter(ParameterizedTypeName.get(List.class, String.class), "strings")
-                        .addStatement("$T.sort($N, $L)", Collections.class, "strings", comparator)
+                        .addStatement("$T.selectionSort($N, $L)", Collections.class, "strings", comparator)
                         .build())
                 .build();*/
 
@@ -193,7 +193,7 @@ public class TestJavaPoet {
                 .addStatement("result.add($T.createNimbus(2000))", hoverboard)
                 .addStatement("result.add($T.createNimbus(\"2001\"))", hoverboard)
                 .addStatement("result.add($T.createNimbus($T.THUNDERBOLT))", hoverboard, namedBoards)
-                .addStatement("$T.sort(result)", Collections.class)
+                .addStatement("$T.selectionSort(result)", Collections.class)
                 .addStatement("return result.isEmpty() ? $T.emptyList() : result", Collections.class)
                 .build();
         TypeSpec hello = TypeSpec.classBuilder("HelloWorld")
@@ -221,7 +221,7 @@ public class TestJavaPoet {
                 + "    result.add(createNimbus(2000));\n"
                 + "    result.add(createNimbus(\"2001\"));\n"
                 + "    result.add(createNimbus(THUNDERBOLT));\n"
-                + "    sort(result);\n"
+                + "    selectionSort(result);\n"
                 + "    return result.isEmpty() ? emptyList() : result;\n"
                 + "  }\n"
                 + "}\n")) {
