@@ -30,7 +30,11 @@
 
         <activity android:name=".RxActivity">
         </activity>
-        <activity android:name=".SparseArrayOrderTestActivity" android:process=":other_process">
+        <activity
+            android:name=".SparseArrayOrderTestActivity"
+            android:process=":other_process">
+        </activity>
+        <activity android:name=".touch.TouchActivity">
         </activity>
     </application>
 
