@@ -134,7 +134,8 @@ public class TestNewASActivity extends AppCompatActivity {
                 Bundle bundle = new Bundle();
                 bundle.putString("key-string", "jump params in bundle");
 
-                ZRouter.getInstance().jump(TestNewASActivity.this, "rx", bundle, 101);
+                //ZRouter.getInstance().jump(TestNewASActivity.this, "rx", bundle, 101);
+                ZRouter.getInstance().jump(TestNewASActivity.this, "touch", bundle, 101);
 
                 //RManager2.getInstance().jump(TestNewASActivity.this, "rx", bundle);
                 return true;
