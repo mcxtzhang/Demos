@@ -39,9 +39,12 @@ public class TestNewASActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d(TAG, "onCreate() called with: savedInstanceState = [" + savedInstanceState + "]");
+        Log.d(TAG, "A onCreate() called with: savedInstanceState = [" + savedInstanceState + "]");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test);
+        finish();
+        ZRouter.getInstance().jump(TestNewASActivity.this, "touch", null, 101);
+
         ZBindTestNewASActivity.bindView(this);
 
         mRoot.setOnLongClickListener(new View.OnLongClickListener() {
@@ -112,7 +115,6 @@ public class TestNewASActivity extends AppCompatActivity {
 
         HelloWorld.main(null);
         HelloWorld.jump("旋转跳跃");
-        Log.d(TAG, "onCreate() called with: savedInstanceState = [" + savedInstanceState + "]");
 
 
         //RManager.getInstance().jump(this,"router1");
@@ -229,7 +231,7 @@ public class TestNewASActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        Log.d(TAG, "onDestroy() called");
+        Log.d(TAG, "A onDestroy() called");
         super.onDestroy();
     }
 
