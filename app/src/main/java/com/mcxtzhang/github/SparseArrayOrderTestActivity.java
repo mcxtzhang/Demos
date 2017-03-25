@@ -1,5 +1,7 @@
 package com.mcxtzhang.github;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -25,7 +27,14 @@ public class SparseArrayOrderTestActivity extends AppCompatActivity {
                 Drawable background = view
                         .getBackground()
                         /*.mutate()*/;
-                background.setAlpha(20);
+                Log.d("TAG", "onClick() called with: background = [" + background + "]");
+                if (background instanceof BitmapDrawable){
+                    BitmapDrawable bitmapDrawable = (BitmapDrawable) background;
+                    Bitmap bitmap = bitmapDrawable.getBitmap();
+                    Log.d("TAG", "onClick() called with: bitmap = [" + bitmap + "]");
+                }
+                //background.setAlpha(20);
+
 
                 //useless
                 //background.setBounds(new Rect(1,2,3,4));

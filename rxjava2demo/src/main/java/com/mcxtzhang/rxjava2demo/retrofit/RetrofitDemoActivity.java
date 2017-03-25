@@ -17,6 +17,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.functions.Consumer;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -53,7 +56,7 @@ public class RetrofitDemoActivity extends AppCompatActivity {
 
         MovieService movieService = retrofit.create(MovieService.class);
         // 1 原始模式
-/*        Call<DouBanMovieBean> topMovieCall = movieService.getTopMovie(0, 10);
+        Call<DouBanMovieBean> topMovieCall = movieService.getTopMovie(0, 10);
         topMovieCall.enqueue(new Callback<DouBanMovieBean>() {
             @Override
             public void onResponse(Call<DouBanMovieBean> call, Response<DouBanMovieBean> response) {
@@ -65,7 +68,7 @@ public class RetrofitDemoActivity extends AppCompatActivity {
             public void onFailure(Call<DouBanMovieBean> call, Throwable t) {
                 resultTV.setText(t.getMessage());
             }
-        });*/
+        });
 
         //2 结合Rxjava
 /*        movieService.getDoubanTopMovie(0, 10)

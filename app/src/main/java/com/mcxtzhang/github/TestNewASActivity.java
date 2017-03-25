@@ -42,8 +42,8 @@ public class TestNewASActivity extends AppCompatActivity {
         Log.d(TAG, "A onCreate() called with: savedInstanceState = [" + savedInstanceState + "]");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test);
-        finish();
-        ZRouter.getInstance().jump(TestNewASActivity.this, "touch", null, 101);
+        //finish();
+        //ZRouter.getInstance().jump(TestNewASActivity.this, "touch", null, 101);
 
         ZBindTestNewASActivity.bindView(this);
 
