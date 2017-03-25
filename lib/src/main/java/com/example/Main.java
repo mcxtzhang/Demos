@@ -107,6 +107,14 @@ public class Main {
         System.out.println(str1 == str2);
         System.out.println(str1.equals(str2));
 
+        String substring = str2.substring(0, 2);
+        System.out.println(substring);
+        char[] chars = substring.toCharArray();
+        chars[0]='m';
+        substring.replace('a','m');
+        System.out.println(substring);
+        System.out.println(str2);
+
     }
 
     public static Map<String, Object> getBody(Map<String, Object> map) {
