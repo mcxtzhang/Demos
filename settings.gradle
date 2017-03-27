@@ -2,8 +2,8 @@ include ':app', ':lib', ':zxtcommonlib', ':library', ':compiler', ':autocopydemo
 
 //include ':aopdemo'
 //include ':viewpagerdemo'
-
-//, ':cstviewdemo',, ':recyclerviewdemo', ':okhttpdemo'
+include ':cstviewdemo'
+//, ,, ':recyclerviewdemo', ':okhttpdemo'
 //include ':animdemo'
 include ':rxjava2demo'
 //incldue  ':rxjavademo'

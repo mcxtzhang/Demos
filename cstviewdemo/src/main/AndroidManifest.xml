@@ -16,17 +16,20 @@
         <activity android:name=".SvgActivity">
         </activity>
         <activity android:name=".adddelview.AddDelViewDemoActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity android:name=".matrix.MatrixActivity">
         </activity>
         <activity android:name=".xfermode.XfermodeActivity">
         </activity>
         <activity android:name=".shader.ShaderActivity">
+        </activity>
+        <activity android:name=".LoppVerticalActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
     </application>
 
