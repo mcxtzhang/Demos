@@ -3,9 +3,7 @@ package com.mcxtzhang.rxjava2demo.retrofit;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -28,6 +26,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.Cache;
+import okhttp3.CertificatePinner;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
@@ -125,7 +124,7 @@ public class AlyTestActivity extends AppCompatActivity {
         }
         //开启okhttp缓存
         File httpCacheDirectory = new File(getExternalCacheDir(), "zxtokhttpcache");
-        builder.cache(new Cache(httpCacheDirectory,10 * 1024 * 1024));
+        builder.cache(new Cache(httpCacheDirectory, 10 * 1024 * 1024));
 
 
         //注意添加顺序 ，按顺序处理的
@@ -141,11 +140,16 @@ public class AlyTestActivity extends AppCompatActivity {
         builder.addInterceptor(loggingInterceptor);
 
 
-        OkHttpClient okHttpClient = builder.build();
+        String hostname = "breakfast.anlaiye.com.cn";
+        CertificatePinner certificatePinner = new CertificatePinner.Builder()
+                .add(hostname, "sha256/YgOnceW2Onj7/P40Sfn2D7AMTdAfyhle0Sj12o8axI8=")
+                .add(hostname, "sha256/IQBnNBEiFuhj+8x6X8XLgh01V9Ic5/V3IRQLNFFc7v4=")
+                .add(hostname, "sha256/K87oWBWM9UZfyddvDfoxL+8lpNyoUB2ptGtn0fv6G2Q=")
+                .build();
 
-
-
-
+        OkHttpClient okHttpClient = builder
+                .certificatePinner(certificatePinner)
+                .build();
 
 
         final String jsonBody = "{\"address\":\"gg\",\"address_id\":\"721866\",\"consignee\":\"gghh\",\"consignee_tel\":\"18616320845\",\"floor_id\":\"98448\",\"gender\":1,\"notice_way\":1,\"order_list\":[{\"comment\":\"\",\"delivery_date\":\"20161123\",\"goods\":[{\"goods_sale_id\":\"54\",\"number\":\"3\",\"price\":0.02},{\"goods_sale_id\":\"45\",\"number\":\"7\",\"price\":0.1}]}],\"payway\":3,\"user_coupon_id\":\"-1\"}";

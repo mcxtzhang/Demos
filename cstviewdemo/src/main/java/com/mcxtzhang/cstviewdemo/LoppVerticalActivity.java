@@ -47,8 +47,8 @@ public class LoppVerticalActivity extends AppCompatActivity {
 
         mTextSwitcher.postDelayed(mRunnable, 1000);
         mTextSwitcher.setCurrentText("一开始");
-        mTextSwitcher.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.anim_in));
-        //mTextSwitcher.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.anim_out));
+        mTextSwitcher.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.bf_anim_bottom_in));
+        mTextSwitcher.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.bf_anim_top_out));
 
     }
 
