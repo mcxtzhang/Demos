@@ -1,32 +1,37 @@
 package com.mcxtzhang.github.view;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.View;
+import android.widget.FrameLayout;
 
 /**
- * Created by zhangxutong .
- * Date: 16/08/27
+ * Intro:
+ * Author: zhangxutong
+ * E-mail: mcxtzhang@163.com
+ * Home Page: http://blog.csdn.net/zxt0601
+ * Created:   2017/3/30.
+ * History:
  */
 
-public class CstView extends View {
-    private static final String TAG = "CstView";
+public class CstFrameLayout extends FrameLayout {
+    private static final String TAG = "CstFrameLayout";
 
-    public CstView(Context context) {
+    public CstFrameLayout(Context context) {
         super(context);
     }
 
-    public CstView(Context context, AttributeSet attrs) {
+    public CstFrameLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public CstView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public CstFrameLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        Intent intent = new Intent();
-        intent.setFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+    }
+
+    public CstFrameLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
     }
 
     @Override

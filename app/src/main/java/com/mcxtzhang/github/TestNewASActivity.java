@@ -45,6 +45,7 @@ public class TestNewASActivity extends AppCompatActivity {
         //finish();
         //ZRouter.getInstance().jump(TestNewASActivity.this, "touch", null, 101);
 
+
         ZBindTestNewASActivity.bindView(this);
 
         mRoot.setOnLongClickListener(new View.OnLongClickListener() {
@@ -66,7 +67,7 @@ public class TestNewASActivity extends AppCompatActivity {
         findViewById(R.id.btnSparseArray).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ZRouter.getInstance().jump(TestNewASActivity.this, SparseArrayOrderTestActivity.TAG, null);
+                ZRouter.getInstance().jump(TestNewASActivity.this, /*SparseArrayOrderTestActivity.TAG*/"testView", null);
             }
         });
 

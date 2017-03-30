@@ -21,6 +21,10 @@
 
         </TextView>
 
+        <com.mcxtzhang.github.view.CstView
+            android:layout_width="match_parent"
+            android:layout_height="60dp"/>
+
         <EditText
             android:id="@+id/editText"
             android:layout_width="match_parent"
