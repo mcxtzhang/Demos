@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 
 /**
@@ -45,5 +46,12 @@ public class CstView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         Log.d(TAG, "onDraw() called with: canvas = [" + canvas + "]");
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        requestLayout();
+        return super.onTouchEvent(event);
+
     }
 }

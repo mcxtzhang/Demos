@@ -26,6 +26,7 @@
             android:layout_height="60dp"/>
 
         <EditText
+            android:focusable="false"
             android:id="@+id/editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

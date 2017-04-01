@@ -2,26 +2,18 @@
 <com.mcxtzhang.github.view.CstFrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_test_cst_view"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+
+    android:background="#456aaa"
+
     tools:context="com.mcxtzhang.github.view.TestCstViewActivity">
 
     <com.mcxtzhang.github.view.CstView
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_weight="1"
-        android:background="@color/colorAccent"/>
+        android:layout_height="match_parent"
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="@color/colorPrimaryDark"
-        android:text="@string/app_name"/>
+/>
+
 </com.mcxtzhang.github.view.CstFrameLayout>
