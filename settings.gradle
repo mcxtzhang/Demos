@@ -1,8 +1,8 @@
-include ':app', ':lib', ':zxtcommonlib', ':library', ':compiler', ':autocopydemo', ':bndemo', ':hotfixdemo', ':proxylib', ':artdemo', ':daggerdemo', ':permissiondemo', ':performancedemo'
-
+include ':app', ':lib', ':zxtcommonlib', ':library', ':compiler', ':autocopydemo', ':bndemo', ':hotfixdemo', ':proxylib', ':artdemo', ':daggerdemo', ':permissiondemo'
+//include ':performancedemo'
 //include ':aopdemo'
 //include ':viewpagerdemo'
-include ':cstviewdemo'
+//include ':cstviewdemo'
 //, ,, ':recyclerviewdemo', ':okhttpdemo'
 //include ':animdemo'
 include ':rxjava2demo'
