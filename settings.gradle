@@ -1,7 +1,7 @@
 include ':app', ':lib', ':zxtcommonlib', ':library', ':compiler', ':autocopydemo', ':bndemo', ':hotfixdemo', ':proxylib', ':artdemo', ':daggerdemo', ':permissiondemo', ':performancedemo'
 
 //include ':aopdemo'
-//include ':viewpagerdemo'
+include ':viewpagerdemo'
 include ':cstviewdemo'
 //, ,, ':recyclerviewdemo', ':okhttpdemo'
 //include ':animdemo'
