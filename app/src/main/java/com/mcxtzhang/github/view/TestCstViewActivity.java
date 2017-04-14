@@ -16,5 +16,6 @@ public class TestCstViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_test_cst_view);
         Log.d("TAG", "onCreate() called with: savedInstanceState = [" + this + "]");
         Log.d("TAG", "onCreate() called with: savedInstanceState = [" +getWindow() + "]");
+        Log.d("TAG", "onCreate() called with: savedInstanceState = [" +getWindow().getWindowManager() + "]");
     }
 }
