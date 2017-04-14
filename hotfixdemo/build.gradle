@@ -12,7 +12,8 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
+// Enabling multidex support.
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -29,4 +30,9 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.1.0'
     testCompile 'junit:junit:4.12'
+    compile 'com.android.support:multidex:1.0.1'
+
+
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.6-SNAPSHOT'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.6-SNAPSHOT'
 }
