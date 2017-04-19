@@ -14,9 +14,11 @@ public class DActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_d);
+        Log.e(TAG, "onCreate() called with: savedInstanceState = [" + savedInstanceState + "]");
         findViewById(R.id.jump).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //A-B-C-D，依次启动，从D利用clearTop 回到A，会先执行 B C 的onDestroy()，然后D的onPause() ->A 会先销毁自己，onDestroy()->onCreate()-onStart().... 所以不会出现闪屏。但是A会销毁自己一次
                 Intent intent = new Intent(DActivity.this, AActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);

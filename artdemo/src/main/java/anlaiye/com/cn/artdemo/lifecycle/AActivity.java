@@ -14,6 +14,7 @@ public class AActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate() called with: savedInstanceState = [" + savedInstanceState + "]");
         setContentView(R.layout.activity_a);
         findViewById(R.id.jump).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -24,6 +25,12 @@ public class AActivity extends AppCompatActivity {
     }
 
     private static final String TAG = "zxt/AActivity";
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Log.d(TAG, "onNewIntent() called with: intent = [" + intent + "]");
+    }
 
     @Override
     protected void onStart() {

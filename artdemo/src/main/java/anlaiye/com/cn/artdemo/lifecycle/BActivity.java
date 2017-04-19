@@ -13,6 +13,7 @@ public class BActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.i(TAG, "onCreate() called with: savedInstanceState = [" + savedInstanceState + "]");
         setContentView(R.layout.activity_b);
         findViewById(R.id.jump).setOnClickListener(new View.OnClickListener() {
             @Override
