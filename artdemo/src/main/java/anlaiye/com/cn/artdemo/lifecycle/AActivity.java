@@ -14,6 +14,8 @@ public class AActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        Log.d(TAG, "onCreate() called with: intent = [" + intent + "]" + intent.getExtras());
         Log.d(TAG, "onCreate() called with: savedInstanceState = [" + savedInstanceState + "]");
         setContentView(R.layout.activity_a);
         findViewById(R.id.jump).setOnClickListener(new View.OnClickListener() {

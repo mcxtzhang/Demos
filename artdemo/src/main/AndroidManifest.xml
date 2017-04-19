@@ -23,7 +23,7 @@
             android:name=".c1.LifeCycleTest2Activity"
             android:launchMode="singleInstance">
         </activity>
-        <activity android:name=".lifecycle.AActivity" android:launchMode="singleTop">
+        <activity android:name=".lifecycle.AActivity">
         </activity>
         <activity android:name=".lifecycle.BActivity">
         </activity>
