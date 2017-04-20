@@ -1,13 +1,23 @@
-include ':app', ':lib', ':zxtcommonlib', ':library', ':compiler', ':autocopydemo', ':bndemo', ':hotfixdemo', ':proxylib', ':artdemo', ':daggerdemo', ':permissiondemo', ':performancedemo'
-
+include ':app', ':lib', ':zxtcommonlib', ':library', ':compiler', ':bndemo', ':hotfixdemo', ':artdemo', ':performancedemo'
+//include  ':permissiondemo' // 6.0运行时权限
+//include ':autocopydemo'
 //include ':aopdemo'
-include ':viewpagerdemo'
-include ':cstviewdemo'
+//include ':viewpagerdemo'
+//include ':cstviewdemo'
 //, ,, ':recyclerviewdemo', ':okhttpdemo'
 //include ':animdemo'
+
+//include ':daggerdemo'
 include ':rxjava2demo'
 //incldue  ':rxjavademo'
 //include ':retrofitdemo'
+
+/***Java Lib***/
+
+//include ':proxylib' //动态代理的lib
+//include ':libfactorypattern'
+//include  ':decoratorpatterndemo'
+//include ':libadapterpattern'
 
 //*********database library:*********
 //include  ':realmdemo'
@@ -15,7 +25,7 @@ include ':rxjava2demo'
 
 //include  ':coordinatordemo'
 
-include ':databindingdemo'
+//include ':databindingdemo'
 //include  'layoutmanager'
 
 //include ':diffutilsdemo'
@@ -30,8 +40,5 @@ include ':databindingdemo'
 //include  ':libannotation'
 //include ':selectcoupondemo'
 
-//include ':libfactorypattern'
-//include  ':decoratorpatterndemo'
-//include ':libadapterpattern'
 
 
