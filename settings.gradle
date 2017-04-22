@@ -1,4 +1,4 @@
-include ':app', ':lib', ':zxtcommonlib', ':library', ':compiler', ':bndemo', ':hotfixdemo', ':artdemo', ':performancedemo'
+include ':app', ':lib', ':zxtcommonlib', ':library', ':compiler',  ':hotfixdemo', ':artdemo', ':performancedemo'
 //include  ':permissiondemo' // 6.0运行时权限
 //include ':autocopydemo'
 //include ':aopdemo'
@@ -6,7 +6,7 @@ include ':app', ':lib', ':zxtcommonlib', ':library', ':compiler', ':bndemo', ':h
 //include ':cstviewdemo'
 //, ,, ':recyclerviewdemo', ':okhttpdemo'
 //include ':animdemo'
-
+//':bndemo',
 //include ':daggerdemo'
 include ':rxjava2demo'
 //incldue  ':rxjavademo'
