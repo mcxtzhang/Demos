@@ -8,6 +8,7 @@ import android.view.View;
 
 import mcxtzhang.recyclerviewdemo.anyview.AnyViewActivity;
 import mcxtzhang.recyclerviewdemo.databinding.ActivityLauncherBinding;
+import mcxtzhang.recyclerviewdemo.expand.ExpandRvActivity;
 import mcxtzhang.recyclerviewdemo.generalizerv.BaseRecyclerViewActivity;
 import mcxtzhang.recyclerviewdemo.itemtouchhelper.TestItemHelperActivity;
 import mcxtzhang.recyclerviewdemo.nestrv.ViewPagerNestRvActivity;
@@ -34,6 +35,10 @@ public class LauncherActivity extends AppCompatActivity {
 
         public void onItemTouchHelperClick(View view) {
             startActivity(new Intent(LauncherActivity.this, TestItemHelperActivity.class));
+        }
+
+        public void onNestExpandClick(View v) {
+            startActivity(new Intent(LauncherActivity.this, ExpandRvActivity.class));
         }
 
 

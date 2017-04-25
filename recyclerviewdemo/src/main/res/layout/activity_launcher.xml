@@ -48,6 +48,12 @@
             android:layout_height="wrap_content"
             android:onClick="@{p::onItemTouchHelperClick}"
             android:text="拖拽"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{p::onNestExpandClick}"
+            android:text="嵌套 Expand"/>
     </LinearLayout>
 </layout>
 
