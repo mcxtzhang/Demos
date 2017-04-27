@@ -11,12 +11,14 @@
         android:orientation="vertical">
 
         <TextView
+            android:text="哈哈哈哈"
             android:id="@+id/tv"
             android:layout_width="120dp"
             android:layout_height="60dp"
             android:background="@drawable/shape_round_bg_cate_list"
             android:gravity="center"
             android:padding="20dp"
+            android:drawableLeft="@drawable/drawable_left"
             android:textColor="@drawable/shape_text_color_white_gray666">
 
         </TextView>
@@ -39,6 +41,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="spar"/>
+
+
+        <Button
+            android:id="@+id/btnTestForTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="测试三种For循环时间"/>
 
         <ImageView
             android:id="@+id/image"

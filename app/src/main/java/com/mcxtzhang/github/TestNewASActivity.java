@@ -20,6 +20,10 @@ import com.mcxzhang.ZRouter;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Vector;
 
 @DIActivity
 @TestHelloWorld("haha")
@@ -112,6 +116,7 @@ public class TestNewASActivity extends AppCompatActivity {
 
         mEt.setText("绑定成功");
         mTv.setText("绑定成功");
+        mTv.setSelected(true);
 
 
         HelloWorld.main(null);
@@ -165,6 +170,49 @@ public class TestNewASActivity extends AppCompatActivity {
                 Log.d(TAG, "onClick() called with: getHeight = [" + image.getHeight() + "]");
                 Log.d(TAG, "onClick() called with: getWidth = [" + image.getDrawable().getIntrinsicWidth() + "]");
                 Log.d(TAG, "onClick() called with: getHeight = [" + image.getDrawable().getIntrinsicHeight() + "]");
+
+            }
+        });
+
+        final List<String> list = new ArrayList<String>();
+        final Vector<String> vector = new Vector<String>();
+        for (int i = 0; i < 1000000; i++) {
+            list.add("a");
+            vector.add("b");
+        }
+        findViewById(R.id.btnTestForTime).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                long time1 = System.currentTimeMillis();
+                for (String s : list) {
+                    String temp = s;
+                    //System.out.println(s);
+                }
+                long time2 = System.currentTimeMillis();
+                Log.e(TAG, "List 增强for-each循环 耗时:" + (time2 - time1));
+                for (String s : vector) {
+                    String temp = s;
+                    //System.out.println(s);
+                }
+                long time3 = System.currentTimeMillis();
+                Log.e(TAG, "Vector 增强for-each循环耗时:" + (time3 - time2));
+                for (int i = 0; i < list.size(); i++) {
+                    String temp = list.get(i);
+                    //System.out.println(list.get(i));
+                }
+                long time4 = System.currentTimeMillis();
+                Log.e(TAG, "List index for循环 耗时:" + (time4 - time3));
+
+
+                for (Iterator<String> iterator = list.iterator(); iterator.hasNext(); ) {
+                    //System.out.println(iterator.next());
+                    String temp = iterator.next();
+                }
+                long time5 = System.currentTimeMillis();
+                Log.e(TAG, "List Iterator for循环 耗时:" + (time5 - time4));
+
 
             }
         });
