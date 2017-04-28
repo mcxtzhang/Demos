@@ -59,6 +59,6 @@
             android:id="@+id/image2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/big_image"/>
+            android:src="@drawable/big_image"/>
     </LinearLayout>
 </ScrollView>
