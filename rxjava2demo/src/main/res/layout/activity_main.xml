@@ -51,4 +51,15 @@
         android:layout_below="@+id/btnAync"
         android:layout_marginTop="11dp"
         android:text="Aly"/>
+
+
+    <Button
+        android:id="@+id/btnCstLifeCycle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/btnAync"
+        android:layout_marginTop="11dp"
+        android:text="自定义生命周期"/>
 </LinearLayout>

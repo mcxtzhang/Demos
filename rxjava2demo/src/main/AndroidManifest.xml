@@ -25,6 +25,8 @@
         </activity>
         <activity android:name=".retrofit.AlyTestActivity">
         </activity>
+        <activity android:name=".lifecycle.CstRxLifecycleActivity">
+        </activity>
     </application>
 
 </manifest>
