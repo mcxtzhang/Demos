@@ -23,4 +23,17 @@
         android:id="@+id/btnIf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+
+
+    <Button
+        android:text="取消订阅dispose测试"
+        android:id="@+id/btnDispodeTest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:text="取消订阅dispose"
+        android:id="@+id/btnDispode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 </LinearLayout>
