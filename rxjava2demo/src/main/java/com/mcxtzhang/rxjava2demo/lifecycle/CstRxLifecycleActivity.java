@@ -35,16 +35,17 @@ public class CstRxLifecycleActivity extends AppCompatActivity {
         final Observable<String> observable = Observable.create(new ObservableOnSubscribe<String>() {
             @Override
             public void subscribe(ObservableEmitter<String> e) throws Exception {
-                Log.e(TAG, "subscribe: 就算被取消了 也是会执行的吗？");
+                Log.e(TAG, " subscribe: 就算被取消了 也是会执行的吗？");
                 try {
                     Thread.sleep(3000);
                 } catch (InterruptedException e3) {
                     e3.printStackTrace();
                 }
+                Log.e(TAG, "源头还是会执行，但不一定会发射");
                 if (!e.isDisposed()) {
                     e.onNext("1");
                     e.onNext("2");
-                    Log.e(TAG, "subscribe:  也是会执行的呀");
+                    Log.e(TAG, "源头还是在biubiubiu发射");
                     e.onComplete();
                 }
 
@@ -66,7 +67,8 @@ public class CstRxLifecycleActivity extends AppCompatActivity {
                                             @Override
                                             public void run() {
                                                 try {
-                                                    Thread.sleep(3000);
+                                                    Thread.sleep(1500);
+                                                    Log.d(TAG, "这个事件发送，触发takeUtil");
                                                     observer.onNext("5");
                                                 } catch (InterruptedException e) {
                                                     e.printStackTrace();
