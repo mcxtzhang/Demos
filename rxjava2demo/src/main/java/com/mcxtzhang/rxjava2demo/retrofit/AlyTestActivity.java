@@ -23,7 +23,6 @@ import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.Cache;
 import okhttp3.CertificatePinner;
@@ -194,7 +193,7 @@ public class AlyTestActivity extends AppCompatActivity {
 
                 Observable<BaseBean<WxPayBean>> stringObservable = movieService.testRxjava(/*baseUrl + pathUrl*/ httpsCreateOrder, body);
 
-                Observable<String> hha = movieService.testField("http://breakfast.anlaiye.com.cn/aaaa", "张旭童");
+/*                Observable<String> hha = movieService.testField("http://breakfast.anlaiye.com.cn/aaaa", "张旭童");
                 hha.subscribe(new Consumer<String>() {
                     @Override
                     public void accept(String s) throws Exception {
@@ -205,7 +204,7 @@ public class AlyTestActivity extends AppCompatActivity {
                     public void accept(Throwable throwable) throws Exception {
                         Log.d(TAG, "accept() called with: throwable = [" + throwable + "]");
                     }
-                });
+                });*/
 
 /*                        .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread());*/
