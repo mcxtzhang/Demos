@@ -1394,6 +1394,54 @@ public class Rx2Activity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.btnIntervalChangeGap).setOnClickListener(new View.OnClickListener() {
+            int time = 1000;
+
+            @Override
+            public void onClick(View view) {
+                //Observable.just(500, 500+1000,500+1000+1500 )
+                //定时5秒后执行，然后10秒后执行，最后15秒后执行，
+                Observable.just(5000, 1000, 15000)
+                        .scan(new BiFunction<Integer, Integer, Integer>() {
+                            @Override
+                            public Integer apply(Integer integer, Integer integer2) throws Exception {
+                                Log.d(TAG, "apply() called with: integer = [" + integer + "], integer2 = [" + integer2 + "]");
+                                return integer + integer2;
+                            }
+                        })
+                        .flatMap(new Function<Integer, ObservableSource<Long>>() {
+                            @Override
+                            public ObservableSource<Long> apply(Integer integer) throws Exception {
+                                Log.d(TAG, "apply() called with: integer = [" + integer + "]");
+                                return Observable.timer(integer, TimeUnit.MILLISECONDS);
+                            }
+                        }).subscribe(new Observer<Long>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        Log.d(TAG, "onSubscribe() called with: d = [" + d + "]");
+                        Log.d(TAG, "onSubscribe() called with: d = [" + System.currentTimeMillis() + "]");
+                    }
+
+                    @Override
+                    public void onNext(Long value) {
+                        Log.d(TAG, "onNext() called with: value = [" + value + "]");
+                        Log.d(TAG, "onSubscribe() called with: d = [" + System.currentTimeMillis() + "]");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d(TAG, "onError() called with: e = [" + e + "]");
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Log.d(TAG, "onComplete() called");
+                    }
+                });
+
+            }
+        });
+
     }
 
     private String getJustData() {

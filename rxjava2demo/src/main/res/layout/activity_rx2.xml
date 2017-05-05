@@ -293,6 +293,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="从create->subscribeOn->Subscribe"/>
+
+        <Button
+            android:id="@+id/btnIntervalChangeGap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="不定时执行"/>
     </LinearLayout>
 </ScrollView>
 
