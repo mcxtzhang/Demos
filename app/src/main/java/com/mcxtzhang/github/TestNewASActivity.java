@@ -52,6 +52,14 @@ public class TestNewASActivity extends AppCompatActivity {
 
         ZBindTestNewASActivity.bindView(this);
 
+        findViewById(R.id.cstView).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //view.invalidate();
+                view.requestLayout();
+            }
+        });
+
         mRoot.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {

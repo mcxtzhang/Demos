@@ -31,6 +31,12 @@ public class CstView extends View {
     }
 
     @Override
+    public void draw(Canvas canvas) {
+        super.draw(canvas);
+        Log.e(TAG, "draw() called with: canvas = [" + canvas + "]");
+    }
+
+    @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         Log.d(TAG, "onMeasure() called with: widthMeasureSpec = [" + widthMeasureSpec + "], heightMeasureSpec = [" + heightMeasureSpec + "]");

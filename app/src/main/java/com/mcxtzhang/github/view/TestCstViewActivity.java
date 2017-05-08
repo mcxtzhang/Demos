@@ -3,6 +3,7 @@ package com.mcxtzhang.github.view;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 
 import com.example.ZRouter;
 import com.mcxtzhang.github.R;
@@ -15,7 +16,16 @@ public class TestCstViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_cst_view);
         Log.d("TAG", "onCreate() called with: savedInstanceState = [" + this + "]");
-        Log.d("TAG", "onCreate() called with: savedInstanceState = [" +getWindow() + "]");
-        Log.d("TAG", "onCreate() called with: savedInstanceState = [" +getWindow().getWindowManager() + "]");
+        Log.d("TAG", "onCreate() called with: savedInstanceState = [" + getWindow() + "]");
+        Log.d("TAG", "onCreate() called with: savedInstanceState = [" + getWindow().getWindowManager() + "]");
+
+
+        findViewById(R.id.cstView).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //view.invalidate();
+                view.requestLayout();
+            }
+        });
     }
 }

@@ -24,6 +24,7 @@
         </TextView>
 
         <com.mcxtzhang.github.view.CstView
+            android:id="@+id/cstView"
             android:layout_width="match_parent"
             android:layout_height="60dp"/>
 
