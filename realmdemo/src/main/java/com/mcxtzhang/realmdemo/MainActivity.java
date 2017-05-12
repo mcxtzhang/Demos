@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         realm = Realm.getDefaultInstance();
 
 
-        findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btnInsert).setOnClickListener(new View.OnClickListener() {
             public static final String TAG = "zxt/realm";
 
             @Override
