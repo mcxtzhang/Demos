@@ -18,4 +18,9 @@ public interface IShopCartBean {
 
     String id();
 
+    String group();//tag
+
+    long updateTime();
+
+
 }

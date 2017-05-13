@@ -2,6 +2,9 @@ package com.shopcart;
 
 import com.common.IShopCartBean;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -23,6 +26,58 @@ public class XYBean extends RealmObject implements IShopCartBean {
     private String primaryKey;
 
     private String desc;
+
+    private int tag;//特殊标记，例如 午餐晚餐    ，早餐的日期，品牌馆的店铺等
+
+    public static int mPrimaryKey;
+    public static XYBean mockData() {
+        XYBean xyBean = new XYBean();
+        xyBean.name = "one";
+        xyBean.price = "0.01";
+        xyBean.count = 3;
+        xyBean.primaryKey = mPrimaryKey++ +"";
+        xyBean.desc = "lala";
+
+        xyBean.tag = 2;//午餐
+        return xyBean;
+    }
+
+    public static XYBean mockData2() {
+        XYBean xyBean = new XYBean();
+        xyBean.name = "two";
+        xyBean.price = "10";
+        xyBean.count = 5;
+        xyBean.primaryKey = mPrimaryKey++ +"";
+        xyBean.desc = "hahha";
+
+        xyBean.tag = 3;//晚餐
+        return xyBean;
+    }
+
+    public static List<XYBean> mockDatas() {
+        List<XYBean> lisst = new ArrayList<>();
+
+        lisst.add(mockData());
+        lisst.add(mockData2());
+        lisst.add(mockData());
+        lisst.add(mockData2());
+        lisst.add(mockData());
+        lisst.add(mockData2());
+        lisst.add(mockData());
+        lisst.add(mockData2());
+        lisst.add(mockData());
+        lisst.add(mockData2());
+        return lisst;
+    }
+
+    public int getTag() {
+        return tag;
+    }
+
+    public XYBean setTag(int tag) {
+        this.tag = tag;
+        return this;
+    }
 
     public String getDesc() {
         return desc;
@@ -87,5 +142,15 @@ public class XYBean extends RealmObject implements IShopCartBean {
     @Override
     public String id() {
         return primaryKey;
+    }
+
+    @Override
+    public String group() {
+        return tag + "";
+    }
+
+    @Override
+    public long updateTime() {
+        return 0;
     }
 }

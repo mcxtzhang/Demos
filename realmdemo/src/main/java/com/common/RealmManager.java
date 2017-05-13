@@ -7,6 +7,7 @@ import java.util.List;
 import io.realm.Realm;
 import io.realm.RealmModel;
 import io.realm.RealmResults;
+import io.realm.Sort;
 
 /**
  * Intro: 购物车管理 具体实现类 可以和业务耦合
@@ -40,7 +41,12 @@ public class RealmManager implements ShopCartManager {
     public <T> List<T> select(int busiType) {
         switch (busiType) {
             case BusiType.TYPE_XIYOU_FOODS:
-                RealmResults<XYBean> all = mRealm.where(XYBean.class).findAll();
+                RealmResults<XYBean> all = mRealm.where(XYBean.class)
+                        /*.beginGroup()
+                        .equalTo("tag", 1)
+                        .endGroup()*/
+                        .findAll();
+                all = all.sort("tag", Sort.ASCENDING , "primaryKey",Sort.DESCENDING);
                 return (List<T>) all;
             default:
                 return null;

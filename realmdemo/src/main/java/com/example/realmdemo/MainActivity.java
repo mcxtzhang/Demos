@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
         Realm.init(this);
         Realm.getInstance(new RealmConfiguration.Builder()
-                .schemaVersion(2)
+                .schemaVersion(3)
                 .deleteRealmIfMigrationNeeded()
                 .name("zxt.realm")
                 .build());
@@ -42,12 +42,17 @@ public class MainActivity extends AppCompatActivity {
                 xyBean.setPrimaryKey("1");
                 ShopCartManager shopCartManager = new RealmManagerFactory().create();
                 shopCartManager.update(xyBean);
+
+                for (XYBean bean : xyBean.mockDatas()) {
+                    shopCartManager.update(bean);
+                }
             }
         });
 
         findViewById(R.id.btnQuery).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //购物车用的
                 List<XYBean> select = new RealmManagerFactory().create().<XYBean>select(BusiType.TYPE_XIYOU_FOODS);
                 if (null != select && !select.isEmpty()) {
                     ((TextView) findViewById(R.id.tvRessult)).setText(select.get(0).toString());
