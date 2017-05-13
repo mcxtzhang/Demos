@@ -70,6 +70,18 @@ public class XYBean extends RealmObject implements IShopCartBean {
         return lisst;
     }
 
+    @Override
+    public String toString() {
+        return "XYBean{" +
+                "count=" + count +
+                ", name='" + name + '\'' +
+                ", price='" + price + '\'' +
+                ", primaryKey='" + primaryKey + '\'' +
+                ", desc='" + desc + '\'' +
+                ", tag=" + tag +
+                '}';
+    }
+
     public int getTag() {
         return tag;
     }

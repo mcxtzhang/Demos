@@ -26,15 +26,44 @@ public class RealmManager implements ShopCartManager {
     }
 
     @Override
-    public void update(IShopCartBean bean) {
-        mRealm.beginTransaction();
-        mRealm.insertOrUpdate((RealmModel) bean);
-        mRealm.commitTransaction();
+    public void update(final IShopCartBean bean) {
+        mRealm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.insertOrUpdate((RealmModel) bean);
+
+            }
+        });
     }
 
     @Override
-    public void delete(IShopCartBean bean) {
+    public void delete(final IShopCartBean bean) {
+        XYBean toBeDelBean = (XYBean) bean;
+        delete(toBeDelBean.getPrimaryKey());
+    }
 
+    @Override
+    public void delete(List<? extends IShopCartBean> datas) {
+        if (null != datas && !datas.isEmpty()) {
+            for (IShopCartBean data : datas) {
+                delete(data);
+            }
+        }
+    }
+
+    @Override
+    public void delete(final String goodsId) {
+        mRealm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmResults<XYBean> all = realm.where(XYBean.class)
+                        .equalTo("primaryKey", goodsId)
+                        .findAll();
+                if (!all.isEmpty()) {
+                    all.deleteAllFromRealm();
+                }
+            }
+        });
     }
 
     @Override
@@ -46,8 +75,8 @@ public class RealmManager implements ShopCartManager {
                         .equalTo("tag", 1)
                         .endGroup()*/
                         .findAll();
-                all = all.sort("tag", Sort.ASCENDING , "primaryKey",Sort.DESCENDING);
-                return (List<T>) all;
+                all = all.sort("tag", Sort.ASCENDING, "primaryKey", Sort.DESCENDING);
+                return (List<T>) mRealm.copyFromRealm(all);
             default:
                 return null;
         }

@@ -15,5 +15,9 @@ public interface ShopCartManager {
 
     void delete(IShopCartBean bean);
 
+    void delete(List<? extends IShopCartBean> datas);
+
+    void delete(String goodsId);
+
     <T> List<T> select(int busiType);
 }
