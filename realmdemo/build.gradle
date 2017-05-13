@@ -2,6 +2,23 @@ apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
 
 android {
+
+    packagingOptions {
+        exclude "lib/armeabi/librealm-jni.so"
+        exclude "lib/arm64-v8a/librealm-jni.so"
+        exclude "lib/mips/librealm-jni.so"
+        exclude "lib/x86/librealm-jni.so"
+        exclude "lib/x86_64/librealm-jni.so"
+    }
+
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'armeabi-v7a'
+        }
+    }
+
     compileSdkVersion 25
     buildToolsVersion "25.0.1"
 
