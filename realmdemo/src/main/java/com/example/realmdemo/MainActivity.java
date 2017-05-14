@@ -7,9 +7,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.common.BusiType;
-import com.common.RealmManagerFactory;
+import com.common.DBManager;
 import com.common.ShopCartManager;
-import com.common.ShopCartManagerFactory;
 import com.mcxtzhang.realmdemo.R;
 import com.shopcart.XYBean;
 
@@ -19,13 +18,20 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
 public class MainActivity extends AppCompatActivity {
+    {
+
+    }
+
+    ShopCartManager mShopCartManager ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         Realm.init(this);
+        mShopCartManager = DBManager.getShopCartManager();
+
+
         Realm.getInstance(new RealmConfiguration.Builder()
                 .schemaVersion(1)
                 .deleteRealmIfMigrationNeeded()
@@ -43,10 +49,10 @@ public class MainActivity extends AppCompatActivity {
                 xyBean.setPrimaryKey("1");
                 shopCartManager.update(xyBean);
 */
-                ShopCartManager shopCartManager = new RealmManagerFactory().create();
+                //ShopCartManager shopCartManager = new RealmManagerFactory().create();
 
                 for (XYBean bean : XYBean.mockDatas()) {
-                    shopCartManager.update(bean);
+                    mShopCartManager.update(bean);
                 }
             }
         });
@@ -57,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //购物车用的
-                List<XYBean> select = new RealmManagerFactory().create().<XYBean>select(BusiType.TYPE_XIYOU_FOODS);
+                List<XYBean> select = mShopCartManager.<XYBean>select(BusiType.TYPE_XIYOU_FOODS);
                 if (null != select && !select.isEmpty()) {
                     StringBuilder sb = new StringBuilder();
                     for (XYBean bean : select) {
@@ -74,20 +80,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        ShopCartManagerFactory factory = new RealmManagerFactory();
-        final ShopCartManager shopCartManager = factory.create();
 
         findViewById(R.id.btnDel).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                shopCartManager.delete(((EditText) findViewById(R.id.et)).getText().toString().trim());
+                mShopCartManager.delete(((EditText) findViewById(R.id.et)).getText().toString().trim());
             }
         });
 
         findViewById(R.id.btnDelAll).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                shopCartManager.delete(shopCartManager.<XYBean>select(BusiType.TYPE_XIYOU_FOODS));
+                mShopCartManager.delete(mShopCartManager.<XYBean>select(BusiType.TYPE_XIYOU_FOODS));
             }
         });
     }

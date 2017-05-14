@@ -81,4 +81,9 @@ public class RealmManager implements ShopCartManager {
                 return null;
         }
     }
+
+    @Override
+    public void close() {
+        mRealm.close();
+    }
 }

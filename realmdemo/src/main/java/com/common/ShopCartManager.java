@@ -20,4 +20,6 @@ public interface ShopCartManager {
     void delete(String goodsId);
 
     <T> List<T> select(int busiType);
+
+    void close();
 }

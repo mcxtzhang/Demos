@@ -3,7 +3,7 @@ apply plugin: 'realm-android'
 
 android {
 
-    packagingOptions {
+    /*packagingOptions {
         exclude "lib/armeabi/librealm-jni.so"
         exclude "lib/arm64-v8a/librealm-jni.so"
         exclude "lib/mips/librealm-jni.so"
@@ -17,7 +17,7 @@ android {
             reset()
             include 'armeabi-v7a'
         }
-    }
+    }*/
 
     compileSdkVersion 25
     buildToolsVersion "25.0.1"
