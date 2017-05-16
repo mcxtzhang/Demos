@@ -94,5 +94,21 @@ public class MainActivity extends AppCompatActivity {
                 mShopCartManager.delete(mShopCartManager.<XYBean>select(BusiType.TYPE_XIYOU_FOODS));
             }
         });
+
+        findViewById(R.id.btnDel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ShopCartManager shopCartManager = new RealmManagerFactory().create();
+                XYBean xyBean = new XYBean();
+                xyBean.setName("shop1");
+                xyBean.setCount(Integer.parseInt(((EditText) findViewById(R.id.et)).getText().toString().trim()));
+                xyBean.setDesc("i am desc");
+                xyBean.setPrice("2.7");
+                xyBean.setPrimaryKey("1");
+                shopCartManager.delete(xyBean);
+            }
+        });
+
+
     }
 }
