@@ -34,6 +34,21 @@ public class RealmManager implements ShopCartManager {
 
     @Override
     public void delete(IShopCartBean bean) {
+        Realm realm = Realm.getDefaultInstance();
+        try {
+            final RealmResults<XYBean> toDeleteList = realm.where(XYBean.class)
+                    .equalTo("primaryKey", bean.id())
+                    .findAll();
+            realm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    toDeleteList.deleteFirstFromRealm();
+
+                }
+            });
+        } finally {
+            realm.close();
+        }
 
     }
 
@@ -46,7 +61,7 @@ public class RealmManager implements ShopCartManager {
                         .equalTo("tag", 1)
                         .endGroup()*/
                         .findAll();
-                all = all.sort("tag", Sort.ASCENDING , "primaryKey",Sort.DESCENDING);
+                all = all.sort("tag", Sort.ASCENDING, "primaryKey", Sort.DESCENDING);
                 return (List<T>) all;
             default:
                 return null;

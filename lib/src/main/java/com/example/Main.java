@@ -115,6 +115,9 @@ public class Main {
         System.out.println(substring);
         System.out.println(str2);
 
+        System.out.println(~1);
+        System.out.println(1<<1);
+
     }
 
     public static Map<String, Object> getBody(Map<String, Object> map) {
