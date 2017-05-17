@@ -1,10 +1,13 @@
 package com.common;
 
+import android.util.Log;
+
 import com.shopcart.XYBean;
 
 import java.util.List;
 
 import io.realm.Realm;
+import io.realm.RealmChangeListener;
 import io.realm.RealmModel;
 import io.realm.RealmResults;
 import io.realm.Sort;
@@ -85,5 +88,28 @@ public class RealmManager implements ShopCartManager {
     @Override
     public void close() {
         mRealm.close();
+    }
+
+    @Override
+    public void clearAll() {
+        mRealm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                final RealmResults<XYBean> allAsync = realm.where(XYBean.class).findAllAsync();
+                RealmChangeListener<RealmResults<XYBean>> realmChangeListener = new RealmChangeListener<RealmResults<XYBean>>() {
+                    @Override
+                    public void onChange(RealmResults<XYBean> element) {
+                        Log.d("TAG", "onChange() called with: element = [" + element + "]");
+                        if (element != null) {
+                            // do sth
+                            allAsync.removeAllChangeListeners();
+                        }
+                    }
+                };
+                allAsync.addChangeListener(realmChangeListener);
+            }
+        });
+
+
     }
 }

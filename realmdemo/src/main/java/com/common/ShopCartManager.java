@@ -22,4 +22,6 @@ public interface ShopCartManager {
     <T> List<T> select(int busiType);
 
     void close();
+
+    void clearAll();
 }

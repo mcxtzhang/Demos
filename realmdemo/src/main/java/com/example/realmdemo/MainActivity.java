@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.common.BusiType;
 import com.common.DBManager;
+import com.common.RealmManagerFactory;
 import com.common.ShopCartManager;
 import com.mcxtzhang.realmdemo.R;
 import com.shopcart.XYBean;
@@ -91,7 +92,8 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btnDelAll).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mShopCartManager.delete(mShopCartManager.<XYBean>select(BusiType.TYPE_XIYOU_FOODS));
+                //mShopCartManager.delete(mShopCartManager.<XYBean>select(BusiType.TYPE_XIYOU_FOODS));
+                mShopCartManager.clearAll();
             }
         });
 
