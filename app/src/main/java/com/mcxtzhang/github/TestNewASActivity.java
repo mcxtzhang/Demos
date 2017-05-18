@@ -16,6 +16,8 @@ import com.example.DIActivity;
 import com.example.DIView;
 import com.example.TestHelloWorld;
 import com.mcxtzhang.HelloWorld;
+import com.mcxtzhang.github.kotlin.FirstBean;
+import com.mcxtzhang.github.kotlin.ThridBean;
 import com.mcxtzhang.github.routerexample.RManager2;
 import com.mcxzhang.ZRouter;
 
@@ -84,6 +86,23 @@ public class TestNewASActivity extends AppCompatActivity {
                 RManager2.getInstance().jump(TestNewASActivity.this, "firstKotlin", null);
             }
         });
+
+        List<FirstBean> kotlinBeanList = new ArrayList<>();
+
+        FirstBean firstBean = new FirstBean("zhangxutong");
+        kotlinBeanList.add(firstBean);
+
+        kotlinBeanList.add(firstBean);
+
+        ThridBean thridBean = new ThridBean();
+        thridBean.setAge(1).setName("z").setPrice(3.54);
+
+
+        Toast.makeText(this, "aaa:" + thridBean, Toast.LENGTH_SHORT).show();
+
+
+
+
 
         //http://www.cnblogs.com/whoislcj/p/5887859.html
 
