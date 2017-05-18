@@ -30,6 +30,7 @@ public class RManager2 {
     private RManager2() {
         routerMap = new HashMap<>();
         routerMap.put("rx", "com.mcxtzhang.github.RxActivity");
+        routerMap.put("firstKotlin","com.mcxtzhang.github.kotlin.FirstKotlinActivity");
     }
 
     private static class InnerRManager {

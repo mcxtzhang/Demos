@@ -39,7 +39,8 @@
         <activity android:name=".view.TestCstViewActivity">
         </activity>
         <activity android:name=".expand.ExpandListViewActivity">
-
+        </activity>
+        <activity android:name=".kotlin.FirstKotlinActivity">
         </activity>
     </application>
 

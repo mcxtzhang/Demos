@@ -16,6 +16,7 @@ import com.example.DIActivity;
 import com.example.DIView;
 import com.example.TestHelloWorld;
 import com.mcxtzhang.HelloWorld;
+import com.mcxtzhang.github.routerexample.RManager2;
 import com.mcxzhang.ZRouter;
 
 import java.io.BufferedReader;
@@ -79,7 +80,8 @@ public class TestNewASActivity extends AppCompatActivity {
         findViewById(R.id.btnSparseArray).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ZRouter.getInstance().jump(TestNewASActivity.this, /*SparseArrayOrderTestActivity.TAG*/"testView", null);
+                //ZRouter.getInstance().jump(TestNewASActivity.this, /*SparseArrayOrderTestActivity.TAG*/"firstKotlin", null);
+                RManager2.getInstance().jump(TestNewASActivity.this, "firstKotlin", null);
             }
         });
 
