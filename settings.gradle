@@ -1,8 +1,10 @@
-include ':app', ':lib', ':zxtcommonlib', ':library', ':compiler', ':hotfixdemo', ':artdemo', ':performancedemo', ':realmdemo'
+include ':app', ':lib', ':zxtcommonlib', ':library', ':compiler', ':artdemo', ':realmdemo'
+//include ':hotfixdemo'
+//include ':performancedemo'
 //include  ':permissiondemo' // 6.0运行时权限
 //include ':autocopydemo'
 //include ':aopdemo'
-//include ':viewpagerdemo'
+include ':viewpagerdemo'
 //include ':cstviewdemo'
 //, ,, ':recyclerviewdemo', ':okhttpdemo'
 //include ':animdemo'
@@ -12,7 +14,7 @@ include ':rxjava2demo'
 //incldue  ':rxjavademo'
 //include ':retrofitdemo'
 /*** UI Module**/
-include ':coordinatordemo'
+//include ':coordinatordemo'
 
 /***Java Lib***/
 
