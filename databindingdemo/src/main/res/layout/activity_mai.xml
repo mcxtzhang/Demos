@@ -3,7 +3,7 @@
 
 
     <data>
-
+        <import type="android.view.View"/>
         <variable
             name="shopCartBean"
             type="com.mcxtzhang.databindingdemo.autobinding.ShopCartBean"/>
@@ -19,12 +19,17 @@
             android:layout_height="wrap_content"
             android:text="@{shopCartBean.num}"/>
 
+        <TextView
+            android:visibility="@{shopCartBean.totalNum>0? View.VISIBLE:View.GONE}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text='@{shopCartBean.totalNum+""}'/>
 
         <Button
             android:id="@+id/btnAddShopCart"
-            android:text="加入购物车"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text="加入购物车"/>
     </LinearLayout>
 </layout>
 

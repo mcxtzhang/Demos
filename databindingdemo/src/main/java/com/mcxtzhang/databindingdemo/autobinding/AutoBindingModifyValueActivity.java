@@ -12,5 +12,6 @@ public class AutoBindingModifyValueActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auto_binding_modify_value);
         ShopCartBean.getInstance().setNum((int) (Math.random() * -1000));
+        ShopCartBean.getInstance().totalNum.set((int) (Math.random() * 1000));
     }
 }

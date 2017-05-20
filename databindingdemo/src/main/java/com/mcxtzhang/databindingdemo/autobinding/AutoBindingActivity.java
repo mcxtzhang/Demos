@@ -2,15 +2,13 @@ package com.mcxtzhang.databindingdemo.autobinding;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 
 import com.mcxtzhang.databindingdemo.R;
 import com.mcxtzhang.databindingdemo.databinding.ActivityMaiBinding;
-
-import java.util.Random;
 
 public class AutoBindingActivity extends AppCompatActivity {
     //private static AutoBindingActivity instance;
@@ -26,6 +24,7 @@ public class AutoBindingActivity extends AppCompatActivity {
         ShopCartBean shopCartBean = ShopCartBean.getInstance();
         shopCartBean.setNum(6);
         mBinding.setShopCartBean(shopCartBean);
+        shopCartBean.totalNum.set(10);
 
         mBinding.btnAddShopCart.setOnClickListener(new View.OnClickListener() {
             @Override

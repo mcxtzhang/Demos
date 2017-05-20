@@ -2,6 +2,7 @@ package com.mcxtzhang.databindingdemo.autobinding;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+import android.databinding.ObservableInt;
 
 import com.mcxtzhang.databindingdemo.BR;
 
@@ -16,6 +17,8 @@ import com.mcxtzhang.databindingdemo.BR;
 
 public class ShopCartBean extends BaseObservable {
     int num;
+
+    public final ObservableInt totalNum = new ObservableInt();
 
     private ShopCartBean() {
 
