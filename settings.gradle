@@ -1,7 +1,4 @@
-include ':app', ':lib', ':zxtcommonlib', ':library', ':compiler',':realmdemo'
-//include ':hotfixdemo'
-//include  ':artdemo'
-//include  ':performancedemo'
+include ':app', ':lib', ':zxtcommonlib', ':library', ':compiler', ':hotfixdemo', ':artdemo', ':performancedemo', ':realmdemo'
 //include  ':permissiondemo' // 6.0运行时权限
 //include ':autocopydemo'
 //include ':aopdemo'
