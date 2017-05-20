@@ -10,13 +10,6 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
-        </activity>
-        <activity android:name=".VarLevelHigherActivity"/>
-        <activity android:name=".FragmentActivity"/>
-        <activity android:name=".TestIncludeActivity"/>
-        <activity android:name=".recyclerview.RecyclerViewActivity">
-        </activity>
         <activity android:name=".mullayout.TestMulLayoutActivity">
         </activity>
         <activity android:name=".LauncherActivity">
@@ -33,6 +26,10 @@
         <activity android:name=".AnimAndCheckBoxActivity">
         </activity>
         <activity android:name=".TestBindingAdapterActivity">
+        </activity>
+        <activity android:name=".autobinding.AutoBindingActivity">
+        </activity>
+        <activity android:name=".autobinding.AutoBindingModifyValueActivity">
         </activity>
     </application>
 

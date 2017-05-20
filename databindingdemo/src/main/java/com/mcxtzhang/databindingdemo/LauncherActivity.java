@@ -6,19 +6,19 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.mcxtzhang.databindingdemo.autobinding.AutoBindingActivity;
 import com.mcxtzhang.databindingdemo.databinding.ActivityLauncherBinding;
-import com.mcxtzhang.databindingdemo.recyclerview.RecyclerViewActivity;
 
 public class LauncherActivity extends AppCompatActivity {
     ActivityLauncherBinding mBinding;
 
     public class Presenter {
         public void onMainClick(View view) {
-            startActivity(new Intent(LauncherActivity.this, MainActivity.class));
+            //startActivity(new Intent(LauncherActivity.this, MainActivity.class));
         }
 
         public void onRvClick(View view) {
-            startActivity(new Intent(LauncherActivity.this, RecyclerViewActivity.class));
+            //startActivity(new Intent(LauncherActivity.this, RecyclerViewActivity.class));
         }
 
         public void onTwoWayClick(View view) {
@@ -46,5 +46,12 @@ public class LauncherActivity extends AppCompatActivity {
         setContentView(mBinding.getRoot());
 
         mBinding.setP(new Presenter());
+
+        mBinding.btnAutoBinding.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LauncherActivity.this, AutoBindingActivity.class));
+            }
+        });
     }
 }

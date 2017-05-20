@@ -9,89 +9,101 @@
             type="com.mcxtzhang.databindingdemo.LauncherActivity.Presenter"/>
     </data>
 
-    <LinearLayout
-
-        android:id="@+id/activity_launcher"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        tools:context="com.mcxtzhang.databindingdemo.LauncherActivity">
+        android:layout_height="match_parent">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="@{p::onMainClick}"
-            android:text="MainActivity"/>
+        <LinearLayout
 
-        <TextView
-            android:text="展位的"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:id="@+id/activity_launcher"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            tools:context="com.mcxtzhang.databindingdemo.LauncherActivity">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="@{p::onRvClick}"
-            android:text="RecyclerViewActivity"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{p::onMainClick}"
+                android:text="MainActivity"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="@{p::onRvClick}"
-            android:text="RecyclerViewActivity"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="展位的"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="@{p::onTwoWayClick}"
-            android:text="双向绑定"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{p::onRvClick}"
+                android:text="RecyclerViewActivity"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="@{p::onLambdaClick}"
-            android:text="Lambda表达式"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{p::onRvClick}"
+                android:text="RecyclerViewActivity"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="@{p::onAnimAndCheckBoxClick}"
-            android:text="动画和CB"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{p::onTwoWayClick}"
+                android:text="双向绑定"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{p::onLambdaClick}"
+                android:text="Lambda表达式"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{p::onAnimAndCheckBoxClick}"
+                android:text="动画和CB"/>
 
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="@{p::onMainClick}"
-            android:text="TestMulLayoutActivity"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{p::onMainClick}"
+                android:text="TestMulLayoutActivity"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="@{p::onMainClick}"
-            android:text="RecyclerViewActivity"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{p::onMainClick}"
+                android:text="RecyclerViewActivity"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="@{p::onMainClick}"
-            android:text="TestIncludeActivity"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{p::onMainClick}"
+                android:text="TestIncludeActivity"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="@{p::onMainClick}"
-            android:text="VarLevelHigherActivity"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{p::onMainClick}"
+                android:text="VarLevelHigherActivity"/>
 
-        <Button
-            android:onClick="@{p::onAdapterClick}"
-            android:text="BingdingAdapter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{p::onAdapterClick}"
+                android:text="BingdingAdapter"/>
+
+            <Button
+                android:id="@+id/btnAutoBinding"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="自动绑定刷新测试，跨界面是否可以"/>
+        </LinearLayout>
+    </ScrollView>
+
 </layout>
 
