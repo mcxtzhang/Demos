@@ -4,15 +4,12 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Demos.iml" filepath="$PROJECT_DIR$/Demos.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/artdemo/artdemo.iml" filepath="$PROJECT_DIR$/artdemo/artdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/compiler/compiler.iml" filepath="$PROJECT_DIR$/compiler/compiler.iml" />
-      <module fileurl="file://$PROJECT_DIR$/coordinatordemo/coordinatordemo.iml" filepath="$PROJECT_DIR$/coordinatordemo/coordinatordemo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/hotfixdemo/hotfixdemo.iml" filepath="$PROJECT_DIR$/hotfixdemo/hotfixdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/lib/lib.iml" filepath="$PROJECT_DIR$/lib/lib.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
-      <module fileurl="file://$PROJECT_DIR$/performancedemo/performancedemo.iml" filepath="$PROJECT_DIR$/performancedemo/performancedemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/realmdemo/realmdemo.iml" filepath="$PROJECT_DIR$/realmdemo/realmdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/rxjava2demo/rxjava2demo.iml" filepath="$PROJECT_DIR$/rxjava2demo/rxjava2demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/viewpagerdemo/viewpagerdemo.iml" filepath="$PROJECT_DIR$/viewpagerdemo/viewpagerdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/zxt_github.iml" filepath="$PROJECT_DIR$/zxt_github.iml" />
       <module fileurl="file://$PROJECT_DIR$/zxt_github_proj.iml" filepath="$PROJECT_DIR$/zxt_github_proj.iml" />
       <module fileurl="file://$PROJECT_DIR$/zxtcommonlib/zxtcommonlib.iml" filepath="$PROJECT_DIR$/zxtcommonlib/zxtcommonlib.iml" />

@@ -1,18 +1,22 @@
 package com.mcxtzhang.viewpagerdemo;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.mcxtzhang.viewpagerdemo.optimise.ImageTestActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements BlankFragment.OnFragmentInteractionListener {
+    private static final String TAG = "zxt";
     ViewPager viewPager;
     ImageView imageView;
 
@@ -34,12 +38,48 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
-                return null;
+                return BlankFragment.newInstance("1", "3");
             }
 
             @Override
             public int getCount() {
-                return 0;
+                return 4;
+            }
+        });
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        tabLayout.setupWithViewPager(viewPager);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                Log.d(TAG, "onPageScrolled() called with: position = [" + position + "], positionOffset = [" + positionOffset + "], positionOffsetPixels = [" + positionOffsetPixels + "]");
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                Log.d(TAG, "onPageSelected() called with: position = [" + position + "]");
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                Log.d(TAG, "onPageScrollStateChanged() called with: state = [" + state + "]");
+            }
+        });
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                Log.e(TAG, "onTabSelected() called with: tab = [" + tab + "]");
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                Log.e(TAG, "onTabUnselected() called with: tab = [" + tab + "]");
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                Log.e(TAG, "onTabReselected() called with: tab = [" + tab + "]");
             }
         });
 
@@ -74,6 +114,11 @@ public class MainActivity extends AppCompatActivity {
                 Glide.get(MainActivity.this).clearMemory();
             }
         });
+
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
 
     }
 }
