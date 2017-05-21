@@ -25,7 +25,7 @@ include ':rxjava2demo'
 //include  ':realmdemo'
 //include  ':dbflowdemo'
 
-include ':databindingdemo'
+//include ':databindingdemo'
 //include  'layoutmanager'
 
 //include ':diffutilsdemo'
