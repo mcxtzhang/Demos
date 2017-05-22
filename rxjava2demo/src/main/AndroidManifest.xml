@@ -27,6 +27,8 @@
         </activity>
         <activity android:name=".lifecycle.CstRxLifecycleActivity">
         </activity>
+        <activity android:name=".okhttp.UpTestActivity">
+        </activity>
     </application>
 
 </manifest>
