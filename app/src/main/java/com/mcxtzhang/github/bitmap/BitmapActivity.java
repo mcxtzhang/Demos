@@ -3,11 +3,13 @@ package com.mcxtzhang.github.bitmap;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.mcxtzhang.github.R;
 import com.mcxtzhang.github.util.BitmapUtils;
@@ -97,6 +99,13 @@ public class BitmapActivity extends AppCompatActivity {
         Log.d(TAG, "bitmap4 = [" + bitmap4.getWidth() + "]" + bitmap4.getHeight());
         Log.d(TAG, "bitmap4:   = [" + BitmapUtils.getBitmapSize(bitmap4) + "]");
         image4.setImageBitmap(bitmap4);
+
+
+
+
+        Drawable rightDrawable = getResources().getDrawable(R.mipmap.lint1);
+        rightDrawable.setBounds(0, 0, rightDrawable.getMinimumWidth(), rightDrawable.getMinimumHeight());
+        ((TextView)findViewById(R.id.tv)).setCompoundDrawables(null, null, rightDrawable, null);
 
     }
 }

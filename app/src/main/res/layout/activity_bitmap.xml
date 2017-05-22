@@ -30,6 +30,12 @@
             android:id="@+id/image4"
             android:layout_width="100dp"
             android:layout_height="100dp"/>
+
+        <TextView
+            android:text="afdasfafadfasd"
+            android:id="@+id/tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
 
