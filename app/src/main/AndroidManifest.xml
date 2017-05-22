@@ -10,11 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity android:name=".TestNewASActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity android:name=".jobscheduler.JobSchedulerActivity">
         </activity>
@@ -41,6 +37,13 @@
         <activity android:name=".expand.ExpandListViewActivity">
         </activity>
         <activity android:name=".kotlin.FirstKotlinActivity">
+        </activity>
+        <activity android:name=".bitmap.BitmapActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
     </application>
 
