@@ -5,13 +5,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.mcxtzhang.constraintlayoutdemo.RatioActivity">
+    tools:context="com.mcxtzhang.constraintlayoutdemo.DoubleRatioActivity">
 
     <Button
-        android:layout_width="200dp"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:text="Ratio"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="2:1"
+        app:layout_constraintDimensionRatio="H,2:1"
         app:layout_constraintTop_toTopOf="parent"/>
 </android.support.constraint.ConstraintLayout>

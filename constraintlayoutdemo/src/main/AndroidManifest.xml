@@ -26,6 +26,12 @@
         </activity>
         <activity android:name=".DemoActivity">
         </activity>
+        <activity android:name=".MinimumActivity">
+        </activity>
+        <activity android:name=".WidgetsDimensionActivity">
+        </activity>
+        <activity android:name=".DoubleRatioActivity">
+        </activity>
     </application>
 
 </manifest>
