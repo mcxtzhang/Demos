@@ -28,7 +28,11 @@
         </activity>
         <activity
             android:name=".SparseArrayOrderTestActivity"
-            android:process=":other_process">
+            android:process=":other_process">            <intent-filter>
+            <action android:name="android.intent.action.MAIN"/>
+
+            <category android:name="android.intent.category.LAUNCHER"/>
+        </intent-filter>
         </activity>
         <activity android:name=".touch.TouchActivity">
         </activity>
@@ -39,11 +43,7 @@
         <activity android:name=".kotlin.FirstKotlinActivity">
         </activity>
         <activity android:name=".bitmap.BitmapActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
     </application>
 

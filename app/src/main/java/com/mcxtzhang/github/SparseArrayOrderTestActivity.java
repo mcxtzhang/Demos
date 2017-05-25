@@ -8,7 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.SparseArray;
 import android.util.SparseIntArray;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.PopupWindow;
 
 import com.example.ZRouter;
 
@@ -28,7 +31,7 @@ public class SparseArrayOrderTestActivity extends AppCompatActivity {
                         .getBackground()
                         /*.mutate()*/;
                 Log.d("TAG", "onClick() called with: background = [" + background + "]");
-                if (background instanceof BitmapDrawable){
+                if (background instanceof BitmapDrawable) {
                     BitmapDrawable bitmapDrawable = (BitmapDrawable) background;
                     Bitmap bitmap = bitmapDrawable.getBitmap();
                     Log.d("TAG", "onClick() called with: bitmap = [" + bitmap + "]");
@@ -40,6 +43,13 @@ public class SparseArrayOrderTestActivity extends AppCompatActivity {
                 //background.setBounds(new Rect(1,2,3,4));
 
                 findViewById(R.id.activity_sparce_array_order_test).invalidate();
+            }
+        });
+
+        findViewById(R.id.btnChangeAlpha).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showCategoryPopupMenu(view);
             }
         });
 
@@ -75,6 +85,46 @@ public class SparseArrayOrderTestActivity extends AppCompatActivity {
         for (int i = 0; i < size; i++) {
             int key = sparseArray.keyAt(i);
             Log.d(TAG, "key = [" + key + "]" + ", value:" + sparseArray.get(key));
+        }
+    }
+
+
+    private PopupWindow mPopCategory;
+
+    private void showCategoryPopupMenu(View anchorView) {
+        View bgView = View.inflate(this, R.layout.activity_touch, null);
+        bgView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //hidePopupWindow();
+            }
+        });
+/*        new VGUtil((ViewGroup) bgView.findViewById(R.id.fvg), new SingleAdapter<BfMainCategoryBean>(mActivity, mCateDatas, R.layout.breakfast_item_category_tab) {
+            @Override
+            public void onBindViewHolder(ViewGroup viewGroup, com.mcxtzhang.commonadapter.viewgroup.adapter.cache.ViewHolder viewHolder, BfMainCategoryBean bfMainCategoryBean, int i) {
+                viewHolder.setText(R.id.tv_category_tab, bfMainCategoryBean.getName());
+                viewHolder.getView(R.id.tv_category_tab).setSelected(bfMainCategoryBean.isSelect());
+            }
+        }, new OnItemClickListener() {
+            @Override
+            public void onItemClick(ViewGroup viewGroup, View view, int i) {
+                hidePopupWindow();
+                changeCategoryUI(i);
+                scrollFromCategoryClick(i);
+            }
+        }).bind();*/
+        mPopCategory = new PopupWindow(bgView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        mPopCategory.setTouchable(true);
+        mPopCategory.setOutsideTouchable(true);
+        if (!mPopCategory.isShowing()) {
+            if (android.os.Build.VERSION.SDK_INT >= 24) {
+                int[] a = new int[2];
+                anchorView.getLocationInWindow(a);
+                mPopCategory.showAtLocation(getWindow().getDecorView(), Gravity.NO_GRAVITY, 0, a[1] + anchorView.getHeight());
+            } else {
+                mPopCategory.showAsDropDown(anchorView);
+            }
+
         }
     }
 }
