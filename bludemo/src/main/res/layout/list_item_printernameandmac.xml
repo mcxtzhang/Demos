@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp" >
+
+    <ImageView
+        android:id="@+id/btListItemPrinterIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/tvListItemPrinterMac"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:clickable="false"
+        android:contentDescription=""
+        android:scaleType="centerInside"
+        android:src="@android:drawable/stat_sys_data_bluetooth" />
+
+    <TextView
+        android:id="@+id/tvListItemPrinterName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/btListItemPrinterIcon"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textIsSelectable="false" />
+
+    <TextView
+        android:id="@+id/tvListItemPrinterMac"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvListItemPrinterName"
+        android:layout_toRightOf="@+id/btListItemPrinterIcon"
+        android:text="" />
+
+</RelativeLayout>

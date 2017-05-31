@@ -1,0 +1,9 @@
+task copyFile(type: Copy) {
+    from 'src'
+    into 'destination'
+    println("Task CopyFile")
+}
+
+task taskA(dependsOn: copyFile) {
+    println "taskA"
+}
