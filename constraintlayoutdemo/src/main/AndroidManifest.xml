@@ -21,6 +21,11 @@
         <activity android:name=".ChainActivity">
         </activity>
         <activity android:name=".DemoActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity android:name=".MinimumActivity">
         </activity>
@@ -31,11 +36,7 @@
         <activity android:name=".GuidelineActivity">
         </activity>
         <activity android:name=".GoodsDetailActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
     </application>
 
