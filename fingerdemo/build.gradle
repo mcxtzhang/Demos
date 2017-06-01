@@ -5,5 +5,96 @@ task copyFile(type: Copy) {
 }
 
 task taskA(dependsOn: copyFile) {
-    println "taskA"
+    //println "taskA"
 }
+
+//（1）调用Project的task()方法创建Task
+
+//这里的“<<”表示追加的意思，即向hello中加入执行过程。我们还可以使用doLast来达到同样的效果：
+task hello1 <<{
+    println("Task1--- hello1")
+
+}
+
+task hello2{
+    //println("hello2 is running")
+    doLast{
+        println("Task2--- hello2")
+    }
+    //println("hello2 is ending")
+}
+//另外，如果需要向Task的最前面加入执行过程，我们可以使用doFirst：
+task hello3{
+    //println("hello3 is running")
+    doFirst{
+        println("Task3--- hello3")
+    }
+    //println("hello3 is ending")
+}
+
+task showTasks{
+    println tasks.class
+    println tasks.size()
+}
+
+//（2）通过TaskContainer的create()方法创建Task
+tasks.create(name:'hello4') <<{
+    println('hello4')
+}
+
+//（3）声明Task之间的依赖关系
+//利用dependsOn
+task hello5(dependsOn: hello4) <<{
+    println("this is hello5")
+}
+//先声明Task 之后再声明依赖
+task hello6<<{
+    println("this is hello6")
+}
+hello6.dependsOn hello5
+
+//（4）配置Task
+//其中有Gradle为每个Task默认定义的Property，比如description，logger等。
+//每一个特定的Task类型还可以含有特定的Property
+
+//我们还可以动态地向Task中加入额外的Property
+//在执行一个Task之前，我们通常都需要先设定Property的值
+
+//1 我们可以在定义Task的时候对Property进行配置：
+task hello7<<{
+    //description = "this is hello7 for testing propertys"
+    println(description)
+}
+
+//2 我们还可以通过闭包的方式来配置一个已有的Task：
+task hello8 <<{
+    println(description)
+}
+hello8{
+    description = "this is hello8"
+}
+
+//3 我们还可以通过调用Task的configure()方法完成Property的设置：
+task hello9 <<{
+    def desc = "this is a custom property"
+    println(description)
+    println(desc)
+}
+hello9.configure{
+    description="this is he llo9"
+    //desc = "i am changed" error
+}
+
+//4 还可以
+hello9.description ="4th method changed"
+//hello9.desc = "aaaaaaaaaaa" error
+
+
+
+
+
+
+
+
+
+
