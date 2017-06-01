@@ -213,5 +213,8 @@ task showProps3<<{
 
 //（四）通过环境变量设置Property
 
+//【六——使用Java Plugin】
+
+
 
 
