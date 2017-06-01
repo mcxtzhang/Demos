@@ -213,8 +213,28 @@ task showProps3<<{
 
 //（四）通过环境变量设置Property
 
-//【六——使用Java Plugin】
+//【九 ------ 自定义Task类型】
+//（一）在build.gradle文件中直接定义
+class HelloWorldTask extends DefaultTask{
+    //message被标记为@Optional，表示在配置该Task时，message是可选的。
+    @Optional
+    String msg = "I am mcxtzhang"
 
+    //@TaskAction表示该Task要执行的动作，即在调用该Task时，hello()方法将被执行。
+    @TaskAction
+    def hello(){
+        println "Hello World $msg"
+    }
 
+}
+
+task hello9_1 (type:HelloWorldTask)
+
+task hello9_2 (type: HelloWorldTask){
+    msg="I am zhangxutong"
+}
+
+//（二）在当前工程中定义Task类型
+//task hello9_3 (type: CustomTask2)
 
 
