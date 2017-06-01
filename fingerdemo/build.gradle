@@ -157,6 +157,61 @@ println(parent.child.name)
 
 //五——自定义Property
 
+/*version = 'this is the project version'
+description = 'this is the project description'*/
+
+/*println"~~~~~~~~~~~~~~The props of proj :"
+println project //Project本身
+println name //Project的名字
+println path //Project的绝对路径
+println description //Project的描述信息
+println buildDir //Project构建结果存放目录
+println version //Project的版本号
+
+task showProjProps <<{
+    println"~~~~~~~~~~~~~~The props of task :"
+    println project
+    println name
+    println path
+    println description
+    println buildDir
+    println version
+}*/
+
+//（一）在build.gradle文件中定义Property
+ext.property1 = "this is custom prop1"
+
+ext {
+    prop2 = 'this is custom prop2'
+}
+
+task showProps << {
+    println(property1)
+    println(prop2)
+}
+
+//（二）通过命令行参数定义Property
+/*ext.prop4
+
+task showPropsByCommondLineInput << {
+    println prop3
+    if (prop4 == null){
+        println("prop4 is null ...")
+    }else {
+        println(prop4)
+    }
+
+}*/
+// gradle showPropsByCommondLineInput -Pprop3="this is custom prop3"
+//两个参数： gradle showPropsByCommondLineInput -Pprop3="this is custom prop3" -Pprop4="aaa"
+
+//（三）通过JVM系统参数定义Property
+task showProps3<<{
+    println( prop3 )
+}
+// gradle showProps3 -Dorg.gradle.project.prop3="this is another property3"
+
+//（四）通过环境变量设置Property
 
 
 
