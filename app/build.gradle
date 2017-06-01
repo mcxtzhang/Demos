@@ -3,6 +3,13 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'com.neenbedankt.android-apt'
 
+apply plugin: DataAndTimePlugin
+
+dateAndTime{
+    timeFormat = 'HH:mm:ss.SSS'
+    dateFormat = 'MM/dd/yyyy'
+}
+
 
 android {
     compileSdkVersion 25
@@ -42,4 +49,25 @@ dependencies {
 }
 repositories {
     mavenCentral()
+}
+
+
+class DataAndTimePlugin implements Plugin<Project>{
+    void apply(Project project){
+        //我们可以通过project.extentions进行访问，比如读取额外的Property和定义额外的Property等
+        project.extensions.create("dateAndTime",DataAndTimePluginExtension)
+
+        project.task('showTime') <<{
+            println( "Current time is "+ new Date().format(project.dateAndTime.timeFormat))
+        }
+
+        project.tasks.create('showDate') <<{
+            println("Current data is " + new Date().format(project.dateAndTime.dateFormat))
+        }
+    }
+}
+
+class DataAndTimePluginExtension{
+    String timeFormat = "MM/dd/yyyy HH:mm:ss.SSS"
+    String dateFormat = "yyyy-MM-dd"
 }
