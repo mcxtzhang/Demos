@@ -1,0 +1,240 @@
+/*
+task copyFile(type: Copy) {
+    from 'src'
+    into 'destination'
+    println("Task CopyFile")
+}
+
+task taskA(dependsOn: copyFile) {
+    //println "taskA"
+}
+
+//（1）调用Project的task()方法创建Task
+
+//这里的“<<”表示追加的意思，即向hello中加入执行过程。我们还可以使用doLast来达到同样的效果：
+task hello1 << {
+    println("Task1--- hello1")
+
+}
+
+task hello2 {
+    //println("hello2 is running")
+    doLast {
+        println("Task2--- hello2")
+    }
+    //println("hello2 is ending")
+}
+//另外，如果需要向Task的最前面加入执行过程，我们可以使用doFirst：
+task hello3 {
+    //println("hello3 is running")
+    doFirst {
+        println("Task3--- hello3")
+    }
+    //println("hello3 is ending")
+}
+
+task showTasks {
+    println tasks.class
+    println tasks.size()
+}
+
+//（2）通过TaskContainer的create()方法创建Task
+tasks.create(name: 'hello4') << {
+    println('hello4')
+}
+
+//（3）声明Task之间的依赖关系
+//利用dependsOn
+task hello5(dependsOn: hello4) << {
+    println("this is hello5")
+}
+//先声明Task 之后再声明依赖
+task hello6 << {
+    println("this is hello6")
+}
+hello6.dependsOn hello5
+
+//（4）配置Task
+//其中有Gradle为每个Task默认定义的Property，比如description，logger等。
+//每一个特定的Task类型还可以含有特定的Property
+
+//我们还可以动态地向Task中加入额外的Property
+//在执行一个Task之前，我们通常都需要先设定Property的值
+
+//1 我们可以在定义Task的时候对Property进行配置：
+task hello7 << {
+    //description = "this is hello7 for testing propertys"
+    println(description)
+}
+
+//2 我们还可以通过闭包的方式来配置一个已有的Task：
+task hello8 << {
+    println(description)
+}
+hello8 {
+    description = "this is hello8"
+}
+
+//3 我们还可以通过调用Task的configure()方法完成Property的设置：
+task hello9 << {
+    def desc = "this is a custom property"
+    println(description)
+    println(desc)
+}
+hello9.configure {
+    description = "this is he llo9"
+    //desc = "i am changed" error
+}
+
+//4 还可以
+hello9.description = "4th method changed"
+//hello9.desc = "aaaaaaaaaaa" error
+
+//直接以 task.property 去使用，实际上调用的是 get set方法
+
+class TestBean1 {
+    private String name;
+}
+
+def bean = new TestBean1()
+bean.name = "zhangxutong"
+println(bean.name)
+
+class Child {
+    private String name;
+}
+
+class Parent {
+    Child child = new Child();
+
+    void configChild(Closure closure) {
+        closure.delegate = child;
+        //closure.setResolveStrategy Closure.DELEGATE_FIRST
+        closure()
+    }
+
+}
+
+def parent = new Parent();
+println(parent.child.name)
+parent.configChild {
+    println("Begin changed Child Propertys")
+    name = "I had changed child name!!!!!!!!!!!!!!!!!!"
+}
+
+println(parent.child.name)
+*/
+
+/*task compileNonIncremental {
+    def source = fileTree('src')
+    def destination = file('destination.txt')
+    doLast {
+        destination.withPrintWriter {
+            writer ->
+                source.each {
+                    src ->
+                        writer.println(src.text)
+                }
+        }
+    }
+}*/
+/*task compileIncremental{
+    def sources = fileTree('src')
+    def destination = file('destination2.txt')
+    inputs.dir( sources)
+    outputs.file( destination)
+
+    doLast{
+        destination.withPrintWriter {
+            writer ->
+                sources.each {
+                    src->
+                        writer.println(src.text)
+                }
+        }
+    }
+}*/
+
+//五——自定义Property
+
+/*version = 'this is the project version'
+description = 'this is the project description'*/
+
+/*println"~~~~~~~~~~~~~~The props of proj :"
+println project //Project本身
+println name //Project的名字
+println path //Project的绝对路径
+println description //Project的描述信息
+println buildDir //Project构建结果存放目录
+println version //Project的版本号
+
+task showProjProps <<{
+    println"~~~~~~~~~~~~~~The props of task :"
+    println project
+    println name
+    println path
+    println description
+    println buildDir
+    println version
+}*/
+
+//（一）在build.gradle文件中定义Property
+ext.property1 = "this is custom prop1"
+
+ext {
+    prop2 = 'this is custom prop2'
+}
+
+task showProps << {
+    println(property1)
+    println(prop2)
+}
+
+//（二）通过命令行参数定义Property
+/*ext.prop4
+
+task showPropsByCommondLineInput << {
+    println prop3
+    if (prop4 == null){
+        println("prop4 is null ...")
+    }else {
+        println(prop4)
+    }
+
+}*/
+// gradle showPropsByCommondLineInput -Pprop3="this is custom prop3"
+//两个参数： gradle showPropsByCommondLineInput -Pprop3="this is custom prop3" -Pprop4="aaa"
+
+//（三）通过JVM系统参数定义Property
+task showProps3<<{
+    println( prop3 )
+}
+// gradle showProps3 -Dorg.gradle.project.prop3="this is another property3"
+
+//（四）通过环境变量设置Property
+
+//【九 ------ 自定义Task类型】
+//（一）在build.gradle文件中直接定义
+class HelloWorldTask extends DefaultTask{
+    //message被标记为@Optional，表示在配置该Task时，message是可选的。
+    @Optional
+    String msg = "I am mcxtzhang"
+
+    //@TaskAction表示该Task要执行的动作，即在调用该Task时，hello()方法将被执行。
+    @TaskAction
+    def hello(){
+        println "Hello World $msg"
+    }
+
+}
+
+task hello9_1 (type:HelloWorldTask)
+
+task hello9_2 (type: HelloWorldTask){
+    msg="I am zhangxutong"
+}
+
+//（二）在当前工程中定义Task类型
+//task hello9_3 (type: CustomTask2)
+
+

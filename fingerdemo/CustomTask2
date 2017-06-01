@@ -1,0 +1,10 @@
+
+class CustomTask2 extends DefaultTask{
+    @Optional
+    String msg = "I am default";
+
+    @TaskAction
+    def run(){
+        println("The msg is $msg");
+    }
+}

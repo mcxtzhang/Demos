@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/openBluetooth_tb"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="18dp"
+        android:layout_marginTop="5dp"
+        android:text="打开蓝牙"/>
+
+    <Button
+        android:id="@+id/searchDevices"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/openBluetooth_tb"
+        android:layout_marginTop="20dp"
+        android:text="搜索设备"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/searchDevices"
+        android:background="@android:color/darker_gray"/>
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginTop="125dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="未配对设备"/>
+
+        <ListView
+            android:id="@+id/unbondDevices"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/searchDevices"
+        android:layout_marginTop="160dp"
+        android:background="@android:color/darker_gray"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="190dp"
+        android:layout_marginTop="288dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="已配对设备"/>
+
+        <ListView
+            android:id="@+id/bondDevices"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/linearLayout1">
+        </ListView>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/return_Bluetooth_btn"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/searchDevices"
+        android:layout_alignParentLeft="true"
+        android:text="返回"/>
+
+</RelativeLayout>

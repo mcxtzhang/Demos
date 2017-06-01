@@ -33,7 +33,23 @@ allprojects {
             url 'https://oss.sonatype.org/content/repositories/snapshots/'
         }
     }
+
+/*    task allTask << {
+        println project.name
+    }*/
 }
+
+/*subprojects{
+    task allSubTasks {
+        doLast{
+            println("I am"+ project.name);
+        }
+    }
+}*/
+
+
+
+
 
 task clean(type: Delete) {
     delete rootProject.buildDir

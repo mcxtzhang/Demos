@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    app:cardCornerRadius="5dp"
+    app:cardPreventCornerOverlap="true"
+    app:cardUseCompatPadding="true">
+
+    <android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="293dp"
+            android:layout_height="300dp"
+            android:layout_marginTop="8dp"
+            android:scaleType="fitXY"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/timg"/>
+
+        <TextView
+            android:id="@+id/textView15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="16dp"
+            android:text="鲜虾盖浇饭"
+            android:textColor="#FF333333"
+            android:textSize="15sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView3"/>
+
+        <TextView
+            android:id="@+id/textView16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
+            android:text="肉质柔软，细嫩多汁"
+            android:textColor="#FF666666"
+            android:textSize="12sp"
+            app:layout_constraintLeft_toLeftOf="@+id/textView15"
+            app:layout_constraintTop_toBottomOf="@+id/textView15"/>
+
+        <TextView
+            android:id="@+id/textView17"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="健康营养套餐一号店"
+            android:textColor="#FF999999"
+            android:textSize="11sp"
+            app:layout_constraintLeft_toLeftOf="@+id/textView16"
+            app:layout_constraintTop_toBottomOf="@+id/textView16"/>
+
+        <TextView
+            android:id="@+id/textView18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="14dp"
+            android:layout_marginTop="6dp"
+            android:text="￥11.5"
+            android:textColor="#FFFF0000"
+            android:textSize="17sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/textView24"
+            app:layout_constraintTop_toBottomOf="@+id/textView17"
+            />
+
+        <TextView
+            android:id="@+id/textView24"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="￥12.5"
+            android:textColor="#FF999999"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/textView18"
+            app:layout_constraintLeft_toRightOf="@+id/textView18"
+            app:layout_constraintRight_toLeftOf="@+id/textView25"
+            app:layout_constraintTop_toTopOf="@+id/textView18"/>
+
+        <TextView
+            android:id="@+id/textView25"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="已售45份"
+            app:layout_constraintBottom_toBottomOf="@+id/textView24"
+            app:layout_constraintLeft_toRightOf="@+id/textView24"
+            app:layout_constraintRight_toLeftOf="@+id/view6"
+            app:layout_constraintTop_toTopOf="@+id/textView24"/>
+
+        <view
+            android:id="@+id/view6"
+            class="com.mcxtzhang.lib.AnimShopButton"
+            id="@+id/view"
+            layout_marginBottom="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/textView25"
+            app:layout_constraintLeft_toRightOf="@+id/textView25"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView25"/>
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.v7.widget.CardView>
