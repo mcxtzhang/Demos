@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
 
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
@@ -10,12 +11,12 @@
 
     tools:context="com.mcxtzhang.github.view.TestCstViewActivity">
 
-    <com.mcxtzhang.github.view.CstView
+    <!--<com.mcxtzhang.github.view.CstView
         android:id="@+id/cstView"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:background="@color/colorAccent"
 
-        />
+        />-->
 
 </com.mcxtzhang.github.view.CstFrameLayout>

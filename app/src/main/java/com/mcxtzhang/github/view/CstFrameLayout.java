@@ -51,4 +51,9 @@ public class CstFrameLayout extends FrameLayout {
         super.onDraw(canvas);
         Log.d(TAG, "onDraw() called with: canvas = [" + canvas + "]");
     }
+
+    @Override
+    protected LayoutParams generateDefaultLayoutParams() {
+        return new LayoutParams(600, 600);
+    }
 }
