@@ -1,4 +1,15 @@
-include ':app', ':lib', ':zxtcommonlib', ':library', ':compiler', ':performancedemo', ':realmdemo', ':constraintlayoutdemo', ':bludemo', ':fingerdemo'
+include ':app', ':lib', ':zxtcommonlib', ':constraintlayoutdemo',  ':fingerdemo', ':gradleplugindemolib'
+
+//':bludemo'
+// ':performancedemo',
+//, ':realmdemo'
+
+/***********apt router*******/
+include ':library'
+include ':compiler'
+
+
+
 //include ':artdemo'
 //include ':hotfixdemo
 //include  ':permissiondemo' // 6.0运行时权限
@@ -10,7 +21,7 @@ include ':app', ':lib', ':zxtcommonlib', ':library', ':compiler', ':performanced
 //include ':animdemo'
 //':bndemo',
 //include ':daggerdemo'
-include ':rxjava2demo'
+//include ':rxjava2demo'
 //incldue  ':rxjavademo'
 //include ':retrofitdemo'
 /*** UI Module**/

@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'com.neenbedankt.android-apt'
 
+
 apply plugin: DataAndTimePlugin
 
 dateAndTime{
@@ -63,6 +64,31 @@ class DataAndTimePlugin implements Plugin<Project>{
 
         project.tasks.create('showDate') <<{
             println("Current data is " + new Date().format(project.dateAndTime.dateFormat))
+        }
+
+
+
+
+        project.afterEvaluate{
+            println 'afterEvaluate'
+            println 'afterEvaluate'
+            println 'afterEvaluate'
+            println 'afterEvaluate'
+            println 'afterEvaluate'
+            println 'afterEvaluate'
+            println 'afterEvaluate'
+            println 'afterEvaluate'
+            println 'afterEvaluate'
+
+
+            File configFile = file('TimeListener')
+            configFile = file(configFile.absolutePath)
+            println configFile.path
+            println configFile.path
+            println configFile.path
+            println configFile.path
+            println configFile.path
+            println configFile.path
         }
     }
 }

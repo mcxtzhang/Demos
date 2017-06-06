@@ -1,0 +1,15 @@
+package com.mcxtzhang.groovy;
+
+import org.gradle.api.Plugin
+import org.gradle.api.Project
+
+public class FirstGradle implements Plugin<Project> {
+
+    @Override
+    void apply(Project project) {
+        project.task('testTask') << {
+            println 'I am the First gradle plugin...'
+        }
+
+    }
+}

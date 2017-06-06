@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.example.ZRouter;
 import com.mcxtzhang.github.R;
@@ -20,12 +21,18 @@ public class TestCstViewActivity extends AppCompatActivity {
         Log.d("TAG", "onCreate() called with: savedInstanceState = [" + getWindow().getWindowManager() + "]");
 
 
-        findViewById(R.id.cstView).setOnClickListener(new View.OnClickListener() {
+        /*findViewById(R.id.cstView).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //view.invalidate();
                 view.requestLayout();
             }
-        });
+        });*/
+
+        View view = new MyRelativeLayout(this);
+        ViewGroup viewById = (ViewGroup) findViewById(R.id.root);
+        viewById.addView(view);
+
+
     }
 }
