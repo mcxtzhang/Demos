@@ -45,10 +45,22 @@
 
 
         <Button
-            android:id="@+id/btnTestForTime"
+            android:id="@+id/btnTestForTimeForEach"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="测试三种For循环时间"/>
+            android:text="测试三种For循环时间-foreach"/>
+
+        <Button
+            android:id="@+id/btnTestForTimeIterator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="测试三种For循环时间-iterator"/>
+
+        <Button
+            android:id="@+id/btnTestForTimeNormal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="测试三种For循环时间-normal"/>
 
         <ImageView
             android:id="@+id/image"

@@ -179,7 +179,7 @@ task showProjProps <<{
 }*/
 
 //（一）在build.gradle文件中定义Property
-ext.property1 = "this is custom prop1"
+/*ext.property1 = "this is custom prop1"
 
 ext {
     prop2 = 'this is custom prop2'
@@ -188,7 +188,7 @@ ext {
 task showProps << {
     println(property1)
     println(prop2)
-}
+}*/
 
 //（二）通过命令行参数定义Property
 /*ext.prop4
@@ -206,16 +206,16 @@ task showPropsByCommondLineInput << {
 //两个参数： gradle showPropsByCommondLineInput -Pprop3="this is custom prop3" -Pprop4="aaa"
 
 //（三）通过JVM系统参数定义Property
-task showProps3<<{
+/*task showProps3<<{
     println( prop3 )
-}
+}*/
 // gradle showProps3 -Dorg.gradle.project.prop3="this is another property3"
 
 //（四）通过环境变量设置Property
 
 //【九 ------ 自定义Task类型】
 //（一）在build.gradle文件中直接定义
-class HelloWorldTask extends DefaultTask{
+/*class HelloWorldTask extends DefaultTask{
     //message被标记为@Optional，表示在配置该Task时，message是可选的。
     @Optional
     String msg = "I am mcxtzhang"
@@ -232,7 +232,7 @@ task hello9_1 (type:HelloWorldTask)
 
 task hello9_2 (type: HelloWorldTask){
     msg="I am zhangxutong"
-}
+}*/
 
 //（二）在当前工程中定义Task类型
 //task hello9_3 (type: CustomTask2)

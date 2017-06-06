@@ -209,42 +209,47 @@ public class TestNewASActivity extends AppCompatActivity {
             list.add("a");
             vector.add("b");
         }
-        findViewById(R.id.btnTestForTime).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btnTestForTimeForEach).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
                 long time1 = System.currentTimeMillis();
                 for (String s : list) {
                     String temp = s;
-                    //System.out.println(s);
+                    System.out.println(temp);
                 }
                 long time2 = System.currentTimeMillis();
                 Log.e(TAG, "List 增强for-each循环 耗时:" + (time2 - time1));
-                for (String s : vector) {
-                    String temp = s;
-                    //System.out.println(s);
-                }
-                long time3 = System.currentTimeMillis();
-                Log.e(TAG, "Vector 增强for-each循环耗时:" + (time3 - time2));
-                for (int i = 0; i < list.size(); i++) {
-                    String temp = list.get(i);
-                    //System.out.println(list.get(i));
-                }
-                long time4 = System.currentTimeMillis();
-                Log.e(TAG, "List index for循环 耗时:" + (time4 - time3));
-
-
-                for (Iterator<String> iterator = list.iterator(); iterator.hasNext(); ) {
-                    //System.out.println(iterator.next());
-                    String temp = iterator.next();
-                }
-                long time5 = System.currentTimeMillis();
-                Log.e(TAG, "List Iterator for循环 耗时:" + (time5 - time4));
-
-
             }
         });
+
+        findViewById(R.id.btnTestForTimeIterator).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        long time4 = System.currentTimeMillis();
+                        for (Iterator<String> iterator = list.iterator(); iterator.hasNext(); ) {
+                            //System.out.println(iterator.next());
+                            String temp = iterator.next();
+                            System.out.println(temp);
+                        }
+                        long time5 = System.currentTimeMillis();
+                        Log.e(TAG, "List Iterator for循环 耗时:" + (time5 - time4));
+                    }
+
+                });
+
+
+        findViewById(R.id.btnTestForTimeNormal).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        long time3 = System.currentTimeMillis();
+                        for (int i = 0; i < list.size(); i++) {
+                            String temp = list.get(i);
+                            System.out.println(temp);
+                        }
+                        long time4 = System.currentTimeMillis();
+                        Log.e(TAG, "List index for循环 耗时:" + (time4 - time3));
+                    }
+                });
     }
 
 

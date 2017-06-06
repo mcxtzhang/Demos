@@ -10,7 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity android:name=".TestNewASActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
 
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity android:name=".jobscheduler.JobSchedulerActivity">
         </activity>
@@ -28,11 +32,7 @@
         </activity>
         <activity
             android:name=".SparseArrayOrderTestActivity"
-            android:process=":other_process">            <intent-filter>
-            <action android:name="android.intent.action.MAIN"/>
-
-            <category android:name="android.intent.category.LAUNCHER"/>
-        </intent-filter>
+            android:process=":other_process">
         </activity>
         <activity android:name=".touch.TouchActivity">
         </activity>
