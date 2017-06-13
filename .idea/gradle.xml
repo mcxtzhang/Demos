@@ -9,16 +9,13 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/bludemo" />
             <option value="$PROJECT_DIR$/compiler" />
             <option value="$PROJECT_DIR$/constraintlayoutdemo" />
             <option value="$PROJECT_DIR$/fingerdemo" />
             <option value="$PROJECT_DIR$/gradleplugindemolib" />
             <option value="$PROJECT_DIR$/lib" />
             <option value="$PROJECT_DIR$/library" />
-            <option value="$PROJECT_DIR$/performancedemo" />
-            <option value="$PROJECT_DIR$/realmdemo" />
-            <option value="$PROJECT_DIR$/rxjava2demo" />
+            <option value="$PROJECT_DIR$/zhiwendemo" />
             <option value="$PROJECT_DIR$/zxtcommonlib" />
           </set>
         </option>

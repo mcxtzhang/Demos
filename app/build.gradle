@@ -7,7 +7,7 @@ apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: DataAndTimePlugin
 
 dateAndTime{
-    timeFormat = 'HH:mm:ss.SSS'
+    timeFormat 'HH:mm:ss                                                               '
     dateFormat = 'MM/dd/yyyy'
 }
 
@@ -80,15 +80,6 @@ class DataAndTimePlugin implements Plugin<Project>{
             println 'afterEvaluate'
             println 'afterEvaluate'
 
-
-            File configFile = file('TimeListener')
-            configFile = file(configFile.absolutePath)
-            println configFile.path
-            println configFile.path
-            println configFile.path
-            println configFile.path
-            println configFile.path
-            println configFile.path
         }
     }
 }
