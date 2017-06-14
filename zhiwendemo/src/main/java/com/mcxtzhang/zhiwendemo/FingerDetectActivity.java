@@ -45,7 +45,7 @@ public class FingerDetectActivity extends AppCompatActivity {
                         (TextView) findViewById(R.id.fingerprint_status),
                         new FingerprintUiHelper.Callback() {
                             @Override
-                            public void onAuthenticated() {
+                            public void onAuthenticated(FingerprintManager.AuthenticationResult result) {
                                 Toast.makeText(FingerDetectActivity.this, "滚吧辣鸡", Toast.LENGTH_SHORT).show();
                             }
 

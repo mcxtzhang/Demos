@@ -123,7 +123,7 @@ public class FingerprintUiHelper extends FingerprintManager.AuthenticationCallba
     }
 
     @Override
-    public void onAuthenticationSucceeded(FingerprintManager.AuthenticationResult result) {
+    public void onAuthenticationSucceeded(final FingerprintManager.AuthenticationResult result) {
         mErrorTextView.removeCallbacks(mResetErrorTextRunnable);
         mIcon.setImageResource(R.drawable.ic_fingerprint_success);
         mErrorTextView.setTextColor(
@@ -132,7 +132,7 @@ public class FingerprintUiHelper extends FingerprintManager.AuthenticationCallba
         mIcon.postDelayed(new Runnable() {
             @Override
             public void run() {
-                mCallback.onAuthenticated();
+                mCallback.onAuthenticated(result);
             }
         }, SUCCESS_DELAY_MILLIS);
     }
@@ -150,14 +150,14 @@ public class FingerprintUiHelper extends FingerprintManager.AuthenticationCallba
         @Override
         public void run() {
             mErrorTextView.setTextColor(Color.RED);
-            mErrorTextView.setText("识别成功");
+            mErrorTextView.setText("请重试咯~");
             mIcon.setImageResource(R.drawable.ic_fp_40px);
         }
     };
 
     public interface Callback {
 
-        void onAuthenticated();
+        void onAuthenticated(FingerprintManager.AuthenticationResult result);
 
         void onError();
     }

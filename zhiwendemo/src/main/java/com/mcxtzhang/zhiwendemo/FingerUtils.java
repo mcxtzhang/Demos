@@ -13,9 +13,13 @@ import android.util.Log;
 
 import java.security.InvalidAlgorithmParameterException;
 import java.security.KeyPairGenerator;
+import java.security.KeyStore;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.spec.ECGenParameterSpec;
+
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
 
 /**
  * Intro:
@@ -90,8 +94,6 @@ public class FingerUtils {
     }
 
 
-
-
     public static final String KEY_NAME = "a_l_y_k_e_y";
 
     /**
@@ -130,4 +132,50 @@ public class FingerUtils {
             throw new RuntimeException("Failed to get an instance of KeyPairGenerator", e);
         }
     }
+
+
+    /**
+     * 生成 秘钥
+     */
+    public static void generateKey() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
+            return;
+        //这里使用AES + CBC + PADDING_PKCS7，并且需要用户验证方能取出，这里生成加密content的key
+        try {
+            KeyStore keyStore = KeyStore.getInstance("AndroidKeyStore");
+            final KeyGenerator generator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, "AndroidKeyStore");
+            keyStore.load(null);
+            final int purpose = KeyProperties.PURPOSE_DECRYPT | KeyProperties.PURPOSE_ENCRYPT;
+            final KeyGenParameterSpec.Builder builder = new KeyGenParameterSpec.Builder("com.mcxtzhang.finger", purpose);
+            builder.setUserAuthenticationRequired(true);
+            builder.setBlockModes(KeyProperties.BLOCK_MODE_CBC);
+            builder.setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_PKCS7);
+            generator.init(builder.build());
+            SecretKey secretKey = generator.generateKey();
+            Log.d("zxt", "生成加密密钥成功:" + secretKey);
+            Log.d("zxt", "生成加密密钥成功:" + secretKey.getEncoded());
+        } catch (Exception e) {
+            Log.d("zxt", "生成加密密钥失败");
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 得到秘钥
+     */
+    public static SecretKey getKey() {
+        try {
+            KeyStore keyStore = KeyStore.getInstance("AndroidKeyStore");
+            keyStore.load(null);
+            SecretKey key = (SecretKey) keyStore.getKey("com.mcxtzhang.finger", null);
+            Log.d("zxt", "onClick() called with: key = [" + key + "]");
+            Log.d("zxt", "onClick() called with: key = [" + key.getEncoded() + "]");
+            return key;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
 }
