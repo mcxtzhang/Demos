@@ -11,13 +11,9 @@ import android.security.keystore.KeyProperties;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
-import java.security.InvalidAlgorithmParameterException;
-import java.security.KeyPairGenerator;
 import java.security.KeyStore;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-import java.security.spec.ECGenParameterSpec;
 
+import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 
@@ -94,12 +90,12 @@ public class FingerUtils {
     }
 
 
-    public static final String KEY_NAME = "a_l_y_k_e_y";
+   /* public static final String KEY_NAME = "a_l_y_k_e_y";
 
-    /**
+    *//**
      * Generates an asymmetric key pair in the Android Keystore. Every use of the private key must
      * be authorized by the user authenticating with fingerprint. Public key use is unrestricted.
-     */
+     *//*
     public static void createKeyPair() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
             return;
@@ -131,7 +127,7 @@ public class FingerUtils {
         } catch (NoSuchAlgorithmException | NoSuchProviderException e) {
             throw new RuntimeException("Failed to get an instance of KeyPairGenerator", e);
         }
-    }
+    }*/
 
 
     /**
@@ -177,5 +173,17 @@ public class FingerUtils {
         return null;
     }
 
-
+    public static Cipher getCipher() {
+        final Cipher cipher;
+        try {
+            SecretKey key = FingerUtils.getKey();
+            if (key == null)
+                return null;
+            cipher = Cipher.getInstance(KeyProperties.KEY_ALGORITHM_AES + "/" + KeyProperties.BLOCK_MODE_CBC + "/" + KeyProperties.ENCRYPTION_PADDING_PKCS7);
+            cipher.init(Cipher.ENCRYPT_MODE, key);
+        } catch (Exception e) {
+            return null;
+        }
+        return cipher;
+    }
 }

@@ -1,44 +1,36 @@
 package com.mcxtzhang.zhiwendemo;
 
 import android.hardware.fingerprint.FingerprintManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.IOException;
-import java.security.KeyFactory;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.PrivateKey;
-import java.security.PublicKey;
 import java.security.Signature;
-import java.security.cert.CertificateException;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.X509EncodedKeySpec;
 
-import static com.mcxtzhang.zhiwendemo.FingerUtils.KEY_NAME;
 
 public class FingerDetectActivity extends AppCompatActivity {
 
     private FingerprintUiHelper mFingerprintUiHelper;
     FingerprintManager.CryptoObject cryptoObject;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fingerprint_dialog_content);
-        if (initSignature()) {
+/*        if (initSignature()) {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
                 cryptoObject = new FingerprintManager.CryptoObject(mSignature);
             }
 
-        }
+        }*/
 
         //enroll();
 
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            cryptoObject = new FingerprintManager.CryptoObject(FingerUtils.getCipher());
+        }
 
         mFingerprintUiHelper = new FingerprintUiHelper.FingerprintUiHelperBuilder(FingerUtils.getFingerprintManager(this))
                 .build((ImageView) findViewById(R.id.fingerprint_icon),
@@ -72,9 +64,9 @@ public class FingerDetectActivity extends AppCompatActivity {
     }
 
 
-    /**
+/*    *//**
      * Enrolls a user to the fake backend.
-     */
+     *//*
     private void enroll() {
         try {
             KeyStore keyStore = KeyStore.getInstance("AndroidKeyStore");
@@ -98,7 +90,7 @@ public class FingerDetectActivity extends AppCompatActivity {
                 IOException | InvalidKeySpecException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
 
 
@@ -111,15 +103,15 @@ public class FingerDetectActivity extends AppCompatActivity {
 
 
 
-    Signature mSignature;
-    /**
+/*    Signature mSignature;
+    *//**
      * Initialize the {@link Signature} instance with the created key in the
      * {@link #createKeyPair()} method.
      *
      * @return {@code true} if initialization is successful, {@code false} if the lock screen has
      * been disabled or reset after the key was generated, or if a fingerprint got enrolled after
      * the key was generated.
-     */
+     *//*
     private boolean initSignature() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
             return false;
@@ -149,5 +141,5 @@ public class FingerDetectActivity extends AppCompatActivity {
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException("Failed to get an instance of Signature", e);
         }
-    }
+    }*/
 }

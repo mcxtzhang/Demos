@@ -1,13 +1,11 @@
 package com.mcxtzhang.zhiwendemo;
 
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
-import static com.mcxtzhang.zhiwendemo.FingerUtils.createKeyPair;
 import static com.mcxtzhang.zhiwendemo.FingerUtils.isOpenFingerDetect;
 
 public class MainActivity extends AppCompatActivity {
@@ -29,8 +27,10 @@ public class MainActivity extends AppCompatActivity {
                 }
                 if (isOpenFingerDetect(MainActivity.this)) {
                     Toast.makeText(MainActivity.this, "支持1", Toast.LENGTH_SHORT).show();
-                    createKeyPair();
-                    startActivity(new Intent(MainActivity.this,FingerDetectActivity.class));
+
+                    //startActivity(new Intent(MainActivity.this,FingerDetectActivity.class));
+                    FingerDialogFragment fingerDialogFragment = new FingerDialogFragment();
+                    fingerDialogFragment.show(getFragmentManager(), "dialog");
 
                 } else {
                     Toast.makeText(MainActivity.this, "不支持指纹之别", Toast.LENGTH_SHORT).show();
@@ -38,9 +38,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-
-
 
 
 }
