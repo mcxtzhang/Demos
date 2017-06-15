@@ -7,6 +7,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mcxtzhang.zhiwendemo.utils.FingerUtils;
+
 import java.security.Signature;
 
 

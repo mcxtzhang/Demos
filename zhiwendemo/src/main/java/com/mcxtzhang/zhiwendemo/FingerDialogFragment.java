@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mcxtzhang.zhiwendemo.utils.FingerUtils;
+
 /**
  * Intro:
  * Author: zhangxutong

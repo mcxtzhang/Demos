@@ -1,4 +1,4 @@
-package com.mcxtzhang.zhiwendemo;
+package com.mcxtzhang.zhiwendemo.utils;
 
 import android.Manifest;
 import android.app.KeyguardManager;
@@ -32,7 +32,7 @@ public class FingerUtils {
     public static boolean isOpenFingerDetect(Context context, String account) {
         try {
             return isSupportFingerPrint(context) && hasEnrolledFingerprints(context)
-                    && FingerLoginUtils.getFingerLoginSwitch(context) && FingerLoginUtils.hasSetPwd(context, account);
+                    && FingerLoginUtils.getFingerLoginSwitch(context, account) && FingerLoginUtils.hasSetPwd(context, account);
         } catch (Exception e) {
             e.printStackTrace();
             return false;

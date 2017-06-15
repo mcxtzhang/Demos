@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import static com.mcxtzhang.zhiwendemo.FingerUtils.isOpenFingerDetect;
+import static com.mcxtzhang.zhiwendemo.utils.FingerUtils.isOpenFingerDetect;
 
 public class MainActivity extends AppCompatActivity {
 

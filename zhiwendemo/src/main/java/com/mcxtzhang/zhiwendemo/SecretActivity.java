@@ -11,6 +11,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.mcxtzhang.zhiwendemo.utils.FingerLoginUtils;
+import com.mcxtzhang.zhiwendemo.utils.FingerUtils;
+
 import javax.crypto.Cipher;
 
 public class SecretActivity extends AppCompatActivity {

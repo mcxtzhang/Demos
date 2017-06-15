@@ -1,4 +1,4 @@
-package com.mcxtzhang.zhiwendemo;
+package com.mcxtzhang.zhiwendemo.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
