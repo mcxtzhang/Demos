@@ -16,6 +16,7 @@ import java.security.KeyStore;
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
+import javax.crypto.spec.IvParameterSpec;
 
 /**
  * Intro:
@@ -28,9 +29,10 @@ import javax.crypto.SecretKey;
 
 public class FingerUtils {
 
-    public static boolean isOpenFingerDetect(Context context) {
+    public static boolean isOpenFingerDetect(Context context, String account) {
         try {
-            return isSupportFingerPrint(context) && hasEnrolledFingerprints(context);
+            return isSupportFingerPrint(context) && hasEnrolledFingerprints(context)
+                    && FingerLoginUtils.getFingerLoginSwitch(context) && FingerLoginUtils.hasSetPwd(context, account);
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -146,7 +148,7 @@ public class FingerUtils {
             keyStore.load(null);
             final int purpose = KeyProperties.PURPOSE_DECRYPT | KeyProperties.PURPOSE_ENCRYPT;
             final KeyGenParameterSpec.Builder builder = new KeyGenParameterSpec.Builder(KEY_STORE_ALIAS, purpose);
-            builder.setUserAuthenticationRequired(true);
+            //builder.setUserAuthenticationRequired(true);
             builder.setBlockModes(KeyProperties.BLOCK_MODE_CBC);
             builder.setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_PKCS7);
             generator.init(builder.build());
@@ -188,9 +190,25 @@ public class FingerUtils {
                 return null;
             cipher = Cipher.getInstance(KeyProperties.KEY_ALGORITHM_AES + "/" + KeyProperties.BLOCK_MODE_CBC + "/" + KeyProperties.ENCRYPTION_PADDING_PKCS7);
             cipher.init(Cipher.ENCRYPT_MODE, key);
+            return cipher;
         } catch (Exception e) {
             return null;
         }
-        return cipher;
+
+    }
+
+    public static Cipher getDecriptCipher(byte[] IV) {
+        final Cipher cipher;
+        try {
+            SecretKey key = FingerUtils.getKey();
+            if (key == null)
+                return null;
+            cipher = Cipher.getInstance(KeyProperties.KEY_ALGORITHM_AES + "/" + KeyProperties.BLOCK_MODE_CBC + "/" + KeyProperties.ENCRYPTION_PADDING_PKCS7);
+            cipher.init(Cipher.DECRYPT_MODE, key, new IvParameterSpec(IV));
+            return cipher;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

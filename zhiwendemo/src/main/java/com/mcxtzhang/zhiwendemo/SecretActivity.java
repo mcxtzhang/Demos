@@ -5,25 +5,19 @@ import android.content.pm.PackageManager;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.security.keystore.KeyProperties;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
-import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.IvParameterSpec;
 
 public class SecretActivity extends AppCompatActivity {
-
-    byte[] mIV;
-    byte[] mEncrypted;
     //String mResult;
-    final String mContent = "123456789";
 
+    final String mAccount = "zxt";
+    //final String mContent = ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +27,8 @@ public class SecretActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //FingerUtils.generateKey();
+                FingerLoginUtils.savePwd(SecretActivity.this, mAccount, "123456789");
+
             }
         });
 
@@ -42,16 +38,14 @@ public class SecretActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
                     return;
-                final Cipher cipher;
+
                 try {
-                    SecretKey key = FingerUtils.getKey();
-                    if (key == null)
-                        return;
+                    Cipher cipher = FingerUtils.getCipher();
+/*                    mEncrypted = cipher.doFinal(mContent.getBytes());
+                    Log.d("zxt", "mEncrypted:" + mEncrypted);*/
 
-                    cipher = Cipher.getInstance(KeyProperties.KEY_ALGORITHM_AES + "/" + KeyProperties.BLOCK_MODE_CBC + "/" + KeyProperties.ENCRYPTION_PADDING_PKCS7);
-                    cipher.init(Cipher.ENCRYPT_MODE, key);
 
-                    final FingerprintManager.CryptoObject crypto = new FingerprintManager.CryptoObject(cipher);
+                    /*final FingerprintManager.CryptoObject crypto = new FingerprintManager.CryptoObject(cipher);
 
                     if (ActivityCompat.checkSelfPermission(SecretActivity.this, Manifest.permission.USE_FINGERPRINT) != PackageManager.PERMISSION_GRANTED) {
                         // TODO: Consider calling
@@ -63,7 +57,12 @@ public class SecretActivity extends AppCompatActivity {
                         // for ActivityCompat#requestPermissions for more details.
                         return;
                     }
-                    FingerUtils.getFingerprintManager(SecretActivity.this)
+                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
+                        return;
+                    */
+
+
+/*                    FingerUtils.getFingerprintManager(SecretActivity.this)
                             .authenticate(crypto, null, 0, new FingerprintManager.AuthenticationCallback() {
                                 @Override
                                 public void onAuthenticationSucceeded(FingerprintManager.AuthenticationResult result) {
@@ -81,7 +80,7 @@ public class SecretActivity extends AppCompatActivity {
                                     }
 
                                 }
-                            }, null);
+                            }, null);*/
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -93,6 +92,41 @@ public class SecretActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 try {
+                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
+                        return;
+                    byte[] iv = FingerLoginUtils.getIv(SecretActivity.this, mAccount);
+                    final byte[] pwd = FingerLoginUtils.getPwd(SecretActivity.this, mAccount);
+                    if (iv == null || pwd == null) {
+                        Toast.makeText(SecretActivity.this, "存的信息为空", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    final FingerprintManager.CryptoObject crypto = new FingerprintManager.CryptoObject(FingerUtils.getDecriptCipher(iv));
+                    if (ActivityCompat.checkSelfPermission(SecretActivity.this, Manifest.permission.USE_FINGERPRINT) != PackageManager.PERMISSION_GRANTED) {
+                        return;
+                    }
+                    FingerUtils.getFingerprintManager(SecretActivity.this).authenticate(crypto, null, 0, new FingerprintManager.AuthenticationCallback() {
+                        @Override
+                        public void onAuthenticationSucceeded(FingerprintManager.AuthenticationResult result) {
+                            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
+                                return;
+                            try {
+                                final Cipher cipher = result.getCryptoObject().getCipher();
+                                //Log.d("tag", "Base 64 of data to decrypt is:\n" + Base64.encodeToString(encryptedToken, Base64.URL_SAFE) + "\n");
+                                byte[] decrypted = cipher.doFinal(pwd);
+                                Log.d("zxt", "decrypted:" + decrypted);
+                                Log.d("zxt", "Decrypted data is:" + new String(decrypted));
+
+                                Toast.makeText(SecretActivity.this, "存的信息为"+new String(decrypted), Toast.LENGTH_SHORT).show();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, null);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                /*try {
                     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
                         return;
                     SecretKey key = FingerUtils.getKey();
@@ -131,8 +165,7 @@ public class SecretActivity extends AppCompatActivity {
                     }, null);
                 } catch (Exception e) {
                     e.printStackTrace();
-                }
-
+                }*/
             }
         });
 
