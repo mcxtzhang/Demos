@@ -81,9 +81,9 @@ public class FingerprintUiHelper extends FingerprintManager.AuthenticationCallba
     }
 
     public void startListening(FingerprintManager.CryptoObject cryptoObject) {
-        if (!isFingerprintAuthAvailable() || null == cryptoObject) {
+/*        if (!isFingerprintAuthAvailable() || null == cryptoObject) {
             return;
-        }
+        }*/
         mCancellationSignal = new CancellationSignal();
         mSelfCancelled = false;
         mFingerprintManager

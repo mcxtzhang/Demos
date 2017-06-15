@@ -32,7 +32,7 @@ public class SecretActivity extends AppCompatActivity {
         findViewById(R.id.buttonCreate).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FingerUtils.generateKey();
+                //FingerUtils.generateKey();
             }
         });
 

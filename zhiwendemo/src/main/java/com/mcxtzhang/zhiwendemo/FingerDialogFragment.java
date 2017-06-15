@@ -33,8 +33,8 @@ public class FingerDialogFragment extends DialogFragment {
         View v = inflater.inflate(R.layout.fingerprint_dialog_container, container, false);
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-            FingerUtils.generateKey();
-            cryptoObject = new FingerprintManager.CryptoObject(FingerUtils.getCipher());
+            //FingerUtils.generateKey();
+            //cryptoObject = new FingerprintManager.CryptoObject(FingerUtils.getCipher());
         }
 
         mFingerprintUiHelper = new FingerprintUiHelper.FingerprintUiHelperBuilder(FingerUtils.getFingerprintManager(getActivity()))
