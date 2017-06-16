@@ -1,12 +1,12 @@
-package com.mcxtzhang.alyimagegallery;
+package com.mcxtzhang.alyimagegallery.view;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
 
@@ -60,21 +60,6 @@ public class AlyImageView extends android.support.v7.widget.AppCompatImageView {
     }
 
     public void show(@DrawableRes int drawableId) {
-        show(getDrawableCompat(getContext(), drawableId));
-    }
-
-
-    /**
-     * 兼容类 获取Drawable
-     *
-     * @param context
-     * @param drawableId
-     * @return
-     */
-    public static Drawable getDrawableCompat(Context context, @DrawableRes int drawableId) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            return context.getResources().getDrawable(drawableId, null);
-        else
-            return context.getResources().getDrawable(drawableId);
+        show(ContextCompat.getDrawable(getContext(), drawableId));
     }
 }
