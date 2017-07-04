@@ -14,9 +14,8 @@ public class Main2Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-        AlyGallery alyGallery = (AlyGallery) findViewById(R.id.gallery);
-
-        alyGallery.setDatas(initDatas());
+        AlyGallery alyBaseGallery = (AlyGallery) findViewById(R.id.gallery);
+        alyBaseGallery.setDatas(initDatas());
     }
 
     public List<String> initDatas() {

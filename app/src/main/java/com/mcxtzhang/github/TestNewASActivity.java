@@ -55,6 +55,13 @@ public class TestNewASActivity extends AppCompatActivity {
 
         ZBindTestNewASActivity.bindView(this);
 
+        mTv.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(TestNewASActivity.this, "如果我显示出来了 那就是泄漏了", Toast.LENGTH_SHORT).show();
+            }
+        }, 2000);
+
         findViewById(R.id.cstView).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -99,9 +106,6 @@ public class TestNewASActivity extends AppCompatActivity {
 
 
         Toast.makeText(this, "aaa:" + thridBean, Toast.LENGTH_SHORT).show();
-
-
-
 
 
         //http://www.cnblogs.com/whoislcj/p/5887859.html
@@ -223,33 +227,33 @@ public class TestNewASActivity extends AppCompatActivity {
         });
 
         findViewById(R.id.btnTestForTimeIterator).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        long time4 = System.currentTimeMillis();
-                        for (Iterator<String> iterator = list.iterator(); iterator.hasNext(); ) {
-                            //System.out.println(iterator.next());
-                            String temp = iterator.next();
-                            System.out.println(temp);
-                        }
-                        long time5 = System.currentTimeMillis();
-                        Log.e(TAG, "List Iterator for循环 耗时:" + (time5 - time4));
-                    }
+            @Override
+            public void onClick(View view) {
+                long time4 = System.currentTimeMillis();
+                for (Iterator<String> iterator = list.iterator(); iterator.hasNext(); ) {
+                    //System.out.println(iterator.next());
+                    String temp = iterator.next();
+                    System.out.println(temp);
+                }
+                long time5 = System.currentTimeMillis();
+                Log.e(TAG, "List Iterator for循环 耗时:" + (time5 - time4));
+            }
 
-                });
+        });
 
 
         findViewById(R.id.btnTestForTimeNormal).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        long time3 = System.currentTimeMillis();
-                        for (int i = 0; i < list.size(); i++) {
-                            String temp = list.get(i);
-                            System.out.println(temp);
-                        }
-                        long time4 = System.currentTimeMillis();
-                        Log.e(TAG, "List index for循环 耗时:" + (time4 - time3));
-                    }
-                });
+            @Override
+            public void onClick(View view) {
+                long time3 = System.currentTimeMillis();
+                for (int i = 0; i < list.size(); i++) {
+                    String temp = list.get(i);
+                    System.out.println(temp);
+                }
+                long time4 = System.currentTimeMillis();
+                Log.e(TAG, "List index for循环 耗时:" + (time4 - time3));
+            }
+        });
     }
 
 
