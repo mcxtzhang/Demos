@@ -1,4 +1,4 @@
-package com.mcxtzhang.alyimagegallery.view;
+package com.mcxtzhang.alyimagegallery.gallery.view;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
@@ -23,17 +23,17 @@ import java.util.List;
  * History:
  */
 
-public class AlyBaseGallery extends HorizontalScrollView {
+public class BaseAlyGallery extends HorizontalScrollView {
 
-    public AlyBaseGallery(Context context) {
+    public BaseAlyGallery(Context context) {
         super(context);
     }
 
-    public AlyBaseGallery(Context context, @Nullable AttributeSet attrs) {
+    public BaseAlyGallery(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public AlyBaseGallery(Context context, @Nullable AttributeSet attrs, int defStyle) {
+    public BaseAlyGallery(Context context, @Nullable AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 
@@ -77,6 +77,7 @@ public class AlyBaseGallery extends HorizontalScrollView {
 
     }
 
+
     public interface OnLoadImageListener {
         void onLoadImage(AlyImageView image, String path);
     }
@@ -87,7 +88,7 @@ public class AlyBaseGallery extends HorizontalScrollView {
         return mOnLoadImageListener;
     }
 
-    public AlyBaseGallery setOnLoadImageListener(OnLoadImageListener onLoadImageListener) {
+    public BaseAlyGallery setOnLoadImageListener(OnLoadImageListener onLoadImageListener) {
         mOnLoadImageListener = onLoadImageListener;
         return this;
     }

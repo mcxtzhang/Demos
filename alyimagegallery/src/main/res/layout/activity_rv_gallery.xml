@@ -5,11 +5,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.mcxtzhang.alyimagegallery.gallery.Main2Activity">
+    tools:context="com.mcxtzhang.alyimagegallery.viewpager.rv.RvGalleryActivity">
 
-    <com.mcxtzhang.alyimagegallery.gallery.view.AlyGallery
-        android:id="@+id/gallery"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv"
+        android:layout_width="0dp"
+        android:layout_height="260dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
 </android.support.constraint.ConstraintLayout>

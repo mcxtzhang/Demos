@@ -1,4 +1,4 @@
-package com.mcxtzhang.alyimagegallery.view;
+package com.mcxtzhang.alyimagegallery.gallery.view;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -19,7 +19,7 @@ import com.mcxtzhang.alyimagegallery.R;
  * History:
  */
 
-public class AlyGallery extends AlyBaseGallery {
+public class AlyGallery extends BaseAlyGallery {
     public AlyGallery(Context context) {
         super(context);
         init(context);
@@ -36,7 +36,7 @@ public class AlyGallery extends AlyBaseGallery {
     }
 
     public void init(final Context context) {
-        setOnLoadImageListener(new AlyBaseGallery.OnLoadImageListener() {
+        setOnLoadImageListener(new BaseAlyGallery.OnLoadImageListener() {
             @Override
             public void onLoadImage(final AlyImageView image, String path) {
                 image.show(R.mipmap.ic_launcher);

@@ -5,42 +5,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context="com.mcxtzhang.alyimagegallery.MainActivity">
+    tools:context="com.mcxtzhang.alyimagegallery.gallery.MainActivity">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <com.mcxtzhang.alyimagegallery.view.AlyImageView
+        <com.mcxtzhang.alyimagegallery.gallery.view.AlyImageView
             android:id="@+id/iv1"
             android:layout_width="wrap_content"
             android:layout_height="200dp"
             android:layout_margin="10dp"
             />
 
-        <com.mcxtzhang.alyimagegallery.view.AlyImageView
+        <com.mcxtzhang.alyimagegallery.gallery.view.AlyImageView
             android:id="@+id/iv2"
             android:layout_width="wrap_content"
             android:layout_height="200dp"
             android:layout_margin="10dp"
             />
 
-        <com.mcxtzhang.alyimagegallery.view.AlyImageView
+        <com.mcxtzhang.alyimagegallery.gallery.view.AlyImageView
             android:id="@+id/iv3"
             android:layout_width="wrap_content"
             android:layout_height="200dp"
             android:layout_margin="10dp"
             />
 
-        <com.mcxtzhang.alyimagegallery.view.AlyImageView
+        <com.mcxtzhang.alyimagegallery.gallery.view.AlyImageView
             android:id="@+id/iv4"
             android:layout_width="wrap_content"
             android:layout_height="200dp"
             android:layout_margin="10dp"
             />
 
-        <com.mcxtzhang.alyimagegallery.view.AlyImageView
+        <com.mcxtzhang.alyimagegallery.gallery.view.AlyImageView
             android:id="@+id/iv5"
             android:layout_width="wrap_content"
             android:layout_height="200dp"

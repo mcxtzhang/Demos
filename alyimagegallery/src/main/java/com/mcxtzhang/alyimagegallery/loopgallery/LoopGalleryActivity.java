@@ -1,22 +1,23 @@
-package com.mcxtzhang.alyimagegallery;
+package com.mcxtzhang.alyimagegallery.loopgallery;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.mcxtzhang.alyimagegallery.view.AlyGallery;
+import com.mcxtzhang.alyimagegallery.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Main2Activity extends AppCompatActivity {
+public class LoopGalleryActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
-        AlyGallery alyBaseGallery = (AlyGallery) findViewById(R.id.gallery);
-        alyBaseGallery.setDatas(initDatas());
+        setContentView(R.layout.activity_loop_gallery);
+        AlyLoopGallery alyLoopGallery = (AlyLoopGallery) findViewById(R.id.alyLoopGallery);
+        alyLoopGallery.setDatasAndLayoutId(initDatas(), R.layout.uc_item_main_image_header);
     }
+
 
     public List<String> initDatas() {
         List<String> datas = new ArrayList<>();

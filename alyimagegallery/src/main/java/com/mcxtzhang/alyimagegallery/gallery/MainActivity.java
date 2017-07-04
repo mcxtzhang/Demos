@@ -1,9 +1,10 @@
-package com.mcxtzhang.alyimagegallery;
+package com.mcxtzhang.alyimagegallery.gallery;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.mcxtzhang.alyimagegallery.view.AlyImageView;
+import com.mcxtzhang.alyimagegallery.R;
+import com.mcxtzhang.alyimagegallery.gallery.view.AlyImageView;
 
 public class MainActivity extends AppCompatActivity {
 

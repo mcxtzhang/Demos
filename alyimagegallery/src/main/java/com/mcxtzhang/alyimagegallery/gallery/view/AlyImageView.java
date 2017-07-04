@@ -1,4 +1,4 @@
-package com.mcxtzhang.alyimagegallery.view;
+package com.mcxtzhang.alyimagegallery.gallery.view;
 
 import android.content.Context;
 import android.graphics.Bitmap;
