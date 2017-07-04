@@ -12,7 +12,6 @@
       <module fileurl="file://$PROJECT_DIR$/lib/lib.iml" filepath="$PROJECT_DIR$/lib/lib.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
       <module fileurl="file://$PROJECT_DIR$/zhiwendemo/zhiwendemo.iml" filepath="$PROJECT_DIR$/zhiwendemo/zhiwendemo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/zxt_github_proj.iml" filepath="$PROJECT_DIR$/zxt_github_proj.iml" />
       <module fileurl="file://$PROJECT_DIR$/zxtcommonlib/zxtcommonlib.iml" filepath="$PROJECT_DIR$/zxtcommonlib/zxtcommonlib.iml" />
     </modules>
   </component>
