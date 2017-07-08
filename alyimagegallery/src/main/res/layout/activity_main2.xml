@@ -10,6 +10,8 @@
     <com.mcxtzhang.alyimagegallery.gallery.view.AlyGallery
         android:id="@+id/gallery"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="8dp"/>
 
 </android.support.constraint.ConstraintLayout>

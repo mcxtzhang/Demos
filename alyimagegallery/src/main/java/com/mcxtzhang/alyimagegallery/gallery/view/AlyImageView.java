@@ -8,6 +8,7 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.ViewGroup;
 
 /**
@@ -20,7 +21,7 @@ import android.view.ViewGroup;
  */
 
 public class AlyImageView extends android.support.v7.widget.AppCompatImageView {
-    private static final int BASE_HEIGHT = 400;
+    private static int BASE_HEIGHT;
 
     public AlyImageView(Context context) {
         this(context, null);
@@ -36,6 +37,7 @@ public class AlyImageView extends android.support.v7.widget.AppCompatImageView {
     }
 
     private void init(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+        BASE_HEIGHT = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,265,getResources().getDisplayMetrics());
         setScaleType(ScaleType.CENTER_CROP);
     }
 

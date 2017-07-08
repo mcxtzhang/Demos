@@ -46,7 +46,7 @@ public class BaseAlyGallery extends HorizontalScrollView {
         addView(linearLayout, lp);
         new VGUtil.Builder()
                 .setParent(linearLayout)
-                .setAdapter(new SingleAdapter<String>(getContext(), imgList, R.layout.item_image) {
+                .setAdapter(new SingleAdapter<String>(getContext(), imgList, R.layout.base_item_image) {
                     @Override
                     public void onBindViewHolder(ViewGroup viewGroup, ViewHolder viewHolder, String s, int i) {
                         final AlyImageView view = (AlyImageView) viewHolder.getView(R.id.iv);
@@ -58,7 +58,7 @@ public class BaseAlyGallery extends HorizontalScrollView {
                 .build()
                 .bind();
 /*        setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        setAdapter(new CommonAdapter<String>(getContext(), imgList, R.layout.item_image) {
+        setAdapter(new CommonAdapter<String>(getContext(), imgList, R.layout.base_item_image) {
             @Override
             public void convert(final com.mcxtzhang.commonadapter.rv.ViewHolder viewHolder, String s) {
                 Glide.with(getContext())

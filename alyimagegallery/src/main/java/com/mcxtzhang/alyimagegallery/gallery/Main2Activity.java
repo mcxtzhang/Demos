@@ -21,7 +21,7 @@ public class Main2Activity extends AppCompatActivity {
 
     public List<String> initDatas() {
         List<String> datas = new ArrayList<>();
-        datas.add(new String("http://imgs.ebrun.com/resources/2016_03/2016_03_25/201603259771458878793312_origin.jpg"));
+        datas.add(new String("http://pic.imcoming.cn/59bace70e68c4107b6b3ba421d97d29c_1920x1080.jpg"));
         datas.add(new String("http://p14.go007.com/2014_11_02_05/a03541088cce31b8_1.jpg"));
         datas.add(new String("http://news.k618.cn/tech/201604/W020160407281077548026.jpg"));
         datas.add(new String("http://www.kejik.com/image/1460343965520.jpg"));
