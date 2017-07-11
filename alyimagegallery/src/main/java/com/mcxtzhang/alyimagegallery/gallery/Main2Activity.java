@@ -21,6 +21,8 @@ public class Main2Activity extends AppCompatActivity {
 
     public List<String> initDatas() {
         List<String> datas = new ArrayList<>();
+        datas.add(R.drawable.test_100_400+"");
+
         datas.add(new String("http://pic.imcoming.cn/59bace70e68c4107b6b3ba421d97d29c_1920x1080.jpg"));
         datas.add(new String("http://p14.go007.com/2014_11_02_05/a03541088cce31b8_1.jpg"));
         datas.add(new String("http://news.k618.cn/tech/201604/W020160407281077548026.jpg"));
@@ -29,6 +31,7 @@ public class Main2Activity extends AppCompatActivity {
         datas.add(new String("http://imgs.ebrun.com/resources/2016_04/2016_04_12/201604124411460430531500.jpg"));
         datas.add(new String("http://imgs.ebrun.com/resources/2016_04/2016_04_24/201604244971461460826484_origin.jpeg"));
         datas.add(new String("http://www.lnmoto.cn/bbs/data/attachment/forum/201408/12/074018gshshia3is1cw3sg.jpg"));
+
         return datas;
     }
 }
