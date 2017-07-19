@@ -48,6 +48,16 @@ public class TestNewASActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "A onCreate() called with: savedInstanceState = [" + savedInstanceState + "]");
         super.onCreate(savedInstanceState);
+
+        ClassLoader classLoader = TestNewASActivity.class.getClassLoader();
+
+        while (classLoader!=null){
+            Log.d(TAG, "onCreate() called with: classLoader = [" + classLoader + "]");
+            classLoader = classLoader.getParent();
+        }
+
+
+
         setContentView(R.layout.test);
         //finish();
         //ZRouter.getInstance().jump(TestNewASActivity.this, "touch", null, 101);

@@ -50,7 +50,6 @@ public class TestCstViewActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        viewById.remove
         viewById.removeCallbacks(runnable);
         Toast.makeText(this, "destroy", Toast.LENGTH_SHORT).show();
     }
