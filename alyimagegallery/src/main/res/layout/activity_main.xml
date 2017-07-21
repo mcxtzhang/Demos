@@ -12,6 +12,11 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="90dp"
+            android:layout_height="90dp"/>
+
         <com.mcxtzhang.alyimagegallery.gallery.view.AlyImageView
             android:id="@+id/iv1"
             android:layout_width="wrap_content"
