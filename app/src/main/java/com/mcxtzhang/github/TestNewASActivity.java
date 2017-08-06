@@ -2,10 +2,11 @@ package com.mcxtzhang.github;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -181,6 +182,16 @@ public class TestNewASActivity extends AppCompatActivity {
                 textView.setText("启用自动打印功能，需要先连接打印机，请调试打印机设置并确保连接成功。");
                 DialogManager.showCustom(mContext, textView
                         , "知道了");
+
+
+/*                Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+                r.play();*/ //RING、 SYSTEM
+
+                //MUSIC
+                MediaPlayer mp = MediaPlayer.create(mContext, R.raw.msg_hint);
+                mp.start();
+
             }
         });
 
@@ -196,7 +207,7 @@ public class TestNewASActivity extends AppCompatActivity {
                 //RManager2.getInstance().jump(TestNewASActivity.this, "rx", bundle);*/
 
 
-                View inflate = LayoutInflater.from(mContext).inflate(R.layout.dialog_upgrade, null);
+/*                View inflate = LayoutInflater.from(mContext).inflate(R.layout.dialog_upgrade, null);
                 ((TextView) inflate.findViewById(R.id.tvTitle)).setText("检测到新版本：8.8.8");
                 ((TextView) inflate.findViewById(R.id.tvContent)).setText("优化菜品管理\n" +
                         "取消订单流程优化\n" +
@@ -213,7 +224,40 @@ public class TestNewASActivity extends AppCompatActivity {
                             public void onClick(View v) {
                                 Toast.makeText(TestNewASActivity.this, " 啊 哈", Toast.LENGTH_SHORT).show();
                             }
-                        });
+                        });*/
+
+
+                AudioManager mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+
+//通话音量
+
+                int max = mAudioManager.getStreamMaxVolume(AudioManager.STREAM_VOICE_CALL);
+                int current = mAudioManager.getStreamVolume(AudioManager.STREAM_VOICE_CALL);
+                Log.d("VIOCE_CALL", "max : " + max + " current : " + current);
+
+//系统音量
+
+                max = mAudioManager.getStreamMaxVolume(AudioManager.STREAM_SYSTEM);
+                current = mAudioManager.getStreamVolume(AudioManager.STREAM_SYSTEM);
+                Log.d("SYSTEM", "max : " + max + " current : " + current);
+
+//铃声音量
+
+                max = mAudioManager.getStreamMaxVolume(AudioManager.STREAM_RING);
+                current = mAudioManager.getStreamVolume(AudioManager.STREAM_RING);
+                Log.d("RING", "max : " + max + " current : " + current);
+
+//音乐音量（媒体音量的设置）
+
+                max = mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+                current = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+                Log.d("MUSIC", "max : " + max + " current : " + current);
+
+//提示声音音量
+
+                max = mAudioManager.getStreamMaxVolume(AudioManager.STREAM_ALARM);
+                current = mAudioManager.getStreamVolume(AudioManager.STREAM_ALARM);
+                Log.d("ALARM", "max : " + max + " current : " + current);
                 return true;
             }
         });
