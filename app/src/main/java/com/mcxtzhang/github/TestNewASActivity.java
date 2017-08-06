@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -19,7 +20,7 @@ import com.mcxtzhang.HelloWorld;
 import com.mcxtzhang.github.kotlin.FirstBean;
 import com.mcxtzhang.github.kotlin.ThridBean;
 import com.mcxtzhang.github.routerexample.RManager2;
-import com.mcxzhang.ZRouter;
+import com.mcxtzhang.zxtcommonlib.widget.dialog.DialogManager;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -31,6 +32,7 @@ import java.util.Vector;
 @DIActivity
 @TestHelloWorld("haha")
 public class TestNewASActivity extends AppCompatActivity {
+    Context mContext;
 
     private static final String TAG = "zxt/lifecycle";
 
@@ -46,16 +48,16 @@ public class TestNewASActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mContext = TestNewASActivity.this;
         Log.d(TAG, "A onCreate() called with: savedInstanceState = [" + savedInstanceState + "]");
         super.onCreate(savedInstanceState);
 
         ClassLoader classLoader = TestNewASActivity.class.getClassLoader();
 
-        while (classLoader!=null){
+        while (classLoader != null) {
             Log.d(TAG, "onCreate() called with: classLoader = [" + classLoader + "]");
             classLoader = classLoader.getParent();
         }
-
 
 
         setContentView(R.layout.test);
@@ -174,21 +176,44 @@ public class TestNewASActivity extends AppCompatActivity {
         findViewById(R.id.tv).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ZRouter.getInstance().jump(TestNewASActivity.this, "main", null, 100);
-
+                //ZRouter.getInstance().jump(TestNewASActivity.this, "main", null, 100);
+                TextView textView = new TextView(mContext);
+                textView.setText("启用自动打印功能，需要先连接打印机，请调试打印机设置并确保连接成功。");
+                DialogManager.showCustom(mContext, textView
+                        , "知道了");
             }
         });
 
         findViewById(R.id.tv).setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                Bundle bundle = new Bundle();
+/*                Bundle bundle = new Bundle();
                 bundle.putString("key-string", "jump params in bundle");
 
                 //ZRouter.getInstance().jump(TestNewASActivity.this, "rx", bundle, 101);
                 ZRouter.getInstance().jump(TestNewASActivity.this, "touch", bundle, 101);
 
-                //RManager2.getInstance().jump(TestNewASActivity.this, "rx", bundle);
+                //RManager2.getInstance().jump(TestNewASActivity.this, "rx", bundle);*/
+
+
+                View inflate = LayoutInflater.from(mContext).inflate(R.layout.dialog_upgrade, null);
+                ((TextView) inflate.findViewById(R.id.tvTitle)).setText("检测到新版本：8.8.8");
+                ((TextView) inflate.findViewById(R.id.tvContent)).setText("优化菜品管理\n" +
+                        "取消订单流程优化\n" +
+                        "增加无网络提示\n" +
+                        "欢迎下载体验～");
+                DialogManager.showCustom(mContext, inflate
+                        , "稍后再说", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Toast.makeText(TestNewASActivity.this, " 啊哈哈哈", Toast.LENGTH_SHORT).show();
+                            }
+                        }, "立即更新", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Toast.makeText(TestNewASActivity.this, " 啊 哈", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                 return true;
             }
         });
