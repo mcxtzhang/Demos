@@ -1,5 +1,8 @@
 package com.mcxtzhang.animdemo;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -26,6 +29,15 @@ public class LauncherActivity extends AppCompatActivity {
                 startActivity(new Intent(LauncherActivity.this, NewAnim20170316Activity.class));
             }
         });
+
+
+
+        ValueAnimator colorAnim = ObjectAnimator.ofInt(getWindow().getDecorView(), "backgroundColor", 0xfff8080, 0xff8080ff);
+        colorAnim.setDuration(3000);
+        colorAnim.setEvaluator(new ArgbEvaluator());
+        colorAnim.setRepeatCount(ValueAnimator.INFINITE);
+        colorAnim.setRepeatMode(ValueAnimator.REVERSE);
+        colorAnim.start();
     }
 
     public class LauncherPresenter {
