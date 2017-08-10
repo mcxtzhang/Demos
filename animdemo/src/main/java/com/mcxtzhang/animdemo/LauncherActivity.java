@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 
 import com.mcxtzhang.animdemo.databinding.ActivityLauncherBinding;
@@ -48,5 +49,34 @@ public class LauncherActivity extends AppCompatActivity {
         public void taobaoVipAnim(View v) {
             startActivity(new Intent(v.getContext(), TaobaoVipAnimActivity.class));
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("TAG", "onResume() called");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d("TAG", "onStart() called");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("TAG", "onPause() called");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d("TAG", "onStop() called");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }
