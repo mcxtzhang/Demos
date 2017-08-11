@@ -1,4 +1,4 @@
-include ':app', ':lib', ':zxtcommonlib', ':constraintlayoutdemo', ':fingerdemo', ':gradleplugindemolib', ':zhiwendemo', ':alyimagegallery'
+include ':app', ':lib', ':zxtcommonlib', ':constraintlayoutdemo', ':fingerdemo', ':gradleplugindemolib', ':zhiwendemo', ':alyimagegallery', ':newwebdemoo'
 
 //':bludemo'
 // ':performancedemo',
