@@ -164,6 +164,8 @@ public class TestNewASActivity extends AppCompatActivity {
         mTv.setText("绑定成功");
         mTv.setSelected(true);
 
+        mTv.setText("我牛逼\n你牛逼");
+
 
         HelloWorld.main(null);
         HelloWorld.jump("旋转跳跃");

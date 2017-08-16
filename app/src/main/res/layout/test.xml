@@ -14,7 +14,7 @@
             android:text="哈哈哈哈"
             android:id="@+id/tv"
             android:layout_width="120dp"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/shape_round_bg_cate_list"
             android:gravity="center"
             android:padding="20dp"
