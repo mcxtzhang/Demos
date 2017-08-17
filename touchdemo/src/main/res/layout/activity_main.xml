@@ -9,6 +9,7 @@
     tools:context="com.mcxtzhang.touchdemo.MainActivity">
 
     <com.mcxtzhang.touchdemo.CustomView
+        android:id="@+id/customView"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:background="@color/colorPrimaryDark"/>
