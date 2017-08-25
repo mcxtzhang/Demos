@@ -1,4 +1,4 @@
-include ':app', ':lib', ':zxtcommonlib',  ':gradleplugindemolib',
+include ':app', ':lib', ':zxtcommonlib', ':gradleplugindemolib', ':unittestdemo'
 //include ':alyimagegallery',
 //include':constraintlayoutdemo',
 //include ':fingerdemo',

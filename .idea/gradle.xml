@@ -8,19 +8,13 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/alyimagegallery" />
-            <option value="$PROJECT_DIR$/animdemo" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/compiler" />
-            <option value="$PROJECT_DIR$/constraintlayoutdemo" />
-            <option value="$PROJECT_DIR$/fingerdemo" />
             <option value="$PROJECT_DIR$/gradleplugindemolib" />
             <option value="$PROJECT_DIR$/lib" />
             <option value="$PROJECT_DIR$/library" />
-            <option value="$PROJECT_DIR$/newwebdemoo" />
-            <option value="$PROJECT_DIR$/rxjava2demo" />
             <option value="$PROJECT_DIR$/touchdemo" />
-            <option value="$PROJECT_DIR$/zhiwendemo" />
+            <option value="$PROJECT_DIR$/unittestdemo" />
             <option value="$PROJECT_DIR$/zxtcommonlib" />
           </set>
         </option>
