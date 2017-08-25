@@ -2,9 +2,14 @@ package com.mcxtzhang.touchdemo;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.ArrayMap;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import java.util.Iterator;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,6 +36,13 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-
+        Map<String, String> map = new ArrayMap<>();
+        map.put("1","1");
+        map.put(null,"2");
+        map.put("3",null);
+        map.put("6",null);
+        map.put("5",null);
+        map.put("4",null);
+        Log.d("TAG", "onCreate() called with: map = [" + map + "]");
     }
 }

@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
+import com.google.gson.Gson;
 import com.mcxtzhang.rxjava2demo.lifecycle.CstRxLifecycleActivity;
 import com.mcxtzhang.rxjava2demo.retrofit.AlyTestActivity;
 import com.mcxtzhang.rxjava2demo.retrofit.RetrofitDemoActivity;
@@ -55,6 +56,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, CstRxLifecycleActivity.class));
             }
         });
+
+
+        String a = "{\"mobile\":\"15901793643\",\"type\":101}";
+
+        Log.d(TAG, "onCreate() called with: a = [" + a + "]");
+        String b = new Gson().toJson(new TestBean());
+        Log.d(TAG, "onCreate() called with: b = [" + b+ "]");
+
     }
 
     @Override

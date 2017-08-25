@@ -1,4 +1,10 @@
-include ':app', ':lib', ':zxtcommonlib', ':constraintlayoutdemo', ':fingerdemo', ':gradleplugindemolib', ':zhiwendemo', ':alyimagegallery', ':newwebdemoo', ':touchdemo'
+include ':app', ':lib', ':zxtcommonlib',  ':gradleplugindemolib',
+//include ':alyimagegallery',
+//include':constraintlayoutdemo',
+//include ':fingerdemo',
+//include ':zhiwendemo',
+//include ':newwebdemoo',
+include ':touchdemo'
 
 //':bludemo'
 // ':performancedemo',
@@ -16,7 +22,7 @@ include ':compiler'
 //include ':viewpagerdemo'
 //include ':cstviewdemo'
 //, ,, ':recyclerviewdemo', ':okhttpdemo'
-include ':animdemo'
+//include ':animdemo'
 //':bndemo',
 //include ':daggerdemo'
 //include ':rxjava2demo'
