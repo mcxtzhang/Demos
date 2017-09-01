@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+
+<button id="btn0">调用android无参参数</button>
+<button id="btn1">调用android有参参数</button>
+
+<a href='aa://atguigu/path'>点我试试</a>
+<a href='https://www.baidu.com'>百度</a>
+
+<div id="content"></div>
+
+</body>
+
+<script type="text/javascript">
+        var name = "啊福老师 哇哇哇"
+        document.getElementById("btn0").onclick = function(){
+//android是传过来的对象名称，setmessage是android中的方法
+            AndroidInterface.printOrder("1234567890");
+        };
+        document.getElementById("btn1").onclick = function(){
+//android是传过来的对象名称，setmessage是android中的方法
+                android.setMessage(name);
+        };
+
+        var content = document.getElementById("content");
+
+        function message(){
+            content.innerHTML = "调用了有参的js函数"
+        };
+
+        function message2(des){
+            content.innerHTML = "调用了"+des;
+        };
+    </script>
+</html>
