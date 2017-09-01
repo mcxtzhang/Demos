@@ -16,7 +16,6 @@ import com.shopcart.XYBean;
 import java.util.List;
 
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
 
 public class MainActivity extends AppCompatActivity {
     {
@@ -30,14 +29,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Realm.init(this);
+;
+
+
         mShopCartManager = DBManager.getShopCartManager();
 
 
-        Realm.getInstance(new RealmConfiguration.Builder()
-                .schemaVersion(1)
-                .deleteRealmIfMigrationNeeded()
-                .name("zxt.realm")
-                .build());
+
 
         findViewById(R.id.btnInsert).setOnClickListener(new View.OnClickListener() {
             @Override

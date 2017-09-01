@@ -8,6 +8,7 @@
       <module fileurl="file://$PROJECT_DIR$/gradleplugindemolib/gradleplugindemolib.iml" filepath="$PROJECT_DIR$/gradleplugindemolib/gradleplugindemolib.iml" />
       <module fileurl="file://$PROJECT_DIR$/lib/lib.iml" filepath="$PROJECT_DIR$/lib/lib.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/realmdemo/realmdemo.iml" filepath="$PROJECT_DIR$/realmdemo/realmdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/touchdemo/touchdemo.iml" filepath="$PROJECT_DIR$/touchdemo/touchdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/unittestdemo/unittestdemo.iml" filepath="$PROJECT_DIR$/unittestdemo/unittestdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/zxt_github_proj.iml" filepath="$PROJECT_DIR$/zxt_github_proj.iml" />

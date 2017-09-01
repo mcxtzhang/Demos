@@ -8,7 +8,7 @@ include ':touchdemo'
 
 //':bludemo'
 // ':performancedemo',
-//, ':realmdemo'
+include ':realmdemo'
 
 /***********apt router*******/
 include ':library'

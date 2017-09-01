@@ -8,6 +8,7 @@ import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
+import io.realm.RealmConfiguration;
 import io.realm.RealmModel;
 import io.realm.RealmResults;
 import io.realm.Sort;
@@ -25,7 +26,12 @@ public class RealmManager implements ShopCartManager {
     Realm mRealm;
 
     public RealmManager() {
-        mRealm = Realm.getDefaultInstance();
+        mRealm = Realm.getInstance(new RealmConfiguration.Builder()
+                .deleteRealmIfMigrationNeeded()
+                .name("zxt.realm")
+                //.migration(new MyMigration())
+                .build());
+
     }
 
     @Override

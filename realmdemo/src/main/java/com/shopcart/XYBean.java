@@ -30,14 +30,34 @@ public class XYBean extends RealmObject implements IShopCartBean {
     private int tag;//特殊标记，例如 午餐晚餐    ，早餐的日期，品牌馆的店铺等
 
     public static int mPrimaryKey;
+
+    public String newVar;
+
+    public static int getmPrimaryKey() {
+        return mPrimaryKey;
+    }
+
+    public static void setmPrimaryKey(int mPrimaryKey) {
+        XYBean.mPrimaryKey = mPrimaryKey;
+    }
+
+    public String getNewVar() {
+        return newVar;
+    }
+
+    public XYBean setNewVar(String newVar) {
+        this.newVar = newVar;
+        return this;
+    }
+
     public static XYBean mockData() {
         XYBean xyBean = new XYBean();
         xyBean.name = "one";
         xyBean.price = "0.01";
         xyBean.count = 3;
-        xyBean.primaryKey = mPrimaryKey++ +"";
+        xyBean.primaryKey = mPrimaryKey++ + "";
         xyBean.desc = "lala";
-
+        xyBean.newVar = "newVar1";
         xyBean.tag = 2;//午餐
         return xyBean;
     }
@@ -47,9 +67,9 @@ public class XYBean extends RealmObject implements IShopCartBean {
         xyBean.name = "two";
         xyBean.price = "10";
         xyBean.count = 5;
-        xyBean.primaryKey = mPrimaryKey++ +"";
+        xyBean.primaryKey = mPrimaryKey++ + "";
         xyBean.desc = "hahha";
-
+        xyBean.newVar = "newVar2";
         xyBean.tag = 3;//晚餐
         return xyBean;
     }
