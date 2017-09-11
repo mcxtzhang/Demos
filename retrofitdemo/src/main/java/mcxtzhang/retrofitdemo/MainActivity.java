@@ -4,9 +4,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import java.io.IOException;
 import java.util.List;
 
 import mcxtzhang.retrofitdemo.model.GithubRepoBean;
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -54,8 +57,18 @@ Call<PostQueryInfo> yuantong = service.search("yuantong", "500379523313");
             }
         });*/
 
+        OkHttpClient  okHttpClient = new  OkHttpClient.Builder()
+                .addInterceptor(new Interceptor() {
+                    @Override
+                    public okhttp3.Response intercept(Chain chain) throws IOException {
+                        throw new RuntimeException("没有网了");
+                        //return null;
+                    }
+                })
+                .build();
 
         Retrofit retrofit = new Retrofit.Builder()
+                .client(okHttpClient)
                 .baseUrl("https://api.github.com/")
                 .build();
         GitHubService service = retrofit.create(GitHubService.class);

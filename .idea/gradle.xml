@@ -9,11 +9,13 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/binderdemo" />
             <option value="$PROJECT_DIR$/compiler" />
             <option value="$PROJECT_DIR$/gradleplugindemolib" />
             <option value="$PROJECT_DIR$/lib" />
             <option value="$PROJECT_DIR$/library" />
             <option value="$PROJECT_DIR$/realmdemo" />
+            <option value="$PROJECT_DIR$/toastdemo" />
             <option value="$PROJECT_DIR$/touchdemo" />
             <option value="$PROJECT_DIR$/unittestdemo" />
             <option value="$PROJECT_DIR$/zxtcommonlib" />
