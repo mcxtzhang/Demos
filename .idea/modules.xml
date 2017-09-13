@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Demos.iml" filepath="$PROJECT_DIR$/Demos.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aidldemoclient/aidldemoclient.iml" filepath="$PROJECT_DIR$/aidldemoclient/aidldemoclient.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aidldemoserver/aidldemoserver.iml" filepath="$PROJECT_DIR$/aidldemoserver/aidldemoserver.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/binder2_messenger/binder2_messenger.iml" filepath="$PROJECT_DIR$/binder2_messenger/binder2_messenger.iml" />
       <module fileurl="file://$PROJECT_DIR$/binderdemo/binderdemo.iml" filepath="$PROJECT_DIR$/binderdemo/binderdemo.iml" />

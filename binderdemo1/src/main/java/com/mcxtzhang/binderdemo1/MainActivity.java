@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         mTextViewStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e(TAG,"call Server method playMusic(),music start play!");
+                Log.e(TAG,"call Server method stopMusic(),music stop play!");
                 mMusicPlayService.stopMusic();
             }
         });
