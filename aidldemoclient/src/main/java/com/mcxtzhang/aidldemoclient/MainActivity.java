@@ -28,6 +28,21 @@ public class MainActivity extends AppCompatActivity {
         public void onServiceConnected(ComponentName name, IBinder service) {
             Log.d(TAG, "onServiceConnected() called with: name = [" + name + "], service = [" + service + "]");
             mBookManager = BookManager.Stub.asInterface(service);
+            //死亡代理
+            try {
+                service.linkToDeath(new IBinder.DeathRecipient() {
+                    @Override
+                    public void binderDied() {
+                        Log.d(TAG, "binderDied() called,mBookManager:" + mBookManager);
+                        if (mBookManager == null) return;
+                        mBookManager.asBinder().unlinkToDeath(this, 0);
+                        mBookManager = null;
+                    }
+                }, 0);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+
             if (null != mBookManager) {
                 try {
                     List<Book> books = mBookManager.getBooks();
