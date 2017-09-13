@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.webkit.JavascriptInterface;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
@@ -51,6 +52,10 @@ public class WebViewActivity extends AppCompatActivity {
         //第一个参数把自身传给js 第二个参数是this的一个名字
         //这个方法用于让H5调用android方法
         wv.addJavascriptInterface(new WebAppInterface(), "AndroidInterface");
+
+        wv.setWebChromeClient(new WebChromeClient(){
+
+        });
     }
 
     public static class WebAppInterface{

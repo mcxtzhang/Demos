@@ -9,7 +9,9 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/binder2_messenger" />
             <option value="$PROJECT_DIR$/binderdemo" />
+            <option value="$PROJECT_DIR$/binderdemo1" />
             <option value="$PROJECT_DIR$/compiler" />
             <option value="$PROJECT_DIR$/gradleplugindemolib" />
             <option value="$PROJECT_DIR$/lib" />
