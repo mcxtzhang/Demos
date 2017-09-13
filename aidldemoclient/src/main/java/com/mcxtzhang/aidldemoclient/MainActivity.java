@@ -111,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        //加不加这一行代码 Service都会执行onDestroy() 但是还是要加上 防止内存泄漏
         unbindService(mServiceConnection);
     }
 }
