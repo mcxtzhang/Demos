@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.mcxtzhang.aidldemoserver.Book;
 import com.mcxtzhang.aidldemoserver.BookManager;
+import com.mcxtzhang.aidldemoserver.OnBookAddObserver;
 
 import java.util.List;
 
@@ -23,6 +24,14 @@ public class MainActivity extends AppCompatActivity {
     private TextView mTextView, mBookCount;
 
     BookManager mBookManager;
+
+    OnBookAddObserver mOnBookAddObserver = new OnBookAddObserver.Stub() {
+        @Override
+        public void onBookAdded(Book newBook) throws RemoteException {
+            Log.w(TAG, "In Client:onBookAdded() called with: newBook = [" + newBook + "]");
+        }
+    };
+
     ServiceConnection mServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
@@ -42,16 +51,22 @@ public class MainActivity extends AppCompatActivity {
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
-
+            //业务函数
             if (null != mBookManager) {
                 try {
                     List<Book> books = mBookManager.getBooks();
                     Log.d(TAG, "onServiceConnected() called with: books = [" + books);
                     Toast.makeText(MainActivity.this, "" + books, Toast.LENGTH_SHORT).show();
+
+
+                    //监听
+                    mBookManager.registerListener(mOnBookAddObserver);
+
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
             }
+
         }
 
         @Override
@@ -113,5 +128,16 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         //加不加这一行代码 Service都会执行onDestroy() 但是还是要加上 防止内存泄漏
         unbindService(mServiceConnection);
+
+        //取消注册监听器
+        if (null != mOnBookAddObserver && mOnBookAddObserver.asBinder().isBinderAlive()) {
+            try {
+                mBookManager.unRegisterListener(mOnBookAddObserver);
+                Log.w(TAG, "onDestroy() unRegisterListener");
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 }
