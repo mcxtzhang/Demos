@@ -19,7 +19,14 @@
     <include layout="@layout/merge_title"/>
 
     <TextView
+    android:id="@+id/testAllocationTracker"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="s"/>
+
+    <TextView
+        android:id="@+id/testAllocationTrackerSb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"/>
+        android:text="sb"/>
 </LinearLayout>

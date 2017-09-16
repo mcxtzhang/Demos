@@ -7,7 +7,7 @@ include ':app', ':lib', ':zxtcommonlib', ':gradleplugindemolib', ':unittestdemo'
 include ':touchdemo'
 
 //':bludemo'
-// ':performancedemo',
+include ':performancedemo'
 include ':realmdemo'
 
 /***********apt router*******/
