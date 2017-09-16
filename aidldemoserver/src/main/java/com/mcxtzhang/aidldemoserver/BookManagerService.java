@@ -10,6 +10,8 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -28,6 +30,7 @@ public class BookManagerService extends Service {
     //private CopyOnWriteArrayList<OnBookAddObserver> mListener = new CopyOnWriteArrayList<>();
     private RemoteCallbackList<OnBookAddObserver> mNewListeners = new RemoteCallbackList<>();
     private AtomicBoolean mIsDestroy = new AtomicBoolean(false);
+    ExecutorService mExecutorService = Executors.newSingleThreadExecutor();
 
 
     @Override
@@ -40,7 +43,7 @@ public class BookManagerService extends Service {
         book.setBookAuthor("XXX");
         mBooks.add(book);
 
-        new Thread(new Runnable() {
+        Runnable runnable = new Runnable() {
             @Override
             public void run() {
                 while (!mIsDestroy.get()) {
@@ -54,12 +57,17 @@ public class BookManagerService extends Service {
                     notifyNewBookAdded();
                 }
             }
-        }).start();
+        };
+
+/*        new Thread(runnable).start();*/
+        mExecutorService.submit(runnable);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+        mIsDestroy.set(true);
+        mExecutorService.shutdown();
         Log.d(TAG, "onDestroy() called");
     }
 
@@ -153,7 +161,7 @@ public class BookManagerService extends Service {
         int n = mNewListeners.beginBroadcast();
         for (int i = 0; i < n; i++) {
             OnBookAddObserver broadcastItem = mNewListeners.getBroadcastItem(i);
-            if (null!=broadcastItem){
+            if (null != broadcastItem) {
                 try {
                     broadcastItem.onBookAdded(book);
                 } catch (RemoteException e) {

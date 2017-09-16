@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
         unbindService(mServiceConnection);
 
         //取消注册监听器
-        if (null != mOnBookAddObserver && mOnBookAddObserver.asBinder().isBinderAlive()) {
+        if (null != mOnBookAddObserver && mOnBookAddObserver.asBinder().isBinderAlive() && null != mBookManager) {
             try {
                 mBookManager.unRegisterListener(mOnBookAddObserver);
                 Log.w(TAG, "onDestroy() unRegisterListener");
