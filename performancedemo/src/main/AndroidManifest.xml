@@ -15,6 +15,13 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name=".measure.TestMeasureActivity">
+
+        </activity>
+        <activity android:name=".measure.TestMeasureRelativeActivity">
+        </activity>
+        <activity android:name=".measure.TestMeasureLInearActivity">
+        </activity>
     </application>
 
 </manifest>

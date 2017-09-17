@@ -1,9 +1,14 @@
 package anlaiye.com.cn.performancedemo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+
+import anlaiye.com.cn.performancedemo.measure.TestMeasureActivity;
+import anlaiye.com.cn.performancedemo.measure.TestMeasureLInearActivity;
+import anlaiye.com.cn.performancedemo.measure.TestMeasureRelativeActivity;
 
 /**
  * 测试  ● Allocation Tracker：追踪内存对象的来源。
@@ -42,5 +47,27 @@ public class MainActivity extends AppCompatActivity {
 
 
         Log.d(TAG, "onCreate() called with: savedInstanceState = [" + findViewById(R.id.root).getBackground().getClass() + "]");
+
+
+        findViewById(R.id.testLL).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, TestMeasureLInearActivity.class));
+            }
+        });
+
+        findViewById(R.id.testRL).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, TestMeasureRelativeActivity.class));
+            }
+        });
+        findViewById(R.id.testCons).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, TestMeasureActivity.class));
+            }
+        });
+
     }
 }
