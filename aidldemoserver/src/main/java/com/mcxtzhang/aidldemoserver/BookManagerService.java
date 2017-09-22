@@ -2,6 +2,7 @@ package com.mcxtzhang.aidldemoserver;
 
 import android.app.Service;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.IBinder;
 import android.os.RemoteCallbackList;
 import android.os.RemoteException;
@@ -75,6 +76,9 @@ public class BookManagerService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         Log.d(TAG, "onBind() called with: intent = [" + intent + "]");
+        int check = checkCallingOrSelfPermission("com.mcxtzhang.permission.ACCESS_BOOK_SERVICE");
+        if (check == PackageManager.PERMISSION_DENIED) return null;
+
         return new BookManager.Stub() {
             @Override
             public List<Book> getBooks() throws RemoteException {
