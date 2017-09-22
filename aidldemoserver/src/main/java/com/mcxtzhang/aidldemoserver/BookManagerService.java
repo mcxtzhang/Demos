@@ -2,8 +2,8 @@ package com.mcxtzhang.aidldemoserver;
 
 import android.app.Service;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.IBinder;
+import android.os.Parcel;
 import android.os.RemoteCallbackList;
 import android.os.RemoteException;
 import android.support.annotation.Nullable;
@@ -76,10 +76,34 @@ public class BookManagerService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         Log.d(TAG, "onBind() called with: intent = [" + intent + "]");
+        //权限验证方式1
         int check = checkCallingOrSelfPermission("com.mcxtzhang.permission.ACCESS_BOOK_SERVICE");
-        if (check == PackageManager.PERMISSION_DENIED) return null;
+/*
+        if (check == PackageManager.PERMISSION_DENIED) return null;*/
 
         return new BookManager.Stub() {
+
+            @Override
+            public boolean onTransact(int code, Parcel data, Parcel reply, int flags) throws RemoteException {
+                //权限验证二：
+                Log.d(TAG, "onTransact() called with: code = [" + code + "], data = [" + data + "], reply = [" + reply + "], flags = [" + flags + "]");
+                int check = checkCallingOrSelfPermission("com.mcxtzhang.permission.ACCESS_BOOK_SERVICE");
+
+
+
+                String pkgName = "";
+                String[] packagesForUid = getPackageManager().getPackagesForUid(getCallingUid());
+                if (null != packagesForUid && packagesForUid.length > 0) {
+                    pkgName = packagesForUid[0];
+                }
+                if (!pkgName.startsWith("com.mcxtzhang")) {
+                    return false;
+                }
+
+
+                return super.onTransact(code, data, reply, flags);
+            }
+
             @Override
             public List<Book> getBooks() throws RemoteException {
                 synchronized (this) {
