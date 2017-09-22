@@ -28,21 +28,21 @@ public class MainActivity extends AppCompatActivity {
     OnBookAddObserver mOnBookAddObserver = new OnBookAddObserver.Stub() {
         @Override
         public void onBookAdded(Book newBook) throws RemoteException {
-            Log.w(TAG, "In Client:onBookAdded() called with: newBook = [" + newBook + "]");
+            Log.w(TAG, "In Client:onBookAdded() called with: newBook = [" + newBook + "], and run in" + Thread.currentThread());
         }
     };
 
     ServiceConnection mServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            Log.d(TAG, "onServiceConnected() called with: name = [" + name + "], service = [" + service + "]");
+            Log.d(TAG, "onServiceConnected() called with: name = [" + name + "], service = [" + service + "], and run in" + Thread.currentThread());
             mBookManager = BookManager.Stub.asInterface(service);
             //死亡代理
             try {
                 service.linkToDeath(new IBinder.DeathRecipient() {
                     @Override
                     public void binderDied() {
-                        Log.d(TAG, "binderDied() called,mBookManager:" + mBookManager);
+                        Log.d(TAG, "binderDied() called,mBookManager:" + mBookManager+ "], and run in" + Thread.currentThread());
                         if (mBookManager == null) return;
                         mBookManager.asBinder().unlinkToDeath(this, 0);
                         mBookManager = null;
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
             if (null != mBookManager) {
                 try {
                     List<Book> books = mBookManager.getBooks();
-                    Log.d(TAG, "onServiceConnected() called with: books = [" + books);
+                    Log.d(TAG, "onServiceConnected() called with: books = [" + books+ "], and run in" + Thread.currentThread());
                     Toast.makeText(MainActivity.this, "" + books, Toast.LENGTH_SHORT).show();
 
 
@@ -71,7 +71,8 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
-            Log.d(TAG, "onServiceDisconnected() called with: name = [" + name + "]");
+            Log.d(TAG, "onServiceDisconnected() called with: name = [" + name + "]"+ "], attempttoReBind ,and run in" + Thread.currentThread());
+            attemptToBindService();
         }
     };
 
