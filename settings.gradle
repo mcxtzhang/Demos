@@ -4,11 +4,11 @@ include ':app', ':lib', ':zxtcommonlib', ':gradleplugindemolib', ':unittestdemo'
 //include ':fingerdemo',
 //include ':zhiwendemo',
 //include ':newwebdemoo',
-include ':touchdemo'
+//include ':touchdemo'
 
 //':bludemo'
 include ':performancedemo'
-include ':realmdemo'
+//include ':realmdemo'
 
 /***********apt router*******/
 include ':library'

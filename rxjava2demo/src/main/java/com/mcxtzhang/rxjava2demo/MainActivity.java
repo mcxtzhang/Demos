@@ -64,6 +64,12 @@ public class MainActivity extends AppCompatActivity {
         String b = new Gson().toJson(new TestBean());
         Log.d(TAG, "onCreate() called with: b = [" + b+ "]");
 
+        String message = "{\"messageType\":1,\"sysCode\":\"20\",\"data\":\"{\\\"content\\\":\\\"您有新的未打印的俺来也订单，订单id=61170922391380001\\\",\\\"orderId\\\":\\\"61170922391380001\\\"}\"}";
+        //打印
+        XcPushBean xcPushBean = new Gson().fromJson(message, XcPushBean.class);
+
+        System.out.println(xcPushBean);
+
     }
 
     @Override
