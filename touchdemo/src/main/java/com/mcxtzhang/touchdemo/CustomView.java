@@ -1,7 +1,6 @@
 package com.mcxtzhang.touchdemo;
 
 import android.content.Context;
-import android.graphics.Canvas;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -35,19 +34,24 @@ public class CustomView extends View {
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
         Log.d(TAG, "dispatchTouchEvent() called with: event = [" + event + "]");
-        super.dispatchTouchEvent(event);
-        return true;
+        //super.dispatchTouchEvent(event);
+        return super.dispatchTouchEvent(event);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         Log.d(TAG, "onTouchEvent() called with: event = [" + event + "]");
         super.onTouchEvent(event);
-        return true;
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                return true;
+
+        }
+        return false;
     }
 
 
-    @Override
+/*    @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         Log.e(TAG, "onMeasure() called with: widthMeasureSpec = [" + widthMeasureSpec + "], heightMeasureSpec = [" + heightMeasureSpec + "]");
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -69,5 +73,5 @@ public class CustomView extends View {
     protected void dispatchDraw(Canvas canvas) {
         Log.e(TAG, "dispatchDraw() called with: canvas = [" + canvas + "]");
         super.dispatchDraw(canvas);
-    }
+    }*/
 }

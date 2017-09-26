@@ -4,7 +4,7 @@ include ':app', ':lib', ':zxtcommonlib', ':gradleplugindemolib', ':unittestdemo'
 //include ':fingerdemo',
 //include ':zhiwendemo',
 //include ':newwebdemoo',
-//include ':touchdemo'
+include ':touchdemo'
 
 //':bludemo'
 include ':performancedemo'

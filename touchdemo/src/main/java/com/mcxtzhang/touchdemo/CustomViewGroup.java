@@ -1,7 +1,6 @@
 package com.mcxtzhang.touchdemo;
 
 import android.content.Context;
-import android.graphics.Canvas;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -12,7 +11,7 @@ import android.widget.LinearLayout;
  * Intro:
  * Author: zhangxutong
  * E-mail: mcxtzhang@163.com
- * Home Page: http://blog.csdn.net/zxt0601
+ * Home Page: http://bLog.csdn.net/zxt0601
  * Created:   2017/8/12.
  * History:
  */
@@ -35,14 +34,14 @@ public class CustomViewGroup extends LinearLayout {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        Log.d(TAG, "dispatchTouchEvent() called with: ev = [" + ev + "]");
-        super.dispatchTouchEvent(ev);
-        return true;
+       Log.w(TAG, "dispatchTouchEvent() called with: ev = [" + ev + "]");
+        //super.dispatchTouchEvent(ev);
+        return super.dispatchTouchEvent(ev);
     }
 
 /*    @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        Log.d(TAG, "onInterceptTouchEvent() called with: ev = [" + ev + "]");
+       Log.w(TAG, "onInterceptTouchEvent() called with: ev = [" + ev + "]");
 
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
@@ -54,11 +53,11 @@ public class CustomViewGroup extends LinearLayout {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        Log.d(TAG, "onTouchEvent() called with: event = [" + event + "]");
+       Log.w(TAG, "onTouchEvent() called with: event = [" + event + "]");
         super.onTouchEvent(event);
-        return true;
+        return false;
     }
-
+/*
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -82,5 +81,5 @@ public class CustomViewGroup extends LinearLayout {
     protected void dispatchDraw(Canvas canvas) {
         Log.e(TAG, "dispatchDraw() called with: canvas = [" + canvas + "]");
         super.dispatchDraw(canvas);
-    }
+    }*/
 }
