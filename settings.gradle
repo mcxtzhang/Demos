@@ -1,4 +1,4 @@
-include ':app', ':lib', ':zxtcommonlib', ':gradleplugindemolib', ':unittestdemo', ':binderdemo', ':toastdemo', ':binderdemo1', ':binder2_messenger', ':aidldemoserver', ':aidldemoclient'
+include ':app', ':lib', ':zxtcommonlib', ':gradleplugindemolib', ':unittestdemo', ':binderdemo', ':toastdemo', ':binderdemo1', ':binder2_messenger', ':aidldemoserver', ':aidldemoclient', ':sqlitedemo'
 //include ':alyimagegallery',
 //include ':constraintlayoutdemo'
 //include ':fingerdemo',
