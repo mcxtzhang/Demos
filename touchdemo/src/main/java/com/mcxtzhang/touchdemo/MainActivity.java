@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,6 +41,24 @@ public class MainActivity extends AppCompatActivity {
         map.put("5",null);
         map.put("4",null);
         Log.e("TAG", "onCreate() called with: map = [" + map + "]");*/
+
+        View view = findViewById(R.id.customView);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(TAG, "onClick() called with: v = [" + v + "]");
+            }
+        });
+        view.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Log.i(TAG, "onTouch() called with: v = [" + v + "], event = [" + event + "]");
+                //返回false   onTouchEvent 和 onClick还会回调， 返回true 则都不会走啦
+                return true;
+            }
+        });
+
+
     }
 
 
