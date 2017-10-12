@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     ServiceConnection mServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
+            //主线程
             Log.d(TAG, "onServiceConnected() called with: name = [" + name + "], service = [" + service + "], and run in" + Thread.currentThread());
             mBookManager = BookManager.Stub.asInterface(service);
             //死亡代理
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
                 service.linkToDeath(new IBinder.DeathRecipient() {
                     @Override
                     public void binderDied() {
+                        //客户端Binder线程池里    子线程
                         Log.d(TAG, "binderDied() called,mBookManager:" + mBookManager+ "], and run in" + Thread.currentThread());
                         if (mBookManager == null) return;
                         mBookManager.asBinder().unlinkToDeath(this, 0);
@@ -71,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
+            //主线程
             Log.d(TAG, "onServiceDisconnected() called with: name = [" + name + "]"+ "], attempttoReBind ,and run in" + Thread.currentThread());
             attemptToBindService();
         }
