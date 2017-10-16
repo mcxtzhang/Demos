@@ -12,13 +12,6 @@
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
         </activity>
-        <activity android:name=".LauncherActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
         <activity android:name=".generalizerv.BaseRecyclerViewActivity">
         </activity>
         <activity android:name=".nestrv.ViewPagerNestRvActivity">
@@ -28,6 +21,13 @@
         <activity android:name=".itemtouchhelper.TestItemHelperActivity">
         </activity>
         <activity android:name=".expand.ExpandRvActivity">
+        </activity>
+        <activity android:name=".PhotoActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
     </application>
 

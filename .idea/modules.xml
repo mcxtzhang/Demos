@@ -11,11 +11,13 @@
       <module fileurl="file://$PROJECT_DIR$/binderdemo1/binderdemo1.iml" filepath="$PROJECT_DIR$/binderdemo1/binderdemo1.iml" />
       <module fileurl="file://$PROJECT_DIR$/compiler/compiler.iml" filepath="$PROJECT_DIR$/compiler/compiler.iml" />
       <module fileurl="file://$PROJECT_DIR$/gradleplugindemolib/gradleplugindemolib.iml" filepath="$PROJECT_DIR$/gradleplugindemolib/gradleplugindemolib.iml" />
-      <module fileurl="file://$PROJECT_DIR$/hookstartactivitydemo/hookstartactivitydemo.iml" filepath="$PROJECT_DIR$/hookstartactivitydemo/hookstartactivitydemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/lib/lib.iml" filepath="$PROJECT_DIR$/lib/lib.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
       <module fileurl="file://$PROJECT_DIR$/performancedemo/performancedemo.iml" filepath="$PROJECT_DIR$/performancedemo/performancedemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/sqlitedemo/sqlitedemo.iml" filepath="$PROJECT_DIR$/sqlitedemo/sqlitedemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sqlitedemo/sqlitedemo.iml" filepath="$PROJECT_DIR$/sqlitedemo/sqlitedemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/toastdemo/toastdemo.iml" filepath="$PROJECT_DIR$/toastdemo/toastdemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/touchdemo/touchdemo.iml" filepath="$PROJECT_DIR$/touchdemo/touchdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/unittestdemo/unittestdemo.iml" filepath="$PROJECT_DIR$/unittestdemo/unittestdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/zxt_github_proj.iml" filepath="$PROJECT_DIR$/zxt_github_proj.iml" />
       <module fileurl="file://$PROJECT_DIR$/zxtcommonlib/zxtcommonlib.iml" filepath="$PROJECT_DIR$/zxtcommonlib/zxtcommonlib.iml" />
