@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate() called with: savedInstanceState = [" + findViewById(R.id.root).getBackground().getClass() + "]");
 
 
+        //以下测试 三个控件哪个性能好，实测 ConstraintLayout 也只调用一次 measure。比RelativeLayout好
         findViewById(R.id.testLL).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
