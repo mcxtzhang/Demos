@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -159,8 +160,11 @@ public class TestNewASActivity extends AppCompatActivity {
 
         //finish();
 
+        ViewGroup.LayoutParams layoutParams = mEt.getLayoutParams();
+        layoutParams.height=300;
+        mEt.setLayoutParams(layoutParams);
 
-        mEt.setText("绑定成功");
+        //mEt.setText("绑定成功");
         mTv.setText("绑定成功");
         mTv.setSelected(true);
 
