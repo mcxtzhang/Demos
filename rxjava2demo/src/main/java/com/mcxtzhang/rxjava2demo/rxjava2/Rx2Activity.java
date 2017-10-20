@@ -88,6 +88,12 @@ public class Rx2Activity extends AppCompatActivity {
         });
 
 
+        RxJavaPlugins.setErrorHandler(new Consumer<Throwable>() {//如果没有被crash的error 都会走到这里
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                Log.e(TAG, "setErrorHandler:accept() called with: throwable = [" + throwable + "]");
+            }
+        });
         findViewById(R.id.btnLeak).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -116,14 +122,8 @@ public class Rx2Activity extends AppCompatActivity {
                                        public void accept(Integer integer) throws Exception {
                                            Log.d(TAG, "accept() called with: integer = [" + integer + "]");
                                        }
-                                   }
-                                , new Consumer<Throwable>() {
-
-                                    @Override
-                                    public void accept(Throwable throwable) throws Exception {
-                                        Log.d(TAG, "accept() called with: throwable = [" + throwable + "]");
-                                    }
-                                });
+                                   })
+                                ;
             }
         });
 
