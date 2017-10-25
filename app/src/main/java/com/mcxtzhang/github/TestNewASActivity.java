@@ -6,7 +6,9 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.ArrayMap;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -29,6 +31,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 @DIActivity
@@ -339,6 +342,35 @@ public class TestNewASActivity extends AppCompatActivity {
                 Log.e(TAG, "List index for循环 耗时:" + (time4 - time3));
             }
         });
+
+
+        Map<String, String> map = new ArrayMap<>();
+        map.put("1","1");
+        map.put(null,"2");
+        map.put("3",null);
+        map.put("6",null);
+        map.put("5",null);
+        map.put("4",null);
+        Log.e("TAG", "onCreate() called with: ArrayMap = [" + map + "]");
+
+
+        SparseArray<String> stringSparseArray = new SparseArray<>();
+        stringSparseArray.put(1,"a");
+        stringSparseArray.put(5,"e");
+        stringSparseArray.put(4,"d");
+        stringSparseArray.put(10,"h");
+        stringSparseArray.put(2,null);
+
+        Log.d(TAG, "onCreate() called with: stringSparseArray = [" + stringSparseArray + "]");
+
+
+        getWindow().getDecorView().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(TestNewASActivity.this,RxActivity.class);
+                startActivity(intent);
+            }
+        },3000);
     }
 
 
