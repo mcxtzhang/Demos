@@ -9,18 +9,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
+
+        </activity>
+        <activity android:name=".measure.TestMeasureActivity">
+        </activity>
+        <activity android:name=".measure.TestMeasureRelativeActivity">
+        </activity>
+        <activity android:name=".measure.TestMeasureLInearActivity">
+        </activity>
+        <activity android:name=".monitor.MonitorActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-        </activity>
-        <activity android:name=".measure.TestMeasureActivity">
-
-        </activity>
-        <activity android:name=".measure.TestMeasureRelativeActivity">
-        </activity>
-        <activity android:name=".measure.TestMeasureLInearActivity">
         </activity>
     </application>
 
