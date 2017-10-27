@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.uphyca.android-aspectj'
 
 android {
     compileSdkVersion 25

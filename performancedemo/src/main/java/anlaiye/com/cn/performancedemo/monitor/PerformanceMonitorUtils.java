@@ -26,6 +26,7 @@ public class PerformanceMonitorUtils {
 
             @Override
             public void println(String x) {
+                //只有looper里有msg 才会执行
                 if (isStarted) {
                     isStarted = false;
                     Log.d("TAG", "本次主线程 操作执行时间 : x = [" + (System.currentTimeMillis() - lastTime) + "]");
@@ -39,6 +40,7 @@ public class PerformanceMonitorUtils {
 
     public static void monitorChoreoGrapher() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            //一直会执行, 这里的消息其实是插入到主线程的handler里执行的，所以如果这里有任务，那么主线程的Handler也会一直运行。 上个方法monitorMainLooper也会一直运行
             Choreographer.getInstance().postFrameCallback(new Choreographer.FrameCallback() {
                 long lastTime;
 
