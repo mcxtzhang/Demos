@@ -1,5 +1,8 @@
 package com.mcxtzhang.github;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
@@ -164,7 +167,7 @@ public class TestNewASActivity extends AppCompatActivity {
         //finish();
 
         ViewGroup.LayoutParams layoutParams = mEt.getLayoutParams();
-        layoutParams.height=300;
+        layoutParams.height = 300;
         mEt.setLayoutParams(layoutParams);
 
         //mEt.setText("绑定成功");
@@ -275,13 +278,35 @@ public class TestNewASActivity extends AppCompatActivity {
         findViewById(R.id.image).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ImageView image = (ImageView) view;
-                Log.d(TAG, "onClick() called with: getWidth = [" + image.getWidth() + "]");
+                final ImageView image = (ImageView) view;
+/*                Log.d(TAG, "onClick() called with: getWidth = [" + image.getWidth() + "]");
                 Log.d(TAG, "onClick() called with: getHeight= [" + image.getHeight() + "]");
                 Log.d(TAG, "onClick() called with: getWidth = [" + image.getDrawable().getIntrinsicHeight() + "]");
-                Log.d(TAG, "onClick() called with: getHeight= [" + image.getDrawable().getIntrinsicWidth() + "]");
+                Log.d(TAG, "onClick() called with: getHeight= [" + image.getDrawable().getIntrinsicWidth() + "]");*/
+
+                Log.d(TAG, "onClick() called with: view = [" + view.getRotationY() + "]");
+
+                image.setRotationY(0);
+                //一圈0.5s 转两圈
+                final ObjectAnimator rotationY = ObjectAnimator.ofFloat(image, "rotationY", 720);
+                rotationY.setDuration(1000);
+                rotationY.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        image.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                rotationY.start();
+                            }
+                        }, 1000);
+                    }
+                });
+                rotationY.start();
+
+
             }
         });
+
 
         findViewById(R.id.image2).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -345,21 +370,21 @@ public class TestNewASActivity extends AppCompatActivity {
 
 
         Map<String, String> map = new ArrayMap<>();
-        map.put("1","1");
-        map.put(null,"2");
-        map.put("3",null);
-        map.put("6",null);
-        map.put("5",null);
-        map.put("4",null);
+        map.put("1", "1");
+        map.put(null, "2");
+        map.put("3", null);
+        map.put("6", null);
+        map.put("5", null);
+        map.put("4", null);
         Log.e("TAG", "onCreate() called with: ArrayMap = [" + map + "]");
 
 
         SparseArray<String> stringSparseArray = new SparseArray<>();
-        stringSparseArray.put(1,"a");
-        stringSparseArray.put(5,"e");
-        stringSparseArray.put(4,"d");
-        stringSparseArray.put(10,"h");
-        stringSparseArray.put(2,null);
+        stringSparseArray.put(1, "a");
+        stringSparseArray.put(5, "e");
+        stringSparseArray.put(4, "d");
+        stringSparseArray.put(10, "h");
+        stringSparseArray.put(2, null);
 
         Log.d(TAG, "onCreate() called with: stringSparseArray = [" + stringSparseArray + "]");
 
@@ -367,10 +392,10 @@ public class TestNewASActivity extends AppCompatActivity {
         getWindow().getDecorView().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(TestNewASActivity.this,RxActivity.class);
+                Intent intent = new Intent(TestNewASActivity.this, RxActivity.class);
                 startActivity(intent);
             }
-        },3000);
+        }, 3000);
     }
 
 
