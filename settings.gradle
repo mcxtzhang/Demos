@@ -15,7 +15,7 @@ include ':performancedemo'
 include ':library'
 include ':compiler'
 
-//include ':artdemo'
+include ':artdemo'
 //include ':hotfixdemo
 //include  ':permissiondemo' // 6.0运行时权限
 //include ':autocopydemo'
