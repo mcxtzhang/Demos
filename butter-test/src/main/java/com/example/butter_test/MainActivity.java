@@ -4,13 +4,19 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "butter-test";
     TextView mTvHint;
     List list = new ArrayList();
 
@@ -58,14 +64,53 @@ public class MainActivity extends AppCompatActivity {
                 float totalMemoM = totalMemoK / 1024f;
                 float freeMemoK = freeMemory / 1024f;
                 float freeMemoM = freeMemoK / 1024f;
-                float allocedMemoK = totalMemoK-freeMemoK;
-                float allocedMemoM = totalMemoM-freeMemoM;
+                float allocedMemoK = totalMemoK - freeMemoK;
+                float allocedMemoM = totalMemoM - freeMemoM;
 
-                mTvHint.setText("totalMemory = [" + totalMemoK + "K]" + totalMemoM + "M"
-                        +"\n freeMemory = [" + freeMemoK + "K]" + freeMemoM + "M"
-                        +"\n alloced = [" + allocedMemoK + "K]" + allocedMemoM + "M");
+                mTvHint.setText("totalMemory = [" + formatFLoat(totalMemoK) + "K]" + formatFLoat(totalMemoM) + "M"
+                        + "\n freeMemory = [" + formatFLoat(freeMemoK) + "K]" + formatFLoat(freeMemoM) + "M"
+                        + "\n alloced = [" + formatFLoat(allocedMemoK) + "K]" + formatFLoat(allocedMemoM) + "M");
+
+                try {
+                    Process exec = Runtime.getRuntime().exec("adb shell dumpsys meminfo 'com.example.butter_test' |grep 'Dalvik Heap'");
+                    Log.d(TAG, "run() called:"+exec);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
     }
+
+    private String formatFLoat(float num) {
+        DecimalFormat decimalFormat = new DecimalFormat(".00");//构造方法的字符格式这里如果小数不足2位,会以0补足.
+        String p = decimalFormat.format(num);//format 返回的是字符串
+        return p;
+    }
+
+
+    // Executes UNIX command.
+    private String exec(String command) {
+        try {
+            Process process = Runtime.getRuntime().exec(command);
+            BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(process.getInputStream()));
+            int read;
+            char[] buffer = new char[4096];
+            StringBuffer output = new StringBuffer();
+            while ((read = reader.read(buffer)) > 0) {
+                output.append(buffer, 0, read);
+            }
+            reader.close();
+            process.waitFor();
+            return output.toString();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
 }
