@@ -11,6 +11,7 @@
       <module fileurl="file://$PROJECT_DIR$/binder2_messenger/binder2_messenger.iml" filepath="$PROJECT_DIR$/binder2_messenger/binder2_messenger.iml" />
       <module fileurl="file://$PROJECT_DIR$/binderdemo/binderdemo.iml" filepath="$PROJECT_DIR$/binderdemo/binderdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/binderdemo1/binderdemo1.iml" filepath="$PROJECT_DIR$/binderdemo1/binderdemo1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/butter-test/butter-test.iml" filepath="$PROJECT_DIR$/butter-test/butter-test.iml" />
       <module fileurl="file://$PROJECT_DIR$/compiler/compiler.iml" filepath="$PROJECT_DIR$/compiler/compiler.iml" />
       <module fileurl="file://$PROJECT_DIR$/gradleplugindemolib/gradleplugindemolib.iml" filepath="$PROJECT_DIR$/gradleplugindemolib/gradleplugindemolib.iml" />
       <module fileurl="file://$PROJECT_DIR$/hookstartactivitydemo/hookstartactivitydemo.iml" filepath="$PROJECT_DIR$/hookstartactivitydemo/hookstartactivitydemo.iml" />
