@@ -26,5 +26,5 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.5.2'
     compile 'com.android.support:support-v4:24.2.1'
 
-    compile project(':zxtcommonlib')
+    implementation project(path:':zxtcommonlib',configuration: 'default')
 }
