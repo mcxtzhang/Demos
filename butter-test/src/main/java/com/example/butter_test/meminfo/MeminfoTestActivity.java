@@ -1,4 +1,4 @@
-package com.example.butter_test;
+package com.example.butter_test.meminfo;
 
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.butter_test.R;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -15,7 +17,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MeminfoTestActivity extends AppCompatActivity {
     private static final String TAG = "butter-test";
     TextView mTvHint;
     List list = new ArrayList();
@@ -37,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //startActivity(new Intent(MainActivity.this, Main2Activity.class));
+                //startActivity(new Intent(MeminfoTestActivity.this, Main2Activity.class));
 
                 new Thread(new Runnable() {
                     @Override
