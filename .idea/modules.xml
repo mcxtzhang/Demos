@@ -18,6 +18,7 @@
       <module fileurl="file://$PROJECT_DIR$/layoutfactory/layoutfactory.iml" filepath="$PROJECT_DIR$/layoutfactory/layoutfactory.iml" />
       <module fileurl="file://$PROJECT_DIR$/lib/lib.iml" filepath="$PROJECT_DIR$/lib/lib.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mykotlindemo/mykotlindemo.iml" filepath="$PROJECT_DIR$/mykotlindemo/mykotlindemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/performancedemo/performancedemo.iml" filepath="$PROJECT_DIR$/performancedemo/performancedemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/playgrounds.iml" filepath="$PROJECT_DIR$/playgrounds.iml" />
       <module fileurl="file://$PROJECT_DIR$/sqlitedemo/sqlitedemo.iml" filepath="$PROJECT_DIR$/sqlitedemo/sqlitedemo.iml" />
