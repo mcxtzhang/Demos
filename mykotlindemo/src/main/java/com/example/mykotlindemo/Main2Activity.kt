@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.widget.Toast
 import com.example.mykotlindemo.bianliangAndshuxing.JibenLeixing
+import org.jetbrains.anko.find
 
 class Main2Activity : AppCompatActivity() {
 
@@ -23,12 +23,15 @@ class Main2Activity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_rv)
-        val forecastList = findViewById<RecyclerView>(R.id.forecastList)
+        //val forecastList = findViewById<RecyclerView>(R.id.forecastList)
+        val forecastList: RecyclerView = find(R.id.forecastList)
         forecastList.layoutManager = LinearLayoutManager(this)
         forecastList.adapter = ForecastListAdapter(datas)
 
         val jibenLeixing = JibenLeixing()
-        Toast.makeText(this, ""+ jibenLeixing.bitwistXor, Toast.LENGTH_SHORT).show()
+        //Toast.makeText(this, "" + jibenLeixing.bitwistXor, Toast.LENGTH_SHORT).show()
         jibenLeixing.printS()
+
     }
+
 }
