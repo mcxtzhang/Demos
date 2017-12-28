@@ -4,12 +4,11 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import com.example.mykotlindemo.Request.Request
 import com.example.mykotlindemo.bianliangAndshuxing.JibenLeixing
+import com.example.mykotlindemo.domain.RequestForecastCommand
 import com.example.mykotlindemo.pojo.PostBean
-import org.jetbrains.anko.custom.async
+import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.find
-import org.jetbrains.anko.longToast
 import org.jetbrains.anko.uiThread
 
 class Main2Activity : AppCompatActivity() {
@@ -37,7 +36,7 @@ class Main2Activity : AppCompatActivity() {
         //Toast.makeText(this, "" + jibenLeixing.bitwistXor, Toast.LENGTH_SHORT).show()
         jibenLeixing.printS()
 
-
+/*
         async() {
             val result = Request("http://gank.io/api/data/Android/10/1").run()
 
@@ -47,7 +46,7 @@ class Main2Activity : AppCompatActivity() {
                 longToast("Request performed")
 
             }
-        }
+        }*/
 
         //数据类
         val post = PostBean("张", "secret")
@@ -70,6 +69,16 @@ class Main2Activity : AppCompatActivity() {
         map1.put("key5", "value5")
         for ((k, v) in map1) {
             println("Key:$k,value:$v")
+        }
+
+
+
+        //在UI中绘制数据
+        doAsync {
+            val result = RequestForecastCommand("524901").execute()
+            uiThread {
+                forecastList.adapter = ForecastListAdapter2(result)
+            }
         }
     }
 
