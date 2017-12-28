@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.example.mykotlindemo.Request.Request
 import com.example.mykotlindemo.bianliangAndshuxing.JibenLeixing
+import com.example.mykotlindemo.pojo.PostBean
 import org.jetbrains.anko.custom.async
 import org.jetbrains.anko.find
 import org.jetbrains.anko.longToast
@@ -48,6 +49,28 @@ class Main2Activity : AppCompatActivity() {
             }
         }
 
+        //数据类
+        val post = PostBean("张", "secret")
+        println(post)
+
+        //复制一个数据类
+        val post2 = post.copy(url = "baidu")
+        println(post2)
+
+        //映射对象到变量中
+        val post3 = PostBean("whoField", "urlField")
+        val (a, b) = post3
+        println("who$a,url:$b")
+        //这个映射对象的特性很强大，还可以用在Map上
+        val map1 = HashMap<String, String>()
+        map1.put("key1", "value1")
+        map1.put("key2", "value2")
+        map1.put("key3", "value3")
+        map1.put("key4", "value4")
+        map1.put("key5", "value5")
+        for ((k, v) in map1) {
+            println("Key:$k,value:$v")
+        }
     }
 
 
