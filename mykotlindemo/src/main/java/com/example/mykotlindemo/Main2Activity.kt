@@ -1,5 +1,6 @@
 package com.example.mykotlindemo
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -72,7 +73,6 @@ class Main2Activity : AppCompatActivity() {
         }
 
 
-
         //在UI中绘制数据
         doAsync {
             val result = RequestForecastCommand("524901").execute()
@@ -80,6 +80,9 @@ class Main2Activity : AppCompatActivity() {
                 forecastList.adapter = ForecastListAdapter2(result)
             }
         }
+
+        window.decorView.post(Runnable { startActivity(Intent(this, MainActivity::class.java)) })
+
     }
 
 
