@@ -1,4 +1,4 @@
-package com.example.mykotlindemo.kuozhanhanshu
+package com.example.mykotlindemo.amp_kuozhanhanshu
 
 import android.content.Context
 import android.widget.TextView
@@ -9,10 +9,8 @@ import android.widget.Toast
  */
 class KuoZhanHanShu {
     public var TextView.text: CharSequence
-        get() = text
-        set(value) {
-            text = value
-        }
+        get() = getText()
+        set(value) = setText(value)
 }
 
 fun Context.myToast(msg: CharSequence, duration: Int = Toast.LENGTH_SHORT) {

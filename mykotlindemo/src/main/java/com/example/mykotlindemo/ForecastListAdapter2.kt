@@ -10,7 +10,7 @@ import com.example.mykotlindemo.domain.ForecastList
  */
 class ForecastListAdapter2(val datas: ForecastList) : RecyclerView.Adapter<ForecastListAdapter2.VH>() {
     override fun onBindViewHolder(holder: VH, position: Int) {
-        with(datas.dailyForecast[position]) {
+        with(datas[position]) {
             holder.tv.text = "$date - $description $high/$low"
         }
 
@@ -18,7 +18,7 @@ class ForecastListAdapter2(val datas: ForecastList) : RecyclerView.Adapter<Forec
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH = VH(TextView(parent.context))
 
-    override fun getItemCount(): Int = datas.dailyForecast.size
+    override fun getItemCount(): Int = datas.size()
 
 
     class VH(val tv: TextView) : RecyclerView.ViewHolder(tv)
