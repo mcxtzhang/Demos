@@ -3,6 +3,7 @@
     package="com.example.mykotlindemo">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,8 +11,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"></activity>
-        <activity android:name=".Main2Activity">
+        <activity
+            android:name=".MainActivity"
+            android:label="main">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Main2Activity"
+            android:label="2">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,6 +35,16 @@
                 <action android:name="com.mcxtzhang.android.butter.GC" />
             </intent-filter>
         </receiver>
+
+        <activity
+            android:name=".Main3Activity"
+            android:label="3">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
