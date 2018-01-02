@@ -24,8 +24,11 @@ class ForecastDataMapper {
         return Forecast(convert2Date(it.dt),
                 it.weather[0].description,
                 it.temp.max.toInt(),
-                it.temp.min.toInt())
+                it.temp.min.toInt(),
+                generateIcon(it.weather[0].icon))
     }
+
+    private fun generateIcon(icon: String): String = "http://openweathermap.org/img/w/$icon.png"
 
     private fun convert2Date(date: Long): String {
         val df = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.CHINESE)

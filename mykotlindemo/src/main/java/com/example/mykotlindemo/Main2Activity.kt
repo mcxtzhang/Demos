@@ -6,10 +6,12 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.example.mykotlindemo.bianliangAndshuxing.JibenLeixing
+import com.example.mykotlindemo.domain.Forecast
 import com.example.mykotlindemo.domain.RequestForecastCommand
 import com.example.mykotlindemo.pojo.PostBean
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.find
+import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
 
 class Main2Activity : AppCompatActivity() {
@@ -77,7 +79,14 @@ class Main2Activity : AppCompatActivity() {
         doAsync {
             val result = RequestForecastCommand("524901").execute()
             uiThread {
-                forecastList.adapter = ForecastListAdapter2(result)
+                forecastList.adapter = ForecastListAdapter2(
+                        result,
+                        object : OnItemClickListener {
+                            override fun invoke(forecast: Forecast) {
+                                toast(forecast.toString())
+                            }
+                        }
+                )
             }
         }
 
