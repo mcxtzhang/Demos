@@ -3,12 +3,11 @@ package com.example.mykotlindemo
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import com.example.mykotlindemo.bianliangAndshuxing.JibenLeixing
 import com.example.mykotlindemo.domain.RequestForecastCommand
 import com.example.mykotlindemo.pojo.PostBean
+import kotlinx.android.synthetic.main.activity_rv.*
 import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.find
 import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
 
@@ -29,7 +28,9 @@ class Main2Activity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_rv)
         //val forecastList = findViewById<RecyclerView>(R.id.forecastList)
-        val forecastList: RecyclerView = find(R.id.forecastList)
+        //val forecastList: RecyclerView = find(R.id.forecastList)
+
+
         forecastList.layoutManager = LinearLayoutManager(this)
         forecastList.adapter = ForecastListAdapter(datas)
 
