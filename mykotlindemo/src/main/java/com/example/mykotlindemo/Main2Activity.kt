@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.example.mykotlindemo.bianliangAndshuxing.JibenLeixing
-import com.example.mykotlindemo.domain.Forecast
 import com.example.mykotlindemo.domain.RequestForecastCommand
 import com.example.mykotlindemo.pojo.PostBean
 import org.jetbrains.anko.doAsync
@@ -78,14 +77,18 @@ class Main2Activity : AppCompatActivity() {
         doAsync {
             val result = RequestForecastCommand("524901").execute()
             uiThread {
-                forecastList.adapter = ForecastListAdapter2(
-                        result,
-                        object : OnItemClickListener {
-                            override fun invoke(forecast: Forecast) {
-                                toast(forecast.toString())
-                            }
-                        }
-                )
+                //                forecastList.adapter = ForecastListAdapter2(
+//                        result,
+//                        object : OnItemClickListener {
+//                            override fun invoke(forecast: Forecast) {
+//                                toast(forecast.toString())
+//                            }
+//                        }
+//                )
+                //forecastList.adapter = ForecastListAdapter2(result, { forecast -> toast(forecast.date) })
+                //forecastList.adapter = ForecastListAdapter2(result) { forecast -> toast(forecast.date) }
+                //如果lambda函数只接受一个参数，那么我们可以使用it引用，而不用去指定左边的参数
+                forecastList.adapter = ForecastListAdapter2(result) { toast(it.description) }
             }
         }
 

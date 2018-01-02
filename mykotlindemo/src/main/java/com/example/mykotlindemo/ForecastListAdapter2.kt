@@ -15,7 +15,8 @@ import org.jetbrains.anko.find
 /**
  * Created by zhangxutong on 2017/12/28.
  */
-class ForecastListAdapter2(val datas: ForecastList, private val itemListener: OnItemClickListener) : RecyclerView.Adapter<ForecastListAdapter2.VH>() {
+class ForecastListAdapter2(val datas: ForecastList,
+                           private val itemListener: (Forecast) -> Unit) : RecyclerView.Adapter<ForecastListAdapter2.VH>() {
     override fun onBindViewHolder(holder: VH, position: Int) {
         holder.bind(datas[position])
     }
@@ -27,7 +28,7 @@ class ForecastListAdapter2(val datas: ForecastList, private val itemListener: On
     override fun getItemCount(): Int = datas.size()
 
 
-    class VH(val item: View, val itemListener: OnItemClickListener) : RecyclerView.ViewHolder(item) {
+    class VH(val item: View, val itemListener: (Forecast) -> Unit) : RecyclerView.ViewHolder(item) {
         private val iconView: ImageView
         private val tvDate: TextView
         private val tvDesc: TextView
@@ -55,9 +56,6 @@ class ForecastListAdapter2(val datas: ForecastList, private val itemListener: On
     }
 }
 
-interface OnItemClickListener {
-    operator fun invoke(forecast: Forecast)
-}
 
 val View.ctx: Context
     get() = context
