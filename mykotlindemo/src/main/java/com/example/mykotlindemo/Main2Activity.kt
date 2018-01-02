@@ -1,6 +1,5 @@
 package com.example.mykotlindemo
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -90,7 +89,7 @@ class Main2Activity : AppCompatActivity() {
             }
         }
 
-        window.decorView.post(Runnable { startActivity(Intent(this, MainActivity::class.java)) })
+        //window.decorView.post(Runnable { startActivity(Intent(this, MainActivity::class.java)) })
 
     }
 
