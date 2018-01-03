@@ -11,6 +11,17 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="anlaiye.com.cn.artdemo.MainActivity">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        android:text="调研"/>
+
+    <Button
+        android:id="@+id/btnStartFinsih"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="先start，再finish的生命周期"/>
 
     <TextView
         android:layout_width="wrap_content"
