@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import anlaiye.com.cn.artdemo.c1.LifeCycleTestActivity;
+import anlaiye.com.cn.artdemo.createfinish.CreateFinishActivity;
 import anlaiye.com.cn.artdemo.forresult.ForResultActivity1;
 import anlaiye.com.cn.artdemo.lifecycle.AActivity;
 
@@ -32,6 +33,12 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, ForResultActivity1.class));
+            }
+        });
+        findViewById(R.id.btnCreateFinsih).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, CreateFinishActivity.class));
             }
         });
     }

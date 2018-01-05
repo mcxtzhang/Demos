@@ -29,7 +29,8 @@
         <activity android:name=".lifecycle.DActivity" />
         <activity android:name=".forresult.ForResultActivity1" />
         <activity android:name=".forresult.ForResultActivity2" />
-        <activity android:name=".forresult.ForResultActivity3"></activity>
+        <activity android:name=".forresult.ForResultActivity3" />
+        <activity android:name=".createfinish.CreateFinishActivity"></activity>
     </application>
 
 </manifest>

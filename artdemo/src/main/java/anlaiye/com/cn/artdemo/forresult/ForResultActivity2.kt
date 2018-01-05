@@ -17,7 +17,7 @@ class ForResultActivity2 : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         Log.w(TAG, "onCreate: ");
         setContentView(R.layout.activity_for_result2)
-        root.setOnClickListener {
+        root.setOnClickListener { 
             startActivity(Intent(this, ForResultActivity3::class.java))
             setResult(Activity.RESULT_OK)
             finish()
