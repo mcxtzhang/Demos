@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Github</string>
+    <string name="no">不是%s</string>
 </resources>

@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.Process;
 import android.support.v7.app.AppCompatActivity;
 import android.util.ArrayMap;
 import android.util.Log;
@@ -37,8 +36,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
-
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 @DIActivity
 @TestHelloWorld("haha")
@@ -178,6 +175,9 @@ public class TestNewASActivity extends AppCompatActivity {
         mTv.setSelected(true);
 
         mTv.setText("我牛逼\n你牛逼");
+
+
+        mTv.setText(getString(R.string.no,"这道菜"));
 
 
         HelloWorld.main(null);
@@ -402,20 +402,20 @@ public class TestNewASActivity extends AppCompatActivity {
 
 
         //new PriorityThread().start();
-        new Thread(new Runnable() {
+       /* new Thread(new Runnable() {
             @Override
             public void run() {
                 Log.d(TAG, "Thread.currentThread().getPriority() = [" + Thread.currentThread().getPriority() + "]");
                 Log.d(TAG, "Process.getThreadPriority() = [" + Process.getThreadPriority((int) Thread.currentThread().getId()) + "]");
                 Process.setThreadPriority(Process.THREAD_PRIORITY_FOREGROUND);
                 Log.d(TAG, "222 Process.getThreadPriority() = [" + Process.getThreadPriority((int) Thread.currentThread().getId()) + "]");
-                Log.d(TAG, "run() called:"+this);
+                Log.d(TAG, "run() called:" + this);
             }
-        }).start();
+        }).start();*/
 
     }
 
-    private static class PriorityThread extends Thread{
+    private static class PriorityThread extends Thread {
 
         public PriorityThread() {
 
