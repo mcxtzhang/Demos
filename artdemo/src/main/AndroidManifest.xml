@@ -30,7 +30,8 @@
         <activity android:name=".forresult.ForResultActivity1" />
         <activity android:name=".forresult.ForResultActivity2" />
         <activity android:name=".forresult.ForResultActivity3" />
-        <activity android:name=".createfinish.CreateFinishActivity"></activity>
+        <activity android:name=".createfinish.CreateFinishActivity" />
+        <activity android:name=".rotatesaveinstance.RorateSaveinstanceActivity"></activity>
     </application>
 
 </manifest>

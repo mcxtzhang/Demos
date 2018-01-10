@@ -9,6 +9,7 @@ import anlaiye.com.cn.artdemo.c1.LifeCycleTestActivity;
 import anlaiye.com.cn.artdemo.createfinish.CreateFinishActivity;
 import anlaiye.com.cn.artdemo.forresult.ForResultActivity1;
 import anlaiye.com.cn.artdemo.lifecycle.AActivity;
+import anlaiye.com.cn.artdemo.rotatesaveinstance.RorateSaveinstanceActivity;
 
 public class MainActivity extends Activity {
 
@@ -19,7 +20,9 @@ public class MainActivity extends Activity {
         findViewById(R.id.btnLifeCycle).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, LifeCycleTestActivity.class));
+                Intent intent = new Intent(MainActivity.this, LifeCycleTestActivity.class);
+                intent.putExtra("key1", "value1");
+                startActivity(intent);
             }
         });
 
@@ -39,6 +42,15 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, CreateFinishActivity.class));
+            }
+        });
+
+        findViewById(R.id.btnRotateSaveinstance).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, RorateSaveinstanceActivity.class);
+                intent.putExtra("key1", "value1");
+                startActivity(intent);
             }
         });
     }

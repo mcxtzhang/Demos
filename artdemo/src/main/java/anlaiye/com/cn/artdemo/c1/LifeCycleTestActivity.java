@@ -13,6 +13,9 @@ import anlaiye.com.cn.artdemo.R;
 public class LifeCycleTestActivity extends Activity {
     private static final String TAG = "zxt";
 
+    private String mValue1;
+    private String mValue2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +27,11 @@ public class LifeCycleTestActivity extends Activity {
                 startActivity(new Intent(LifeCycleTestActivity.this, LifeCycleTest2Activity.class));
             }
         });
+        if (savedInstanceState == null) {
+            mValue1 = getIntent().getStringExtra("key1");
+            mValue2 = "value2";
+        }
+        Log.d(TAG, "onCreate() called with: mValue1 = [" + mValue1 + "]mValue2 = [" + mValue2 + "],activity obj:" + this);
     }
 
     @Override
