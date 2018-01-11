@@ -1,80 +1,108 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?><!--<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             xmlns:tools="http://schemas.android.com/tools">-->
 
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/root"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/etSpan1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        tools:text="aaa" />
 
-        <TextView
-            android:text="哈哈哈哈"
-            android:id="@+id/tv"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/shape_round_bg_cate_list"
-            android:gravity="center"
-            android:padding="20dp"
-            android:focusable="true"
-            android:drawableLeft="@drawable/drawable_left"
-            android:textColor="@drawable/shape_text_color_white_gray666">
+    <EditText
+        android:id="@+id/etSpan2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="aaa" />
 
-        </TextView>
+    <EditText
+        android:id="@+id/etSpan3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="aaa" />
 
-        <com.mcxtzhang.github.view.CstView
-            android:id="@+id/cstView"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"/>
+    <EditText
+        android:id="@+id/etSpan4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="aaa" />
 
-        <EditText
-            android:hint="输入"
-            android:text="哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈"
-            android:focusable="true"
-            android:id="@+id/editText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#11aa11"/>
+    <EditText
+        android:id="@+id/etSpan5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="aaa" />
+
+    <TextView
+        android:id="@+id/tv"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_round_bg_cate_list"
+        android:drawableLeft="@drawable/drawable_left"
+        android:focusable="true"
+        android:gravity="center"
+        android:padding="20dp"
+        android:text="哈哈哈哈"
+        android:textColor="@drawable/shape_text_color_white_gray666">
+
+    </TextView>
+
+    <com.mcxtzhang.github.view.CstView
+        android:id="@+id/cstView"
+        android:layout_width="match_parent"
+        android:layout_height="60dp" />
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#11aa11"
+        android:focusable="true"
+        android:hint="输入"
+        android:text="哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈" />
 
 
-        <Button
-            android:id="@+id/btnSparseArray"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="spar"/>
+    <Button
+        android:id="@+id/btnSparseArray"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="spar" />
 
 
-        <Button
-            android:id="@+id/btnTestForTimeForEach"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="测试三种For循环时间-foreach"/>
+    <Button
+        android:id="@+id/btnTestForTimeForEach"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="测试三种For循环时间-foreach" />
 
-        <Button
-            android:id="@+id/btnTestForTimeIterator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="测试三种For循环时间-iterator"/>
+    <Button
+        android:id="@+id/btnTestForTimeIterator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="测试三种For循环时间-iterator" />
 
-        <Button
-            android:id="@+id/btnTestForTimeNormal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="测试三种For循环时间-normal"/>
+    <Button
+        android:id="@+id/btnTestForTimeNormal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="测试三种For循环时间-normal" />
 
-        <ImageView
-            android:id="@+id/image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/clipboard2"/>
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/clipboard2" />
 
-        <ImageView
-            android:id="@+id/image2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/big_image"/>
-    </LinearLayout>
-<!--</ScrollView>-->
+    <ImageView
+        android:id="@+id/image2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/big_image" />
+</LinearLayout><!--</ScrollView>-->

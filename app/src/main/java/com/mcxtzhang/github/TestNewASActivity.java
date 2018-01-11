@@ -5,13 +5,21 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Layout;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.AlignmentSpan;
 import android.util.ArrayMap;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.SparseArray;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -177,7 +185,7 @@ public class TestNewASActivity extends AppCompatActivity {
         mTv.setText("我牛逼\n你牛逼");
 
 
-        mTv.setText(getString(R.string.no,"这道菜"));
+        mTv.setText(getString(R.string.no, "这道菜"));
 
 
         HelloWorld.main(null);
@@ -412,6 +420,81 @@ public class TestNewASActivity extends AppCompatActivity {
                 Log.d(TAG, "run() called:" + this);
             }
         }).start();*/
+
+
+        //得到合适宽度：
+        Rect indexBounds = new Rect();//存放每个绘制的index的Rect区域
+        Paint paint = new Paint();
+        //传入像素
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        paint.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 14, metrics));
+
+        String toBeMeasure = "我多宽多高我多宽多高我多宽多高我多宽多高我多宽多高我多宽多高我多宽多高我多宽多高我多宽多高我多宽多高我多宽多高我多宽多高我多宽多高我多宽多高我多宽多高我多宽多高我多宽多高我多宽多高我多宽多高我多宽多高我多宽多高我多宽多高我多宽多高我多宽多高我多宽多高我多宽多高我多宽多高我多宽多高我多宽多高我多宽多高我多宽多高我多宽多高我多宽多高我多宽多高我多宽多高我多宽多高我多宽多高我多宽多高我多宽多高我多宽多高我多宽多高我多宽多高我多宽多高我多宽多高我多宽多高我多宽多高我多宽多高我多宽多高我多宽多高我多宽多高";
+        paint.getTextBounds(toBeMeasure, 0, toBeMeasure.length(), indexBounds);//测量计算文字所在矩形，可以得到宽高
+        Log.d(TAG, "onCreate() called with: indexBounds.height() = [" + indexBounds.height() + "]");
+        Log.d(TAG, "onCreate() called with: indexBounds.width() = [" + indexBounds.width() + "]");
+
+        toBeMeasure = " ";
+        paint.getTextBounds(toBeMeasure, 0, toBeMeasure.length(), indexBounds);//测量计算文字所在矩形，可以得到宽高
+        Log.d(TAG, "onCreate() called with: toBeMeasure.length() = [" + toBeMeasure.length() + "]");
+        Log.d(TAG, "onCreate() called with: indexBounds.height() = [" + indexBounds.height() + "]");
+        Log.d(TAG, "onCreate() called with: indexBounds.width() = [" + indexBounds.width() + "]");
+
+        toBeMeasure = "\n";
+        paint.getTextBounds(toBeMeasure, 0, toBeMeasure.length(), indexBounds);//测量计算文字所在矩形，可以得到宽高
+        Log.d(TAG, "onCreate() called with: indexBounds.height() = [" + indexBounds.height() + "]");
+        Log.d(TAG, "onCreate() called with: indexBounds.width() = [" + indexBounds.width() + "]");
+
+        toBeMeasure = "\t";
+        paint.getTextBounds(toBeMeasure, 0, toBeMeasure.length(), indexBounds);//测量计算文字所在矩形，可以得到宽高
+        Log.d(TAG, "onCreate() called with: indexBounds.height() = [" + indexBounds.height() + "]");
+        Log.d(TAG, "onCreate() called with: indexBounds.width() = [" + indexBounds.width() + "]");
+
+        toBeMeasure = "哎";
+        paint.getTextBounds(toBeMeasure, 0, toBeMeasure.length(), indexBounds);//测量计算文字所在矩形，可以得到宽高
+        Log.d(TAG, "onCreate() called with: indexBounds.height() = [" + indexBounds.height() + "]");
+        Log.d(TAG, "onCreate() called with: indexBounds.width() = [" + indexBounds.width() + "]");
+
+        toBeMeasure = "哎哎";
+        paint.getTextBounds(toBeMeasure, 0, toBeMeasure.length(), indexBounds);//测量计算文字所在矩形，可以得到宽高
+        Log.d(TAG, "onCreate() called with: indexBounds.height() = [" + indexBounds.height() + "]");
+        Log.d(TAG, "onCreate() called with: indexBounds.width() = [" + indexBounds.width() + "]");
+
+        toBeMeasure = "哎 哎";
+        paint.getTextBounds(toBeMeasure, 0, toBeMeasure.length(), indexBounds);//测量计算文字所在矩形，可以得到宽高
+        Log.d(TAG, "onCreate() called with: indexBounds.height() = [" + indexBounds.height() + "]");
+        Log.d(TAG, "onCreate() called with: indexBounds.width() = [" + indexBounds.width() + "]");
+
+
+
+
+        EditText etSpan1 = (EditText) findViewById(R.id.etSpan1);
+        SpannableStringBuilder ssb = new SpannableStringBuilder("哈哈哈1");
+        ssb.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_NORMAL), 0, ssb.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        etSpan1.setHint(ssb);
+
+
+        EditText etSpan2 = (EditText) findViewById(R.id.etSpan2);
+        ssb = new SpannableStringBuilder("哈哈哈2");
+        ssb.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_OPPOSITE), 0, ssb.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        etSpan2.setHint(ssb);
+
+        EditText etSpan3 = (EditText) findViewById(R.id.etSpan3);
+        ssb = new SpannableStringBuilder("哈哈哈3");
+        ssb.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), 0, ssb.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        etSpan3.setHint(ssb);
+
+       /* EditText etSpan4 = (EditText) findViewById(R.id.etSpan2);
+        ssb = new SpannableStringBuilder("哈哈哈");
+        ssb.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_LEFT), 0, ssb.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        etSpan2.setHint(ssb);
+
+        EditText etSpan5 = (EditText) findViewById(R.id.etSpan2);
+        ssb = new SpannableStringBuilder("哈哈哈");
+        ssb.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_RIGHT), 0, ssb.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        etSpan2.setHint(ssb);*/
+
 
     }
 
