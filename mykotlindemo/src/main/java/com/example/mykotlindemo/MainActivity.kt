@@ -3,9 +3,11 @@ package com.example.mykotlindemo
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.View
 import com.example.mykotlindemo.bianliangAndshuxing.ShuXing
 import com.example.mykotlindemo.kuozhanyuyan3.supportsLollipop
+import com.example.mykotlindemo.pojo.PostBean
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.toast
 
@@ -54,6 +56,18 @@ class MainActivity : AppCompatActivity() {
         supportsLollipop {
             window.statusBarColor = (Color.BLUE)
         }
+
+        var obj: PostBean? = null
+        obj.toString()
+        //obj不等null时才会调用 ，等null不调用
+        obj?.toString()
+        //obj等null crash
+        //obj!!.toString()
+
+        val name = obj?.who ?: "空"
+        Log.d("TAG", "name:$name");
+
+
     }
 
 }
