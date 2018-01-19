@@ -18,6 +18,8 @@ class JibenLeixing {
 
     val bitwistXor = 0x1 xor 0x1
 
+    val bitNot = 1
+
 
     //String 可以像数组那样访问，迭代
     val s = "example"

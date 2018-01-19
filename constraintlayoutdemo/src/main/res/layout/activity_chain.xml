@@ -1,21 +1,20 @@
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:layout_editor_absoluteY="81dp"
-    tools:layout_editor_absoluteX="0dp">
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="81dp">
 
     <Button
         android:id="@+id/button19"
         android:layout_width="169dp"
         android:layout_height="90dp"
         android:text="Button"
-        tools:layout_editor_absoluteX="145dp"
         app:layout_constraintBottom_toTopOf="@+id/button20"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed"/>
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:layout_editor_absoluteX="145dp" />
 
     <Button
         android:id="@+id/button20"
@@ -23,8 +22,8 @@
         android:layout_height="48dp"
         android:text="Button"
         app:layout_constraintBottom_toTopOf="@+id/button21"
-        app:layout_constraintTop_toBottomOf="@+id/button19"
-        app:layout_constraintRight_toRightOf="@+id/button19"/>
+        app:layout_constraintRight_toRightOf="@+id/button19"
+        app:layout_constraintTop_toBottomOf="@+id/button19" />
 
     <Button
         android:id="@+id/button21"
@@ -32,6 +31,6 @@
         android:layout_height="65dp"
         android:text="Button"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button20"
-        app:layout_constraintRight_toRightOf="@+id/button20"/>
+        app:layout_constraintRight_toRightOf="@+id/button20"
+        app:layout_constraintTop_toBottomOf="@+id/button20" />
 </android.support.constraint.ConstraintLayout>

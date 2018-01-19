@@ -467,8 +467,6 @@ public class TestNewASActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate() called with: indexBounds.width() = [" + indexBounds.width() + "]");
 
 
-
-
         EditText etSpan1 = (EditText) findViewById(R.id.etSpan1);
         SpannableStringBuilder ssb = new SpannableStringBuilder("哈哈哈1");
         ssb.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_NORMAL), 0, ssb.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -496,6 +494,17 @@ public class TestNewASActivity extends AppCompatActivity {
         etSpan2.setHint(ssb);*/
 
 
+    }
+
+    private void longCostMethod(){
+        for (int i = 0; i < 50; i++) {
+            try {
+                Thread.sleep(10);
+                Log.d(TAG, "longCostMethod() called");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private static class PriorityThread extends Thread {
@@ -557,6 +566,7 @@ public class TestNewASActivity extends AppCompatActivity {
     protected void onResume() {
         Log.d(TAG, "onResume() called");
         super.onResume();
+        longCostMethod();
     }
 
     @Override

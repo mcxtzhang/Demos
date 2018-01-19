@@ -65,10 +65,21 @@ class MainActivity : AppCompatActivity() {
         //obj!!.toString()
 
         val name = obj?.who ?: "空"
-        Log.d("TAG", "name:$name");
+        Log.d("TAG", "name:$name")
 
+        //log("name:$name")
+
+        val poemArray:Array<String> = arrayOf("朝辞白帝彩云间", "千里江陵一日还", "两岸猿声啼不住", "轻舟已过万重山")
+
+        for(item in poemArray){
+
+        }
 
     }
+
+  /*  fun log(msg: String, tag: String = javaClass<MainActivity>().getSimpleName()) {
+        Log.d(tag, msg)
+    }*/
 
 }
 
