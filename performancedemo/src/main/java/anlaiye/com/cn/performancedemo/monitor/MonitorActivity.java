@@ -15,7 +15,7 @@ public class MonitorActivity extends AppCompatActivity {
 
         //monitorMainLooper();
         //PerformanceMonitorUtils.monitorChoreoGrapher();
-        PerformanceMonitorUtils.monitorFrameMetrics(this);
+        //PerformanceMonitorUtils.monitorFrameMetrics(this);
         //new ActivityFrameMetrics.Builder().build().startFrameMetrics(this);
         /**
          * 换句话说，IdleHandler就是 优先级别较低的 Message，
