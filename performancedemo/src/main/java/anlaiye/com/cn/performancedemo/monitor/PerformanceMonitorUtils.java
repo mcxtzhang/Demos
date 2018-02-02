@@ -1,10 +1,14 @@
 package anlaiye.com.cn.performancedemo.monitor;
 
+import android.app.Activity;
 import android.os.Build;
+import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.util.Printer;
 import android.view.Choreographer;
+import android.view.FrameMetrics;
+import android.view.Window;
 
 /**
  * Intro:
@@ -57,6 +61,44 @@ public class PerformanceMonitorUtils {
                     Choreographer.getInstance().postFrameCallback(this);
                 }
             });
+        }
+    }
+
+
+    public static void monitorFrameMetrics(Activity activity) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            activity.getWindow().addOnFrameMetricsAvailableListener(new Window.OnFrameMetricsAvailableListener() {
+                @Override
+                public void onFrameMetricsAvailable(Window window, FrameMetrics frameMetrics, int dropCountSinceLastInvocation) {
+                    //Log.d(TAG, "onFrameMetricsAvailable() called with: window = [" + window + "], frameMetrics = [" + frameMetrics + "], dropCountSinceLastInvocation = [" + dropCountSinceLastInvocation + "]");
+
+
+                    final long UNKNOWN_DELAY_DURATION = frameMetrics.getMetric(FrameMetrics.UNKNOWN_DELAY_DURATION);
+                    final long INPUT_HANDLING_DURATION = frameMetrics.getMetric(FrameMetrics.INPUT_HANDLING_DURATION);
+                    final long ANIMATION_DURATION = frameMetrics.getMetric(FrameMetrics.ANIMATION_DURATION);
+                    final long LAYOUT_MEASURE_DURATION = frameMetrics.getMetric(FrameMetrics.LAYOUT_MEASURE_DURATION);
+                    final long DRAW_DURATION = frameMetrics.getMetric(FrameMetrics.DRAW_DURATION);
+                    final long SYNC_DURATION = frameMetrics.getMetric(FrameMetrics.SYNC_DURATION);
+                    final long COMMAND_ISSUE_DURATION = frameMetrics.getMetric(FrameMetrics.COMMAND_ISSUE_DURATION);
+                    final long SWAP_BUFFERS_DURATION = frameMetrics.getMetric(FrameMetrics.SWAP_BUFFERS_DURATION);
+                    final long TOTAL_DURATION = frameMetrics.getMetric(FrameMetrics.TOTAL_DURATION);
+
+                    final long FIRST_DRAW_FRAME = frameMetrics.getMetric(FrameMetrics.FIRST_DRAW_FRAME);
+
+                    Log.e(TAG, "onFrameMetricsAvailable："
+                            + "UNKNOWN_DELAY_DURATION：[" + UNKNOWN_DELAY_DURATION + "],"
+                            + "INPUT_HANDLING_DURATION：[" + INPUT_HANDLING_DURATION + "],"
+                            + "ANIMATION_DURATION：[" + ANIMATION_DURATION + "],"
+                            + "LAYOUT_MEASURE_DURATION：[" + LAYOUT_MEASURE_DURATION + "],"
+                            + "DRAW_DURATION：[" + DRAW_DURATION + "],"
+                            + "SYNC_DURATION：[" + SYNC_DURATION + "],"
+                            + "COMMAND_ISSUE_DURATION：[" + COMMAND_ISSUE_DURATION + "],"
+                            + "SWAP_BUFFERS_DURATION：[" + SWAP_BUFFERS_DURATION + "],"
+                            + "TOTAL_DURATION：[" + TOTAL_DURATION + "],"
+                            + "FIRST_DRAW_FRAME：[" + FIRST_DRAW_FRAME + "],");
+
+                }
+            }, new Handler(Looper.getMainLooper()));
         }
     }
 }
