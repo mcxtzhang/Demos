@@ -20,7 +20,7 @@ import android.view.Window;
  */
 
 public class PerformanceMonitorUtils {
-    private static final String TAG = "zxt/PerformanceMonitorUtils";
+    private static final String TAG = "zxt/monitor";
 
     public static void monitorMainLooper() {
 
@@ -33,7 +33,7 @@ public class PerformanceMonitorUtils {
                 //只有looper里有msg 才会执行
                 if (isStarted) {
                     isStarted = false;
-                    Log.d("TAG", "本次主线程 操作执行时间 : x = [" + (System.currentTimeMillis() - lastTime) + "]");
+                    Log.d(TAG, "本次主线程 操作执行时间 : x = [" + (System.currentTimeMillis() - lastTime) + "]");
                 } else {
                     isStarted = true;
                     lastTime = System.currentTimeMillis();
