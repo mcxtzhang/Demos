@@ -2,6 +2,7 @@ package anlaiye.com.cn.performancedemo.monitor;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import anlaiye.com.cn.performancedemo.R;
 
@@ -30,5 +31,12 @@ public class MonitorActivity extends AppCompatActivity {
                 return true;
             }
         });*/
+    }
+
+    @Override
+    protected void onResume() {
+        Log.w("TAG", "onResume() called");
+        super.onResume();
+        Log.e("TAG", "onResume() called");
     }
 }

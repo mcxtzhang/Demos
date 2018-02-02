@@ -1,8 +1,6 @@
-package anlaiye.com.cn.performancedemo;
+package anlaiye.com.cn.performancedemo.monitor;
 
 import android.app.Application;
-
-import anlaiye.com.cn.performancedemo.monitor.ActivityFrameMetrics;
 
 /**
  * Created by zhangxutong on 2018/2/2.

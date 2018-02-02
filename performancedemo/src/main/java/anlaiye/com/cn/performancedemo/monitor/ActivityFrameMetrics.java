@@ -30,6 +30,7 @@ public class ActivityFrameMetrics implements Application.ActivityLifecycleCallba
 
     @Override
     public void onActivityResumed(Activity activity) {
+        Log.d("TAG", "onActivityResumed() called with: activity = [" + activity + "]");
         startFrameMetrics(activity);
     }
 
