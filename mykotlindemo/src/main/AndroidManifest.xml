@@ -47,7 +47,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:hardwareAccelerated="false"
             android:name=".test.hdacce.HardwareAccelerateActivity"
             android:label="hd">
             <intent-filter>
