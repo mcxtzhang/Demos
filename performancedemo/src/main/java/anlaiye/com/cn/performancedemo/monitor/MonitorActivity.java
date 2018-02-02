@@ -1,10 +1,13 @@
 package anlaiye.com.cn.performancedemo.monitor;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 
 import anlaiye.com.cn.performancedemo.R;
+import anlaiye.com.cn.performancedemo.monitor.list.RvActivity;
 
 public class MonitorActivity extends AppCompatActivity {
     private static final String TAG = "MonitorActivity";
@@ -31,6 +34,12 @@ public class MonitorActivity extends AppCompatActivity {
                 return true;
             }
         });*/
+        findViewById(R.id.btnJumpA).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MonitorActivity.this, RvActivity.class));
+            }
+        });
     }
 
     @Override
@@ -39,4 +48,7 @@ public class MonitorActivity extends AppCompatActivity {
         super.onResume();
         Log.e("TAG", "onResume() called");
     }
+
+
+
 }

@@ -15,12 +15,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ActivityFrameMetrics implements Application.ActivityLifecycleCallbacks {
+    private static final String TAG = "TAG/AF";
     private static final float DEFAULT_WARNING_LEVEL_MS = 16.67f;
     private static final float DEFAULT_ERROR_LEVEL_MS = DEFAULT_WARNING_LEVEL_MS * 2;
 
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-
+        startFrameMetrics(activity);
     }
 
     @Override
@@ -30,18 +31,18 @@ public class ActivityFrameMetrics implements Application.ActivityLifecycleCallba
 
     @Override
     public void onActivityResumed(Activity activity) {
-        Log.d("TAG", "onActivityResumed() called with: activity = [" + activity + "]");
-        startFrameMetrics(activity);
+        Log.e(TAG, "onActivityResumed() called with: activity = [" + activity + "]");
+
     }
 
     @Override
     public void onActivityPaused(Activity activity) {
-        stopFrameMetrics(activity);
+        Log.e(TAG, "onActivityPaused() called with: activity = [" + activity + "]");
     }
 
     @Override
     public void onActivityStopped(Activity activity) {
-
+        Log.e(TAG, "onActivityStopped() called with: activity = [" + activity + "]");
     }
 
     @Override
@@ -51,7 +52,8 @@ public class ActivityFrameMetrics implements Application.ActivityLifecycleCallba
 
     @Override
     public void onActivityDestroyed(Activity activity) {
-
+        Log.e(TAG, "onActivityDestroyed() called with: activity = [" + activity + "]");
+        stopFrameMetrics(activity);
     }
 
     private float warningLevelMs;
@@ -75,6 +77,7 @@ public class ActivityFrameMetrics implements Application.ActivityLifecycleCallba
 
                 @Override
                 public void onFrameMetricsAvailable(Window window, FrameMetrics frameMetrics, int dropCountSinceLastInvocation) {
+                    Log.d(TAG, "onFrameMetricsAvailable() called with: window = [" + window + "], frameMetrics = [" + frameMetrics + "], dropCountSinceLastInvocation = [" + dropCountSinceLastInvocation + "]");
                     FrameMetrics frameMetricsCopy = new FrameMetrics(frameMetrics);
                     allFrames++;
                     float totalDurationMs = (float) (0.000001 * frameMetricsCopy.getMetric(FrameMetrics.TOTAL_DURATION));
@@ -90,9 +93,9 @@ public class ActivityFrameMetrics implements Application.ActivityLifecycleCallba
                                 layoutMeasureDurationMs, drawDurationMs, gpuCommandMs, othersMs);
                         msg += "Janky frames: " + jankyFrames + "/" + allFrames + "(" + jankyPercent + "%)";
                         if (showWarning && totalDurationMs > errorLevelMs) {
-                            Log.e("FrameMetrics", msg);
+                            Log.e(TAG, msg);
                         } else if (showError) {
-                            Log.w("FrameMetrics", msg);
+                            Log.w(TAG, msg);
                         }
                     }
                 }
@@ -100,7 +103,7 @@ public class ActivityFrameMetrics implements Application.ActivityLifecycleCallba
             activity.getWindow().addOnFrameMetricsAvailableListener(listener, new Handler(Looper.getMainLooper()));
             frameMetricsAvailableListenerMap.put(activityName, listener);
         } else {
-            Log.w("FrameMetrics", "FrameMetrics can work only with Android SDK 24 (Nougat) and higher");
+            Log.w(TAG, "FrameMetrics can work only with Android SDK 24 (Nougat) and higher");
         }
     }
 
