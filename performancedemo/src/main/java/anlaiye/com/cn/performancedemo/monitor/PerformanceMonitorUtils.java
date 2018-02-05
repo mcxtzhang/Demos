@@ -73,20 +73,45 @@ public class PerformanceMonitorUtils {
                     //Log.d(TAG, "onFrameMetricsAvailable() called with: window = [" + window + "], frameMetrics = [" + frameMetrics + "], dropCountSinceLastInvocation = [" + dropCountSinceLastInvocation + "]");
 
 
-                    final long UNKNOWN_DELAY_DURATION = frameMetrics.getMetric(FrameMetrics.UNKNOWN_DELAY_DURATION);
-                    final long INPUT_HANDLING_DURATION = frameMetrics.getMetric(FrameMetrics.INPUT_HANDLING_DURATION);
-                    final long ANIMATION_DURATION = frameMetrics.getMetric(FrameMetrics.ANIMATION_DURATION);
-                    final long LAYOUT_MEASURE_DURATION = frameMetrics.getMetric(FrameMetrics.LAYOUT_MEASURE_DURATION);
-                    final long DRAW_DURATION = frameMetrics.getMetric(FrameMetrics.DRAW_DURATION);
-                    final long SYNC_DURATION = frameMetrics.getMetric(FrameMetrics.SYNC_DURATION);
-                    final long COMMAND_ISSUE_DURATION = frameMetrics.getMetric(FrameMetrics.COMMAND_ISSUE_DURATION);
-                    final long SWAP_BUFFERS_DURATION = frameMetrics.getMetric(FrameMetrics.SWAP_BUFFERS_DURATION);
-                    final long TOTAL_DURATION = frameMetrics.getMetric(FrameMetrics.TOTAL_DURATION);
+                    /**
+                     *
+                     final long UNKNOWN_DELAY_DURATION  =
+                     final long INPUT_HANDLING_DURATION =
+                     final long ANIMATION_DURATION      =
+                     final long LAYOUT_MEASURE_DURATION =
+                     final long DRAW_DURATION           =
+                     final long SYNC_DURATION           =
+                     final long COMMAND_ISSUE_DURATION  =
+                     final long SWAP_BUFFERS_DURATION   =
+                     final long TOTAL_DURATION          =
+                     */
 
-                    final long FIRST_DRAW_FRAME = frameMetrics.getMetric(FrameMetrics.FIRST_DRAW_FRAME);
+                    double UNKNOWN_DELAY_DURATION = frameMetrics.getMetric(FrameMetrics.UNKNOWN_DELAY_DURATION);
+                    double INPUT_HANDLING_DURATION = frameMetrics.getMetric(FrameMetrics.INPUT_HANDLING_DURATION);
+                    double ANIMATION_DURATION = frameMetrics.getMetric(FrameMetrics.ANIMATION_DURATION);
+                    double LAYOUT_MEASURE_DURATION = frameMetrics.getMetric(FrameMetrics.LAYOUT_MEASURE_DURATION);
+                    double DRAW_DURATION = frameMetrics.getMetric(FrameMetrics.DRAW_DURATION);
+                    double SYNC_DURATION = frameMetrics.getMetric(FrameMetrics.SYNC_DURATION);
+                    double COMMAND_ISSUE_DURATION = frameMetrics.getMetric(FrameMetrics.COMMAND_ISSUE_DURATION);
+                    double SWAP_BUFFERS_DURATION = frameMetrics.getMetric(FrameMetrics.SWAP_BUFFERS_DURATION);
+                    double TOTAL_DURATION = frameMetrics.getMetric(FrameMetrics.TOTAL_DURATION);
 
-                    Log.e(TAG, "onFrameMetricsAvailable："
-                            + "UNKNOWN_DELAY_DURATION：[" + UNKNOWN_DELAY_DURATION + "],"
+                    double FIRST_DRAW_FRAME = frameMetrics.getMetric(FrameMetrics.FIRST_DRAW_FRAME);
+
+                    UNKNOWN_DELAY_DURATION  =(UNKNOWN_DELAY_DURATION *(0.000001));
+                    INPUT_HANDLING_DURATION =(INPUT_HANDLING_DURATION*(0.000001));
+                    ANIMATION_DURATION      =(ANIMATION_DURATION     *(0.000001));
+                    LAYOUT_MEASURE_DURATION =(LAYOUT_MEASURE_DURATION*(0.000001));
+                    DRAW_DURATION           =(DRAW_DURATION          *(0.000001));
+                    SYNC_DURATION           =(SYNC_DURATION          *(0.000001));
+                    COMMAND_ISSUE_DURATION  =(COMMAND_ISSUE_DURATION *(0.000001));
+                    SWAP_BUFFERS_DURATION   =(SWAP_BUFFERS_DURATION  *(0.000001));
+                    TOTAL_DURATION          =(TOTAL_DURATION         *(0.000001));
+
+                            Log.e(TAG, "onFrameMetricsAvailable："
+                                    + "TOTAL_DURATION：[" + TOTAL_DURATION + "],"
+
+                                    + "UNKNOWN_DELAY_DURATION：[" + UNKNOWN_DELAY_DURATION + "],"
                             + "INPUT_HANDLING_DURATION：[" + INPUT_HANDLING_DURATION + "],"
                             + "ANIMATION_DURATION：[" + ANIMATION_DURATION + "],"
                             + "LAYOUT_MEASURE_DURATION：[" + LAYOUT_MEASURE_DURATION + "],"
@@ -94,7 +119,6 @@ public class PerformanceMonitorUtils {
                             + "SYNC_DURATION：[" + SYNC_DURATION + "],"
                             + "COMMAND_ISSUE_DURATION：[" + COMMAND_ISSUE_DURATION + "],"
                             + "SWAP_BUFFERS_DURATION：[" + SWAP_BUFFERS_DURATION + "],"
-                            + "TOTAL_DURATION：[" + TOTAL_DURATION + "],"
                             + "FIRST_DRAW_FRAME：[" + FIRST_DRAW_FRAME + "],");
 
                 }

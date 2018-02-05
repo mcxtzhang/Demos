@@ -13,10 +13,11 @@ import android.view.Window;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class ActivityFrameMetrics implements Application.ActivityLifecycleCallbacks {
     private static final String TAG = "TAG/AF";
-    private static final float DEFAULT_WARNING_LEVEL_MS = 16.67f;
+    private static final float DEFAULT_WARNING_LEVEL_MS = (float) TimeUnit.SECONDS.toMillis(1) / 60;//16.67ms
     private static final float DEFAULT_ERROR_LEVEL_MS = DEFAULT_WARNING_LEVEL_MS * 2;
 
     @Override
@@ -77,10 +78,11 @@ public class ActivityFrameMetrics implements Application.ActivityLifecycleCallba
 
                 @Override
                 public void onFrameMetricsAvailable(Window window, FrameMetrics frameMetrics, int dropCountSinceLastInvocation) {
-                    Log.d(TAG, "onFrameMetricsAvailable() called with: window = [" + window + "], frameMetrics = [" + frameMetrics + "], dropCountSinceLastInvocation = [" + dropCountSinceLastInvocation + "]");
                     FrameMetrics frameMetricsCopy = new FrameMetrics(frameMetrics);
                     allFrames++;
                     float totalDurationMs = (float) (0.000001 * frameMetricsCopy.getMetric(FrameMetrics.TOTAL_DURATION));
+                    Log.d(TAG, "onFrameMetricsAvailable() called with: totalDurationMs = [" + totalDurationMs + "], DEFAULT_WARNING_LEVEL_MS = [" + DEFAULT_WARNING_LEVEL_MS + "], dropCountSinceLastInvocation = [" + dropCountSinceLastInvocation + "]");
+
                     if (totalDurationMs > warningLevelMs) {
                         jankyFrames++;
                         String msg = String.format("Janky frame detected on %s with total duration: %.2fms\n", activityName, totalDurationMs);
