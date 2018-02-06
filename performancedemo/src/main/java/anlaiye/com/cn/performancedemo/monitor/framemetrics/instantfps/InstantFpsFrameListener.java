@@ -5,15 +5,17 @@ import android.view.FrameMetrics;
 import android.view.Window;
 
 import anlaiye.com.cn.performancedemo.monitor.framemetrics.AbstractDpFrameMonitor;
+import anlaiye.com.cn.performancedemo.monitor.framemetrics.IFrameListener;
 
 /**
  * Created by zhangxutong on 2018/2/5.
  */
 
-public class InstantFpsFrameListener implements Window.OnFrameMetricsAvailableListener {
+public class InstantFpsFrameListener implements IFrameListener {
     private static final String TAG = "butter/InstantFps";
     long mFrameCount = 0;
     double sumOfInstantFps = 0;
+    double minFps = Double.MAX_VALUE;
 
     @Override
     public void onFrameMetricsAvailable(Window window, FrameMetrics frameMetrics, int dropCountSinceLastInvocation) {
@@ -31,10 +33,17 @@ public class InstantFpsFrameListener implements Window.OnFrameMetricsAvailableLi
         mFrameCount++;
         double instantFps = 1 / totalDurationMs * 1000;
         sumOfInstantFps = sumOfInstantFps + instantFps;
-        Log.i(TAG, "sumOfInstantFps:" + sumOfInstantFps + ", mFrameCount:" + mFrameCount);
+
+        minFps = Math.min(minFps, instantFps);
+        Log.i(TAG, "sumOfInstantFps:" + sumOfInstantFps + ", mFrameCount:" + mFrameCount + ", minFps:" + minFps);
     }
 
     public double getAvgFpsInSeconds() {
         return sumOfInstantFps / mFrameCount;
+    }
+
+    @Override
+    public double getMinFpsInSeconds() {
+        return minFps;
     }
 }

@@ -30,7 +30,7 @@ public class SumDurationMonitor extends AbstractDpFrameMonitor<SumDurationFrameL
     public void report(Activity activity) {
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
             SumDurationFrameListener listener = frameMetricsAvailableListenerMap.get(activity);
-            Log.d(TAG, "report() called with: listener.getAvgFpsInSeconds() = [" + listener.getAvgFpsInSeconds() + "]");
+            Log.d(TAG, "report() called with: listener.getAvgFpsInSeconds() = [" + listener.getAvgFpsInSeconds() + "],getMinFpsInSeconds:" + listener.getMinFpsInSeconds());
 
         }
     }

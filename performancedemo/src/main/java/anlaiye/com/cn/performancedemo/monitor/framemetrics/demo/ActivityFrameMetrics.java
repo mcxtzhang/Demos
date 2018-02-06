@@ -1,4 +1,4 @@
-package anlaiye.com.cn.performancedemo.monitor.framemetrics;
+package anlaiye.com.cn.performancedemo.monitor.framemetrics.demo;
 
 import android.annotation.TargetApi;
 import android.app.Activity;

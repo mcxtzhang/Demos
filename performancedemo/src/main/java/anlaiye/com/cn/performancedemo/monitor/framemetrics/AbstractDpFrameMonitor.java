@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
  * Created by zhangxutong on 2018/2/5.
  */
 
-public abstract class AbstractDpFrameMonitor<T extends Window.OnFrameMetricsAvailableListener> implements IFrameMonitor {
+public abstract class AbstractDpFrameMonitor<T extends IFrameListener> implements IFrameMonitor {
     protected static final String TAG = "TAG/AF";
     public static final float DEFAULT_WARNING_LEVEL_MS = (float) TimeUnit.SECONDS.toMillis(1) / 60;//16.67ms
     public static final float DEFAULT_ERROR_LEVEL_MS = DEFAULT_WARNING_LEVEL_MS * 2;

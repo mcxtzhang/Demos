@@ -24,7 +24,7 @@ public class InstantFpsMonitor extends AbstractDpFrameMonitor<InstantFpsFrameLis
     public void report(Activity activity) {
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
             InstantFpsFrameListener listener = frameMetricsAvailableListenerMap.get(activity);
-            Log.i(TAG, "report() called with: listener.getAvgFpsInSeconds() = [" + listener.getAvgFpsInSeconds() + "]");
+            Log.i(TAG, "report() called with: listener.getAvgFpsInSeconds() = [" + listener.getAvgFpsInSeconds() + "],getMinFpsInSeconds:" + listener.getMinFpsInSeconds());
 
         }
     }
