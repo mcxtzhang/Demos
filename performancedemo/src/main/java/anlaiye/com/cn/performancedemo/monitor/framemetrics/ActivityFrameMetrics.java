@@ -1,4 +1,4 @@
-package anlaiye.com.cn.performancedemo.monitor;
+package anlaiye.com.cn.performancedemo.monitor.framemetrics;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -62,19 +62,21 @@ public class ActivityFrameMetrics implements Application.ActivityLifecycleCallba
     private boolean showWarning;
     private boolean showError;
 
-    private Map<String, Window.OnFrameMetricsAvailableListener> frameMetricsAvailableListenerMap = new HashMap<>();
+    private Map<Activity, Window.OnFrameMetricsAvailableListener> frameMetricsAvailableListenerMap = new HashMap<>();
 
     private ActivityFrameMetrics() {
     }
 
     @TargetApi(Build.VERSION_CODES.N)
-    public void startFrameMetrics(Activity activity) {
+    public void startFrameMetrics(final Activity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            final String activityName = activity.getClass().getSimpleName();
             Window.OnFrameMetricsAvailableListener listener = new Window.OnFrameMetricsAvailableListener() {
 
                 private int allFrames = 0;
                 private int jankyFrames = 0;
+
+                long sumOfTotalDuration = 0L;
+                long frameCount = 0L;
 
                 @Override
                 public void onFrameMetricsAvailable(Window window, FrameMetrics frameMetrics, int dropCountSinceLastInvocation) {
@@ -85,7 +87,7 @@ public class ActivityFrameMetrics implements Application.ActivityLifecycleCallba
 
                     if (totalDurationMs > warningLevelMs) {
                         jankyFrames++;
-                        String msg = String.format("Janky frame detected on %s with total duration: %.2fms\n", activityName, totalDurationMs);
+                        String msg = String.format("Janky frame detected on %s with total duration: %.2fms\n", activity.getClass().getName(), totalDurationMs);
                         float layoutMeasureDurationMs = (float) (0.000001 * frameMetricsCopy.getMetric(FrameMetrics.LAYOUT_MEASURE_DURATION));
                         float drawDurationMs = (float) (0.000001 * frameMetricsCopy.getMetric(FrameMetrics.DRAW_DURATION));
                         float gpuCommandMs = (float) (0.000001 * frameMetricsCopy.getMetric(FrameMetrics.COMMAND_ISSUE_DURATION));
@@ -94,16 +96,24 @@ public class ActivityFrameMetrics implements Application.ActivityLifecycleCallba
                         msg += String.format("Layout/measure: %.2fms, draw:%.2fms, gpuCommand:%.2fms others:%.2fms\n",
                                 layoutMeasureDurationMs, drawDurationMs, gpuCommandMs, othersMs);
                         msg += "Janky frames: " + jankyFrames + "/" + allFrames + "(" + jankyPercent + "%)";
-                        if (showWarning && totalDurationMs > errorLevelMs) {
+                        if (showError && totalDurationMs > errorLevelMs) {
                             Log.e(TAG, msg);
-                        } else if (showError) {
+                        } else if (showWarning && totalDurationMs > warningLevelMs) {
                             Log.w(TAG, msg);
                         }
                     }
+
+
+                    frameCount++;
+                    if (totalDurationMs < warningLevelMs) {//小于就补齐16ms
+                        totalDurationMs = warningLevelMs;
+                    }
+                    sumOfTotalDuration += totalDurationMs;
+
                 }
             };
             activity.getWindow().addOnFrameMetricsAvailableListener(listener, new Handler(Looper.getMainLooper()));
-            frameMetricsAvailableListenerMap.put(activityName, listener);
+            frameMetricsAvailableListenerMap.put(activity, listener);
         } else {
             Log.w(TAG, "FrameMetrics can work only with Android SDK 24 (Nougat) and higher");
         }
@@ -112,12 +122,18 @@ public class ActivityFrameMetrics implements Application.ActivityLifecycleCallba
     @TargetApi(Build.VERSION_CODES.N)
     public void stopFrameMetrics(Activity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            String activityName = activity.getClass().getName();
-            Window.OnFrameMetricsAvailableListener onFrameMetricsAvailableListener = frameMetricsAvailableListenerMap.get(activityName);
+            Window.OnFrameMetricsAvailableListener onFrameMetricsAvailableListener = frameMetricsAvailableListenerMap.get(activity);
             if (onFrameMetricsAvailableListener != null) {
                 activity.getWindow().removeOnFrameMetricsAvailableListener(onFrameMetricsAvailableListener);
-                frameMetricsAvailableListenerMap.remove(activityName);
+                frameMetricsAvailableListenerMap.remove(activity);
             }
+        }
+    }
+
+    public void report(Activity activity) {
+        if (Build.VERSION.SDK_INT>Build.VERSION_CODES.N){
+            Window.OnFrameMetricsAvailableListener listener = frameMetricsAvailableListenerMap.get(activity);
+            //listener.
         }
     }
 
@@ -158,5 +174,13 @@ public class ActivityFrameMetrics implements Application.ActivityLifecycleCallba
             activityFrameMetrics.showWarning = this.showWarnings;
             return activityFrameMetrics;
         }
+    }
+
+    private static class InnerHolder {
+        static final ActivityFrameMetrics INSTANCE = new ActivityFrameMetrics.Builder().build();
+    }
+
+    public static ActivityFrameMetrics getInstance() {
+        return InnerHolder.INSTANCE;
     }
 }

@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.widget.ImageView
 import anlaiye.com.cn.performancedemo.R
-import anlaiye.com.cn.performancedemo.monitor.PerformanceMonitorUtils
+import anlaiye.com.cn.performancedemo.monitor.framemetrics.ButterFactory
 import com.bumptech.glide.Glide
 import com.mcxtzhang.zxtcommonlib.recyclerview.CommonAdapter
 import com.mcxtzhang.zxtcommonlib.recyclerview.ViewHolder
@@ -17,7 +17,7 @@ class RvActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_rv)
-        PerformanceMonitorUtils.monitorFrameMetrics(this)
+        //PerformanceMonitorUtils.monitorFrameMetrics(this)
         rv.layoutManager = LinearLayoutManager(this)
         rv.adapter = object : CommonAdapter<ListDataBean>(this, R.layout.item_rv, initDatas()) {
             override fun convert(holder: ViewHolder?, data: ListDataBean?) {
@@ -27,6 +27,20 @@ class RvActivity : AppCompatActivity() {
             }
 
         }
+
+
+
+        btnReport.setOnClickListener { _ ->
+            //ActivityFrameMetrics.getInstance().report(this)
+            ButterFactory.getFrameMonitor().report(this)
+
+            ButterFactory.getInstantFpsMonitor().report(this)
+
+        }
+
+
+        ButterFactory.getInstantFpsMonitor().startMonitor(this)
+
     }
 
 

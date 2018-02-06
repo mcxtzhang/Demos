@@ -1,4 +1,4 @@
-package anlaiye.com.cn.performancedemo.monitor;
+package anlaiye.com.cn.performancedemo.monitor.framemetrics;
 
 import android.app.Application;
 
@@ -10,6 +10,6 @@ public class CstApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        registerActivityLifecycleCallbacks(new ActivityFrameMetrics.Builder().build());
+        registerActivityLifecycleCallbacks(/*ActivityFrameMetrics.getInstance()*/ ButterFactory.getFrameMonitor());
     }
 }
