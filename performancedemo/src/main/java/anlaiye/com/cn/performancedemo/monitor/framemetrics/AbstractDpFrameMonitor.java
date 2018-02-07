@@ -21,6 +21,48 @@ public abstract class AbstractDpFrameMonitor<T extends IFrameListener> implement
     public static final float DEFAULT_WARNING_LEVEL_MS = (float) TimeUnit.SECONDS.toMillis(1) / 60;//16.67ms
     public static final float DEFAULT_ERROR_LEVEL_MS = DEFAULT_WARNING_LEVEL_MS * 2;
 
+    protected float warningLevelMs;
+    protected float errorLevelMs;
+    protected boolean showWarning;
+    protected boolean showError;
+
+    protected Map<Activity, T> frameMetricsAvailableListenerMap = new HashMap<>();
+
+    @Override
+    public void startMonitor(Activity activity) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            T listener = createFrameListener();
+            activity.getWindow().addOnFrameMetricsAvailableListener(listener, new Handler(Looper.getMainLooper()));
+            frameMetricsAvailableListenerMap.put(activity, listener);
+        } else {
+            Log.w(TAG, "FrameMetrics can work only with Android SDK 24 (Nougat) and higher");
+        }
+    }
+
+    public abstract T createFrameListener();
+
+    @Override
+    public void stopMonitor(Activity activity) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Window.OnFrameMetricsAvailableListener onFrameMetricsAvailableListener = frameMetricsAvailableListenerMap.get(activity);
+            if (onFrameMetricsAvailableListener != null) {
+                report(activity);
+
+                activity.getWindow().removeOnFrameMetricsAvailableListener(onFrameMetricsAvailableListener);
+                frameMetricsAvailableListenerMap.remove(activity);
+            }
+        }
+    }
+
+    @Override
+    public void report(Activity activity) {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
+            T listener = frameMetricsAvailableListenerMap.get(activity);
+            Log.i(TAG, "report() called with: currentListener :+" + listener.getClass().getSimpleName() + ", getAvgFps() = [" + listener.getAvgFps() + "],getMinFps:" + listener.getMinFps());
+
+        }
+    }
+
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
         startMonitor(activity);
@@ -56,38 +98,6 @@ public abstract class AbstractDpFrameMonitor<T extends IFrameListener> implement
     public void onActivityDestroyed(Activity activity) {
         Log.i(TAG, "onActivityDestroyed() called with: activity = [" + activity + "]");
         stopMonitor(activity);
-    }
-
-    protected float warningLevelMs;
-    protected float errorLevelMs;
-    protected boolean showWarning;
-    protected boolean showError;
-
-    protected Map<Activity, T> frameMetricsAvailableListenerMap = new HashMap<>();
-
-
-    @Override
-    public void startMonitor(Activity activity) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            T listener = createMonitor();
-            activity.getWindow().addOnFrameMetricsAvailableListener(listener, new Handler(Looper.getMainLooper()));
-            frameMetricsAvailableListenerMap.put(activity, listener);
-        } else {
-            Log.w(TAG, "FrameMetrics can work only with Android SDK 24 (Nougat) and higher");
-        }
-    }
-
-    public abstract T createMonitor();
-
-    @Override
-    public void stopMonitor(Activity activity) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Window.OnFrameMetricsAvailableListener onFrameMetricsAvailableListener = frameMetricsAvailableListenerMap.get(activity);
-            if (onFrameMetricsAvailableListener != null) {
-                activity.getWindow().removeOnFrameMetricsAvailableListener(onFrameMetricsAvailableListener);
-                frameMetricsAvailableListenerMap.remove(activity);
-            }
-        }
     }
 
 }

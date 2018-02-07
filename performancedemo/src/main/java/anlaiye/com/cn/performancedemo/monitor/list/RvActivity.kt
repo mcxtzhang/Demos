@@ -17,7 +17,6 @@ class RvActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_rv)
-        //PerformanceMonitorUtils.monitorFrameMetrics(this)
         rv.layoutManager = LinearLayoutManager(this)
         rv.adapter = object : CommonAdapter<ListDataBean>(this, R.layout.item_rv, initDatas()) {
             override fun convert(holder: ViewHolder?, data: ListDataBean?) {
@@ -37,10 +36,6 @@ class RvActivity : AppCompatActivity() {
             ButterFactory.getInstantFpsMonitor().report(this)
 
         }
-
-
-        ButterFactory.getInstantFpsMonitor().startMonitor(this)
-
     }
 
 

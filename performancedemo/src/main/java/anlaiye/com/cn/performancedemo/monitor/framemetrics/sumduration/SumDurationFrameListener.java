@@ -59,11 +59,13 @@ public class SumDurationFrameListener implements IFrameListener {
 
     }
 
-    public double getAvgFpsInSeconds() {
+    @Override
+    public double getAvgFps() {
         return frameCount / sumOfTotalDuration * 1000;
     }
 
-    public double getMinFpsInSeconds() {
+    @Override
+    public double getMinFps() {
         return minFps;
     }
 }

@@ -37,13 +37,13 @@ public class InstantFpsFrameListener implements IFrameListener {
         minFps = Math.min(minFps, instantFps);
         Log.i(TAG, "sumOfInstantFps:" + sumOfInstantFps + ", mFrameCount:" + mFrameCount + ", minFps:" + minFps);
     }
-
-    public double getAvgFpsInSeconds() {
+    @Override
+    public double getAvgFps() {
         return sumOfInstantFps / mFrameCount;
     }
 
     @Override
-    public double getMinFpsInSeconds() {
+    public double getMinFps() {
         return minFps;
     }
 }

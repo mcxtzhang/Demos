@@ -11,7 +11,7 @@ import android.view.Window;
 @RequiresApi(api = Build.VERSION_CODES.N)
 public interface IFrameListener extends Window.OnFrameMetricsAvailableListener {
 
-    double getAvgFpsInSeconds();
+    double getAvgFps();
 
-    double getMinFpsInSeconds();
+    double getMinFps();
 }

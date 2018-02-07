@@ -1,8 +1,5 @@
 package anlaiye.com.cn.performancedemo.monitor.framemetrics;
 
-import anlaiye.com.cn.performancedemo.monitor.framemetrics.instantfps.InstantFpsMonitor;
-import anlaiye.com.cn.performancedemo.monitor.framemetrics.sumduration.SumDurationMonitor;
-
 /**
  * Created by zhangxutong on 2018/2/5.
  */
@@ -10,13 +7,19 @@ import anlaiye.com.cn.performancedemo.monitor.framemetrics.sumduration.SumDurati
 public class ButterFactory {
     public static IFrameMonitor getFrameMonitor() {
         if (true) {
-            return SumDurationMonitor.getInstance();
+            return getSumDurationMonitor();
         } else {
             return getInstantFpsMonitor();
         }
     }
 
+    public static IFrameMonitor getSumDurationMonitor() {
+        //return SumDurationMonitor.getInstance();
+        return DpFrameMonitor.getInstance("sumDuration");
+    }
+
     public static IFrameMonitor getInstantFpsMonitor() {
-        return InstantFpsMonitor.getInstance();
+        //return InstantFpsMonitor.getInstance();
+        return DpFrameMonitor.getInstance("instantFps");
     }
 }

@@ -1,15 +1,11 @@
 package anlaiye.com.cn.performancedemo.monitor.framemetrics.instantfps;
 
-import android.app.Activity;
-import android.os.Build;
-import android.util.Log;
-
 import anlaiye.com.cn.performancedemo.monitor.framemetrics.AbstractDpFrameMonitor;
 
 /**
  * Created by zhangxutong on 2018/2/5.
  */
-
+@Deprecated
 public class InstantFpsMonitor extends AbstractDpFrameMonitor<InstantFpsFrameListener> {
 
     private static class InnerHolder {
@@ -21,16 +17,7 @@ public class InstantFpsMonitor extends AbstractDpFrameMonitor<InstantFpsFrameLis
     }
 
     @Override
-    public void report(Activity activity) {
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
-            InstantFpsFrameListener listener = frameMetricsAvailableListenerMap.get(activity);
-            Log.i(TAG, "report() called with: listener.getAvgFpsInSeconds() = [" + listener.getAvgFpsInSeconds() + "],getMinFpsInSeconds:" + listener.getMinFpsInSeconds());
-
-        }
-    }
-
-    @Override
-    public InstantFpsFrameListener createMonitor() {
+    public InstantFpsFrameListener createFrameListener() {
         return new InstantFpsFrameListener();
     }
 }
