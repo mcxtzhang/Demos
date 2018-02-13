@@ -68,10 +68,22 @@ public class PerformanceMonitorUtils {
     public static void monitorFrameMetrics(Activity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             activity.getWindow().addOnFrameMetricsAvailableListener(new Window.OnFrameMetricsAvailableListener() {
+                long lastTime ;
                 @Override
                 public void onFrameMetricsAvailable(Window window, FrameMetrics frameMetrics, int dropCountSinceLastInvocation) {
-                    //Log.d(TAG, "onFrameMetricsAvailable() called with: window = [" + window + "], frameMetrics = [" + frameMetrics + "], dropCountSinceLastInvocation = [" + dropCountSinceLastInvocation + "]");
+                    Log.i(TAG, "onFrameMetricsAvailable() called with: window = [" + window + "], frameMetrics = [" + frameMetrics + "], dropCountSinceLastInvocation = [" + dropCountSinceLastInvocation + "]");
 
+
+                    long currentTimeMillis = System.currentTimeMillis();
+
+                    long gap = ((currentTimeMillis - lastTime) );
+                    //Log.i(TAG, "onFrameMetricsAvailable: gap = [" + gap + "]" + "totalDuration:" + frameMetrics.getMetric(FrameMetrics.TOTAL_DURATION) + ", currentTimeMillis:" + currentTimeMillis);
+                    if (gap > 16) {
+                        long count = (gap - 16) / 16;
+                        //Log.i(TAG, "onFrameMetricsAvailable   丢帧 :  lasttime:" + lastTime + ", gap:" + gap + ",丢了几帧:" + count);
+
+                    }
+                    lastTime = currentTimeMillis;
 
                     /**
                      *
@@ -108,7 +120,7 @@ public class PerformanceMonitorUtils {
                     SWAP_BUFFERS_DURATION   =(SWAP_BUFFERS_DURATION  *(0.000001));
                     TOTAL_DURATION          =(TOTAL_DURATION         *(0.000001));
 
-                            Log.e(TAG, "onFrameMetricsAvailable："
+                            /*Log.e(TAG, "onFrameMetricsAvailable："
                                     + "TOTAL_DURATION：[" + TOTAL_DURATION + "],"
 
                                     + "UNKNOWN_DELAY_DURATION：[" + UNKNOWN_DELAY_DURATION + "],"
@@ -120,7 +132,7 @@ public class PerformanceMonitorUtils {
                             + "COMMAND_ISSUE_DURATION：[" + COMMAND_ISSUE_DURATION + "],"
                             + "SWAP_BUFFERS_DURATION：[" + SWAP_BUFFERS_DURATION + "],"
                             + "FIRST_DRAW_FRAME：[" + FIRST_DRAW_FRAME + "],");
-
+*/
                 }
             }, new Handler(Looper.getMainLooper()));
         }

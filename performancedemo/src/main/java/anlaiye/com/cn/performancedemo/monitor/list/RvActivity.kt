@@ -41,14 +41,16 @@ class RvActivity : AppCompatActivity() {
 
     fun initDatas(): List<ListDataBean> {
         val datas = ArrayList<ListDataBean>()
-        datas.add(ListDataBean("http://imgs.ebrun.com/resources/2016_03/2016_03_25/201603259771458878793312_origin.jpg", "张"))
-        datas.add(ListDataBean("http://p14.go007.com/2014_11_02_05/a03541088cce31b8_1.jpg", "旭童"))
-        datas.add(ListDataBean("http://news.k618.cn/tech/201604/W020160407281077548026.jpg", "多种type"))
-        datas.add(ListDataBean("http://www.kejik.com/image/1460343965520.jpg", "多种type"))
-        datas.add(ListDataBean("http://cn.chinadaily.com.cn/img/attachement/jpg/site1/20160318/eca86bd77be61855f1b81c.jpg", "多种type"))
-        datas.add(ListDataBean("http://imgs.ebrun.com/resources/2016_04/2016_04_12/201604124411460430531500.jpg", "多种type"))
-        datas.add(ListDataBean("http://imgs.ebrun.com/resources/2016_04/2016_04_24/201604244971461460826484_origin.jpeg", "多种type"))
-        datas.add(ListDataBean("http://www.lnmoto.cn/bbs/data/attachment/forum/201408/12/074018gshshia3is1cw3sg.jpg", "多种type"))
+        datas.add(ListDataBean("https://upload-images.jianshu.io/upload_images/595349-6ffdbb24d4945fa4.png", "Glide"))
+        datas.add(ListDataBean("http://static.open-open.com/lib/uploadImg/20160909/20160909163002_510.jpg", "MVP"))
+        datas.add(ListDataBean("http://static.open-open.com/lib/uploadImg/20160909/20160909161955_797.png", "ButterKnife"))
+        datas.add(ListDataBean("http://static.open-open.com/lib/uploadImg/20160909/20160909161955_718.png", "Retrofit"))
+        datas.add(ListDataBean("http://static.open-open.com/lib/uploadImg/20160909/20160909161956_36.png", "Picasso"))
+        datas.add(ListDataBean("http://static.open-open.com/lib/uploadImg/20160909/20160909162002_610.jpg", "Realm"))
+        datas.add(ListDataBean("http://static.open-open.com/lib/uploadImg/20160909/20160909162002_447.jpg", "RxJava"))
+        datas.add(ListDataBean("https://gss1.bdstatic.com/9vo3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268/sign=818bbcabfcf2b211e42e8248f2826511/9a504fc2d5628535746e08f997ef76c6a6ef6358.jpg", "kotlin"))
+        datas.add(ListDataBean("https://gss0.bdstatic.com/-4o3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268/sign=f5c6e8806959252da3171a020c9a032c/0df431adcbef76096709930527dda3cc7cd99e2d.jpg", "Java"))
+        datas.add(ListDataBean("https://gss1.bdstatic.com/9vo3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike80%2C5%2C5%2C80%2C26/sign=3b03c837572c11dfcadcb771024e09b5/ae51f3deb48f8c54cd34cafb3a292df5e1fe7f7a.jpg", "Android"))
         return datas
     }
 }

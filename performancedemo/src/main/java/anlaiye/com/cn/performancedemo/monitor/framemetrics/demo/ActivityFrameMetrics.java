@@ -131,7 +131,7 @@ public class ActivityFrameMetrics implements Application.ActivityLifecycleCallba
     }
 
     public void report(Activity activity) {
-        if (Build.VERSION.SDK_INT>Build.VERSION_CODES.N){
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
             Window.OnFrameMetricsAvailableListener listener = frameMetricsAvailableListenerMap.get(activity);
             //listener.
         }
