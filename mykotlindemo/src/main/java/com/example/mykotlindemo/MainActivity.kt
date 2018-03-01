@@ -1,5 +1,6 @@
 package com.example.mykotlindemo
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -8,6 +9,7 @@ import android.view.View
 import com.example.mykotlindemo.bianliangAndshuxing.ShuXing
 import com.example.mykotlindemo.kuozhanyuyan3.supportsLollipop
 import com.example.mykotlindemo.pojo.PostBean
+import com.example.mykotlindemo.test.ToBeKillService
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.toast
 
@@ -69,17 +71,20 @@ class MainActivity : AppCompatActivity() {
 
         //log("name:$name")
 
-        val poemArray:Array<String> = arrayOf("朝辞白帝彩云间", "千里江陵一日还", "两岸猿声啼不住", "轻舟已过万重山")
+        val poemArray: Array<String> = arrayOf("朝辞白帝彩云间", "千里江陵一日还", "两岸猿声啼不住", "轻舟已过万重山")
 
-        for(item in poemArray){
+        for (item in poemArray) {
 
         }
 
+
+        startService(Intent(this, ToBeKillService::class.java))
+
     }
 
-  /*  fun log(msg: String, tag: String = javaClass<MainActivity>().getSimpleName()) {
-        Log.d(tag, msg)
-    }*/
+    /*  fun log(msg: String, tag: String = javaClass<MainActivity>().getSimpleName()) {
+          Log.d(tag, msg)
+      }*/
 
 }
 
