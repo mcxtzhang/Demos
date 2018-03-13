@@ -24,7 +24,7 @@ include ':artdemo'
 //include ':viewpagerdemo'
 //include ':cstviewdemo'
 //, ,, ':recyclerviewdemo', ':okhttpdemo'
-//include ':animdemo'
+include ':animdemo'
 //':bndemo',
 //include ':daggerdemo'
 //include ':rxjava2demo'

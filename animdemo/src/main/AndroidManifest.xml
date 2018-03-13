@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.mcxtzhang.animdemo">
+    package="com.mcxtzhang.animdemo">
 
     <application
         android:allowBackup="true"
@@ -8,25 +8,20 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
-        </activity>
-        <activity android:name=".ColorActivity">
-        </activity>
-        <activity android:name=".TestInterpolatorActivity">
-        </activity>
+        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".ColorActivity"></activity>
+        <activity android:name=".TestInterpolatorActivity"></activity>
         <activity android:name=".LauncherActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
-        <activity android:name=".ui.WaterWaveActivity">
-        </activity>
-        <activity android:name=".vipclub.TaobaoVipAnimActivity">
-        </activity>
-        <activity android:name=".NewAnim20170316Activity">
-        </activity>
+        <activity android:name=".ui.WaterWaveActivity"></activity>
+        <activity android:name=".vipclub.TaobaoVipAnimActivity"></activity>
+        <activity android:name=".NewAnim20170316Activity"></activity>
+        <activity android:name=".text.TextViewDianDianDIanActivity"><intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter></activity>
     </application>
 
 </manifest>

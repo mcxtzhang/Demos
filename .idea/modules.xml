@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/Demos.iml" filepath="$PROJECT_DIR$/Demos.iml" />
       <module fileurl="file://$PROJECT_DIR$/aidldemoclient/aidldemoclient.iml" filepath="$PROJECT_DIR$/aidldemoclient/aidldemoclient.iml" />
       <module fileurl="file://$PROJECT_DIR$/aidldemoserver/aidldemoserver.iml" filepath="$PROJECT_DIR$/aidldemoserver/aidldemoserver.iml" />
+      <module fileurl="file://$PROJECT_DIR$/animdemo/animdemo.iml" filepath="$PROJECT_DIR$/animdemo/animdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/artdemo/artdemo.iml" filepath="$PROJECT_DIR$/artdemo/artdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/baseemptyfragment/baseemptyfragment.iml" filepath="$PROJECT_DIR$/baseemptyfragment/baseemptyfragment.iml" />
