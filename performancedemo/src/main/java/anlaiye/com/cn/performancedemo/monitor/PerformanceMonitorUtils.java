@@ -77,7 +77,7 @@ public class PerformanceMonitorUtils {
                     long currentTimeMillis = System.currentTimeMillis();
 
                     long gap = ((currentTimeMillis - lastTime) );
-                    //Log.i(TAG, "onFrameMetricsAvailable: gap = [" + gap + "]" + "totalDuration:" + frameMetrics.getMetric(FrameMetrics.TOTAL_DURATION) + ", currentTimeMillis:" + currentTimeMillis);
+                    Log.i(TAG, "onFrameMetricsAvailable: gap = [" + gap + "]," + "totalDuration:[" + frameMetrics.getMetric(FrameMetrics.TOTAL_DURATION) + "], currentTimeMillis:" + currentTimeMillis);
                     if (gap > 16) {
                         long count = (gap - 16) / 16;
                         //Log.i(TAG, "onFrameMetricsAvailable   丢帧 :  lasttime:" + lastTime + ", gap:" + gap + ",丢了几帧:" + count);

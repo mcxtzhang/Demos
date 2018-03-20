@@ -18,7 +18,7 @@ public class MonitorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_monitor);
 
         //PerformanceMonitorUtils.monitorMainLooper();
-        PerformanceMonitorUtils.monitorChoreoGrapher();
+        //PerformanceMonitorUtils.monitorChoreoGrapher();
         PerformanceMonitorUtils.monitorFrameMetrics(this);
         //new ActivityFrameMetrics.Builder().build().startFrameMetrics(this);
         /**
