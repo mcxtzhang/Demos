@@ -14,9 +14,7 @@
         <activity
             android:name=".TestNewASActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden">
-
-        </activity>
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"></activity>
         <activity android:name=".jobscheduler.JobSchedulerActivity" />
 
         <service
@@ -44,6 +42,12 @@
             android:exported="true" />
 
         <activity android:name=".MainActivity">
+
+        </activity>
+        <activity
+            android:name=".test.TestInputActivity"
+            android:theme="@style/Theme.DianpingTranslucent"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:dp="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#60000000">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="389dp"
+        android:layout_gravity="bottom"
+        android:background="#fff"
+        android:clickable="true"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="19dp"
+                android:text="string/ugc_image_recognition_user_mark_cancel"
+                android:textColor="#777777"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="string/ugc_image_recognition_user_mark_title"
+                android:textColor="#111111"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tvSubmit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:text="string/ugc_image_recognition_user_mark_submit"
+                android:textColor="#FF6633"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="#E1E1E1" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/ivPhoto"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/big_image" />
+
+
+            <TextView
+                android:id="@+id/tvPicHint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:textColor="#111111"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:text="string/ugc_image_recognition_user_mark_result" />
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_gravity="bottom"
+                android:background="#E1E1E1" />
+
+            <LinearLayout
+                android:id="@+id/llFlowLayout3Tab"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="16dp">
+
+
+                <!--
+                                <RadioButton
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:checked="true"
+                                    android:drawableBottom="@drawable/ugc_image_recognition_arrow"
+                                    android:gravity="center"
+                                    android:text="菜"
+                                    android:textColor="@drawable/ugc_image_recognition_arrow_text"
+                                    android:textSize="18sp" />
+
+                                <RadioButton
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:checked="true"
+                                    android:drawableBottom="@drawable/ugc_image_recognition_arrow"
+                                    android:gravity="center"
+                                    android:text="菜"
+                                    android:textColor="@drawable/ugc_image_recognition_arrow_text"
+                                    android:textSize="18sp" />
+
+                                <RadioButton
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:checked="true"
+                                    android:drawableBottom="@drawable/ugc_image_recognition_arrow"
+                                    android:gravity="center"
+                                    android:text="菜"
+                                    android:textColor="@drawable/ugc_image_recognition_arrow_text"
+                                    android:textSize="18sp" />
+
+                                <RadioButton
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:checked="true"
+                                    android:drawableBottom="@drawable/ugc_image_recognition_arrow"
+                                    android:gravity="center"
+                                    android:text="菜"
+                                    android:textColor="@drawable/ugc_image_recognition_arrow_text"
+                                    android:textSize="18sp" />
+                -->
+
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+
+        <LinearLayout
+            android:id="@+id/flowLayout3"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="9dp"
+            android:orientation="vertical"
+            android:paddingBottom="25dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"></LinearLayout>
+
+        <EditText
+            android:id="@+id/edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_gravity="center_vertical"
+            android:background="@null"
+            android:hint="string/ugc_image_recognition_user_mark_hint_category_normal"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:singleLine="true"
+            android:textColor="#111111"
+            android:textColorHint="#777777"
+            android:textSize="14sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="#832aaa" />
+
+    </LinearLayout>
+</FrameLayout>
