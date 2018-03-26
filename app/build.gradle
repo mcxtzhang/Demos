@@ -40,30 +40,30 @@ dependencies {
     compile 'io.reactivex:rxjava:1.1.6'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha8'
     testCompile 'junit:junit:4.12'
-    implementation project(path:':zxtcommonlib',configuration: 'default')
+    implementation project(path: ':zxtcommonlib', configuration: 'default')
 }
 repositories {
     mavenCentral()
 }
 
 
-class DataAndTimePlugin implements Plugin<Project>{
-    void apply(Project project){
+class DataAndTimePlugin implements Plugin<Project> {
+    void apply(Project project) {
         //我们可以通过project.extentions进行访问，比如读取额外的Property和定义额外的Property等
-        project.extensions.create("dateAndTime",DataAndTimePluginExtension)
+        project.extensions.create("dateAndTime", DataAndTimePluginExtension)
 
-        project.task('showTime') <<{
-            println( "Current time is "+ new Date().format(project.dateAndTime.timeFormat))
+        project.task('showTime') << {
+            println("Current time is " + new Date().format(project.dateAndTime.timeFormat))
         }
 
-        project.tasks.create('showDate') <<{
+        project.tasks.create('showDate') << {
             println("Current data is " + new Date().format(project.dateAndTime.dateFormat))
         }
 
 
 
 
-        project.afterEvaluate{
+        project.afterEvaluate {
             println 'afterEvaluate'
             println 'afterEvaluate'
             println 'afterEvaluate'
@@ -87,7 +87,7 @@ class DataAndTimePlugin implements Plugin<Project>{
     }
 }
 
-class DataAndTimePluginExtension{
+class DataAndTimePluginExtension {
     String timeFormat = "MM/dd/yyyy HH:mm:ss.SSS"
     String dateFormat = "yyyy-MM-dd"
 }

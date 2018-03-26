@@ -15,13 +15,9 @@
             android:name=".TestNewASActivity"
             android:configChanges="orientation|keyboardHidden"
             android:windowSoftInputMode="adjustUnspecified|stateHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
-        <activity android:name=".jobscheduler.JobSchedulerActivity"></activity>
+        <activity android:name=".jobscheduler.JobSchedulerActivity" />
 
         <service
             android:name=".jobscheduler.JobSchedulerService"
@@ -29,23 +25,31 @@
         <service
             android:name=".service.TestThreadAndProcessService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
 
-        <activity android:name=".RxActivity"></activity>
+        <activity android:name=".RxActivity" />
         <activity
             android:name=".SparseArrayOrderTestActivity"
-            android:process=":other_process"></activity>
-        <activity android:name=".touch.TouchActivity"></activity>
-        <activity android:name=".view.TestCstViewActivity"></activity>
-        <activity android:name=".expand.ExpandListViewActivity"></activity>
-        <activity android:name=".kotlin.FirstKotlinActivity"></activity>
-        <activity android:name=".bitmap.BitmapActivity"></activity>
-        <activity android:name=".web.WebViewActivity"></activity>
+            android:process=":other_process" />
+        <activity android:name=".touch.TouchActivity" />
+        <activity android:name=".view.TestCstViewActivity" />
+        <activity android:name=".expand.ExpandListViewActivity" />
+        <activity android:name=".kotlin.FirstKotlinActivity" />
+        <activity android:name=".bitmap.BitmapActivity" />
+        <activity android:name=".web.WebViewActivity" />
 
         <receiver
             android:name=".dianping.MyReceiver"
             android:enabled="true"
-            android:exported="true"></receiver>
+            android:exported="true" />
+
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
