@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.mcxtzhang.coordinatordemo.alipay.AlipayMainActivity;
+import com.mcxtzhang.coordinatordemo.ir.ImageRecognitionActivity;
 import com.mcxtzhang.coordinatordemo.juejin.JuejinActivity;
 import com.mcxtzhang.coordinatordemo.parallex.ParallexActivity;
 import com.mcxtzhang.coordinatordemo.uc.UcActivity;
@@ -45,6 +46,13 @@ public class LauncherActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(LauncherActivity.this, UcActivity.class));
+            }
+        });
+
+        findViewById(R.id.btnIr).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LauncherActivity.this, ImageRecognitionActivity.class));
             }
         });
     }

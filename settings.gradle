@@ -2,6 +2,8 @@ include ':app', ':lib', ':zxtcommonlib', ':gradleplugindemolib',':binderdemo', '
 //include  ':unittestdemo'
 //include ':alyimagegallery',
 include ':constraintlayoutdemo'
+include ':coordinatordemo'
+
 //include ':fingerdemo',
 //include ':zhiwendemo',
 //include ':newwebdemoo',
@@ -59,5 +61,4 @@ include ':animdemo'
 //include  ':libannotation'
 //include ':selectcoupondemo'
 
-//include ':coordinatordemo2'
 

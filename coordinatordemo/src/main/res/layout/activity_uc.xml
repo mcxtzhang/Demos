@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_uc"
@@ -13,15 +12,14 @@
         android:layout_height="300dp"
         android:background="@color/colorPrimaryDark"
         android:orientation="vertical"
-        app:layout_behavior=".uc.CstCollapsedBehavior"
-        >
+        app:layout_behavior=".uc.CstCollapsedBehavior">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
             android:text="内容一大坨"
-            android:textColor="@android:color/white"/>
+            android:textColor="@android:color/white" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -29,7 +27,7 @@
             android:layout_weight="1"
             android:gravity="bottom"
             android:text="最底下"
-            android:textColor="@android:color/white"/>
+            android:textColor="@android:color/white" />
     </LinearLayout>
 
     <LinearLayout
@@ -44,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="一开始我是隐藏的 上啦显示"
-            android:textColor="@android:color/white"/>
+            android:textColor="@android:color/white" />
     </LinearLayout>
 
     <LinearLayout
@@ -59,7 +57,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="一开始我是隐藏的 我假装自己是四个标题"
-            android:textColor="@android:color/white"/>
+            android:textColor="@android:color/white" />
     </LinearLayout>
 
 
@@ -68,12 +66,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#fd7e06"
-        app:layout_behavior=".uc.CstNestContentBehavior"
-        >
+        app:layout_behavior=".uc.CstNestContentBehavior">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/large_text"/>
+            android:text="@string/large_text" />
     </android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>

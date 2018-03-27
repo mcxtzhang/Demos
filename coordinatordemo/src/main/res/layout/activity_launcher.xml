@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_launcher"
     android:layout_width="match_parent"
@@ -16,31 +15,38 @@
         android:id="@+id/btnParallax"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="(入门)视差"/>
+        android:text="(入门)视差" />
 
 
     <Button
         android:id="@+id/btnJuejin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="掘金"/>
+        android:text="掘金" />
 
 
     <Button
         android:id="@+id/btnZhihu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="知乎"/>
+        android:text="知乎" />
 
     <Button
         android:id="@+id/btnAlipay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="支付宝"/>
+        android:text="支付宝" />
 
     <Button
         android:id="@+id/btnUc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Uc浏览器"/>
+        android:text="Uc浏览器" />
+
+    <Button
+        android:id="@+id/btnIr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="智能识图页面" />
+
 </LinearLayout>

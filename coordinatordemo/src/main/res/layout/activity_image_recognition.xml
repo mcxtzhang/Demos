@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_uc"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.mcxtzhang.coordinatordemo.uc.UcActivity">
+
+    <TextView
+        android:id="@+id/bigTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:gravity="top"
+        android:paddingLeft="20dp"
+        android:text="智能识图"
+        android:textColor="@android:color/black"
+        android:textSize="26dp"
+        app:layout_behavior="com.mcxtzhang.coordinatordemo.ir.CstCollapsedBehavior" />
+
+    <View
+        android:id="@+id/bitTitleTopSpace"
+        android:layout_width="match_parent"
+        android:layout_height="27dp"
+        android:background="@android:color/white" />
+
+    <View
+        android:id="@+id/bigTitleBottomSpace"
+        android:layout_width="match_parent"
+        android:layout_height="12dp"
+        android:background="@android:color/white"
+        app:layout_behavior="com.mcxtzhang.coordinatordemo.ir.CstBigTitleBottomViewBehavior" />
+
+    <TextView
+        android:id="@+id/litterTitle"
+        android:layout_width="match_parent"
+        android:layout_height="39dp"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:text="智能识图"
+        android:textColor="@android:color/black"
+        android:textSize="17sp"
+        android:visibility="gone" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#fd7e06"
+        app:layout_behavior="com.mcxtzhang.coordinatordemo.ir.CsScrollContentBehavior">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/large_text" />
+    </android.support.v4.widget.NestedScrollView>
+</android.support.design.widget.CoordinatorLayout>
