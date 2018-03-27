@@ -14,7 +14,7 @@
         <activity
             android:name=".TestNewASActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"></activity>
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity android:name=".jobscheduler.JobSchedulerActivity" />
 
         <service
@@ -41,13 +41,20 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".MainActivity">
-
-        </activity>
+        <activity android:name=".MainActivity"></activity>
         <activity
             android:name=".test.TestInputActivity"
             android:theme="@style/Theme.DianpingTranslucent"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".test.UploadPhotoJumpActivity"
+            android:label="智能识图跳转助手">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
