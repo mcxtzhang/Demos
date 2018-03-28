@@ -5,6 +5,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.mcxtzhang.coordinatordemo.R;
 import com.mcxtzhang.coordinatordemo.util.ViewOffsetBehavior;
@@ -39,6 +40,13 @@ public class CsScrollContentBehavior extends ViewOffsetBehavior<View> {
     public boolean onDependentViewChanged(CoordinatorLayout parent, View child, View dependency) {
         Log.d(TAG, "onDependentViewChanged() called with: parent = [" + parent + "], child = [" + child + "], dependency = [" + dependency + "]");
         setTopAndBottomOffset(dependency.getBottom());
+
+        ViewGroup.LayoutParams layoutParams = child.getLayoutParams();
+        int contentHeight = parent.getHeight() - parent.findViewById(R.id.litterTitle).getHeight();
+        if (layoutParams.height != contentHeight) {
+            layoutParams.height = contentHeight;
+            child.setLayoutParams(layoutParams);
+        }
         return true;
     }
 
