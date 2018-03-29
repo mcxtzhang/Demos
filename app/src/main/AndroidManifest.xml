@@ -28,7 +28,14 @@
         <activity android:name=".RxActivity" />
         <activity
             android:name=".SparseArrayOrderTestActivity"
-            android:process=":other_process" />
+            android:label="测试透明"
+            android:process=":other_process">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".touch.TouchActivity" />
         <activity android:name=".view.TestCstViewActivity" />
         <activity android:name=".expand.ExpandListViewActivity" />
@@ -41,7 +48,7 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
         <activity
             android:name=".test.TestInputActivity"
             android:theme="@style/Theme.DianpingTranslucent"
@@ -55,6 +62,13 @@
         <activity
             android:name=".test.UploadPhotoJumpActivity"
             android:label="智能识图跳转助手">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".test.TestWhiteTranslucentActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

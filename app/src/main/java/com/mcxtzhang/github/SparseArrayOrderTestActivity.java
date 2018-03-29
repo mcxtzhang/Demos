@@ -1,7 +1,5 @@
 package com.mcxtzhang.github;
 
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -29,14 +27,14 @@ public class SparseArrayOrderTestActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Drawable background = view
                         .getBackground()
-                        /*.mutate()*/;
-                Log.d("TAG", "onClick() called with: background = [" + background + "]");
+                        .mutate();
+                /*Log.d("TAG", "onClick() called with: background = [" + background + "]");
                 if (background instanceof BitmapDrawable) {
                     BitmapDrawable bitmapDrawable = (BitmapDrawable) background;
                     Bitmap bitmap = bitmapDrawable.getBitmap();
                     Log.d("TAG", "onClick() called with: bitmap = [" + bitmap + "]");
-                }
-                //background.setAlpha(20);
+                }*/
+                background.setAlpha(20);
 
 
                 //useless
@@ -46,12 +44,12 @@ public class SparseArrayOrderTestActivity extends AppCompatActivity {
             }
         });
 
-        findViewById(R.id.btnChangeAlpha).setOnClickListener(new View.OnClickListener() {
+/*        findViewById(R.id.btnChangeAlpha).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showCategoryPopupMenu(view);
             }
-        });
+        });*/
 
 
     }
