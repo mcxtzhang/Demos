@@ -16,6 +16,7 @@
       <module fileurl="file://$PROJECT_DIR$/compiler/compiler.iml" filepath="$PROJECT_DIR$/compiler/compiler.iml" />
       <module fileurl="file://$PROJECT_DIR$/constraintlayoutdemo/constraintlayoutdemo.iml" filepath="$PROJECT_DIR$/constraintlayoutdemo/constraintlayoutdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/coordinatordemo/coordinatordemo.iml" filepath="$PROJECT_DIR$/coordinatordemo/coordinatordemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cstviewdemo/cstviewdemo.iml" filepath="$PROJECT_DIR$/cstviewdemo/cstviewdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/gradleplugindemolib/gradleplugindemolib.iml" filepath="$PROJECT_DIR$/gradleplugindemolib/gradleplugindemolib.iml" />
       <module fileurl="file://$PROJECT_DIR$/hookstartactivitydemo/hookstartactivitydemo.iml" filepath="$PROJECT_DIR$/hookstartactivitydemo/hookstartactivitydemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/layoutfactory/layoutfactory.iml" filepath="$PROJECT_DIR$/layoutfactory/layoutfactory.iml" />

@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion '25.0.1'
+    buildToolsVersion '26.0.2'
 
     defaultConfig {
         applicationId "com.mcxtzhang.cstviewdemo"
@@ -20,9 +20,12 @@ android {
 }
 
 dependencies {
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.eftimoff:android-pathview:1.0.8@aar'
-    implementation project(path:':zxtcommonlib',configuration: 'default')
+    implementation project(path: ':zxtcommonlib', configuration: 'default')
+    implementation 'com.android.support:recyclerview-v7:24.2.1'
+
 }

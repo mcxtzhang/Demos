@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.mcxtzhang.cstviewdemo">
+    package="com.mcxtzhang.cstviewdemo">
 
     <application
         android:allowBackup="true"
@@ -9,26 +9,19 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
-        </activity>
-        <activity android:name=".PathMeasureActivity">
-        </activity>
-        <activity android:name=".SvgActivity">
-        </activity>
-        <activity android:name=".adddelview.AddDelViewDemoActivity">
-
-        </activity>
-        <activity android:name=".matrix.MatrixActivity">
-        </activity>
-        <activity android:name=".xfermode.XfermodeActivity">
-        </activity>
-        <activity android:name=".shader.ShaderActivity">
-        </activity>
-        <activity android:name=".LoppVerticalActivity">
+        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".PathMeasureActivity"></activity>
+        <activity android:name=".SvgActivity"></activity>
+        <activity android:name=".adddelview.AddDelViewDemoActivity"></activity>
+        <activity android:name=".matrix.MatrixActivity"></activity>
+        <activity android:name=".xfermode.XfermodeActivity"></activity>
+        <activity android:name=".shader.ShaderActivity"></activity>
+        <activity android:name=".LoppVerticalActivity"></activity>
+        <activity android:name=".suspend.SuspendViewActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>

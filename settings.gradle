@@ -24,7 +24,7 @@ include ':artdemo'
 //include ':autocopydemo'
 //include ':aopdemo'
 //include ':viewpagerdemo'
-//include ':cstviewdemo'
+include ':cstviewdemo'
 //, ,, ':recyclerviewdemo', ':okhttpdemo'
 include ':animdemo'
 //':bndemo',
