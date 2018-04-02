@@ -114,6 +114,17 @@ public class CstCollapsedBehavior extends ViewOffsetBehavior<View> {
 
         }
 
+        if (mTotalOffsetY == mSelfHeight) {
+            mLitterTitle.setVisibility(View.VISIBLE);
+        } else {
+            mLitterTitle.setVisibility(View.GONE);
+        }
+
     }
 
+    @Override
+    public boolean onNestedFling(CoordinatorLayout coordinatorLayout, View child, View target, float velocityX, float velocityY, boolean consumed) {
+        Log.d(TAG, "onNestedFling() called with: child = [" + child + "], target = [" + target + "], velocityX = [" + velocityX + "], velocityY = [" + velocityY + "], consumed = [" + consumed + "]");
+        return super.onNestedFling(coordinatorLayout, child, target, velocityX, velocityY, consumed);
+    }
 }
