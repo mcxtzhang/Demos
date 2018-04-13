@@ -1,6 +1,5 @@
 package anlaiye.com.cn.artdemo.forresult
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -17,10 +16,15 @@ class ForResultActivity2 : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         Log.w(TAG, "onCreate: ");
         setContentView(R.layout.activity_for_result2)
-        root.setOnClickListener { 
-            startActivity(Intent(this, ForResultActivity3::class.java))
-            setResult(Activity.RESULT_OK)
+        root.setOnClickListener {
+            setResult(99)
             finish()
+
+            startActivity(Intent(this, ForResultActivity3::class.java))
+
+            root.post {
+            }
+
         }
     }
 
@@ -33,6 +37,18 @@ class ForResultActivity2 : AppCompatActivity() {
     override fun onResume() {
         Log.w(TAG, "onResume: ");
         super.onResume()
+    }
+
+    override fun onDestroy() {
+        Log.w(TAG, "onDestroy: ");
+
+        super.onDestroy()
+    }
+
+    override fun onStop() {
+        Log.w(TAG, "onStop: ");
+
+        super.onStop()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
