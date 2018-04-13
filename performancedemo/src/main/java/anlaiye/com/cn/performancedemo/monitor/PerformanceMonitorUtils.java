@@ -42,6 +42,7 @@ public class PerformanceMonitorUtils {
         });
     }
 
+    public static int mChoreographerFrameCount;
     public static void monitorChoreoGrapher() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             //一直会执行, 这里的消息其实是插入到主线程的handler里执行的，所以如果这里有任务，那么主线程的Handler也会一直运行。 上个方法monitorMainLooper也会一直运行
@@ -50,8 +51,9 @@ public class PerformanceMonitorUtils {
 
                 @Override
                 public void doFrame(long frameTimeNanos) {
+                    mChoreographerFrameCount++;
                     long gap = ((frameTimeNanos - lastTime) / 1000000);
-                    Log.d(TAG, "doFrame: frameTimeNanos = [" + frameTimeNanos + "]" + "lasttime:" + lastTime + ", gap:" + gap);
+                    Log.d(TAG, "doFrame: mChoreographerFrameCount = [" + mChoreographerFrameCount + "]" + "lasttime:" + lastTime + ", gap:" + gap);
                     if (gap > 16) {
                         long count = (gap - 16) / 16;
                         Log.e(TAG, "丢帧 : frameTimeNanos = [" + frameTimeNanos + "]" + "lasttime:" + lastTime + ", gap:" + gap + ",丢了几帧:" + count);
@@ -64,7 +66,7 @@ public class PerformanceMonitorUtils {
         }
     }
 
-
+    public static int mFrameMetricsFrameCount;
     public static void monitorFrameMetrics(Activity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             activity.getWindow().addOnFrameMetricsAvailableListener(new Window.OnFrameMetricsAvailableListener() {
@@ -72,12 +74,12 @@ public class PerformanceMonitorUtils {
                 @Override
                 public void onFrameMetricsAvailable(Window window, FrameMetrics frameMetrics, int dropCountSinceLastInvocation) {
                     Log.i(TAG, "onFrameMetricsAvailable() called with: window = [" + window + "], frameMetrics = [" + frameMetrics + "], dropCountSinceLastInvocation = [" + dropCountSinceLastInvocation + "]");
-
+                    mFrameMetricsFrameCount ++;
 
                     long currentTimeMillis = System.currentTimeMillis();
 
                     long gap = ((currentTimeMillis - lastTime) );
-                    Log.i(TAG, "onFrameMetricsAvailable: gap = [" + gap + "]," + "totalDuration:[" + frameMetrics.getMetric(FrameMetrics.TOTAL_DURATION) + "], currentTimeMillis:" + currentTimeMillis);
+                    Log.i(TAG, "onFrameMetricsAvailable: gap = [" + gap + "]," + "totalDuration:[" + frameMetrics.getMetric(FrameMetrics.TOTAL_DURATION) + "], mFrameMetricsFrameCount:" + mFrameMetricsFrameCount);
                     if (gap > 16) {
                         long count = (gap - 16) / 16;
                         //Log.i(TAG, "onFrameMetricsAvailable   丢帧 :  lasttime:" + lastTime + ", gap:" + gap + ",丢了几帧:" + count);
