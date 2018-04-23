@@ -38,7 +38,7 @@ dependencies {
 
 
     implementation "com.android.support:recyclerview-v7:$support_version"
-    implementation project(path:':zxtcommonlib',configuration: 'default')
+    implementation project(path: ':zxtcommonlib', configuration: 'default')
 
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.github.bumptech.glide:glide:3.8.0'

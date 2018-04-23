@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId "com.mcxtzhang.github"
-        minSdkVersion 14
+        minSdkVersion 15
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -41,6 +41,8 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha8'
     testCompile 'junit:junit:4.12'
     implementation project(path: ':zxtcommonlib', configuration: 'default')
+    debugImplementation 'com.willowtreeapps.hyperion:hyperion-core:0.9.22'
+
 }
 repositories {
     mavenCentral()
