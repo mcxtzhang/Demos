@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -17,10 +17,7 @@
     <include
         layout="@layout/view_test_merge_cl"
         android:layout_width="30dp"
-        android:layout_height="50dp"
+        android:layout_height="1dp"
         android:layout_marginLeft="400dp"
-        android:background="#123456"
-        app:layout_constraintLeft_toLeftOf="parent"
-
-        app:layout_constraintRight_toRightOf="parent" />
-</android.support.constraint.ConstraintLayout>
+        android:background="#123456" />
+</LinearLayout>

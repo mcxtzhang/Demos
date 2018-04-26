@@ -10,6 +10,7 @@ public class TestMergeParentActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test_merge_parent);
+        //setContentView(R.layout.activity_test_merge_parent);
+        setContentView(R.layout.activity_test_merge_parent_2);
     }
 }
