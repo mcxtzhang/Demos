@@ -28,6 +28,7 @@
       <module fileurl="file://$PROJECT_DIR$/sqlitedemo/sqlitedemo.iml" filepath="$PROJECT_DIR$/sqlitedemo/sqlitedemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/toastdemo/toastdemo.iml" filepath="$PROJECT_DIR$/toastdemo/toastdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/touchdemo/touchdemo.iml" filepath="$PROJECT_DIR$/touchdemo/touchdemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/viewinspector/viewinspector.iml" filepath="$PROJECT_DIR$/viewinspector/viewinspector.iml" />
       <module fileurl="file://$PROJECT_DIR$/zxt_github_proj.iml" filepath="$PROJECT_DIR$/zxt_github_proj.iml" />
       <module fileurl="file://$PROJECT_DIR$/zxtcommonlib/zxtcommonlib.iml" filepath="$PROJECT_DIR$/zxtcommonlib/zxtcommonlib.iml" />
     </modules>
