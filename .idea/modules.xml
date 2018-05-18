@@ -3,34 +3,12 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Demos.iml" filepath="$PROJECT_DIR$/Demos.iml" />
-      <module fileurl="file://$PROJECT_DIR$/aidldemoclient/aidldemoclient.iml" filepath="$PROJECT_DIR$/aidldemoclient/aidldemoclient.iml" />
-      <module fileurl="file://$PROJECT_DIR$/aidldemoserver/aidldemoserver.iml" filepath="$PROJECT_DIR$/aidldemoserver/aidldemoserver.iml" />
-      <module fileurl="file://$PROJECT_DIR$/animdemo/animdemo.iml" filepath="$PROJECT_DIR$/animdemo/animdemo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/artdemo/artdemo.iml" filepath="$PROJECT_DIR$/artdemo/artdemo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/baseemptyfragment/baseemptyfragment.iml" filepath="$PROJECT_DIR$/baseemptyfragment/baseemptyfragment.iml" />
-      <module fileurl="file://$PROJECT_DIR$/binder2_messenger/binder2_messenger.iml" filepath="$PROJECT_DIR$/binder2_messenger/binder2_messenger.iml" />
-      <module fileurl="file://$PROJECT_DIR$/binderdemo/binderdemo.iml" filepath="$PROJECT_DIR$/binderdemo/binderdemo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/binderdemo1/binderdemo1.iml" filepath="$PROJECT_DIR$/binderdemo1/binderdemo1.iml" />
       <module fileurl="file://$PROJECT_DIR$/butter-test/butter-test.iml" filepath="$PROJECT_DIR$/butter-test/butter-test.iml" />
-      <module fileurl="file://$PROJECT_DIR$/compiler/compiler.iml" filepath="$PROJECT_DIR$/compiler/compiler.iml" />
-      <module fileurl="file://$PROJECT_DIR$/constraintlayoutdemo/constraintlayoutdemo.iml" filepath="$PROJECT_DIR$/constraintlayoutdemo/constraintlayoutdemo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/coordinatordemo/coordinatordemo.iml" filepath="$PROJECT_DIR$/coordinatordemo/coordinatordemo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/cstviewdemo/cstviewdemo.iml" filepath="$PROJECT_DIR$/cstviewdemo/cstviewdemo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/gradleplugindemolib/gradleplugindemolib.iml" filepath="$PROJECT_DIR$/gradleplugindemolib/gradleplugindemolib.iml" />
-      <module fileurl="file://$PROJECT_DIR$/hookstartactivitydemo/hookstartactivitydemo.iml" filepath="$PROJECT_DIR$/hookstartactivitydemo/hookstartactivitydemo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/layoutfactory/layoutfactory.iml" filepath="$PROJECT_DIR$/layoutfactory/layoutfactory.iml" />
-      <module fileurl="file://$PROJECT_DIR$/lib/lib.iml" filepath="$PROJECT_DIR$/lib/lib.iml" />
-      <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mykotlindemo/mykotlindemo.iml" filepath="$PROJECT_DIR$/mykotlindemo/mykotlindemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/performancedemo/performancedemo.iml" filepath="$PROJECT_DIR$/performancedemo/performancedemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/playgrounds.iml" filepath="$PROJECT_DIR$/playgrounds.iml" />
-      <module fileurl="file://$PROJECT_DIR$/sqlitedemo/sqlitedemo.iml" filepath="$PROJECT_DIR$/sqlitedemo/sqlitedemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/toastdemo/toastdemo.iml" filepath="$PROJECT_DIR$/toastdemo/toastdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/touchdemo/touchdemo.iml" filepath="$PROJECT_DIR$/touchdemo/touchdemo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/viewinspector/viewinspector.iml" filepath="$PROJECT_DIR$/viewinspector/viewinspector.iml" />
       <module fileurl="file://$PROJECT_DIR$/zxt_github_proj.iml" filepath="$PROJECT_DIR$/zxt_github_proj.iml" />
-      <module fileurl="file://$PROJECT_DIR$/zxtcommonlib/zxtcommonlib.iml" filepath="$PROJECT_DIR$/zxtcommonlib/zxtcommonlib.iml" />
     </modules>
   </component>
 </project>

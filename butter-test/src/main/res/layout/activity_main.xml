@@ -38,4 +38,36 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button" />
 
+
+    <TextView
+        android:id="@+id/btnRuntime"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/colorAccent"
+        android:text="Runtime get"
+        app:layout_constraintStart_toStartOf="@+id/button2"
+        app:layout_constraintTop_toBottomOf="@+id/button2" />
+
+    <TextView
+        android:id="@+id/btnDebugPss"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/colorAccent"
+        android:text="Debug getPss"
+        app:layout_constraintStart_toStartOf="@+id/btnRuntime"
+        app:layout_constraintTop_toBottomOf="@+id/btnRuntime" />
+
+    <TextView
+        android:id="@+id/btnAmPss"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/colorAccent"
+        android:text="Debug getPss"
+        app:layout_constraintStart_toStartOf="@+id/btnDebugPss"
+        app:layout_constraintTop_toBottomOf="@+id/btnDebugPss" />
+
 </android.support.constraint.ConstraintLayout>

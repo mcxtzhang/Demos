@@ -7,8 +7,8 @@ import android.widget.ImageView
 import anlaiye.com.cn.performancedemo.R
 import anlaiye.com.cn.performancedemo.monitor.framemetrics.ButterFactory
 import com.bumptech.glide.Glide
-import com.mcxtzhang.zxtcommonlib.recyclerview.CommonAdapter
-import com.mcxtzhang.zxtcommonlib.recyclerview.ViewHolder
+import com.mcxtzhang.commonadapter.rv.CommonAdapter
+import com.mcxtzhang.commonadapter.rv.ViewHolder
 import kotlinx.android.synthetic.main.activity_rv.*
 import java.util.*
 
@@ -18,7 +18,7 @@ class RvActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_rv)
         rv.layoutManager = LinearLayoutManager(this)
-        rv.adapter = object : CommonAdapter<ListDataBean>(this, R.layout.item_rv, initDatas()) {
+        rv.adapter = object : CommonAdapter<ListDataBean>(this, initDatas(), R.layout.item_rv) {
             override fun convert(holder: ViewHolder?, data: ListDataBean?) {
                 holder?.setText(R.id.tv, data?.name)
                 Glide.with(holder?.itemView?.context).load(data?.url).into(holder?.getView<ImageView>(R.id.imageView))

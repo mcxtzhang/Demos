@@ -1,8 +1,11 @@
-include ':app', ':lib', ':zxtcommonlib', ':gradleplugindemolib',':binderdemo', ':baseemptyfragment', ':binderdemo1', ':binder2_messenger', ':aidldemoserver', ':aidldemoclient', ':sqlitedemo', ':hookstartactivitydemo', ':butter-test', ':layoutfactory', ':mykotlindemo', ':viewinspector'
+include ':performancedemo'
+include ':butter-test'
+
+//include ':app', ':lib', ':zxtcommonlib', ':gradleplugindemolib',':binderdemo', ':baseemptyfragment', ':binderdemo1', ':binder2_messenger', ':aidldemoserver', ':aidldemoclient', ':sqlitedemo', ':hookstartactivitydemo', ':layoutfactory', ':mykotlindemo', ':viewinspector'
 //include  ':unittestdemo'
 //include ':alyimagegallery',
-include ':constraintlayoutdemo'
-include ':coordinatordemo'
+//include ':constraintlayoutdemo'
+//include ':coordinatordemo'
 
 //include ':fingerdemo',
 //include ':zhiwendemo',
@@ -11,22 +14,22 @@ include ':coordinatordemo'
 //include ':toastdemo'
 
 //':bludemo'
-include ':performancedemo'
+
 //include ':realmdemo'
 
 /***********apt router*******/
-include ':library'
-include ':compiler'
+//include ':library'
+//include ':compiler'
 
-include ':artdemo'
+//include ':artdemo'
 //include ':hotfixdemo
 //include  ':permissiondemo' // 6.0运行时权限
 //include ':autocopydemo'
 //include ':aopdemo'
 //include ':viewpagerdemo'
-include ':cstviewdemo'
+//include ':cstviewdemo'
 //, ,, ':recyclerviewdemo', ':okhttpdemo'
-include ':animdemo'
+//include ':animdemo'
 //':bndemo',
 //include ':daggerdemo'
 //include ':rxjava2demo'
