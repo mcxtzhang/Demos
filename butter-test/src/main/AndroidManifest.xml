@@ -9,9 +9,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".meminfo.MeminfoTestActivity">
-
-        </activity>
+        <activity android:name=".meminfo.MeminfoTestActivity"></activity>
         <activity android:name=".meminfo.MeminfoGcTestActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,16 +17,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".Main2Activity" />
         <activity
             android:name=".launch.LaunchTimeTestActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".LauncherActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".launch.MidlleJumpActivity"
             android:exported="true" />
@@ -42,6 +37,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".cpu.CpuMonitorActivity"></activity>
     </application>
 
 </manifest>

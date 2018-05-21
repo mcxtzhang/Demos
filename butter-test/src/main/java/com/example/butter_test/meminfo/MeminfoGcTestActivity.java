@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.butter_test.R;
+import com.example.butter_test.cpu.CpuMonitorUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -26,16 +27,29 @@ public class MeminfoGcTestActivity extends AppCompatActivity {
     List list = new ArrayList();
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        long debugCpuValue = CpuMonitorUtils.INSTANCE.endMonitor("MeminfoGcTestActivity");
+        Log.w(TAG, "onDestroy() end with: cpu:" + debugCpuValue);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        CpuMonitorUtils.INSTANCE.startMonitor("MeminfoGcTestActivity");
+
 
         mTvHint = (TextView) findViewById(R.id.tvHint);
 
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                CpuMonitorUtils.INSTANCE.startMonitor("button");
                 dumpMemoInfo();
+                long debugCpuValue = CpuMonitorUtils.INSTANCE.endMonitor("button");
+                Log.d(TAG, "onClick() end with: cpu:" + debugCpuValue);
             }
         });
 
@@ -78,13 +92,17 @@ public class MeminfoGcTestActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "onClick() called with: view1 = [" + view + "]");
+                CpuMonitorUtils.INSTANCE.startMonitor("btnRuntime");
+
                 long mem = 0;
                 long time1 = System.currentTimeMillis();
                 for (int i = 0; i < 1000; i++) {
                     mem = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
                 }
                 long time2 = System.currentTimeMillis() - time1;
-                Log.d(TAG, "onClick() end with: time2 = [" + time2 + "]," + mem);
+                long debugCpuValue = CpuMonitorUtils.INSTANCE.endMonitor("btnRuntime");
+                Log.d(TAG, "onClick() end with: time2 = [" + time2 + "],mem:" + mem + ",cpu:" + debugCpuValue);
+
             }
         });
 
@@ -93,13 +111,16 @@ public class MeminfoGcTestActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Log.d(TAG, "onClick() called with: view2 = [" + view + "]");
 
+                CpuMonitorUtils.INSTANCE.startMonitor("debugPss");
+
                 long mem = 0;
                 long time1 = System.currentTimeMillis();
                 for (int i = 0; i < 1000; i++) {
                     mem = Debug.getPss();
                 }
                 long time2 = System.currentTimeMillis() - time1;
-                Log.d(TAG, "onClick() end with: time2 = [" + time2 + "]," + mem);
+                long debugPssCpuValue = CpuMonitorUtils.INSTANCE.endMonitor("debugPss");
+                Log.d(TAG, "onClick() end with: time2 = [" + time2 + "],mem:" + mem + ",cpu:" + debugPssCpuValue);
             }
         });
 
@@ -107,7 +128,7 @@ public class MeminfoGcTestActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "onClick() called with: view3 = [" + view + "]");
-
+                CpuMonitorUtils.INSTANCE.startMonitor("btnAmPss");
                 long mem = 0;
                 long time1 = System.currentTimeMillis();
                 for (int i = 0; i < 1000; i++) {
@@ -116,7 +137,8 @@ public class MeminfoGcTestActivity extends AppCompatActivity {
                     mem = memoryInfos[0].getTotalPss();
                 }
                 long time2 = System.currentTimeMillis() - time1;
-                Log.d(TAG, "onClick() end with: time2 = [" + time2 + "]," + mem);
+                long debugCpuValue = CpuMonitorUtils.INSTANCE.endMonitor("btnAmPss");
+                Log.d(TAG, "onClick() end with: time2 = [" + time2 + "],mem:" + mem + ",cpu:" + debugCpuValue);
             }
         });
     }
