@@ -2,6 +2,7 @@ package com.example.butter_test.cpu;
 
 
 import android.support.v4.util.ArrayMap;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -16,6 +17,7 @@ import java.io.InputStreamReader;
 public enum CpuMonitorUtils {
     INSTANCE;
 
+    private static final String TAG = CpuMonitorUtils.class.getSimpleName();
     private int mPid = 0;
 
     private ArrayMap<String, CpuCacheModel> mCpuCaches = new ArrayMap<>();
@@ -31,7 +33,10 @@ public enum CpuMonitorUtils {
     }
 
     public void startMonitor(String key) {
+        long time1 = System.currentTimeMillis();
         long[] cpu = getCpu();
+        long time2 = System.currentTimeMillis() - time1;
+        Log.d(TAG, "startMonitor() called with: key = [" + time2 + "]");
         if (null == cpu || cpu[0] == -1 || cpu[1] == -1) {
             return;
         }
@@ -43,7 +48,10 @@ public enum CpuMonitorUtils {
         if (null == cpuCacheModel) {
             return -1;
         }
+        long time1 = System.currentTimeMillis();
         long[] cpu = getCpu();
+        long time2 = System.currentTimeMillis() - time1;
+        Log.d(TAG, "endMonitor() called with: key = [" + time2 + "]");
         if (null == cpu || cpu[0] == -1 || cpu[1] == -1) {
             return -1;
         }
