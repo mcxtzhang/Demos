@@ -24,7 +24,7 @@ public class MyApplication extends Application {
         super.onCreate();
         //app 启动加入延时
         Log.d(TAG, "Application onCreate() called and start delay");
-        SystemClock.sleep(5000);
+        //SystemClock.sleep(5000);
         Log.d(TAG, "Application onCreate() end");
     }
 }

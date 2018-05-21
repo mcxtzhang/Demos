@@ -32,6 +32,9 @@ public enum CpuMonitorUtils {
 
     public void startMonitor(String key) {
         long[] cpu = getCpu();
+        if (null == cpu || cpu[0] == -1 || cpu[1] == -1) {
+            return;
+        }
         mCpuCaches.put(key, new CpuCacheModel(cpu[0], cpu[1]));
     }
 
@@ -41,8 +44,12 @@ public enum CpuMonitorUtils {
             return -1;
         }
         long[] cpu = getCpu();
+        if (null == cpu || cpu[0] == -1 || cpu[1] == -1) {
+            return -1;
+        }
         long sysCpuTimeCost = cpu[0] - cpuCacheModel.sysCpuTime;
         if (sysCpuTimeCost > 0) {
+            //appCpuRate = 100*( processCpuTime2 – processCpuTime1) / (totalCpuTime2 – totalCpuTime1) 
             return 100 * (cpu[1] - cpuCacheModel.pidCpuTime) / sysCpuTimeCost;
         } else {
             return -1;
@@ -50,23 +57,22 @@ public enum CpuMonitorUtils {
     }
 
     public long[] getCpu() {
-        //通过读取"/proc/stat",  "/proc/pid/stat"分别获取 整个系统CPU时间 totalCpuTime 以及 App进程的CPU时间 processCpuTime。
-        BufferedReader cpuReader = null;
+        BufferedReader sysReader = null;
         BufferedReader pidReader = null;
         try {
-            cpuReader = new BufferedReader(new InputStreamReader(
+            sysReader = new BufferedReader(new InputStreamReader(
                     new FileInputStream("/proc/stat")), 1000);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        String cpuRate = null;
+        String sysCpuInfo = null;
         try {
-            cpuRate = cpuReader.readLine();
+            sysCpuInfo = sysReader.readLine();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (cpuRate == null) {
-            cpuRate = "";
+        if (sysCpuInfo == null) {
+            sysCpuInfo = "";
         }
 
         if (mPid == 0) {
@@ -78,59 +84,51 @@ public enum CpuMonitorUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        String pidCpuRate = null;
+        String pidCpuInfo = null;
         try {
-            pidCpuRate = pidReader.readLine();
+            pidCpuInfo = pidReader.readLine();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (pidCpuRate == null) {
-            pidCpuRate = "";
+        if (pidCpuInfo == null) {
+            pidCpuInfo = "";
         }
 
-        return parseCpuRate(cpuRate, pidCpuRate);
+        return new long[]{parseSysTotalCpuTime(sysCpuInfo), parseProcessCpuTime(pidCpuInfo)};
     }
 
-    //appCpuRate = 100*( processCpuTime2 – processCpuTime1) / (totalCpuTime2 – totalCpuTime1) 
-    private long[] parseCpuRate(String cpuRate, String pidCpuRate) {
-        long[] result = new long[2];
-        String[] cpuInfoArray = cpuRate.split(" ");
+    private long parseSysTotalCpuTime(String sysTotalCpuInto) {
+        String[] cpuInfoArray = sysTotalCpuInto.split(" +");
         if (cpuInfoArray.length < 9) {
-            return result;
+            return -1;
         }
         // 从系统启动开始累计到当前时刻，用户态的CPU时间，不包含 nice值为负进程
-        long user = Long.parseLong(cpuInfoArray[2]);
+        long user = Long.parseLong(cpuInfoArray[1]);
         // 从系统启动开始累计到当前时刻，nice值为负的进程所占用的CPU时间
-        long nice = Long.parseLong(cpuInfoArray[3]);
+        long nice = Long.parseLong(cpuInfoArray[2]);
         // 从系统启动开始累计到当前时刻，核心时间
-        long system = Long.parseLong(cpuInfoArray[4]);
+        long system = Long.parseLong(cpuInfoArray[3]);
         // 从系统启动开始累计到当前时刻，除硬盘IO等待时间以外其它等待时间
-        long idle = Long.parseLong(cpuInfoArray[5]);
+        long idle = Long.parseLong(cpuInfoArray[4]);
         // 从系统启动开始累计到当前时刻，硬盘IO等待时间
-        long ioWait = Long.parseLong(cpuInfoArray[6]);
+        long ioWait = Long.parseLong(cpuInfoArray[5]);
+        //从系统启动开始累计到当前时刻，硬中断时间
+        long irq = Long.parseLong(cpuInfoArray[6]);
+        //从系统启动开始累计到当前时刻，软中断时间
+        long softirq = Long.parseLong(cpuInfoArray[7]);
         // CPU总时间 = 以上所有加上irq（硬中断）和softirq（软中断）的时间
-        long sysCpuTime = user + nice + system + idle + ioWait + Long.parseLong(cpuInfoArray[7]) + Long.parseLong(cpuInfoArray[8]);
+        long sysCpuTime = user + nice + system + idle + ioWait + irq + softirq;
+        return sysCpuTime;
+    }
 
-        String[] pidCpuInfos = pidCpuRate.split(" ");
+    private long parseProcessCpuTime(String processCpuInfo) {
+        String[] pidCpuInfos = processCpuInfo.split(" ");
         if (pidCpuInfos.length < 17) {
-            return result;
+            return -1;
         }
-
         long pidCpuTime = Long.parseLong(pidCpuInfos[13]) + Long.parseLong(pidCpuInfos[14])
                 + Long.parseLong(pidCpuInfos[15]) + Long.parseLong(pidCpuInfos[16]);
-
-        result[0] = sysCpuTime;
-        result[1] = pidCpuTime;
-        return result;
-//
-//        if (mTotalLast != 0) {
-//            long totalTime = total - mTotalLast;
-//            if (totalTime > 0 && event != null) {
-//                event.computeAvg((pidCpuTime - mAppCpuTimeLast) * 100L / totalTime);
-//            }
-//        }
-//        mTotalLast = total;
-//        mAppCpuTimeLast = pidCpuTime;
+        return pidCpuTime;
     }
 
 }
