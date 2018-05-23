@@ -1,8 +1,10 @@
 include ':app'
+include ':constraintlayoutdemo'
+
 /***********apt router*******/
 include ':library'
 include ':compiler'
-
+/***********performance router*******/
 include ':performancedemo'
 include ':butter-test'
 /***********base lib*******/
@@ -11,7 +13,7 @@ include ':zxtcommonlib'
 //, ':lib', ':gradleplugindemolib',':binderdemo', ':baseemptyfragment', ':binderdemo1', ':binder2_messenger', ':aidldemoserver', ':aidldemoclient', ':sqlitedemo', ':hookstartactivitydemo', ':layoutfactory', ':mykotlindemo', ':viewinspector'
 //include  ':unittestdemo'
 //include ':alyimagegallery',
-//include ':constraintlayoutdemo'
+//
 //include ':coordinatordemo'
 
 //include ':fingerdemo',
