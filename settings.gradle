@@ -1,7 +1,14 @@
+include ':app'
+/***********apt router*******/
+include ':library'
+include ':compiler'
+
 include ':performancedemo'
 include ':butter-test'
+/***********base lib*******/
+include ':zxtcommonlib'
 
-//include ':app', ':lib', ':zxtcommonlib', ':gradleplugindemolib',':binderdemo', ':baseemptyfragment', ':binderdemo1', ':binder2_messenger', ':aidldemoserver', ':aidldemoclient', ':sqlitedemo', ':hookstartactivitydemo', ':layoutfactory', ':mykotlindemo', ':viewinspector'
+//, ':lib', ':gradleplugindemolib',':binderdemo', ':baseemptyfragment', ':binderdemo1', ':binder2_messenger', ':aidldemoserver', ':aidldemoclient', ':sqlitedemo', ':hookstartactivitydemo', ':layoutfactory', ':mykotlindemo', ':viewinspector'
 //include  ':unittestdemo'
 //include ':alyimagegallery',
 //include ':constraintlayoutdemo'
@@ -16,10 +23,6 @@ include ':butter-test'
 //':bludemo'
 
 //include ':realmdemo'
-
-/***********apt router*******/
-//include ':library'
-//include ':compiler'
 
 //include ':artdemo'
 //include ':hotfixdemo

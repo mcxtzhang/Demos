@@ -30,11 +30,11 @@
             android:name=".SparseArrayOrderTestActivity"
             android:label="测试透明"
             android:process=":other_process">
-            <intent-filter>
+            <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>-->
         </activity>
         <activity android:name=".touch.TouchActivity" />
         <activity android:name=".view.TestCstViewActivity" />
@@ -51,7 +51,6 @@
         <activity android:name=".MainActivity" />
         <activity
             android:name=".test.TestInputActivity"
-            android:theme="@style/Theme.DianpingTranslucent"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
