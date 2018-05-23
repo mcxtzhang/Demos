@@ -29,7 +29,7 @@ public class TestInputActivity extends AppCompatActivity {
                 } else {
                     visible = true;
                     //findViewById(R.id.ivPhoto).setVisibility(View.VISIBLE);
-                    findViewById(R.id.ivPhoto).setAlpha(255);
+                    findViewById(R.id.ivPhoto).setAlpha(1);
                 }
 
                 Toast.makeText(TestInputActivity.this, "visible:" + visible, Toast.LENGTH_SHORT).show();

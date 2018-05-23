@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.mcxtzhang.constraintlayoutdemo">
+    package="com.mcxtzhang.constraintlayoutdemo">
 
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:allowBackup="true"
@@ -11,31 +11,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
-
-        </activity>
-        <activity android:name=".MatchActivity">
-        </activity>
-        <activity android:name=".RatioActivity">
-        </activity>
-        <activity android:name=".ChainActivity">
-        </activity>
-        <activity android:name=".DemoActivity">
+        <activity android:name=".MainActivity" />
+        <activity android:name=".MatchActivity" />
+        <activity android:name=".RatioActivity" />
+        <activity android:name=".ChainActivity" />
+        <activity android:name=".DemoActivity" />
+        <activity android:name=".MinimumActivity" />
+        <activity android:name=".WidgetsDimensionActivity" />
+        <activity android:name=".DoubleRatioActivity" />
+        <activity android:name=".GuidelineActivity" />
+        <activity android:name=".GoodsDetailActivity" />
+        <activity android:name=".onedotone.PercentActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MinimumActivity">
-        </activity>
-        <activity android:name=".WidgetsDimensionActivity">
-        </activity>
-        <activity android:name=".DoubleRatioActivity">
-        </activity>
-        <activity android:name=".GuidelineActivity">
-        </activity>
-        <activity android:name=".GoodsDetailActivity">
+        <activity android:name=".onedotone.GroupActivity"></activity>
+        <activity android:name=".onedotone.CircleConstraintActivity">
 
         </activity>
     </application>
