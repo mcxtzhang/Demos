@@ -2,6 +2,7 @@ package com.example.butter_test.meminfo.badcase;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.example.butter_test.R;
 
@@ -25,11 +26,11 @@ public class ThreadLeakActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_thread_leak);
         //leak 1  线程未执行完毕,退出Activity 会leak
-        (mSubThread = new SubInfiniteThread()).start();
-
-        //leak 2  线程池未执行完毕,退出Activity 会leak
-        mInfiniteRunnable = new InfiniteRunnable();
-        mSingleExecutor.execute(mInfiniteRunnable);
+//        (mSubThread = new SubInfiniteThread()).start();
+//
+//        //leak 2  线程池未执行完毕,退出Activity 会leak
+//        mInfiniteRunnable = new InfiniteRunnable();
+//        mSingleExecutor.execute(mInfiniteRunnable);
 
         //test 3 线程执行完毕,退出Activity 不会leak
 //        new SubThread().start();
@@ -41,14 +42,23 @@ public class ThreadLeakActivity extends AppCompatActivity {
 //                System.out.println(Thread.currentThread().getName() + ":a");
 //            }
 //        });
+
+        //test 5 给view.postDelayed(runnable) ,退出Activity runnable还会继续执行么?
+        View rootView = findViewById(R.id.activity_thread_leak);
+        rootView.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("delay 5000ms, i still run!");
+            }
+        },5000);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mSubThread.stopMe();
-        mSingleExecutor.shutdownNow();
-        mInfiniteRunnable.stopMe();
+//        mSubThread.stopMe();
+//        mSingleExecutor.shutdownNow();
+//        mInfiniteRunnable.stopMe();
     }
 
     class SubThread extends Thread {
