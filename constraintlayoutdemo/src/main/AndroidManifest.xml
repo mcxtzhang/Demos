@@ -22,15 +22,16 @@
         <activity android:name=".GuidelineActivity" />
         <activity android:name=".GoodsDetailActivity" />
         <activity android:name=".onedotone.PercentActivity">
+
+        </activity>
+        <activity android:name=".onedotone.GroupActivity" />
+        <activity android:name=".onedotone.CircleConstraintActivity"></activity>
+        <activity android:name=".TestMatchConstraintBugActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".onedotone.GroupActivity"></activity>
-        <activity android:name=".onedotone.CircleConstraintActivity">
-
         </activity>
     </application>
 
