@@ -4,12 +4,12 @@ import android.content.Context
 import android.graphics.Canvas
 import android.util.AttributeSet
 import android.util.Log
-import android.widget.Button
+import android.widget.TextView
 
 /**
  * Created by zhangxutong on 2018/1/26.
  */
-class CstButton3(context: Context?, attrs: AttributeSet?) : Button(context, attrs) {
+class CstButton3(context: Context?, attrs: AttributeSet?) : TextView(context, attrs) {
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         Log.i("TAG", "onMeasure() called");
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)

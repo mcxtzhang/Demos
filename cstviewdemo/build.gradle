@@ -25,7 +25,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.eftimoff:android-pathview:1.0.8@aar'
-    implementation project(path: ':zxtcommonlib', configuration: 'default')
     implementation 'com.android.support:recyclerview-v7:24.2.1'
-
+    compile project(':zxtcommonlib')
 }

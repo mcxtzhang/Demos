@@ -15,8 +15,8 @@ class HardwareAccelerateActivity : AppCompatActivity() {
         button4.setOnClickListener { v ->
             if (System.currentTimeMillis()-time>1000){
                 //Log.w("TAG", "invalidate() called")
-                //v.invalidate()
-                v.requestLayout()
+                v.invalidate()
+                //v.requestLayout()
             }
             time = System.currentTimeMillis()
 
