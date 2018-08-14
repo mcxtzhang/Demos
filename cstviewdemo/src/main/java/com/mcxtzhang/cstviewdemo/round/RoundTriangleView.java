@@ -3,6 +3,7 @@ package com.mcxtzhang.cstviewdemo.round;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.CornerPathEffect;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.support.annotation.Nullable;
@@ -28,14 +29,14 @@ public class RoundTriangleView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        Paint paint = new Paint();
+        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
         paint.setColor(Color.parseColor("#66222222"));
         paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeCap(Paint.Cap.ROUND);
-        paint.setStrokeWidth(13);
+        paint.setStrokeWidth(3);
+        paint.setPathEffect(new CornerPathEffect(35));
 
-        canvas.drawLine(40,40,40,500,paint);
+        canvas.drawLine(40, 40, 40, 500, paint);
 
         // 绘制这个三角形,你可以绘制任意多边形
         Path path = new Path();
@@ -44,7 +45,8 @@ public class RoundTriangleView extends View {
         path.lineTo(80, 800);
         path.close(); // 使这些点构成封闭的多边形
         canvas.drawPath(path, paint);
-        //canvas.round//
+        //canvas.round// 
+
 
     }
 }
