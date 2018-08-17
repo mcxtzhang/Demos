@@ -6,6 +6,11 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="editTextStyle">@style/CustomEditTextView</item>
+    </style>
+
+    <style name="CustomEditTextView" parent="android:Widget.EditText">
+        <item name="android:textCursorDrawable">@drawable/cursor_color_bg_2</item>
     </style>
 
 </resources>
