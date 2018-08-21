@@ -2,6 +2,7 @@ package com.mcxtzhang.android.layoutfactory;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.ContextThemeWrapper;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
@@ -40,8 +41,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         LinearLayout linearLayout = findViewById(R.id.root);
-        linearLayout.addView(new EditText(this));
+        EditText editText = new EditText(this);
+        editText.setHint("new EditText()");
+        linearLayout.addView(editText);
 
+
+        EditText editTextWithTheme = new EditText(new ContextThemeWrapper(this, R.style.CustomEditTextView));
+        editTextWithTheme.setHint("new EditText(new ContextThemeWrapper(this, R.style.CustomEditTextView))");
+        linearLayout.addView(editTextWithTheme);
+
+
+        EditText dpEditTextWithTheme = new DPEditText(new ContextThemeWrapper(this, R.style.CustomEditTextView));
+        dpEditTextWithTheme.setHint("new DPEditText(new ContextThemeWrapper(this, R.style.CustomEditTextView))");
+        linearLayout.addView(dpEditTextWithTheme);
 //        final View decorView = getWindow().getDecorView();
 //        if (decorView instanceof ViewGroup) {
 //            final ViewGroup root = (ViewGroup) decorView;

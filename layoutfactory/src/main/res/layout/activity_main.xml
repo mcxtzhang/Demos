@@ -9,18 +9,34 @@
     tools:context="com.mcxtzhang.android.layoutfactory.MainActivity">
 
     <EditText
-        android:id="@+id/editText"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_marginLeft="10dp"
-        android:hint="光标颜色手动设置"
-        android:textCursorDrawable="@drawable/cursor_color_bg" />
-
-    <EditText
         android:id="@+id/editText2"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginLeft="10dp"
-        android:hint="光标颜色未特殊设置" />
+        android:hint="原生EditText，光标颜色未特殊设置" />
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="10dp"
+        android:hint="原生EditText，光标颜色手动设置"
+        android:textCursorDrawable="@drawable/cursor_color_bg" />
+
+
+    <com.mcxtzhang.android.layoutfactory.DPEditText
+        android:id="@+id/editText4"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="10dp"
+        android:hint="自定义EditText，光标颜色未特殊设置" />
+
+    <com.mcxtzhang.android.layoutfactory.DPEditText
+        android:id="@+id/editText5"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="10dp"
+        android:hint="自定义EditText，光标颜色手动设置"
+        android:textCursorDrawable="@drawable/cursor_color_bg" />
 
 </LinearLayout>

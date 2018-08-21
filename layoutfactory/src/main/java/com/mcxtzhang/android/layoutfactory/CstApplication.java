@@ -1,19 +1,6 @@
 package com.mcxtzhang.android.layoutfactory;
 
-import android.app.Activity;
 import android.app.Application;
-import android.content.Context;
-import android.os.Bundle;
-import android.support.v4.view.LayoutInflaterCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AppCompatDelegate;
-import android.util.AttributeSet;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
-
-import java.lang.reflect.Field;
 
 /**
  * Created by zhangxutong on 2018/8/17.
@@ -25,7 +12,7 @@ public class CstApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-
+/*
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(final Activity activity, Bundle savedInstanceState) {
@@ -110,6 +97,6 @@ public class CstApplication extends Application {
             public void onActivityDestroyed(Activity activity) {
 
             }
-        });
+        });*/
     }
 }
