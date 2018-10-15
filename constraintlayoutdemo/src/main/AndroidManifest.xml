@@ -14,7 +14,11 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".MatchActivity" />
         <activity android:name=".RatioActivity" />
-        <activity android:name=".ChainActivity" />
+        <activity android:name=".ChainActivity" ><intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter></activity>
         <activity android:name=".DemoActivity" />
         <activity android:name=".MinimumActivity" />
         <activity android:name=".WidgetsDimensionActivity" />
@@ -27,11 +31,7 @@
         <activity android:name=".TestMatchConstraintBugActivity">
 
         </activity>
-        <activity android:name=".TextViewOutOfBoundsActivity">  <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter></activity>
+        <activity android:name=".TextViewOutOfBoundsActivity">  </activity>
     </application>
 
 </manifest>

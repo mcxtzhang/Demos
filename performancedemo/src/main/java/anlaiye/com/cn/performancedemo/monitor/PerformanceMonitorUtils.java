@@ -49,8 +49,19 @@ public class PerformanceMonitorUtils {
             Choreographer.getInstance().postFrameCallback(new Choreographer.FrameCallback() {
                 long lastTime;
 
+                long tempMethodCallTime;
+
                 @Override
                 public void doFrame(long frameTimeNanos) {
+                    //Log.d(TAG, "doFrame() called with: frameTimeNanos = [" + frameTimeNanos + "]");
+                    /*long currentTimeMillis = System.currentTimeMillis();
+                    if (tempMethodCallTime==0){
+                        tempMethodCallTime = currentTimeMillis;
+                    }else {
+                        Log.d(TAG, "doFrame() called with: tempMethodCallTime = [" + (currentTimeMillis-tempMethodCallTime) + "]");
+                        tempMethodCallTime = currentTimeMillis;
+
+                    }
                     mChoreographerFrameCount++;
                     long gap = ((frameTimeNanos - lastTime) / 1000000);
                     Log.d(TAG, "doFrame: mChoreographerFrameCount = [" + mChoreographerFrameCount + "]" + "lasttime:" + lastTime + ", gap:" + gap);
@@ -59,7 +70,7 @@ public class PerformanceMonitorUtils {
                         Log.e(TAG, "丢帧 : frameTimeNanos = [" + frameTimeNanos + "]" + "lasttime:" + lastTime + ", gap:" + gap + ",丢了几帧:" + count);
 
                     }
-                    lastTime = frameTimeNanos;
+                    lastTime = frameTimeNanos;*/
                     Choreographer.getInstance().postFrameCallback(this);
                 }
             });
@@ -83,7 +94,6 @@ public class PerformanceMonitorUtils {
                     if (gap > 16) {
                         long count = (gap - 16) / 16;
                         //Log.i(TAG, "onFrameMetricsAvailable   丢帧 :  lasttime:" + lastTime + ", gap:" + gap + ",丢了几帧:" + count);
-
                     }
                     lastTime = currentTimeMillis;
 

@@ -17,14 +17,14 @@
         <activity android:name=".measure.TestMeasureRelativeActivity" />
         <activity android:name=".measure.TestMeasureLInearActivity" />
         <activity android:name=".monitor.MonitorActivity">
-
-        </activity>
-        <activity android:name=".monitor.list.RvActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".monitor.list.RvActivity">
+
         </activity>
         <activity android:name=".merge.TestMergeParentActivity">
 
