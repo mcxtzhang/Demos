@@ -20,4 +20,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="线程、线程池leak" />
+
+    <Button
+        android:id="@+id/btnMeminfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="内存" />
 </LinearLayout>

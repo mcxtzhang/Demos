@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MeminfoTestActivity extends AppCompatActivity {
-    private static final String TAG = "butter-test";
     TextView mTvHint;
     List list = new ArrayList();
 
@@ -69,13 +68,17 @@ public class MeminfoTestActivity extends AppCompatActivity {
                 float allocedMemoK = totalMemoK - freeMemoK;
                 float allocedMemoM = totalMemoM - freeMemoM;
 
+                long maxMemory = Runtime.getRuntime().maxMemory();
+                float maxMemoryM = maxMemory / 1024f / 1024f;
+
                 mTvHint.setText("totalMemory = [" + formatFLoat(totalMemoK) + "K]" + formatFLoat(totalMemoM) + "M"
                         + "\n freeMemory = [" + formatFLoat(freeMemoK) + "K]" + formatFLoat(freeMemoM) + "M"
-                        + "\n alloced = [" + formatFLoat(allocedMemoK) + "K]" + formatFLoat(allocedMemoM) + "M");
+                        + "\n alloced = [" + formatFLoat(allocedMemoK) + "K]" + formatFLoat(allocedMemoM) + "M"
+                        + "\n maxMemoryM = [" + formatFLoat(maxMemoryM) + "]M");
 
                 try {
                     Process exec = Runtime.getRuntime().exec("adb shell dumpsys meminfo 'com.example.butter_test' |grep 'Dalvik Heap'");
-                    Log.d(TAG, "run() called:"+exec);
+                    Log.d(TAG, "run() called:" + exec);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -113,6 +116,36 @@ public class MeminfoTestActivity extends AppCompatActivity {
         }
     }
 
+    private static final String TAG = "Memory";
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.e(TAG, "onStart() called" + this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.e(TAG, "onStop() called" + this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.e(TAG, "onDestroy() called" + this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.e(TAG, "onResume() called" + this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.e(TAG, "onPause() called" + this);
+    }
 
 }
