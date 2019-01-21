@@ -12,6 +12,7 @@
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
       <module fileurl="file://$PROJECT_DIR$/mykotlindemo/mykotlindemo.iml" filepath="$PROJECT_DIR$/mykotlindemo/mykotlindemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/performancedemo/performancedemo.iml" filepath="$PROJECT_DIR$/performancedemo/performancedemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/photoedit/photoedit.iml" filepath="$PROJECT_DIR$/photoedit/photoedit.iml" />
       <module fileurl="file://$PROJECT_DIR$/playgrounds.iml" filepath="$PROJECT_DIR$/playgrounds.iml" />
       <module fileurl="file://$PROJECT_DIR$/toastdemo/toastdemo.iml" filepath="$PROJECT_DIR$/toastdemo/toastdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/touchdemo/touchdemo.iml" filepath="$PROJECT_DIR$/touchdemo/touchdemo.iml" />

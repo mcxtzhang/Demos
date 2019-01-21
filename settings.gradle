@@ -1,4 +1,4 @@
-include ':app'
+include ':app', ':photoedit'
 include ':constraintlayoutdemo'
 include ':mykotlindemo'
 include ':cstviewdemo'
