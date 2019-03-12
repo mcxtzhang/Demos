@@ -19,7 +19,7 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:scaleType="matrix"
-        android:src="@drawable/temp"
+        android:src="@drawable/pic1"
         app:layout_constraintLeft_toLeftOf="@id/guide"
         app:layout_constraintRight_toRightOf="parent" />
 
@@ -42,7 +42,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Button"
+        android:text="缩放"
         app:layout_constraintEnd_toStartOf="@+id/guide"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button" />

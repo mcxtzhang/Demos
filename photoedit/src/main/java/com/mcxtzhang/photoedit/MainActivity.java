@@ -48,5 +48,12 @@ public class MainActivity extends AppCompatActivity {
                 imageView.setImageBitmap(bitmap);
             }
         });
+
+        findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 }
