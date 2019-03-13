@@ -106,19 +106,19 @@ public class PhotoEditUtils {
 
     /**
      * 旋转图片
-     * @param angle 旋转角度
+     *
+     * @param angle  旋转角度
      * @param bitmap 要处理的Bitmap
      * @return 处理后的Bitmap
      */
-    public static Bitmap rotaingImageView(int angle, Bitmap bitmap)
-    {
+    public static Bitmap rotaingImageView(int angle, Bitmap bitmap) {
         // 旋转图片 动作
         Matrix matrix = new Matrix();
         matrix.postRotate(angle);
         // 创建新的图片
         Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0,
                 bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-        if (resizedBitmap != bitmap && bitmap != null && !bitmap.isRecycled()){
+        if (resizedBitmap != bitmap && bitmap != null && !bitmap.isRecycled()) {
             bitmap.recycle();
             bitmap = null;
         }

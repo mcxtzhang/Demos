@@ -1,5 +1,6 @@
 package com.mcxtzhang.photoedit;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
+    ImageView mImageView;
     Bitmap bitmap;
 
     @Override
@@ -18,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
         final ImageView imageView = findViewById(R.id.image);
 
-        findViewById(R.id.image).setOnClickListener(new View.OnClickListener() {
+        (mImageView = findViewById(R.id.image)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 BitmapDrawable bitmapDrawable = (BitmapDrawable) imageView.getDrawable();
@@ -55,5 +57,23 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+
+        findViewById(R.id.button3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivityForResult(new Intent(MainActivity.this, ImageActivity.class), 100);
+            }
+        });
     }
+
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+////        Bitmap cropPic = data.getParcelableExtra("cropPic");
+////        mImageView.setImageBitmap(cropPic);
+//        String cropPicPath = data.getStringExtra("cropPicPath");
+//        Bitmap bitmap = BitmapFactory.decodeFile(cropPicPath);
+//        mImageView.setImageBitmap(bitmap);
+//    }
 }
