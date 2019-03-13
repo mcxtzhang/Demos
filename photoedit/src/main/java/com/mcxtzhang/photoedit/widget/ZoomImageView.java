@@ -306,6 +306,42 @@ public class ZoomImageView extends android.support.v7.widget.AppCompatImageView 
 //
 //    }
 
+    float[] floats = new float[9];
+
+    /**
+     * 剪切图片，返回剪切后的bitmap对象
+     *
+     * @return
+     */
+    public Bitmap crop(int cropStartX, int cropStartY, int cropWidth, int cropHeight) {
+        Bitmap bitmap = ((BitmapDrawable) getDrawable()).getBitmap();
+
+        mScaleMatrix.getValues(floats);
+        float scaleX = floats[Matrix.MSCALE_X];
+        float scaleY = floats[Matrix.MSCALE_Y];
+        //偏移量 是和  放大系数 无关的 绝对长度
+        float transX = floats[Matrix.MTRANS_X];
+        float transY = floats[Matrix.MTRANS_Y];
+
+        float leftOffset = -transX + cropStartX;
+        leftOffset = leftOffset / scaleX;
+
+        float topOffset = -transY + cropStartY;
+        topOffset = topOffset / scaleY;
+
+        float width = cropWidth;
+        width = width / scaleX;
+        float height = cropHeight;
+        height = height / scaleY;
+
+        return Bitmap.createBitmap(bitmap,
+                (int) leftOffset,
+                (int) topOffset,
+                (int) width,
+                (int) height);
+    }
+
+
     /**
      * 剪切图片，返回剪切后的bitmap对象
      *

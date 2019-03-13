@@ -13,7 +13,11 @@
         android:src="@drawable/pic1" />
 
 
-    <com.mcxtzhang.photoedit.widget.ClipImageBorderView
+    <!--<com.mcxtzhang.photoedit.widget.ClipImageBorderView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent" />-->
+    <com.mcxtzhang.photoedit.widget.CropView
+        android:id="@+id/cropView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
