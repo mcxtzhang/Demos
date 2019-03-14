@@ -1,26 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/black"
+    android:orientation="vertical"
     tools:context="com.mcxtzhang.photoedit.ImageActivity">
 
-    <com.mcxtzhang.photoedit.widget.ZoomImageView
-        android:id="@+id/zoomImageView"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/pic1" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@android:color/black"
+        android:paddingBottom="13dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="13dp">
 
+        <com.mcxtzhang.photoedit.widget.CropImageView
+            android:id="@+id/zoomImageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/pic1" />
 
-    <!--<com.mcxtzhang.photoedit.widget.ClipImageBorderView-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent" />-->
-    <com.mcxtzhang.photoedit.widget.CropView
-        android:id="@+id/cropView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        <com.mcxtzhang.photoedit.widget.CropDragView
+            android:id="@+id/cropView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
 
     <Button
         android:id="@+id/submit"
@@ -28,4 +35,4 @@
         android:layout_height="wrap_content"
         android:text="确定" />
 
-</FrameLayout>
+</LinearLayout>

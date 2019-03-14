@@ -4,27 +4,27 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.mcxtzhang.photoedit.widget.CropView;
-import com.mcxtzhang.photoedit.widget.ZoomImageView;
+import com.mcxtzhang.photoedit.widget.CropDragView;
+import com.mcxtzhang.photoedit.widget.CropImageView;
 
 public class ImageActivity extends AppCompatActivity {
-    ZoomImageView mZoomImageView;
+    CropImageView mCropImageView;
 
-    CropView mCropView;
+    CropDragView mCropDragView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image);
-        mZoomImageView =
+        mCropImageView =
                 findViewById(R.id.zoomImageView);
 
-        mCropView = findViewById(R.id.cropView);
+        mCropDragView = findViewById(R.id.cropView);
 
         findViewById(R.id.submit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mZoomImageView.setImageBitmap(mZoomImageView.crop(mCropView.getStartX(), mCropView.getStartY(), mCropView.getCropWidth(), mCropView.getCropHeight()));
+                mCropImageView.setImageBitmap(mCropImageView.crop(mCropDragView.getStartX(), mCropDragView.getStartY(), mCropDragView.getCropWidth(), mCropDragView.getCropHeight()));
             }
         });
     }

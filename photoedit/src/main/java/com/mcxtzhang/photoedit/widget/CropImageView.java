@@ -18,10 +18,10 @@ import android.view.ViewTreeObserver;
 /**
  * Created by zhangxutong on 2019/3/13.
  */
-public class ZoomImageView extends android.support.v7.widget.AppCompatImageView implements OnScaleGestureListener, ViewTreeObserver.OnGlobalLayoutListener
+public class CropImageView extends android.support.v7.widget.AppCompatImageView implements OnScaleGestureListener, ViewTreeObserver.OnGlobalLayoutListener
 
 {
-    private static final String TAG = ZoomImageView.class.getSimpleName();
+    private static final String TAG = CropImageView.class.getSimpleName();
 
     public static final float SCALE_MAX = 4.0f;
     /**
@@ -46,11 +46,11 @@ public class ZoomImageView extends android.support.v7.widget.AppCompatImageView 
 
     private int mTouchSlop;
 
-    public ZoomImageView(Context context) {
+    public CropImageView(Context context) {
         this(context, null);
     }
 
-    public ZoomImageView(Context context, AttributeSet attrs) {
+    public CropImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
         super.setScaleType(ScaleType.MATRIX);
         mScaleGestureDetector = new ScaleGestureDetector(context, this);

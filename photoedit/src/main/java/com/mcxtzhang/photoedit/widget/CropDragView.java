@@ -17,9 +17,9 @@ import android.view.View;
  * Created by zhangxutong on 2019/3/13.
  */
 
-public class CropView extends View {
+public class CropDragView extends View {
 
-    private static final String TAG = CropView.class.getSimpleName();
+    private static final String TAG = CropDragView.class.getSimpleName();
 
     private static final int MODE_CORNER_LT = 1;
     private static final int MODE_CORNER_RT = 2;
@@ -48,15 +48,15 @@ public class CropView extends View {
 
     private int mTouchDeviationThreshold;
 
-    public CropView(Context context) {
+    public CropDragView(Context context) {
         this(context, null);
     }
 
-    public CropView(Context context, @Nullable AttributeSet attrs) {
+    public CropDragView(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public CropView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public CropDragView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mCropRect = new Rect();
 
