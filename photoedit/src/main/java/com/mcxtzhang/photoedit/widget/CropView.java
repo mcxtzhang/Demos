@@ -60,11 +60,6 @@ public class CropView extends View {
         super(context, attrs, defStyleAttr);
         mCropRect = new Rect();
 
-        mStartX = 300;
-        mStartY = 300;
-        mCropWidth = 500;
-        mCropHeight = 500;
-
         mCropLinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mCropLinePaint.setColor(Color.WHITE);
         mCropLineWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, getResources().getDisplayMetrics());

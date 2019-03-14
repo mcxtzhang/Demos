@@ -15,6 +15,9 @@ import android.view.ScaleGestureDetector.OnScaleGestureListener;
 import android.view.ViewConfiguration;
 import android.view.ViewTreeObserver;
 
+/**
+ * Created by zhangxutong on 2019/3/13.
+ */
 public class ZoomImageView extends android.support.v7.widget.AppCompatImageView implements OnScaleGestureListener, ViewTreeObserver.OnGlobalLayoutListener
 
 {
@@ -38,7 +41,7 @@ public class ZoomImageView extends android.support.v7.widget.AppCompatImageView 
      */
     private ScaleGestureDetector mScaleGestureDetector = null;
 
-    private final Matrix mScaleMatrix = new Matrix();
+    private final Matrix mImageMatrix = new Matrix();
 
 
     private int mTouchSlop;
@@ -65,8 +68,8 @@ public class ZoomImageView extends android.support.v7.widget.AppCompatImageView 
         if (getDrawable() == null)
             return true;
 
-        mScaleMatrix.postScale(scaleFactor, scaleFactor, detector.getFocusX(), detector.getFocusY());
-        setImageMatrix(mScaleMatrix);
+        mImageMatrix.postScale(scaleFactor, scaleFactor, detector.getFocusX(), detector.getFocusY());
+        setImageMatrix(mImageMatrix);
         /**
          * 缩放的范围控制
          */
@@ -84,9 +87,9 @@ public class ZoomImageView extends android.support.v7.widget.AppCompatImageView 
 //            /**
 //             * 设置缩放比例
 //             */
-//            mScaleMatrix.postScale(scaleFactor, scaleFactor, getWidth() / 2,
+//            mImageMatrix.postScale(scaleFactor, scaleFactor, getWidth() / 2,
 //                    getHeight() / 2);
-//            setImageMatrix(mScaleMatrix);
+//            setImageMatrix(mImageMatrix);
 //        }
         return true;
 
@@ -107,7 +110,7 @@ public class ZoomImageView extends android.support.v7.widget.AppCompatImageView 
      * @return
      */
     private RectF getMatrixRectF() {
-        Matrix matrix = mScaleMatrix;
+        Matrix matrix = mImageMatrix;
         RectF rect = new RectF();
         Drawable d = getDrawable();
         if (null != d) {
@@ -173,9 +176,9 @@ public class ZoomImageView extends android.support.v7.widget.AppCompatImageView 
 //                            dy = 0;
 //                            isCheckTopAndBottom = false;
 //                        }
-                        mScaleMatrix.postTranslate(dx, dy);
+                        mImageMatrix.postTranslate(dx, dy);
                         //checkMatrixBounds();
-                        setImageMatrix(mScaleMatrix);
+                        setImageMatrix(mImageMatrix);
                     }
                 }
                 mLastX = x;
@@ -189,7 +192,7 @@ public class ZoomImageView extends android.support.v7.widget.AppCompatImageView 
                 break;
         }
         float[] floats = new float[9];
-        mScaleMatrix.getValues(floats);
+        mImageMatrix.getValues(floats);
 
 //        Log.e(TAG, "MSCALE_X: " + floats[Matrix.MSCALE_X]
 //                + "MSCALE_Y: " + floats[Matrix.MSCALE_Y]
@@ -220,7 +223,7 @@ public class ZoomImageView extends android.support.v7.widget.AppCompatImageView 
      * @return
      */
     public final float getScale() {
-        mScaleMatrix.getValues(matrixValues);
+        mImageMatrix.getValues(matrixValues);
         return matrixValues[Matrix.MSCALE_X];
     }
 
@@ -294,11 +297,11 @@ public class ZoomImageView extends android.support.v7.widget.AppCompatImageView 
 //            SCALE_MID = initScale * 2;
 //            SCALE_MAX = initScale * 4;
 //            Log.e(TAG, "initScale = " + initScale);
-//            mScaleMatrix.postTranslate((width - dw) / 2, (height - dh) / 2);
-//            mScaleMatrix.postScale(scale, scale, getWidth() / 2,
+//            mImageMatrix.postTranslate((width - dw) / 2, (height - dh) / 2);
+//            mImageMatrix.postScale(scale, scale, getWidth() / 2,
 //                    getHeight() / 2);
 //            // 图片移动至屏幕中心
-//            setImageMatrix(mScaleMatrix);
+//            setImageMatrix(mImageMatrix);
 //            once = false;
 //        }
 //
@@ -314,7 +317,7 @@ public class ZoomImageView extends android.support.v7.widget.AppCompatImageView 
     public Bitmap crop(int cropStartX, int cropStartY, int cropWidth, int cropHeight) {
         Bitmap bitmap = ((BitmapDrawable) getDrawable()).getBitmap();
 
-        mScaleMatrix.getValues(floats);
+        mImageMatrix.getValues(floats);
         float scaleX = floats[Matrix.MSCALE_X];
         float scaleY = floats[Matrix.MSCALE_Y];
         //偏移量 是和  放大系数 无关的 绝对长度
@@ -361,7 +364,7 @@ public class ZoomImageView extends android.support.v7.widget.AppCompatImageView 
         float height = getWidth() - 2 * mHorizontalPadding;
 
         float[] floats = new float[9];
-        mScaleMatrix.getValues(floats);
+        mImageMatrix.getValues(floats);
         float scaleX = floats[Matrix.MSCALE_X];
         float scaleY = floats[Matrix.MSCALE_Y];
         //偏移量 是和  放大系数 无关的 绝对长度
@@ -397,7 +400,7 @@ public class ZoomImageView extends android.support.v7.widget.AppCompatImageView 
 //        Log.d(TAG, "clip() called：" + bitmap.getHeight());
 //
 //        float[] floats = new float[9];
-//        mScaleMatrix.getValues(floats);
+//        mImageMatrix.getValues(floats);
 //        float scaleX = floats[Matrix.MSCALE_X];
 //        float scaleY = floats[Matrix.MSCALE_Y];
 //        //偏移量 是和  放大系数 无关的 绝对长度
@@ -455,7 +458,7 @@ public class ZoomImageView extends android.support.v7.widget.AppCompatImageView 
                 deltaY = height - mVerticalPadding - rect.bottom;
             }
         }
-        mScaleMatrix.postTranslate(deltaX, deltaY);
+        mImageMatrix.postTranslate(deltaX, deltaY);
 
     }
 
@@ -466,12 +469,16 @@ public class ZoomImageView extends android.support.v7.widget.AppCompatImageView 
             Drawable d = getDrawable();
             if (d == null)
                 return;
-            Log.e(TAG, d.getIntrinsicWidth() + " , " + d.getIntrinsicHeight());
+            Bitmap bitmap = ((BitmapDrawable) getDrawable()).getBitmap();
+
             int width = getWidth();
             int height = getHeight();
+            Log.e(TAG, d.getIntrinsicWidth() + " , " + d.getIntrinsicHeight());
+            Log.e(TAG, bitmap.getWidth() + " , " + bitmap.getHeight());
+            Log.e(TAG, width + " , " + height);
             // 拿到图片的宽和高
-            int dw = d.getIntrinsicWidth();
-            int dh = d.getIntrinsicHeight();
+            int dw = bitmap.getWidth();
+            int dh = bitmap.getHeight();
             float scale = 1.0f;
             // 如果图片的宽或者高大于屏幕，则缩放至屏幕的宽或者高
             if (dw > width && dh <= height) {
@@ -482,14 +489,17 @@ public class ZoomImageView extends android.support.v7.widget.AppCompatImageView 
             }
             // 如果宽和高都大于屏幕，则让其按按比例适应屏幕大小
             if (dw > width && dh > height) {
-                scale = Math.min(dw * 1.0f / width, dh * 1.0f / height);
+                scale = Math.min(width * 1.0f / dw, height * 1.0f / dh);
+            } else if (dw < width && dh < height) {
+                scale = Math.min(width * 1.0f / dw, height * 1.0f / dh);
             }
+
             initScale = scale;
             // 图片移动至屏幕中心
-            mScaleMatrix.postTranslate((width - dw) / 2, (height - dh) / 2);
-            mScaleMatrix
+            mImageMatrix.postTranslate((width - dw) / 2, (height - dh) / 2);
+            mImageMatrix
                     .postScale(scale, scale, getWidth() / 2, getHeight() / 2);
-            setImageMatrix(mScaleMatrix);
+            setImageMatrix(mImageMatrix);
             once = false;
         }
 
