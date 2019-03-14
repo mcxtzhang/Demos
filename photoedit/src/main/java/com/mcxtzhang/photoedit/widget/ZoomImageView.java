@@ -12,13 +12,10 @@ import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.ScaleGestureDetector.OnScaleGestureListener;
-import android.view.View;
-import android.view.View.OnTouchListener;
 import android.view.ViewConfiguration;
 import android.view.ViewTreeObserver;
 
-public class ZoomImageView extends android.support.v7.widget.AppCompatImageView implements OnScaleGestureListener,
-        OnTouchListener, ViewTreeObserver.OnGlobalLayoutListener
+public class ZoomImageView extends android.support.v7.widget.AppCompatImageView implements OnScaleGestureListener, ViewTreeObserver.OnGlobalLayoutListener
 
 {
     private static final String TAG = ZoomImageView.class.getSimpleName();
@@ -54,7 +51,7 @@ public class ZoomImageView extends android.support.v7.widget.AppCompatImageView 
         super(context, attrs);
         super.setScaleType(ScaleType.MATRIX);
         mScaleGestureDetector = new ScaleGestureDetector(context, this);
-        this.setOnTouchListener(this);
+        //this.setOnTouchListener(this);
 
         mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
 
@@ -125,8 +122,9 @@ public class ZoomImageView extends android.support.v7.widget.AppCompatImageView 
     boolean isCanDrag;
     float mLastX, mLastY;
 
+
     @Override
-    public boolean onTouch(View v, MotionEvent event) {
+    public boolean onTouchEvent(MotionEvent event) {
         mScaleGestureDetector.onTouchEvent(event);
 
         float x = 0, y = 0;
@@ -193,11 +191,11 @@ public class ZoomImageView extends android.support.v7.widget.AppCompatImageView 
         float[] floats = new float[9];
         mScaleMatrix.getValues(floats);
 
-        Log.e(TAG, "MSCALE_X: " + floats[Matrix.MSCALE_X]
-                + "MSCALE_Y: " + floats[Matrix.MSCALE_Y]
-                + "MTRANS_X: " + floats[Matrix.MTRANS_X]
-                + "MTRANS_Y: " + floats[Matrix.MTRANS_Y]
-        );
+//        Log.e(TAG, "MSCALE_X: " + floats[Matrix.MSCALE_X]
+//                + "MSCALE_Y: " + floats[Matrix.MSCALE_Y]
+//                + "MTRANS_X: " + floats[Matrix.MTRANS_X]
+//                + "MTRANS_Y: " + floats[Matrix.MTRANS_Y]
+//        );
 
         return true;
 
