@@ -6,6 +6,8 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -31,13 +33,14 @@ public class CropDragView extends View {
             MODE_CORNER_RT,
             MODE_CORNER_RB,
             MODE_CORNER_LB};
-
     private static final int MODE_EDGE_L = 5;
     private static final int MODE_EDGE_T = 6;
     private static final int MODE_EDGE_R = 7;
     private static final int MODE_EDGE_B = 8;
 
     private int mWidth, mHeight;
+    private float[] mFloats = new float[9];
+    private int mTouchDeviationThreshold;
 
 
     private int mStartX, mStartY;
@@ -49,10 +52,14 @@ public class CropDragView extends View {
 
     private Paint mCropCornerPaint;
 
-    private int mTouchDeviationThreshold;
+    private Paint mBgPaint;
 
+
+    /**
+     * 外部通信变量
+     */
     private CropImageView mCropImageView;
-    private float[] mFloats = new float[9];
+
 
     public CropDragView(Context context) {
         this(context, null);
@@ -71,6 +78,9 @@ public class CropDragView extends View {
         mCropLineWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, getResources().getDisplayMetrics());
         mCropLinePaint.setStrokeWidth(mCropLineWidth);
         mCropLinePaint.setStyle(Paint.Style.STROKE);
+
+        mBgPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mBgPaint.setColor(Color.parseColor("#66000000"));
 
 
         mTouchDeviationThreshold = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, getResources().getDisplayMetrics());
@@ -151,6 +161,16 @@ public class CropDragView extends View {
     protected void onDraw(Canvas canvas) {
         mCropRect.set(mStartX, mStartY, mStartX + mCropWidth, mStartY + mCropHeight);
         canvas.drawRect(mCropRect, mCropLinePaint);
+
+        int layerId = canvas.saveLayer(0, 0, canvas.getWidth(), canvas.getHeight(), null, Canvas.ALL_SAVE_FLAG);
+        canvas.drawRect(0, 0, mWidth, mHeight, mBgPaint);
+        //使用CLEAR作为PorterDuffXfermode绘制蓝色的矩形
+        mBgPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OUT));
+        canvas.drawRect(mCropRect, mBgPaint);
+        //最后将画笔去除Xfermode
+        mBgPaint.setXfermode(null);
+        canvas.restoreToCount(layerId);
+
     }
 
     private Point mLastDownPoint = new Point();
