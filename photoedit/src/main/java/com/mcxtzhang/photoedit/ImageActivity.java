@@ -31,10 +31,11 @@ public class ImageActivity extends AppCompatActivity {
                 Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.long1);
                 mCropImageView.setImageBitmap(bitmap);
                 mCropImageView.showBitmapInCenter();
+                mCropImageView.setCropDragView(mCropDragView);
 
                 mCropDragView.bindCropImageView(mCropImageView);
             }
-        }, 2000);
+        }, 500);
 
         findViewById(R.id.submit).setOnClickListener(new View.OnClickListener() {
             @Override

@@ -37,6 +37,8 @@ public class CropDragView extends View {
     private static final int MODE_EDGE_R = 7;
     private static final int MODE_EDGE_B = 8;
 
+    private int mWidth, mHeight;
+
 
     private int mStartX, mStartY;
     private int mCropWidth, mCropHeight;
@@ -99,8 +101,8 @@ public class CropDragView extends View {
             } else {
                 mStartY = (int) mFloats[Matrix.MTRANS_Y];
             }
-            mCropWidth = getWidth() - mStartX - mStartX;
-            mCropHeight = getHeight() - mStartY - mStartY;
+            mCropWidth = mWidth - mStartX - mStartX;
+            mCropHeight = mHeight - mStartY - mStartY;
         } else {
 
         }
@@ -153,9 +155,18 @@ public class CropDragView extends View {
 
     private Point mLastDownPoint = new Point();
     private int mDragMode;
+    private Runnable mUpdateUIRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (null != mCropImageView) {
+                mCropImageView.updateShowInCenter(mStartX, mStartY, mCropWidth, mCropHeight);
+            }
+        }
+    };
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        removeCallbacks(mUpdateUIRunnable);
         int eventX = (int) event.getX();
         int eventY = (int) event.getY();
         Log.d(TAG, "onTouchEvent() called with: event = [" + event + ",    " + mTouchDeviationThreshold + ",,, " + mDragMode);
@@ -220,6 +231,18 @@ public class CropDragView extends View {
                         mCropHeight += moveY;
                         break;
                 }
+                if (mStartX < 0) {
+                    mStartX = 0;
+                }
+                if (mStartY < 0) {
+                    mStartY = 0;
+                }
+                if (mStartX + mCropWidth > mWidth) {
+                    mCropWidth = mWidth - mStartX;
+                }
+                if (mStartY + mCropHeight > mHeight) {
+                    mCropHeight = mHeight - mStartY;
+                }
 
                 invalidate();
                 mLastDownPoint.set(eventX, eventY);
@@ -227,6 +250,7 @@ public class CropDragView extends View {
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
                 mDragMode = 0;
+                postDelayed(mUpdateUIRunnable, 1500);
                 break;
         }
         return super.onTouchEvent(event);
@@ -283,4 +307,10 @@ public class CropDragView extends View {
     }
 
 
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
+        mWidth = getWidth();
+        mHeight = getHeight();
+    }
 }

@@ -19,6 +19,10 @@ import android.view.ViewConfiguration;
 public class CropImageView extends android.support.v7.widget.AppCompatImageView implements OnScaleGestureListener {
     private static final String TAG = CropImageView.class.getSimpleName();
 
+    private int mWidth, mHeight;
+    private CropDragView mCropDragView;
+
+
     public static final float SCALE_MAX = 4.0f;
     /**
      * 初始化时的缩放比例，如果图片宽或高大于屏幕，此值将小于0
@@ -52,6 +56,15 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
 
         mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
 
+    }
+
+    public CropDragView getCropDragView() {
+        return mCropDragView;
+    }
+
+    public CropImageView setCropDragView(CropDragView cropDragView) {
+        mCropDragView = cropDragView;
+        return this;
     }
 
     @Override
@@ -337,4 +350,62 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
         setImageMatrix(mImageMatrix);
     }
 
+    /**
+     * 裁剪后被选中区域自动放大、居中展示。
+     *
+     * @param cropStartX
+     * @param cropStartY
+     * @param cropWidth
+     * @param cropHeight
+     */
+    public void updateShowInCenter(int cropStartX, int cropStartY, int cropWidth, int cropHeight) {
+        int tranX = 0, tranY = 0;
+        tranX = (mWidth - cropWidth - cropStartX - cropStartX) / 2;
+        tranY = (mHeight - cropHeight - cropStartY - cropStartY) / 2;
+//        int horizontalSpace = ;
+//        if (mWidth >) {
+//            //右边离中轴线更近
+//            tranX =
+//        } else {
+//
+//        }
+        mImageMatrix.postTranslate(tranX, tranY);
+
+
+        float scale = Math.min(mWidth * 1.0f / cropWidth, mHeight * 1.0f / cropHeight);
+        mImageMatrix.postScale(scale, scale, getWidth() / 2, getHeight() / 2);
+        setImageMatrix(mImageMatrix);
+
+
+        cropWidth *= scale;
+        cropHeight *= scale;
+        if (cropWidth > mWidth) {
+            cropWidth = mWidth;
+        }
+        if (cropHeight > mHeight) {
+            cropHeight = mHeight;
+        }
+        if (cropWidth > cropHeight) {
+            cropStartX = 0;
+            cropStartY = (mHeight - cropHeight) / 2;
+        } else {
+            cropStartY = 0;
+            cropStartX = (mWidth - cropWidth) / 2;
+        }
+
+        mCropDragView.setStartX(cropStartX)
+                .setStartY(cropStartY)
+                .setCropWidth(cropWidth)
+                .setCropHeight(cropHeight)
+                .invalidate();
+
+        Log.d(TAG, "updateShowInCenter() called with: tranX = [" + tranX + "], tranY = [" + tranY + "], scale = [" + scale + "], cropHeight = [" + cropHeight + "]");
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
+        mWidth = getWidth();
+        mHeight = getHeight();
+    }
 }
