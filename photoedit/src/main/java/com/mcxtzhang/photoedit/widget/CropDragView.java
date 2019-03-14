@@ -3,6 +3,7 @@ package com.mcxtzhang.photoedit.widget;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
@@ -48,6 +49,9 @@ public class CropDragView extends View {
 
     private int mTouchDeviationThreshold;
 
+    private CropImageView mCropImageView;
+    private float[] mFloats = new float[9];
+
     public CropDragView(Context context) {
         this(context, null);
     }
@@ -68,6 +72,61 @@ public class CropDragView extends View {
 
 
         mTouchDeviationThreshold = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, getResources().getDisplayMetrics());
+    }
+
+    public CropDragView bindCropImageView(CropImageView cropImageView) {
+        mCropImageView = cropImageView;
+        updateCropAreaPosition();
+        return this;
+    }
+
+    public void updateCropAreaPosition() {
+        if (null == mCropImageView) {
+            return;
+        }
+        Matrix imageMatrix = mCropImageView.getImageMatrix();
+        imageMatrix.getValues(mFloats);
+
+        //init
+        if (mCropWidth == 0 && mCropHeight == 0) {
+            if (mFloats[Matrix.MTRANS_X] <= 0) {
+                mStartX = 0;
+            } else {
+                mStartX = (int) mFloats[Matrix.MTRANS_X];
+            }
+            if (mFloats[Matrix.MTRANS_Y] <= 0) {
+                mStartY = 0;
+            } else {
+                mStartY = (int) mFloats[Matrix.MTRANS_Y];
+            }
+            mCropWidth = getWidth() - mStartX - mStartX;
+            mCropHeight = getHeight() - mStartY - mStartY;
+        } else {
+
+        }
+        invalidate();
+
+
+    }
+
+    public CropDragView setStartX(int startX) {
+        mStartX = startX;
+        return this;
+    }
+
+    public CropDragView setStartY(int startY) {
+        mStartY = startY;
+        return this;
+    }
+
+    public CropDragView setCropWidth(int cropWidth) {
+        mCropWidth = cropWidth;
+        return this;
+    }
+
+    public CropDragView setCropHeight(int cropHeight) {
+        mCropHeight = cropHeight;
+        return this;
     }
 
     public int getStartX() {

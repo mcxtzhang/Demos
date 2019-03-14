@@ -20,8 +20,7 @@
         <com.mcxtzhang.photoedit.widget.CropImageView
             android:id="@+id/zoomImageView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/pic1" />
+            android:layout_height="match_parent" />
 
         <com.mcxtzhang.photoedit.widget.CropDragView
             android:id="@+id/cropView"

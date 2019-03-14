@@ -1,6 +1,10 @@
 package com.mcxtzhang.photoedit;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
@@ -16,10 +20,21 @@ public class ImageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image);
-        mCropImageView =
-                findViewById(R.id.zoomImageView);
+        mCropImageView = findViewById(R.id.zoomImageView);
 
         mCropDragView = findViewById(R.id.cropView);
+
+
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.long1);
+                mCropImageView.setImageBitmap(bitmap);
+                mCropImageView.showBitmapInCenter();
+
+                mCropDragView.bindCropImageView(mCropImageView);
+            }
+        }, 2000);
 
         findViewById(R.id.submit).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -27,6 +42,8 @@ public class ImageActivity extends AppCompatActivity {
                 mCropImageView.setImageBitmap(mCropImageView.crop(mCropDragView.getStartX(), mCropDragView.getStartY(), mCropDragView.getCropWidth(), mCropDragView.getCropHeight()));
             }
         });
+
+
     }
 
 

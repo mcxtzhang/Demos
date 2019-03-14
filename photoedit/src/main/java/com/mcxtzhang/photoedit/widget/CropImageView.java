@@ -8,19 +8,15 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.ScaleGestureDetector.OnScaleGestureListener;
 import android.view.ViewConfiguration;
-import android.view.ViewTreeObserver;
 
 /**
  * Created by zhangxutong on 2019/3/13.
  */
-public class CropImageView extends android.support.v7.widget.AppCompatImageView implements OnScaleGestureListener, ViewTreeObserver.OnGlobalLayoutListener
-
-{
+public class CropImageView extends android.support.v7.widget.AppCompatImageView implements OnScaleGestureListener {
     private static final String TAG = CropImageView.class.getSimpleName();
 
     public static final float SCALE_MAX = 4.0f;
@@ -33,8 +29,6 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
      * 用于存放矩阵的9个值
      */
     private final float[] matrixValues = new float[9];
-
-    private boolean once = true;
 
     /**
      * 缩放的手势检测
@@ -194,11 +188,11 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
         float[] floats = new float[9];
         mImageMatrix.getValues(floats);
 
-//        Log.e(TAG, "MSCALE_X: " + floats[Matrix.MSCALE_X]
-//                + "MSCALE_Y: " + floats[Matrix.MSCALE_Y]
-//                + "MTRANS_X: " + floats[Matrix.MTRANS_X]
-//                + "MTRANS_Y: " + floats[Matrix.MTRANS_Y]
-//        );
+        Log.e(TAG, "MSCALE_X: " + floats[Matrix.MSCALE_X]
+                + "MSCALE_Y: " + floats[Matrix.MSCALE_Y]
+                + "MTRANS_X: " + floats[Matrix.MTRANS_X]
+                + "MTRANS_Y: " + floats[Matrix.MTRANS_Y]
+        );
 
         return true;
 
@@ -227,20 +221,6 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
         return matrixValues[Matrix.MSCALE_X];
     }
 
-    @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        getViewTreeObserver().addOnGlobalLayoutListener(this);
-    }
-
-    @SuppressWarnings("deprecation")
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        getViewTreeObserver().removeGlobalOnLayoutListener(this);
-    }
-
-
     /**
      * 水平方向与View的边距
      */
@@ -249,63 +229,6 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
      * 垂直方向与View的边距
      */
     private int mVerticalPadding;
-//
-//    @Override
-//    public void onGlobalLayout()
-//    {
-//        if (once)
-//        {
-//            Drawable d = getDrawable();
-//            if (d == null)
-//                return;
-//            Log.e(TAG, d.getIntrinsicWidth() + " , " + d.getIntrinsicHeight());
-//            // 计算padding的px
-//            mHorizontalPadding = (int) TypedValue.applyDimension(
-//                    TypedValue.COMPLEX_UNIT_DIP, mHorizontalPadding,
-//                    getResources().getDisplayMetrics());
-//            // 垂直方向的边距
-//            mVerticalPadding = (getHeight() - (getWidth() - 2 * mHorizontalPadding)) / 2;
-//
-//            int width = getWidth();
-//            int height = getHeight();
-//            // 拿到图片的宽和高
-//            int dw = d.getIntrinsicWidth();
-//            int dh = d.getIntrinsicHeight();
-//            float scale = 1.0f;
-//            if (dw < getWidth() - mHorizontalPadding * 2
-//                    && dh > getHeight() - mVerticalPadding * 2)
-//            {
-//                scale = (getWidth() * 1.0f - mHorizontalPadding * 2) / dw;
-//            }
-//
-//            if (dh < getHeight() - mVerticalPadding * 2
-//                    && dw > getWidth() - mHorizontalPadding * 2)
-//            {
-//                scale = (getHeight() * 1.0f - mVerticalPadding * 2) / dh;
-//            }
-//
-//            if (dw < getWidth() - mHorizontalPadding * 2
-//                    && dh < getHeight() - mVerticalPadding * 2)
-//            {
-//                float scaleW = (getWidth() * 1.0f - mHorizontalPadding * 2)
-//                        / dw;
-//                float scaleH = (getHeight() * 1.0f - mVerticalPadding * 2) / dh;
-//                scale = Math.max(scaleW, scaleH);
-//            }
-//
-//            initScale = scale;
-//            SCALE_MID = initScale * 2;
-//            SCALE_MAX = initScale * 4;
-//            Log.e(TAG, "initScale = " + initScale);
-//            mImageMatrix.postTranslate((width - dw) / 2, (height - dh) / 2);
-//            mImageMatrix.postScale(scale, scale, getWidth() / 2,
-//                    getHeight() / 2);
-//            // 图片移动至屏幕中心
-//            setImageMatrix(mImageMatrix);
-//            once = false;
-//        }
-//
-//    }
 
     float[] floats = new float[9];
 
@@ -342,93 +265,6 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
                 (int) height);
     }
 
-
-    /**
-     * 剪切图片，返回剪切后的bitmap对象
-     *
-     * @return
-     */
-    public Bitmap clip() {
-        mHorizontalPadding = (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP, mHorizontalPadding, getResources()
-                        .getDisplayMetrics());
-        //计算矩形区域的宽度
-        int mWidth = getWidth() - 2 * mHorizontalPadding;
-        //计算距离屏幕垂直边界 的边距
-        mVerticalPadding = (getHeight() - mWidth) / 2;
-
-        Bitmap bitmap = ((BitmapDrawable) getDrawable()).getBitmap();
-        float leftOffset = mHorizontalPadding;
-        float topOffset = mVerticalPadding;
-        float width = getWidth() - 2 * mHorizontalPadding;
-        float height = getWidth() - 2 * mHorizontalPadding;
-
-        float[] floats = new float[9];
-        mImageMatrix.getValues(floats);
-        float scaleX = floats[Matrix.MSCALE_X];
-        float scaleY = floats[Matrix.MSCALE_Y];
-        //偏移量 是和  放大系数 无关的 绝对长度
-        float transX = floats[Matrix.MTRANS_X];
-        float transY = floats[Matrix.MTRANS_Y];
-//        Log.e(TAG, "MSCALE_X: " + scaleX
-//                + "MSCALE_Y: " + scaleY
-//                + "MTRANS_X: " + transX
-//                + "MTRANS_Y: " + transY);
-
-        leftOffset = -transX + leftOffset;
-        leftOffset = leftOffset / scaleX;
-
-        topOffset = -transY + topOffset;
-        topOffset = topOffset / scaleY;
-
-        width = width / scaleX;
-        height = height / scaleY;
-
-        return Bitmap.createBitmap(bitmap,
-                (int) leftOffset,
-                (int) topOffset,
-                (int) width,
-                (int) height);
-
-
-//        float top = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, getResources().getDisplayMetrics());
-//        float left = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 77, getResources().getDisplayMetrics());
-//        float width = getWidth() - left;
-//        float height = getHeight() - top;
-//
-//        Bitmap bitmap = ((BitmapDrawable) getDrawable()).getBitmap();
-//        Log.d(TAG, "clip() called：" + bitmap.getHeight());
-//
-//        float[] floats = new float[9];
-//        mImageMatrix.getValues(floats);
-//        float scaleX = floats[Matrix.MSCALE_X];
-//        float scaleY = floats[Matrix.MSCALE_Y];
-//        //偏移量 是和  放大系数 无关的 绝对长度
-//        float transX = floats[Matrix.MTRANS_X];
-//        float transY = floats[Matrix.MTRANS_Y];
-////        Log.e(TAG, "MSCALE_X: " + scaleX
-////                + "MSCALE_Y: " + scaleY
-////                + "MTRANS_X: " + transX
-////                + "MTRANS_Y: " + transY);
-//
-//        top = -transY + top;
-//        top = top / scaleY;
-//
-//        left = -transX + left;
-//        left = left / scaleX;
-//
-//
-//        width = width / scaleX;
-//        height = height / scaleY;
-//
-//
-//        return Bitmap.createBitmap(bitmap,
-//                (int) left,
-//                (int) top,
-//                (int) width,
-//                (int) height);
-    }
-
     /**
      * 边界检测
      */
@@ -462,46 +298,43 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
 
     }
 
+    /**
+     * 将图片 缩放、居中展示
+     */
+    public void showBitmapInCenter() {
+        Drawable d = getDrawable();
+        if (!(d instanceof BitmapDrawable))
+            return;
+        Bitmap bitmap = ((BitmapDrawable) getDrawable()).getBitmap();
 
-    @Override
-    public void onGlobalLayout() {
-        if (once) {
-            Drawable d = getDrawable();
-            if (d == null)
-                return;
-            Bitmap bitmap = ((BitmapDrawable) getDrawable()).getBitmap();
-
-            int width = getWidth();
-            int height = getHeight();
-            Log.e(TAG, d.getIntrinsicWidth() + " , " + d.getIntrinsicHeight());
-            Log.e(TAG, bitmap.getWidth() + " , " + bitmap.getHeight());
-            Log.e(TAG, width + " , " + height);
-            // 拿到图片的宽和高
-            int dw = bitmap.getWidth();
-            int dh = bitmap.getHeight();
-            float scale = 1.0f;
-            // 如果图片的宽或者高大于屏幕，则缩放至屏幕的宽或者高
-            if (dw > width && dh <= height) {
-                scale = width * 1.0f / dw;
-            }
-            if (dh > height && dw <= width) {
-                scale = height * 1.0f / dh;
-            }
-            // 如果宽和高都大于屏幕，则让其按按比例适应屏幕大小
-            if (dw > width && dh > height) {
-                scale = Math.min(width * 1.0f / dw, height * 1.0f / dh);
-            } else if (dw < width && dh < height) {
-                scale = Math.min(width * 1.0f / dw, height * 1.0f / dh);
-            }
-
-            initScale = scale;
-            // 图片移动至屏幕中心
-            mImageMatrix.postTranslate((width - dw) / 2, (height - dh) / 2);
-            mImageMatrix
-                    .postScale(scale, scale, getWidth() / 2, getHeight() / 2);
-            setImageMatrix(mImageMatrix);
-            once = false;
+        int width = getWidth();
+        int height = getHeight();
+        Log.e(TAG, d.getIntrinsicWidth() + " , " + d.getIntrinsicHeight());
+        Log.e(TAG, bitmap.getWidth() + " , " + bitmap.getHeight());
+        Log.e(TAG, width + " , " + height);
+        // 拿到图片的宽和高
+        int dw = bitmap.getWidth();
+        int dh = bitmap.getHeight();
+        float scale = 1.0f;
+        // 如果图片的宽或者高大于屏幕，则缩放至屏幕的宽或者高
+        if (dw > width && dh <= height) {
+            scale = width * 1.0f / dw;
+        }
+        if (dh > height && dw <= width) {
+            scale = height * 1.0f / dh;
+        }
+        // 如果宽和高都大于屏幕，则让其按按比例适应屏幕大小
+        if (dw > width && dh > height) {
+            scale = Math.min(width * 1.0f / dw, height * 1.0f / dh);
+        } else if (dw < width && dh < height) {
+            scale = Math.min(width * 1.0f / dw, height * 1.0f / dh);
         }
 
+        initScale = scale;
+        // 图片移动至屏幕中心
+        mImageMatrix.postTranslate((width - dw) / 2, (height - dh) / 2);
+        mImageMatrix.postScale(scale, scale, getWidth() / 2, getHeight() / 2);
+        setImageMatrix(mImageMatrix);
     }
+
 }
