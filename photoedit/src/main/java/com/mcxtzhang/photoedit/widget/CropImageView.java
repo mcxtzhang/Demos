@@ -16,31 +16,19 @@ import android.view.ViewConfiguration;
 /**
  * Created by zhangxutong on 2019/3/13.
  */
-public class CropImageView extends android.support.v7.widget.AppCompatImageView implements OnScaleGestureListener {
+public class CropImageView extends android.support.v7.widget.AppCompatImageView {
     private static final String TAG = CropImageView.class.getSimpleName();
 
     private int mWidth, mHeight;
-    private CropDragView mCropDragView;
-
-
-    public static final float SCALE_MAX = 4.0f;
-    /**
-     * 初始化时的缩放比例，如果图片宽或高大于屏幕，此值将小于0
-     */
-    private float initScale = 1.0f;
-
-    /**
-     * 用于存放矩阵的9个值
-     */
+    private final Matrix mImageMatrix = new Matrix();
     private final float[] matrixValues = new float[9];
 
-    /**
-     * 缩放的手势检测
-     */
     private ScaleGestureDetector mScaleGestureDetector = null;
 
-    private final Matrix mImageMatrix = new Matrix();
-
+    /**
+     * 外部通信变量
+     */
+    private CropDragView mCropDragView;
 
     private int mTouchSlop;
 
@@ -51,35 +39,20 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
     public CropImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
         super.setScaleType(ScaleType.MATRIX);
-        mScaleGestureDetector = new ScaleGestureDetector(context, this);
-        //this.setOnTouchListener(this);
+        mScaleGestureDetector = new ScaleGestureDetector(context, new OnScaleGestureListener() {
+            @Override
+            public boolean onScale(ScaleGestureDetector detector) {
+                float scale = getScale();
+                float scaleFactor = detector.getScaleFactor();
 
-        mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
+                if (getDrawable() == null)
+                    return true;
 
-    }
-
-    public CropDragView getCropDragView() {
-        return mCropDragView;
-    }
-
-    public CropImageView setCropDragView(CropDragView cropDragView) {
-        mCropDragView = cropDragView;
-        return this;
-    }
-
-    @Override
-    public boolean onScale(ScaleGestureDetector detector) {
-        float scale = getScale();
-        float scaleFactor = detector.getScaleFactor();
-
-        if (getDrawable() == null)
-            return true;
-
-        mImageMatrix.postScale(scaleFactor, scaleFactor, detector.getFocusX(), detector.getFocusY());
-        setImageMatrix(mImageMatrix);
-        /**
-         * 缩放的范围控制
-         */
+                mImageMatrix.postScale(scaleFactor, scaleFactor, detector.getFocusX(), detector.getFocusY());
+                setImageMatrix(mImageMatrix);
+                /**
+                 * 缩放的范围控制
+                 */
 //        if ((scale < SCALE_MAX && scaleFactor > 1.0f)
 //                || (scale > initScale && scaleFactor < 1.0f)) {
 //            /**
@@ -98,17 +71,27 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
 //                    getHeight() / 2);
 //            setImageMatrix(mImageMatrix);
 //        }
-        return true;
+                return true;
+            }
+
+            @Override
+            public boolean onScaleBegin(ScaleGestureDetector detector) {
+                return true;
+            }
+
+            @Override
+            public void onScaleEnd(ScaleGestureDetector detector) {
+
+            }
+        });
+
+        mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
 
     }
 
-    @Override
-    public boolean onScaleBegin(ScaleGestureDetector detector) {
-        return true;
-    }
-
-    @Override
-    public void onScaleEnd(ScaleGestureDetector detector) {
+    public CropImageView setCropDragView(CropDragView cropDragView) {
+        mCropDragView = cropDragView;
+        return this;
     }
 
     /**
@@ -129,7 +112,6 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
 
 
     private int lastPointerCount;
-    boolean isCanDrag;
     float mLastX, mLastY;
 
 
@@ -152,7 +134,6 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
          * 每当触摸点发生变化时，重置mLasX , mLastY
          */
         if (pointerCount != lastPointerCount) {
-            isCanDrag = false;
             mLastX = x;
             mLastY = y;
         }
@@ -162,16 +143,10 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_MOVE:
-                Log.e(TAG, "ACTION_MOVE");
                 float dx = x - mLastX;
                 float dy = y - mLastY;
-
-                if (!isCanDrag) {
-                    isCanDrag = isCanDrag(dx, dy);
-                }
-                if (isCanDrag) {
-                    RectF rectF = getMatrixRectF();
-                    if (getDrawable() != null) {
+                RectF rectF = getMatrixRectF();
+                if (getDrawable() != null) {
 //                        isCheckLeftAndRight = isCheckTopAndBottom = true;
 //                        // 如果宽度小于屏幕宽度，则禁止左右移动
 //                        if (rectF.width() < getWidth()) {
@@ -183,10 +158,9 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
 //                            dy = 0;
 //                            isCheckTopAndBottom = false;
 //                        }
-                        mImageMatrix.postTranslate(dx, dy);
-                        //checkMatrixBounds();
-                        setImageMatrix(mImageMatrix);
-                    }
+                    mImageMatrix.postTranslate(dx, dy);
+                    //checkMatrixBounds();
+                    setImageMatrix(mImageMatrix);
                 }
                 mLastX = x;
                 mLastY = y;
@@ -194,35 +168,43 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
 
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
-                Log.e(TAG, "ACTION_UP");
                 lastPointerCount = 0;
+
+                //checkOverBorder();
+
+                RectF matrixRectF = getMatrixRectF();
+                Log.d(TAG, "onTouchEvent() called with: matrixRectF = [" + matrixRectF + "]");
+                Log.d(TAG, "onTouchEvent() called with: matrixRectF = [" + matrixRectF + "]");
+                int tranX = 0, tranY = 0;
+
+                if (matrixRectF.top > mCropDragView.getStartY()) {
+                    tranY = (int) (mCropDragView.getStartY() - matrixRectF.top);
+                }
+                if (matrixRectF.bottom < mCropDragView.getStartY() + mCropDragView.getCropHeight()) {
+                    tranY = (int) (mCropDragView.getStartY() + mCropDragView.getCropHeight() - matrixRectF.bottom);
+                }
+                if (matrixRectF.left > mCropDragView.getStartX()) {
+                    tranX = (int) (mCropDragView.getStartX() - matrixRectF.left);
+                }
+                if (matrixRectF.right < mCropDragView.getStartX() + mCropDragView.getCropWidth()) {
+                    tranX = (int) (mCropDragView.getStartX() + mCropDragView.getCropWidth() - matrixRectF.right);
+                }
+                mImageMatrix.postTranslate(tranX, tranY);
+                setImageMatrix(mImageMatrix);
                 break;
         }
-        float[] floats = new float[9];
-        mImageMatrix.getValues(floats);
-
-        Log.e(TAG, "MSCALE_X: " + floats[Matrix.MSCALE_X]
-                + "MSCALE_Y: " + floats[Matrix.MSCALE_Y]
-                + "MTRANS_X: " + floats[Matrix.MTRANS_X]
-                + "MTRANS_Y: " + floats[Matrix.MTRANS_Y]
-        );
+//        float[] floats = new float[9];
+//        mImageMatrix.getValues(floats);
+//
+//        Log.e(TAG, "MSCALE_X: " + floats[Matrix.MSCALE_X]
+//                + "MSCALE_Y: " + floats[Matrix.MSCALE_Y]
+//                + "MTRANS_X: " + floats[Matrix.MTRANS_X]
+//                + "MTRANS_Y: " + floats[Matrix.MTRANS_Y]
+//        );
 
         return true;
 
     }
-
-    /**
-     * 是否是推动行为
-     *
-     * @param dx
-     * @param dy
-     * @return
-     */
-    private boolean isCanDrag(float dx, float dy) {
-        //return Math.sqrt((dx * dx) + (dy * dy)) >= mTouchSlop;
-        return true;
-    }
-
 
     /**
      * 获得当前的缩放比例
@@ -343,7 +325,6 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
             scale = Math.min(width * 1.0f / dw, height * 1.0f / dh);
         }
 
-        initScale = scale;
         // 图片移动至屏幕中心
         mImageMatrix.postTranslate((width - dw) / 2, (height - dh) / 2);
         mImageMatrix.postScale(scale, scale, getWidth() / 2, getHeight() / 2);
