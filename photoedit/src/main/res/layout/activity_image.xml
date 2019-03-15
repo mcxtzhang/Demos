@@ -12,10 +12,10 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="@android:color/black"
-        android:paddingBottom="13dp"
+        android:paddingBottom="10dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:paddingTop="13dp">
+        android:paddingTop="10dp">
 
         <com.mcxtzhang.photoedit.widget.CropImageView
             android:id="@+id/zoomImageView"
@@ -28,10 +28,139 @@
             android:layout_height="match_parent" />
     </FrameLayout>
 
-    <Button
-        android:id="@+id/submit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="确定" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#1C1C1C"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <TextView
+            android:id="@+id/tvCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="取消"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="裁剪/旋转"
+            android:textColor="#999999"
+            android:textSize="14sp" />
+
+
+        <TextView
+            android:id="@+id/tvSubmit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="确定"
+            android:textColor="#FF6633"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#333333" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="117dp"
+        android:background="#1C1C1C"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvRotate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:drawablePadding="14dp"
+            android:drawableTop="@drawable/ugc_imagecrop_rotate"
+            android:gravity="center"
+            android:text="旋转"
+            android:textColor="#FFFFFF"
+            android:textSize="11sp" />
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="45dp"
+            android:layout_marginLeft="24dp"
+            android:background="#666666" />
+
+
+        <TextView
+            android:id="@+id/tvModeNormal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:drawablePadding="14dp"
+            android:drawableTop="@drawable/ugc_imagecrop_normal"
+            android:gravity="center"
+            android:text="自由"
+            android:textColor="@drawable/ugc_imagecrop_text_color_mode"
+            android:textSize="11sp" />
+
+
+        <TextView
+            android:id="@+id/tvMode11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:drawablePadding="14dp"
+            android:drawableTop="@drawable/ugc_imagecrop_11"
+            android:gravity="center"
+            android:text="1:1"
+            android:textColor="@drawable/ugc_imagecrop_text_color_mode"
+            android:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/tvMode34"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:drawablePadding="14dp"
+            android:drawableTop="@drawable/ugc_imagecrop_34"
+            android:gravity="center"
+            android:text="3:4"
+            android:textColor="@drawable/ugc_imagecrop_text_color_mode"
+            android:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/tvMode43"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:drawablePadding="14dp"
+            android:drawableTop="@drawable/ugc_imagecrop_43"
+            android:gravity="center"
+            android:text="4:3"
+            android:textColor="@drawable/ugc_imagecrop_text_color_mode"
+            android:textSize="11sp" />
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="45dp"
+            android:layout_marginLeft="29dp"
+            android:background="#666666" />
+
+        <TextView
+            android:id="@+id/tvRestore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="29dp"
+            android:drawablePadding="14dp"
+            android:drawableTop="@drawable/ugc_imagecrop_restore"
+            android:gravity="center"
+            android:text="还原"
+            android:textColor="#FFFFFF"
+            android:textSize="11sp" />
+    </LinearLayout>
 
 </LinearLayout>

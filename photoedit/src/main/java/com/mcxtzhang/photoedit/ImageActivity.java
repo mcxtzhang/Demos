@@ -37,7 +37,7 @@ public class ImageActivity extends AppCompatActivity {
             }
         }, 500);
 
-        findViewById(R.id.submit).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.tvSubmit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mCropImageView.setImageBitmap(mCropImageView.crop(mCropDragView.getStartX(), mCropDragView.getStartY(), mCropDragView.getCropWidth(), mCropDragView.getCropHeight()));
