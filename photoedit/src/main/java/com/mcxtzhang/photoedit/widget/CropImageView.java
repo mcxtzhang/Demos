@@ -81,7 +81,6 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
 
             @Override
             public void onScaleEnd(ScaleGestureDetector detector) {
-
             }
         });
 
@@ -171,6 +170,15 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
                 lastPointerCount = 0;
 
                 //checkOverBorder();
+                Drawable d = getDrawable();
+                if (d == null) {
+                    return true;
+                }
+                float scaleNow = getScale();
+                float scale = Math.max(mCropDragView.getCropWidth() * 1.0f / (d.getIntrinsicWidth() * scaleNow), mCropDragView.getCropHeight() * 1.0f / (d.getIntrinsicHeight() * scaleNow));
+                if (scale > 1) {
+                    mImageMatrix.postScale(scale, scale, getWidth() / 2, getHeight() / 2);
+                }
 
                 RectF matrixRectF = getMatrixRectF();
                 Log.d(TAG, "onTouchEvent() called with: matrixRectF = [" + matrixRectF + "]");
@@ -190,6 +198,7 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
                     tranX = (int) (mCropDragView.getStartX() + mCropDragView.getCropWidth() - matrixRectF.right);
                 }
                 mImageMatrix.postTranslate(tranX, tranY);
+
                 setImageMatrix(mImageMatrix);
                 break;
         }
