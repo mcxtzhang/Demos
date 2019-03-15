@@ -41,6 +41,7 @@ public class CropDragView extends View {
     private int mWidth, mHeight;
     private float[] mFloats = new float[9];
     private int mTouchDeviationThreshold;
+    private int mCropMinLength;
 
 
     private int mStartX, mStartY;
@@ -83,7 +84,8 @@ public class CropDragView extends View {
         mBgPaint.setColor(Color.parseColor("#66000000"));
 
 
-        mTouchDeviationThreshold = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, getResources().getDisplayMetrics());
+        mTouchDeviationThreshold = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 15, getResources().getDisplayMetrics());
+        mCropMinLength = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 75, getResources().getDisplayMetrics());
     }
 
     public CropDragView bindCropImageView(CropImageView cropImageView) {
@@ -205,7 +207,7 @@ public class CropDragView extends View {
             case MotionEvent.ACTION_MOVE:
                 int moveX = eventX - mLastDownPoint.x;
                 int moveY = eventY - mLastDownPoint.y;
-
+                int cropLimitLength;
                 switch (mDragMode) {
                     case MODE_CORNER_LT:
                         //拖拽左上角，改变起点 和 宽高
@@ -213,44 +215,66 @@ public class CropDragView extends View {
                         mCropWidth -= moveX;
                         mStartY += moveY;
                         mCropHeight -= moveY;
+
+                        checkStartXInDrag();
+                        checkStartYInDrag();
                         break;
                     case MODE_CORNER_RT:
                         //拖拽右上角，水平位移改变宽度,竖直位移改变起点Y和高度
                         mCropWidth += moveX;
                         mStartY += moveY;
                         mCropHeight -= moveY;
+
+                        checkWidthInDrag();
+                        checkStartYInDrag();
+
                         break;
                     case MODE_CORNER_RB:
                         //拖拽右下角，水平位移改变宽度，竖直位移改变高度
                         mCropWidth += moveX;
                         mCropHeight += moveY;
+
+                        checkWidthInDrag();
+                        checkHeightInDrag();
                         break;
                     case MODE_CORNER_LB:
                         //拖拽左下角，水平位移改变起点X和宽度，竖直位移改变高度
                         mStartX += moveX;
                         mCropWidth -= moveX;
                         mCropHeight += moveY;
+
+                        checkStartXInDrag();
+                        checkHeightInDrag();
                         break;
 
                     case MODE_EDGE_L:
                         //拖拽左边，水平位移，改变起点和宽度
                         mStartX += moveX;
                         mCropWidth -= moveX;
+
+                        checkStartXInDrag();
                         break;
                     case MODE_EDGE_T:
                         //拖拽上边，竖直位移，改变起点和高度
                         mStartY += moveY;
                         mCropHeight -= moveY;
+
+                        checkStartYInDrag();
                         break;
                     case MODE_EDGE_R:
                         //拖拽右边，水平位移，改变宽度
                         mCropWidth += moveX;
+
+                        checkWidthInDrag();
                         break;
                     case MODE_EDGE_B:
                         //拖拽底边，述职位移，改变高度
                         mCropHeight += moveY;
+
+                        checkHeightInDrag();
                         break;
                 }
+                //边界处理 limit max
                 if (mStartX < 0) {
                     mStartX = 0;
                 }
@@ -274,6 +298,36 @@ public class CropDragView extends View {
                 break;
         }
         return super.onTouchEvent(event);
+    }
+
+    private void checkHeightInDrag() {
+        if (mCropHeight < mCropMinLength) {
+            mCropHeight = mCropMinLength;
+        }
+    }
+
+    private void checkWidthInDrag() {
+        if (mCropWidth < mCropMinLength) {
+            mCropWidth = mCropMinLength;
+        }
+    }
+
+    private void checkStartYInDrag() {
+        int cropLimitLength;
+        cropLimitLength = mCropHeight - mCropMinLength;
+        if (cropLimitLength < 0) {
+            mCropHeight -= cropLimitLength;
+            mStartY += cropLimitLength;
+        }
+    }
+
+    private void checkStartXInDrag() {
+        int cropLimitLength;
+        cropLimitLength = mCropWidth - mCropMinLength;
+        if (cropLimitLength < 0) {
+            mCropWidth -= cropLimitLength;
+            mStartX += cropLimitLength;
+        }
     }
 
     private boolean touchOnCorner(Rect rect, int x, int y) {
