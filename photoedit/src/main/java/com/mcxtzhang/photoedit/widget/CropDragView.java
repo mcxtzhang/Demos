@@ -192,6 +192,10 @@ public class CropDragView extends View {
         int eventX = (int) event.getX();
         int eventY = (int) event.getY();
         Log.d(TAG, "onTouchEvent() called with: event = [" + event + ",    " + mTouchDeviationThreshold + ",,, " + mDragMode);
+        if (event.getPointerId(0) > 0) {
+            //多指
+            return super.onTouchEvent(event);
+        }
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 mLastDownPoint.set(eventX, eventY);
