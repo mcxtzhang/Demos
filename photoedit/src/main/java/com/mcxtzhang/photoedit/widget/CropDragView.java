@@ -11,6 +11,7 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
@@ -52,6 +53,8 @@ public class CropDragView extends View {
     private int mCropLineWidth;
 
     private Paint mCropCornerPaint;
+    private int mCropCornerLineWidth;
+    private int mCropCornerLineLength;
 
     private Paint mBgPaint;
 
@@ -72,20 +75,29 @@ public class CropDragView extends View {
 
     public CropDragView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+
+        mTouchDeviationThreshold = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 21, displayMetrics);
+        mCropMinLength = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 75, displayMetrics);
+
         mCropRect = new Rect();
 
+        mCropLineWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, displayMetrics);
         mCropLinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mCropLinePaint.setColor(Color.WHITE);
-        mCropLineWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, getResources().getDisplayMetrics());
         mCropLinePaint.setStrokeWidth(mCropLineWidth);
         mCropLinePaint.setStyle(Paint.Style.STROKE);
 
+
+        mCropCornerLineLength = mTouchDeviationThreshold;
+        mCropCornerLineWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 3, displayMetrics);
+        mCropCornerPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mCropCornerPaint.setColor(Color.WHITE);
+        mCropCornerPaint.setStrokeWidth(mCropCornerLineWidth);
+        mCropCornerPaint.setStyle(Paint.Style.FILL);
+
         mBgPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mBgPaint.setColor(Color.parseColor("#66000000"));
-
-
-        mTouchDeviationThreshold = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 15, getResources().getDisplayMetrics());
-        mCropMinLength = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 75, getResources().getDisplayMetrics());
     }
 
     public CropDragView bindCropImageView(CropImageView cropImageView) {
@@ -161,15 +173,43 @@ public class CropDragView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
+        if (mCropWidth == 0 || mCropHeight == 0) {
+            return;
+        }
+        //border
         mCropRect.set(mStartX, mStartY, mStartX + mCropWidth, mStartY + mCropHeight);
         canvas.drawRect(mCropRect, mCropLinePaint);
 
+        // 4 lines
+        float horizontalStep = mCropWidth * 1.0f / 3;
+        for (float x = mStartX + horizontalStep; x <= mStartX + horizontalStep * 2; x = x + horizontalStep) {
+            canvas.drawLine(x, mStartY, x, mStartY + mCropHeight, mCropLinePaint);
+        }
+        float verticalStep = mCropHeight * 1.0f / 3;
+        for (float y = mStartY + verticalStep; y <= mStartY + verticalStep * 2; y = y + verticalStep) {
+            canvas.drawLine(mStartX, y, mStartX + mCropWidth, y, mCropLinePaint);
+        }
+
+        //4 corners
+        int offset = (mCropCornerLineWidth - mCropLineWidth) / 2;
+        //lt
+        canvas.drawLine(mStartX + offset, mStartY + offset, mStartX + mCropCornerLineLength, mStartY + offset, mCropCornerPaint);
+        canvas.drawLine(mStartX + offset, mStartY + offset, mStartX + offset, mStartY + mCropCornerLineLength, mCropCornerPaint);
+        //rt
+        canvas.drawLine(mStartX + mCropWidth - offset, mStartY + offset, mStartX + mCropWidth - mCropCornerLineLength, mStartY + offset, mCropCornerPaint);
+        canvas.drawLine(mStartX + mCropWidth - offset, mStartY + offset, mStartX + mCropWidth - offset, mStartY + mCropCornerLineLength, mCropCornerPaint);
+        //rb
+        canvas.drawLine(mStartX + mCropWidth - offset, mStartY + mCropHeight - offset, mStartX + mCropWidth - mCropCornerLineLength, mStartY + mCropHeight - offset, mCropCornerPaint);
+        canvas.drawLine(mStartX + mCropWidth - offset, mStartY + mCropHeight - offset, mStartX + mCropWidth - offset, mStartY + mCropHeight - mCropCornerLineLength, mCropCornerPaint);
+        //lb
+        canvas.drawLine(mStartX + offset, mStartY + mCropHeight - offset, mStartX + mCropCornerLineLength, mStartY + mCropHeight - offset, mCropCornerPaint);
+        canvas.drawLine(mStartX + offset, mStartY + mCropHeight - offset, mStartX + offset, mStartY + mCropHeight - mCropCornerLineLength, mCropCornerPaint);
+
+        //shadow
         int layerId = canvas.saveLayer(0, 0, canvas.getWidth(), canvas.getHeight(), null, Canvas.ALL_SAVE_FLAG);
         canvas.drawRect(0, 0, mWidth, mHeight, mBgPaint);
-        //使用CLEAR作为PorterDuffXfermode绘制蓝色的矩形
         mBgPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OUT));
         canvas.drawRect(mCropRect, mBgPaint);
-        //最后将画笔去除Xfermode
         mBgPaint.setXfermode(null);
         canvas.restoreToCount(layerId);
 
