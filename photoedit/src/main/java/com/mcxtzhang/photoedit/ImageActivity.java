@@ -72,6 +72,12 @@ public class ImageActivity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.tvRotate).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mCropImageView.rotate();
+            }
+        });
 
     }
 

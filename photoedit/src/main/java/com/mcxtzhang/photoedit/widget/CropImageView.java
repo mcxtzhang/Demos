@@ -398,4 +398,48 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
         mWidth = getWidth();
         mHeight = getHeight();
     }
+
+    public void rotate() {
+        mImageMatrix.postRotate(90, mWidth / 2, mHeight / 2);
+
+        int cropWidth = mCropDragView.getCropWidth();
+        int cropHeight = mCropDragView.getCropHeight();
+
+        float scale = 0;
+        if (cropWidth < mHeight && cropHeight < mWidth) {
+            //旋转后需要放大
+            scale = Math.min(mHeight * 1.0f / cropWidth, mWidth * 1.0f / cropHeight);
+        } else if (cropWidth > mHeight) {
+            //旋转后 不够完全显示裁剪区域 需要缩小
+            scale = (mHeight * 1.0f / cropWidth);
+        } else if (cropHeight > mWidth) {
+            scale = (mWidth * 1.0f / cropHeight);
+        }
+        mImageMatrix.postScale(scale, scale, mWidth / 2, mHeight / 2);
+        setImageMatrix(mImageMatrix);
+
+
+        int newCropWidth = (int) (cropHeight * scale);
+        int newCropHeight = (int) (cropWidth * scale);
+        if (newCropWidth > mWidth) {
+            newCropWidth = mWidth;
+        }
+        if (newCropHeight > mHeight) {
+            newCropHeight = mHeight;
+        }
+        int cropStartX, cropStartY;
+        if (newCropWidth > newCropHeight) {
+            cropStartX = 0;
+            cropStartY = (mHeight - newCropHeight) / 2;
+        } else {
+            cropStartY = 0;
+            cropStartX = (mWidth - newCropWidth) / 2;
+        }
+
+        mCropDragView.setStartX(cropStartX)
+                .setStartY(cropStartY)
+                .setCropWidth(newCropWidth)
+                .setCropHeight(newCropHeight)
+                .invalidate();
+    }
 }
