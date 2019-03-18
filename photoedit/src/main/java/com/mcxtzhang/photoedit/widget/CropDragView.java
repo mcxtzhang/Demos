@@ -25,6 +25,11 @@ public class CropDragView extends View {
 
     private static final String TAG = CropDragView.class.getSimpleName();
 
+    public static final int CROP_RATE_FREE = 1;
+    public static final int CROP_RATE_11 = 2;
+    public static final int CROP_RATE_34 = 3;
+    public static final int CROP_RATE_43 = 4;
+
     private static final int MODE_CORNER_LT = 1;
     private static final int MODE_CORNER_RT = 2;
     private static final int MODE_CORNER_RB = 3;
@@ -42,8 +47,8 @@ public class CropDragView extends View {
     private int mWidth, mHeight;
     private float[] mFloats = new float[9];
     private int mTouchDeviationThreshold;
-    private int mCropMinLength;
-
+    private int mCropMinBaseLength;
+    private int mCropMinWidth, mCropMinHeight;
 
     private int mStartX, mStartY;
     private int mCropWidth, mCropHeight;
@@ -58,11 +63,12 @@ public class CropDragView extends View {
 
     private Paint mBgPaint;
 
-
     /**
      * 外部通信变量
      */
     private CropImageView mCropImageView;
+
+    private int mCropRate;
 
 
     public CropDragView(Context context) {
@@ -78,7 +84,7 @@ public class CropDragView extends View {
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
 
         mTouchDeviationThreshold = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 21, displayMetrics);
-        mCropMinLength = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 75, displayMetrics);
+        mCropMinBaseLength = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 75, displayMetrics);
 
         mCropRect = new Rect();
 
@@ -171,6 +177,80 @@ public class CropDragView extends View {
         return mCropHeight;
     }
 
+    public int getCropRate() {
+        return mCropRate;
+    }
+
+    public CropDragView setCropRate(int cropRate) {
+        mCropRate = cropRate;
+
+        if (null == mCropImageView) {
+            return this;
+        }
+        Matrix imageMatrix = mCropImageView.getImageMatrix();
+        imageMatrix.getValues(mFloats);
+
+        switch (mCropRate) {
+            case CROP_RATE_FREE:
+                mCropMinWidth = mCropMinBaseLength;
+                mCropMinHeight = mCropMinBaseLength;
+                break;
+            case CROP_RATE_11:
+                mCropMinWidth = mCropMinBaseLength;
+                mCropMinHeight = mCropMinBaseLength;
+
+                //以图片短边为基准边长
+                int edge;
+                if (mFloats[Matrix.MTRANS_X] > 0) {
+                    edge = (int) (mWidth - mFloats[Matrix.MTRANS_X] * 2);
+                } else if (mFloats[Matrix.MTRANS_Y] > 0) {
+                    edge = (int) (mHeight - mFloats[Matrix.MTRANS_Y] * 2);
+                } else {
+                    edge = Math.min(mWidth, mHeight);
+                }
+                mCropWidth = edge;
+                mCropHeight = edge;
+                break;
+            case CROP_RATE_34:
+                mCropMinWidth = mCropMinBaseLength;
+                mCropMinHeight = (int) (mCropMinBaseLength * 4.0f / 3);
+
+                //特殊图以短边为基准
+                if (mFloats[Matrix.MTRANS_X] > 0) {
+                    mCropWidth = (int) (mWidth - mFloats[Matrix.MTRANS_X] * 2);
+                    mCropHeight = (int) (mCropWidth * 4.0f / 3);
+                } else if (mFloats[Matrix.MTRANS_Y] > 0) {
+                    mCropHeight = (int) (mHeight - mFloats[Matrix.MTRANS_Y] * 2);
+                    mCropWidth = (int) (mCropHeight * 3.0f / 4);
+                } else {
+                    mCropHeight = mHeight;
+                    mCropWidth = (int) (mCropHeight * 3.0f / 4);
+                }
+                break;
+            case CROP_RATE_43:
+                mCropMinWidth = (int) (mCropMinBaseLength * 4.0f / 3);
+                mCropMinHeight = mCropMinBaseLength;
+
+                if (mFloats[Matrix.MTRANS_X] > 0) {
+                    mCropWidth = (int) (mWidth - mFloats[Matrix.MTRANS_X] * 2);
+                    mCropHeight = (int) (mCropWidth * 3.0f / 4);
+                } else if (mFloats[Matrix.MTRANS_Y] > 0) {
+                    mCropHeight = (int) (mHeight - mFloats[Matrix.MTRANS_Y] * 2);
+                    mCropWidth = (int) (mCropHeight * 4.0f / 3);
+                } else {
+                    mCropHeight = (int) (mHeight - mFloats[Matrix.MTRANS_Y] * 2);
+                    mCropWidth = mWidth;
+                }
+                break;
+        }
+
+        mStartX = (mWidth - mCropWidth) / 2;
+        mStartY = (mHeight - mCropHeight) / 2;
+
+        invalidate();
+        return this;
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
         if (mCropWidth == 0 || mCropHeight == 0) {
@@ -240,20 +320,78 @@ public class CropDragView extends View {
             case MotionEvent.ACTION_DOWN:
                 mLastDownPoint.set(eventX, eventY);
                 if (touchOnCorner(mCropRect, eventX, eventY)) {
-                    Log.e("TAG", "摸在角上: ");
                     return true;
-                } else if (touchOnBorder(mCropRect, eventX, eventY)) {
-                    Log.e("TAG", "摸在边上: ");
+                } else if (mCropRate == CROP_RATE_FREE && touchOnBorder(mCropRect, eventX, eventY)) {
+                    //只有自由比例时，四个边才允许拖拽
                     return true;
                 } else {
-                    Log.e("TAG", "miss: ");
                 }
             case MotionEvent.ACTION_MOVE:
                 int moveX = eventX - mLastDownPoint.x;
                 int moveY = eventY - mLastDownPoint.y;
+
+                int absX = Math.abs(moveX);
+                int absY = Math.abs(moveY);
+                switch (mCropRate) {
+                    case CROP_RATE_FREE:
+                        break;
+                    case CROP_RATE_11:
+                        //观察美图秀秀，以较小移动距离为准
+                        if (absX > absY) {
+                            if (moveX > 0) {
+                                moveX = absY;
+                            } else {
+                                moveX = -absY;
+                            }
+                        } else {
+                            if (moveY > 0) {
+                                moveY = absX;
+                            } else {
+                                moveY = -absX;
+                            }
+                        }
+                        break;
+                    case CROP_RATE_34:
+                        if (absX > absY) {
+                            if (moveX > 0) {
+                                moveX = (int) (absY * 3.0f / 4);
+                            } else {
+                                moveX = (int) (-absY * 3.0f / 4);
+                            }
+                        } else {
+                            if (moveY > 0) {
+                                moveY = (int) (absX * 4.0f / 3);
+                            } else {
+                                moveY = (int) (-absX * 4.0f / 3);
+                            }
+                        }
+                        break;
+                    case CROP_RATE_43:
+                        if (absX > absY) {
+                            if (moveX > 0) {
+                                moveX = (int) (absY * 4.0f / 3);
+                            } else {
+                                moveX = (int) (-absY * 4.0f / 3);
+                            }
+                        } else {
+                            if (moveY > 0) {
+                                moveY = (int) (absX * 3.0f / 4);
+                            } else {
+                                moveY = (int) (-absX * 3.0f / 4);
+                            }
+                        }
+                        break;
+                }
+
                 int cropLimitLength;
                 switch (mDragMode) {
                     case MODE_CORNER_LT:
+                        if (mCropRate != CROP_RATE_FREE) {
+                            if (moveX * moveY < 0) {
+                                moveX = 0;
+                                moveY = 0;
+                            }
+                        }
                         //拖拽左上角，改变起点 和 宽高
                         mStartX += moveX;
                         mCropWidth -= moveX;
@@ -264,6 +402,12 @@ public class CropDragView extends View {
                         checkStartYInDrag();
                         break;
                     case MODE_CORNER_RT:
+                        if (mCropRate != CROP_RATE_FREE) {
+                            if (moveX * moveY > 0) {
+                                moveX = 0;
+                                moveY = 0;
+                            }
+                        }
                         //拖拽右上角，水平位移改变宽度,竖直位移改变起点Y和高度
                         mCropWidth += moveX;
                         mStartY += moveY;
@@ -274,6 +418,12 @@ public class CropDragView extends View {
 
                         break;
                     case MODE_CORNER_RB:
+                        if (mCropRate != CROP_RATE_FREE) {
+                            if (moveX * moveY < 0) {
+                                moveX = 0;
+                                moveY = 0;
+                            }
+                        }
                         //拖拽右下角，水平位移改变宽度，竖直位移改变高度
                         mCropWidth += moveX;
                         mCropHeight += moveY;
@@ -282,6 +432,12 @@ public class CropDragView extends View {
                         checkHeightInDrag();
                         break;
                     case MODE_CORNER_LB:
+                        if (mCropRate != CROP_RATE_FREE) {
+                            if (moveX * moveY > 0) {
+                                moveX = 0;
+                                moveY = 0;
+                            }
+                        }
                         //拖拽左下角，水平位移改变起点X和宽度，竖直位移改变高度
                         mStartX += moveX;
                         mCropWidth -= moveX;
@@ -351,20 +507,20 @@ public class CropDragView extends View {
     }
 
     private void checkHeightInDrag() {
-        if (mCropHeight < mCropMinLength) {
-            mCropHeight = mCropMinLength;
+        if (mCropHeight < mCropMinHeight) {
+            mCropHeight = mCropMinHeight;
         }
     }
 
     private void checkWidthInDrag() {
-        if (mCropWidth < mCropMinLength) {
-            mCropWidth = mCropMinLength;
+        if (mCropWidth < mCropMinWidth) {
+            mCropWidth = mCropMinWidth;
         }
     }
 
     private void checkStartYInDrag() {
         int cropLimitLength;
-        cropLimitLength = mCropHeight - mCropMinLength;
+        cropLimitLength = mCropHeight - mCropMinHeight;
         if (cropLimitLength < 0) {
             mCropHeight -= cropLimitLength;
             mStartY += cropLimitLength;
@@ -373,7 +529,7 @@ public class CropDragView extends View {
 
     private void checkStartXInDrag() {
         int cropLimitLength;
-        cropLimitLength = mCropWidth - mCropMinLength;
+        cropLimitLength = mCropWidth - mCropMinWidth;
         if (cropLimitLength < 0) {
             mCropWidth -= cropLimitLength;
             mStartX += cropLimitLength;

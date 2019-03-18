@@ -28,12 +28,13 @@ public class ImageActivity extends AppCompatActivity {
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
-                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.long1);
+                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.kuan);
                 mCropImageView.setImageBitmap(bitmap);
                 mCropImageView.showBitmapInCenter();
                 mCropImageView.setCropDragView(mCropDragView);
 
-                mCropDragView.bindCropImageView(mCropImageView);
+                mCropDragView.bindCropImageView(mCropImageView)
+                        .setCropRate(CropDragView.CROP_RATE_FREE);
             }
         }, 500);
 
@@ -41,6 +42,33 @@ public class ImageActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 mCropImageView.setImageBitmap(mCropImageView.crop(mCropDragView.getStartX(), mCropDragView.getStartY(), mCropDragView.getCropWidth(), mCropDragView.getCropHeight()));
+            }
+        });
+
+
+        findViewById(R.id.tvModeNormal).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mCropDragView.setCropRate(CropDragView.CROP_RATE_FREE);
+            }
+        });
+        findViewById(R.id.tvMode11).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mCropDragView.setCropRate(CropDragView.CROP_RATE_11);
+            }
+        });
+
+        findViewById(R.id.tvMode34).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mCropDragView.setCropRate(CropDragView.CROP_RATE_34);
+            }
+        });
+        findViewById(R.id.tvMode43).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mCropDragView.setCropRate(CropDragView.CROP_RATE_43);
             }
         });
 
