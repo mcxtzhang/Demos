@@ -319,18 +319,7 @@ public class CropDragView extends View {
                         break;
                 }
                 //边界处理 limit max
-                if (mStartX < 0) {
-                    mStartX = 0;
-                }
-                if (mStartY < 0) {
-                    mStartY = 0;
-                }
-                if (mStartX + mCropWidth > mWidth) {
-                    mCropWidth = mWidth - mStartX;
-                }
-                if (mStartY + mCropHeight > mHeight) {
-                    mCropHeight = mHeight - mStartY;
-                }
+                checkBorderInDrag();
 
                 invalidate();
                 mLastDownPoint.set(eventX, eventY);
@@ -342,6 +331,23 @@ public class CropDragView extends View {
                 break;
         }
         return super.onTouchEvent(event);
+    }
+
+    private void checkBorderInDrag() {
+        if (mStartX < 0) {
+            mCropWidth += mStartX;
+            mStartX = 0;
+        }
+        if (mStartY < 0) {
+            mCropHeight += mStartY;
+            mStartY = 0;
+        }
+        if (mStartX + mCropWidth > mWidth) {
+            mCropWidth = mWidth - mStartX;
+        }
+        if (mStartY + mCropHeight > mHeight) {
+            mCropHeight = mHeight - mStartY;
+        }
     }
 
     private void checkHeightInDrag() {
