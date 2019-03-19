@@ -246,7 +246,7 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
      *
      * @return
      */
-    public Bitmap crop(int cropStartX, int cropStartY, int cropWidth, int cropHeight) {
+    public Bitmap crop(float cropStartX, float cropStartY, float cropWidth, float cropHeight) {
         Bitmap bitmap = ((BitmapDrawable) getDrawable()).getBitmap();
 
         mImageMatrix.getValues(floats);
@@ -353,8 +353,8 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
      * @param cropWidth
      * @param cropHeight
      */
-    public void updateShowInCenter(int cropStartX, int cropStartY, int cropWidth, int cropHeight) {
-        int tranX = 0, tranY = 0;
+    public void updateShowInCenter(float cropStartX, float cropStartY, float cropWidth, float cropHeight) {
+        float tranX = 0, tranY = 0;
         tranX = (mWidth - cropWidth - cropStartX - cropStartX) / 2;
         tranY = (mHeight - cropHeight - cropStartY - cropStartY) / 2;
 //        int horizontalSpace = ;
@@ -380,13 +380,8 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
         if (cropHeight > mHeight) {
             cropHeight = mHeight;
         }
-        if (cropWidth > cropHeight) {
-            cropStartX = 0;
-            cropStartY = (mHeight - cropHeight) / 2;
-        } else {
-            cropStartY = 0;
-            cropStartX = (mWidth - cropWidth) / 2;
-        }
+        cropStartY = (mHeight - cropHeight) / 2;
+        cropStartX = (mWidth - cropWidth) / 2;
 
         mCropDragView.setStartX(cropStartX)
                 .setStartY(cropStartY)
@@ -407,8 +402,8 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
     public void rotate() {
         mImageMatrix.postRotate(90, mWidth / 2, mHeight / 2);
 
-        int cropWidth = mCropDragView.getCropWidth();
-        int cropHeight = mCropDragView.getCropHeight();
+        float cropWidth = mCropDragView.getCropWidth();
+        float cropHeight = mCropDragView.getCropHeight();
 
         float scale = 0;
         if (cropWidth < mHeight && cropHeight < mWidth) {
