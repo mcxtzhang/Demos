@@ -286,12 +286,12 @@ public class CropDragView extends View {
         canvas.drawRect(mCropRect, mCropLinePaint);
 
         // 4 lines
-        float horizontalStep = (mCropWidth * 1.0f / 3);
-        for (float x = mStartX + horizontalStep; x <= mStartX + horizontalStep * 2; x = x + horizontalStep) {
+        float horizontalStep = (mCropWidth / 3);
+        for (float x = mStartX + horizontalStep; x <= mStartX + horizontalStep + horizontalStep; x = x + horizontalStep) {
             canvas.drawLine(x, mStartY, x, mStartY + mCropHeight, mCropLinePaint);
         }
-        float verticalStep = (mCropHeight * 1.0f / 3);
-        for (float y = mStartY + verticalStep; y <= mStartY + verticalStep * 2; y = y + verticalStep) {
+        float verticalStep = (mCropHeight / 3);
+        for (float y = mStartY + verticalStep; y <= mStartY + verticalStep + verticalStep; y = y + verticalStep) {
             canvas.drawLine(mStartX, y, mStartX + mCropWidth, y, mCropLinePaint);
         }
 
@@ -383,7 +383,7 @@ public class CropDragView extends View {
                     }
                 }
                 if (yOffsetPixels < 0) {
-                    // TODO: 2019/3/19  
+                    // TODO: 2019/3/19
                     Toast.makeText(getContext(), "图片尺寸过小，无法进行裁剪", Toast.LENGTH_SHORT).show();
                     float photoMinHeight = (mPhotoMinHeightPixels * scale);
                     switch (dragMode) {
