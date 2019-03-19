@@ -93,6 +93,11 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
         return this;
     }
 
+    public void reset() {
+        mImageMatrix.reset();
+        showBitmapInCenter();
+    }
+
     /**
      * 根据当前图片的Matrix获得图片的范围
      *

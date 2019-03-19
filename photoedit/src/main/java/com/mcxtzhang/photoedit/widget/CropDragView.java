@@ -120,7 +120,19 @@ public class CropDragView extends View {
         imageMatrix.getValues(mFloats);
 
         //init
-        if (mCropWidth == 0 && mCropHeight == 0) {
+        if (mFloats[Matrix.MTRANS_X] <= 0) {
+            mStartX = 0;
+        } else {
+            mStartX = (int) mFloats[Matrix.MTRANS_X];
+        }
+        if (mFloats[Matrix.MTRANS_Y] <= 0) {
+            mStartY = 0;
+        } else {
+            mStartY = (int) mFloats[Matrix.MTRANS_Y];
+        }
+        mCropWidth = mWidth - mStartX - mStartX;
+        mCropHeight = mHeight - mStartY - mStartY;
+        /*if (mCropWidth == 0 && mCropHeight == 0) {
             if (mFloats[Matrix.MTRANS_X] <= 0) {
                 mStartX = 0;
             } else {
@@ -135,7 +147,7 @@ public class CropDragView extends View {
             mCropHeight = mHeight - mStartY - mStartY;
         } else {
 
-        }
+        }*/
         invalidate();
 
 

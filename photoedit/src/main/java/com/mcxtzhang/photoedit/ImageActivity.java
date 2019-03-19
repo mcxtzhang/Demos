@@ -24,11 +24,11 @@ public class ImageActivity extends AppCompatActivity {
 
         mCropDragView = findViewById(R.id.cropView);
 
+        final Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.kuan);
 
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
-                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.kuan);
                 mCropImageView.setImageBitmap(bitmap);
                 mCropImageView.showBitmapInCenter();
                 mCropImageView.setCropDragView(mCropDragView);
@@ -79,7 +79,17 @@ public class ImageActivity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.tvRestore).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.kuan);
+                mCropImageView.reset();
+
+                mCropDragView
+                        .setCropRate(CropDragView.CROP_RATE_FREE)
+                        .updateCropAreaPosition();
+            }
+        });
+
     }
-
-
 }
