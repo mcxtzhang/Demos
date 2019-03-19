@@ -428,13 +428,8 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
             newCropHeight = mHeight;
         }
         int cropStartX, cropStartY;
-        if (newCropWidth > newCropHeight) {
-            cropStartX = 0;
-            cropStartY = (mHeight - newCropHeight) / 2;
-        } else {
-            cropStartY = 0;
-            cropStartX = (mWidth - newCropWidth) / 2;
-        }
+        cropStartY = (mHeight - newCropHeight) / 2;
+        cropStartX = (mWidth - newCropWidth) / 2;
 
         mCropDragView.setStartX(cropStartX)
                 .setStartY(cropStartY)
