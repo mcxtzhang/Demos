@@ -276,6 +276,14 @@ public class CropDragView extends View {
         return this;
     }
 
+    public float getCropMinWidth() {
+        return mCropMinWidth;
+    }
+
+    public float getCropMinHeight() {
+        return mCropMinHeight;
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
         if (mCropWidth == 0 || mCropHeight == 0) {
@@ -297,18 +305,20 @@ public class CropDragView extends View {
 
         //4 corners
         float offset = (mCropCornerLineWidth - mCropLineWidth) / 2;
+        float cropCornerLineXLength = mCropCornerLineLength > mCropWidth ? mCropWidth : mCropCornerLineLength;
+        float cropCornerLineYLength = mCropCornerLineLength > mCropHeight ? mCropHeight : mCropCornerLineLength;
         //lt
-        canvas.drawLine(mStartX + offset, mStartY + offset, mStartX + mCropCornerLineLength, mStartY + offset, mCropCornerPaint);
-        canvas.drawLine(mStartX + offset, mStartY + offset, mStartX + offset, mStartY + mCropCornerLineLength, mCropCornerPaint);
+        canvas.drawLine(mStartX + offset, mStartY + offset, mStartX + cropCornerLineXLength, mStartY + offset, mCropCornerPaint);
+        canvas.drawLine(mStartX + offset, mStartY + offset, mStartX + offset, mStartY + cropCornerLineYLength, mCropCornerPaint);
         //rt
-        canvas.drawLine(mStartX + mCropWidth - offset, mStartY + offset, mStartX + mCropWidth - mCropCornerLineLength, mStartY + offset, mCropCornerPaint);
-        canvas.drawLine(mStartX + mCropWidth - offset, mStartY + offset, mStartX + mCropWidth - offset, mStartY + mCropCornerLineLength, mCropCornerPaint);
+        canvas.drawLine(mStartX + mCropWidth - offset, mStartY + offset, mStartX + mCropWidth - cropCornerLineXLength, mStartY + offset, mCropCornerPaint);
+        canvas.drawLine(mStartX + mCropWidth - offset, mStartY + offset, mStartX + mCropWidth - offset, mStartY + cropCornerLineYLength, mCropCornerPaint);
         //rb
-        canvas.drawLine(mStartX + mCropWidth - offset, mStartY + mCropHeight - offset, mStartX + mCropWidth - mCropCornerLineLength, mStartY + mCropHeight - offset, mCropCornerPaint);
-        canvas.drawLine(mStartX + mCropWidth - offset, mStartY + mCropHeight - offset, mStartX + mCropWidth - offset, mStartY + mCropHeight - mCropCornerLineLength, mCropCornerPaint);
+        canvas.drawLine(mStartX + mCropWidth - offset, mStartY + mCropHeight - offset, mStartX + mCropWidth - cropCornerLineXLength, mStartY + mCropHeight - offset, mCropCornerPaint);
+        canvas.drawLine(mStartX + mCropWidth - offset, mStartY + mCropHeight - offset, mStartX + mCropWidth - offset, mStartY + mCropHeight - cropCornerLineYLength, mCropCornerPaint);
         //lb
-        canvas.drawLine(mStartX + offset, mStartY + mCropHeight - offset, mStartX + mCropCornerLineLength, mStartY + mCropHeight - offset, mCropCornerPaint);
-        canvas.drawLine(mStartX + offset, mStartY + mCropHeight - offset, mStartX + offset, mStartY + mCropHeight - mCropCornerLineLength, mCropCornerPaint);
+        canvas.drawLine(mStartX + offset, mStartY + mCropHeight - offset, mStartX + cropCornerLineXLength, mStartY + mCropHeight - offset, mCropCornerPaint);
+        canvas.drawLine(mStartX + offset, mStartY + mCropHeight - offset, mStartX + offset, mStartY + mCropHeight - cropCornerLineYLength, mCropCornerPaint);
 
         //shadow
         int layerId = canvas.saveLayer(0, 0, canvas.getWidth(), canvas.getHeight(), null, Canvas.ALL_SAVE_FLAG);
@@ -436,6 +446,11 @@ public class CropDragView extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         removeCallbacks(mUpdateUIRunnable);
+
+        if (mCropImageView.checkTooLongWide()) {
+            return false;
+        }
+
         float eventX = event.getX();
         float eventY = event.getY();
         Log.d(TAG, "onTouchEvent() called with: event = [" + event + ",    " + mTouchDeviationThreshold + ",,, " + mDragMode);

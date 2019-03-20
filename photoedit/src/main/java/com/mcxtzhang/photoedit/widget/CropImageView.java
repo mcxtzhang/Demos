@@ -121,6 +121,10 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        if (checkTooLongWide()) {
+            return false;
+        }
+
         mScaleGestureDetector.onTouchEvent(event);
 
         float x = 0, y = 0;
@@ -390,6 +394,37 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
                 .invalidate();
 
         Log.d(TAG, "updateShowInCenter() called with: tranX = [" + tranX + "], tranY = [" + tranY + "], scale = [" + scale + "], cropHeight = [" + cropHeight + "]");
+    }
+
+    public boolean checkTooLongWide() {
+        RectF matrixRectF = getMatrixRectF();
+        float scale = Math.max(mCropDragView.getCropMinHeight() / matrixRectF.height(), mCropDragView.getCropMinWidth() / matrixRectF.width());
+
+        if (scale > 1) {
+            mImageMatrix.postScale(scale, scale, getWidth() / 2, getHeight() / 2);
+            setImageMatrix(mImageMatrix);
+
+            int newCropWidth = (int) (mCropDragView.getCropWidth() * scale);
+            int newCropHeight = (int) (mCropDragView.getCropHeight() * scale);
+            if (newCropWidth > mWidth) {
+                newCropWidth = mWidth;
+            }
+            if (newCropHeight > mHeight) {
+                newCropHeight = mHeight;
+            }
+            int cropStartX, cropStartY;
+            cropStartY = (mHeight - newCropHeight) / 2;
+            cropStartX = (mWidth - newCropWidth) / 2;
+
+            mCropDragView.setStartX(cropStartX)
+                    .setStartY(cropStartY)
+                    .setCropWidth(newCropWidth)
+                    .setCropHeight(newCropHeight)
+                    .invalidate();
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override

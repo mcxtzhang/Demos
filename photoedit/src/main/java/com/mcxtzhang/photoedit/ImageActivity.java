@@ -24,7 +24,7 @@ public class ImageActivity extends AppCompatActivity {
 
         mCropDragView = findViewById(R.id.cropView);
 
-        final Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.kuan);
+        final Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.shu1);
 
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
