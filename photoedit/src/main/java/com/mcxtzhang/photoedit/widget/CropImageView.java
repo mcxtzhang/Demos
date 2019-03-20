@@ -103,7 +103,7 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
      *
      * @return
      */
-    private RectF getMatrixRectF() {
+    public RectF getMatrixRectF() {
         Matrix matrix = mImageMatrix;
         RectF rect = new RectF();
         Drawable d = getDrawable();

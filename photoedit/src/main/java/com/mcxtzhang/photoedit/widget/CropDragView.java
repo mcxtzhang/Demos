@@ -617,19 +617,23 @@ public class CropDragView extends View {
     }
 
     private void checkBorderInDrag() {
-        if (mStartX < 0) {
-            mCropWidth += mStartX;
-            mStartX = 0;
+        RectF matrixRectF = mCropImageView.getMatrixRectF();
+        float xBase = matrixRectF.left < 0 ? 0 : matrixRectF.left;
+        float yBase = matrixRectF.top < 0 ? 0 : matrixRectF.top;
+
+        if (mStartX < xBase) {
+            mCropWidth += (mStartX - xBase);
+            mStartX = xBase;
         }
-        if (mStartY < 0) {
-            mCropHeight += mStartY;
-            mStartY = 0;
+        if (mStartY < yBase) {
+            mCropHeight += (mStartY - yBase);
+            mStartY = yBase;
         }
-        if (mStartX + mCropWidth > mWidth) {
-            mCropWidth = mWidth - mStartX;
+        if (mStartX + mCropWidth > matrixRectF.right) {
+            mCropWidth = matrixRectF.right - mStartX;
         }
-        if (mStartY + mCropHeight > mHeight) {
-            mCropHeight = mHeight - mStartY;
+        if (mStartY + mCropHeight > matrixRectF.bottom) {
+            mCropHeight = matrixRectF.bottom - mStartY;
         }
     }
 
