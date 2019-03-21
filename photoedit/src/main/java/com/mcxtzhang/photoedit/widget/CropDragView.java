@@ -207,12 +207,22 @@ public class CropDragView extends View {
         Matrix imageMatrix = mCropImageView.getImageMatrix();
         imageMatrix.getValues(mFloats);
 
+        //以裁剪框当前长边为基准
+        //计算切换比例尺后的，
+        //裁剪框的长度宽度
+        float newCropWidth = 0;
+        float newCropHeight = 0;
+        float newStartX;
+        float newStartY;
+
         switch (mCropRate) {
             case CROP_RATE_FREE:
                 mCropMinWidth = mCropMinBaseLength;
                 mCropMinHeight = mCropMinBaseLength;
                 mPhotoMinWidthPixels = mPhotoMinBasePixels;
                 mPhotoMinHeightPixels = mPhotoMinBasePixels;
+                newCropWidth = mCropWidth;
+                newCropHeight = mCropHeight;
                 break;
             case CROP_RATE_11:
                 mCropMinWidth = mCropMinBaseLength;
@@ -220,17 +230,10 @@ public class CropDragView extends View {
                 mPhotoMinWidthPixels = mPhotoMinBasePixels;
                 mPhotoMinHeightPixels = mPhotoMinBasePixels;
 
-                //以图片短边为基准边长
-                float edge;
-                if (mFloats[Matrix.MTRANS_X] > 0) {
-                    edge = (mWidth - mFloats[Matrix.MTRANS_X] * 2);
-                } else if (mFloats[Matrix.MTRANS_Y] > 0) {
-                    edge = (mHeight - mFloats[Matrix.MTRANS_Y] * 2);
-                } else {
-                    edge = Math.min(mWidth, mHeight);
-                }
-                mCropWidth = edge;
-                mCropHeight = edge;
+                float baseLength = Math.max(mCropWidth, mCropHeight);
+                newCropWidth = baseLength;
+                newCropHeight = baseLength;
+
                 break;
             case CROP_RATE_34:
                 mCropMinWidth = mCropMinBaseLength;
@@ -238,17 +241,19 @@ public class CropDragView extends View {
                 mPhotoMinWidthPixels = mPhotoMinBasePixels;
                 mPhotoMinHeightPixels = (mPhotoMinBasePixels * 4.0f / 3);
 
-                //特殊图以短边为基准
-                if (mFloats[Matrix.MTRANS_X] > 0) {
-                    mCropWidth = (mWidth - mFloats[Matrix.MTRANS_X] * 2);
-                    mCropHeight = (mCropWidth * 4.0f / 3);
-                } else if (mFloats[Matrix.MTRANS_Y] > 0) {
-                    mCropHeight = (mHeight - mFloats[Matrix.MTRANS_Y] * 2);
-                    mCropWidth = (mCropHeight * 3.0f / 4);
+                if (mCropWidth == mCropHeight) {
+                    newCropWidth = mCropWidth;
+                    newCropHeight = 4 * newCropWidth / 3;
+                } else if (mCropWidth > mCropHeight) {
+                    //宽更长
+                    newCropWidth = mCropWidth;
+                    newCropHeight = 4 * newCropWidth / 3;
                 } else {
-                    mCropHeight = mHeight;
-                    mCropWidth = (mCropHeight * 3.0f / 4);
+                    //高更长
+                    newCropHeight = mCropHeight;
+                    newCropWidth = 3 * newCropHeight / 4;
                 }
+
                 break;
             case CROP_RATE_43:
                 mCropMinWidth = (mCropMinBaseLength * 4.0f / 3);
@@ -256,24 +261,115 @@ public class CropDragView extends View {
                 mPhotoMinWidthPixels = (mPhotoMinBasePixels * 4.0f / 3);
                 mPhotoMinHeightPixels = mPhotoMinBasePixels;
 
-                if (mFloats[Matrix.MTRANS_X] > 0) {
-                    mCropWidth = (mWidth - mFloats[Matrix.MTRANS_X] * 2);
-                    mCropHeight = (mCropWidth * 3.0f / 4);
-                } else if (mFloats[Matrix.MTRANS_Y] > 0) {
-                    mCropHeight = (mHeight - mFloats[Matrix.MTRANS_Y] * 2);
-                    mCropWidth = (mCropHeight * 4.0f / 3);
+                if (mCropWidth == mCropHeight) {
+                    newCropHeight = mCropHeight;
+                    newCropWidth = 4 * newCropHeight / 3;
+                } else if (mCropWidth > mCropHeight) {
+                    //宽更长
+                    newCropWidth = mCropWidth;
+                    newCropHeight = 3 * newCropWidth / 4;
                 } else {
-                    mCropHeight = (mHeight - mFloats[Matrix.MTRANS_Y] * 2);
-                    mCropWidth = mWidth;
+                    //高更长
+                    newCropHeight = mCropHeight;
+                    newCropWidth = 4 * newCropHeight / 3;
                 }
                 break;
         }
 
+        RectF rectF = mCropImageView.getMatrixRectF();
+        float picWidth = rectF.width();
+        float picHeight = rectF.height();
+        //切换后的裁剪框
+        //大于图片最大宽高
+        if (newCropWidth > picWidth
+                || newCropHeight > picHeight) {
+            //以图片边较短的为基准，
+            //计算切换比例尺后的，
+            //裁剪框的长度宽度
+
+            if (picWidth < picHeight) {
+                newCropWidth = picWidth;
+                newCropHeight = computeCropHeightByWidth(newCropWidth);
+            } else {
+                newCropHeight = picHeight;
+                newCropWidth = computeCropWidthByHeight(newCropHeight);
+            }
+        }
+
+        //切换后的长度、宽度
+        //超出屏幕范围
+        if (newCropWidth > mWidth) {
+            float scale = mWidth / newCropWidth;
+            //缩小图片
+            mCropImageView.scale(scale);
+            newCropWidth = mWidth;
+            newCropHeight = computeCropHeightByWidth(newCropWidth);
+        }
+        if (newCropHeight > mHeight) {
+            float scale = mHeight / newCropHeight;
+            mCropImageView.scale(scale);
+            newCropHeight = mHeight;
+            newCropWidth = computeCropWidthByHeight(newCropHeight);
+        }
+
+        //如果裁剪框和图片不匹配
+        //位移图片
+        newStartX = mStartX - (newCropWidth - mCropWidth) / 2;
+        newStartY = mStartY - (newCropHeight - mCropHeight) / 2;
+        rectF = mCropImageView.getMatrixRectF();
+        if (newStartX < rectF.left) {
+            mCropImageView.translate(newStartX - rectF.left, 0);
+        }
+        if (newStartX + newCropWidth > rectF.right) {
+            mCropImageView.translate(newStartX + newCropWidth - rectF.right, 0);
+        }
+        if (newStartY < rectF.top) {
+            mCropImageView.translate(0, newStartY - rectF.top);
+        }
+        if (newStartY + newCropHeight > rectF.bottom) {
+            mCropImageView.translate(0, newStartY + newCropHeight - rectF.bottom);
+        }
+
+
+        mCropWidth = newCropWidth;
+        mCropHeight = newCropHeight;
         mStartX = (mWidth - mCropWidth) / 2;
         mStartY = (mHeight - mCropHeight) / 2;
 
+        mCropImageView.updateShowInCenter(mStartX, mStartY, mCropWidth, mCropHeight);
+
         invalidate();
         return this;
+    }
+
+    private float computeCropWidthByHeight(float cropHeight) {
+        switch (mCropRate) {
+            case CROP_RATE_FREE:
+                return mCropWidth;
+            case CROP_RATE_11:
+                return cropHeight;
+            case CROP_RATE_34:
+                return 3 * cropHeight / 4;
+            case CROP_RATE_43:
+                return 4 * cropHeight / 3;
+            default:
+                return mCropWidth;
+        }
+    }
+
+    private float computeCropHeightByWidth(float cropWidth) {
+        switch (mCropRate) {
+            case CROP_RATE_FREE:
+                return mCropHeight;
+            case CROP_RATE_11:
+                return cropWidth;
+            case CROP_RATE_34:
+                return 4 * cropWidth / 3;
+            case CROP_RATE_43:
+                return 3 * cropWidth / 4;
+            default:
+                return mCropHeight;
+        }
     }
 
     public float getCropMinWidth() {

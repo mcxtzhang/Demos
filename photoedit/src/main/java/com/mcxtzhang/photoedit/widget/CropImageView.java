@@ -472,4 +472,14 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
                 .setCropHeight(newCropHeight)
                 .invalidate();
     }
+
+    public void scale(float scale) {
+        mImageMatrix.postScale(scale, scale, mWidth / 2, mHeight / 2);
+        setImageMatrix(mImageMatrix);
+    }
+
+    public void translate(float tranX, float tranY) {
+        mImageMatrix.postTranslate(tranX, tranY);
+        setImageMatrix(mImageMatrix);
+    }
 }
