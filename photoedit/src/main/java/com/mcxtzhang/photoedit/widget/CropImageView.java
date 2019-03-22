@@ -21,7 +21,7 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
 
     private int mWidth, mHeight;
     private final Matrix mImageMatrix = new Matrix();
-    private final float[] matrixValues = new float[9];
+    private final float[] mFloats = new float[9];
 
     private ScaleGestureDetector mScaleGestureDetector = null;
 
@@ -230,20 +230,20 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
      * @return
      */
     public final float getScale() {
-        mImageMatrix.getValues(matrixValues);
-        return matrixValues[Matrix.MSCALE_X];
+        mImageMatrix.getValues(mFloats);
+        // calculate real scale
+        float scalex = mFloats[Matrix.MSCALE_X];
+        float skewy = mFloats[Matrix.MSKEW_Y];
+        float rScale = (float) Math.sqrt(scalex * scalex + skewy * skewy);
+        return rScale;
     }
 
-    /**
-     * 水平方向与View的边距
-     */
-    private int mHorizontalPadding = 20;
-    /**
-     * 垂直方向与View的边距
-     */
-    private int mVerticalPadding;
-
-    float[] floats = new float[9];
+    public final float getRotate() {
+        mImageMatrix.getValues(mFloats);
+        // calculate the degree of rotation
+        float rAngle = Math.round(Math.atan2(mFloats[Matrix.MSKEW_X], mFloats[Matrix.MSCALE_X]) * (180 / Math.PI));
+        return rAngle;
+    }
 
     /**
      * 剪切图片，返回剪切后的bitmap对象
@@ -252,63 +252,56 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
      */
     public Bitmap crop(float cropStartX, float cropStartY, float cropWidth, float cropHeight) {
         Bitmap bitmap = ((BitmapDrawable) getDrawable()).getBitmap();
+        Log.d(TAG, "crop() called with: bitmap.getWidth() = [" + bitmap.getWidth() + "], cropStartY = [" + bitmap.getHeight() + "], cropWidth = [" + bitmap.getHeight() + "], cropHeight = [" + cropHeight + "]");
+        float scale = getScale();
+        float rotate = getRotate();
 
-        mImageMatrix.getValues(floats);
-        float scaleX = floats[Matrix.MSCALE_X];
-        float scaleY = floats[Matrix.MSCALE_Y];
+        mImageMatrix.getValues(mFloats);
         //偏移量 是和  放大系数 无关的 绝对长度
-        float transX = floats[Matrix.MTRANS_X];
-        float transY = floats[Matrix.MTRANS_Y];
+        float transX = mFloats[Matrix.MTRANS_X];
+        float transY = mFloats[Matrix.MTRANS_Y];
 
-        float leftOffset = -transX + cropStartX;
-        leftOffset = leftOffset / scaleX;
+        float startX = 0;
+        float startY = 0;
+        float width = 0;
+        float height = 0;
 
-        float topOffset = -transY + cropStartY;
-        topOffset = topOffset / scaleY;
+        if (rotate == 0) {
+            startX = -transX + cropStartX;
+            startY = -transY + cropStartY;
+            width = cropWidth;
+            height = cropHeight;
+        } else if (rotate == -90) {
+            //顺时针90度
+            startX = -transY + cropStartY;
+            startY = transX - (cropStartX + cropWidth);
+            width = cropHeight;
+            height = cropWidth;
+        } else if (rotate == 180) {
+            startX = transX - (cropStartX + cropWidth);
+            startY = transY - (cropStartY + cropHeight);
+            width = cropWidth;
+            height = cropHeight;
+        } else if (rotate == 90) {
+            startX = transY - (cropStartY + cropHeight);
+            startY = -transX + cropStartX;
+            width = cropHeight;
+            height = cropWidth;
+        }
 
-        float width = cropWidth;
-        width = width / scaleX;
-        float height = cropHeight;
-        height = height / scaleY;
+
+        startX = startX / scale;
+        startY = startY / scale;
+
+        width = width / scale;
+        height = height / scale;
 
         return Bitmap.createBitmap(bitmap,
-                (int) leftOffset,
-                (int) topOffset,
+                (int) startX,
+                (int) startY,
                 (int) width,
-                (int) height);
-    }
-
-    /**
-     * 边界检测
-     */
-    private void checkBorder() {
-
-        RectF rect = getMatrixRectF();
-        float deltaX = 0;
-        float deltaY = 0;
-
-        int width = getWidth();
-        int height = getHeight();
-
-        // 如果宽或高大于屏幕，则控制范围
-        if (rect.width() >= width - 2 * mHorizontalPadding) {
-            if (rect.left > mHorizontalPadding) {
-                deltaX = -rect.left + mHorizontalPadding;
-            }
-            if (rect.right < width - mHorizontalPadding) {
-                deltaX = width - mHorizontalPadding - rect.right;
-            }
-        }
-        if (rect.height() >= height - 2 * mVerticalPadding) {
-            if (rect.top > mVerticalPadding) {
-                deltaY = -rect.top + mVerticalPadding;
-            }
-            if (rect.bottom < height - mVerticalPadding) {
-                deltaY = height - mVerticalPadding - rect.bottom;
-            }
-        }
-        mImageMatrix.postTranslate(deltaX, deltaY);
-
+                (int) height,
+                mImageMatrix, true);
     }
 
     /**
@@ -440,7 +433,7 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
         float cropWidth = mCropDragView.getCropWidth();
         float cropHeight = mCropDragView.getCropHeight();
 
-        float scale = 0;
+        float scale = 1;
         if (cropWidth < mHeight && cropHeight < mWidth) {
             //旋转后需要放大
             scale = Math.min(mHeight * 1.0f / cropWidth, mWidth * 1.0f / cropHeight);
@@ -450,7 +443,9 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
         } else if (cropHeight > mWidth) {
             scale = (mWidth * 1.0f / cropHeight);
         }
-        mImageMatrix.postScale(scale, scale, mWidth / 2, mHeight / 2);
+        if (scale != 1) {
+            mImageMatrix.postScale(scale, scale, mWidth / 2, mHeight / 2);
+        }
         setImageMatrix(mImageMatrix);
 
 
