@@ -35,6 +35,7 @@ public class ImageActivity extends AppCompatActivity {
 
                 mCropDragView.bindCropImageView(mCropImageView)
                         .setCropRate(CropDragView.CROP_RATE_FREE);
+                mModeNormal.setSelected(true);
             }
         }, 500);
 
@@ -46,15 +47,30 @@ public class ImageActivity extends AppCompatActivity {
         });
 
 
+        mModeNormal = findViewById(R.id.tvModeNormal);
+        mMode11 = findViewById(R.id.tvMode11);
+        mMode34 = findViewById(R.id.tvMode34);
+        mMode43 = findViewById(R.id.tvMode43);
+
         findViewById(R.id.tvModeNormal).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (view.isSelected()) {
+                    return;
+                }
+                resetCropRateStatus();
+                view.setSelected(true);
                 mCropDragView.setCropRate(CropDragView.CROP_RATE_FREE);
             }
         });
         findViewById(R.id.tvMode11).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (view.isSelected()) {
+                    return;
+                }
+                resetCropRateStatus();
+                view.setSelected(true);
                 mCropDragView.setCropRate(CropDragView.CROP_RATE_11);
             }
         });
@@ -62,15 +78,26 @@ public class ImageActivity extends AppCompatActivity {
         findViewById(R.id.tvMode34).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (view.isSelected()) {
+                    return;
+                }
+                resetCropRateStatus();
+                view.setSelected(true);
                 mCropDragView.setCropRate(CropDragView.CROP_RATE_34);
             }
         });
         findViewById(R.id.tvMode43).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (view.isSelected()) {
+                    return;
+                }
+                resetCropRateStatus();
+                view.setSelected(true);
                 mCropDragView.setCropRate(CropDragView.CROP_RATE_43);
             }
         });
+
 
         findViewById(R.id.tvRotate).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,5 +118,14 @@ public class ImageActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private View mModeNormal, mMode11, mMode34, mMode43;
+
+    private void resetCropRateStatus() {
+        mModeNormal.setSelected(false);
+        mMode11.setSelected(false);
+        mMode34.setSelected(false);
+        mMode43.setSelected(false);
     }
 }
