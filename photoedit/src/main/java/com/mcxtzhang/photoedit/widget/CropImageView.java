@@ -13,6 +13,8 @@ import android.view.ScaleGestureDetector;
 import android.view.ScaleGestureDetector.OnScaleGestureListener;
 import android.view.ViewConfiguration;
 
+import com.mcxtzhang.photoedit.PhotoCropRotateModel;
+
 /**
  * Created by zhangxutong on 2019/3/13.
  */
@@ -20,8 +22,9 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
     private static final String TAG = CropImageView.class.getSimpleName();
 
     private int mWidth, mHeight;
-    private final Matrix mImageMatrix = new Matrix();
+    private Matrix mImageMatrix = new Matrix();
     private final float[] mFloats = new float[9];
+    private Bitmap mOriginBitmap;
 
     private ScaleGestureDetector mScaleGestureDetector = null;
 
@@ -94,8 +97,7 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
     }
 
     public void reset() {
-        mImageMatrix.reset();
-        showBitmapInCenter();
+        showBitmapInCenter(mOriginBitmap, null);
     }
 
     /**
@@ -250,11 +252,11 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
      *
      * @return
      */
-    public Bitmap crop(float cropStartX, float cropStartY, float cropWidth, float cropHeight) {
+    public PhotoCropRotateModel crop(float cropStartX, float cropStartY, float cropWidth, float cropHeight) {
         Bitmap bitmap = ((BitmapDrawable) getDrawable()).getBitmap();
-        Log.d(TAG, "crop() called with: bitmap.getWidth() = [" + bitmap.getWidth() + "], cropStartY = [" + bitmap.getHeight() + "], cropWidth = [" + bitmap.getHeight() + "], cropHeight = [" + cropHeight + "]");
         float scale = getScale();
         float rotate = getRotate();
+        Log.d(TAG, "crop() called with: bitmap.getWidth() = [" + bitmap.getWidth() + "], bitmap.getHeight = [" + bitmap.getHeight() + "], rotate = [" + rotate + "], cropHeight = [" + cropHeight + "]");
 
         mImageMatrix.getValues(mFloats);
         //偏移量 是和  放大系数 无关的 绝对长度
@@ -296,31 +298,50 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
         width = width / scale;
         height = height / scale;
 
-        return Bitmap.createBitmap(bitmap,
-                (int) startX,
+//        return Bitmap.createBitmap(bitmap,
+//                (int) startX,
+//                (int) startY,
+//                (int) width,
+//                (int) height,
+//                mImageMatrix, true);
+
+        return new PhotoCropRotateModel((int) startX,
                 (int) startY,
                 (int) width,
                 (int) height,
-                mImageMatrix, true);
+                rotate);
     }
 
     /**
      * 将图片 缩放、居中展示
      */
-    public void showBitmapInCenter() {
-        Drawable d = getDrawable();
-        if (!(d instanceof BitmapDrawable))
+    public void showBitmapInCenter(Bitmap bitmap, PhotoCropRotateModel photoCropRotateModel) {
+        if (bitmap == null) {
             return;
-        Bitmap bitmap = ((BitmapDrawable) getDrawable()).getBitmap();
+        }
+        mImageMatrix = new Matrix();
+        mOriginBitmap = bitmap;
+        setImageBitmap(bitmap);
 
-        int width = getWidth();
-        int height = getHeight();
-        Log.e(TAG, d.getIntrinsicWidth() + " , " + d.getIntrinsicHeight());
-        Log.e(TAG, bitmap.getWidth() + " , " + bitmap.getHeight());
+        int width = mWidth;
+        int height = mHeight;
         Log.e(TAG, width + " , " + height);
-        // 拿到图片的宽和高
-        int dw = bitmap.getWidth();
-        int dh = bitmap.getHeight();
+        int dw, dh;
+        if (null == photoCropRotateModel) {
+            //Log.e(TAG, bitmap.getWidth() + " , " + bitmap.getHeight());
+            // 拿到图片的宽和高
+            dw = bitmap.getWidth();
+            dh = bitmap.getHeight();
+
+            // 图片移动至屏幕中心
+            mImageMatrix.postTranslate((width - dw) / 2, (height - dh) / 2);
+        } else {
+            dw = photoCropRotateModel.width;
+            dh = photoCropRotateModel.height;
+            mImageMatrix.postTranslate((width - dw) / 2 - photoCropRotateModel.x, (height - dh) / 2 - photoCropRotateModel.y);
+            float rotate = photoCropRotateModel.rotate;
+            Log.d(TAG, "showBitmapInCenter() called with: rotate = [" + rotate + "], photoCropRotateModel = [" + photoCropRotateModel + "]");
+        }
         float scale = 1.0f;
         // 如果图片的宽或者高大于屏幕，则缩放至屏幕的宽或者高
         if (dw > width && dh <= height) {
@@ -335,11 +356,9 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
         } else if (dw < width && dh < height) {
             scale = Math.min(width * 1.0f / dw, height * 1.0f / dh);
         }
-
-        // 图片移动至屏幕中心
-        mImageMatrix.postTranslate((width - dw) / 2, (height - dh) / 2);
         mImageMatrix.postScale(scale, scale, getWidth() / 2, getHeight() / 2);
         setImageMatrix(mImageMatrix);
+
     }
 
     /**

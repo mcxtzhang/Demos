@@ -1,5 +1,6 @@
 package com.mcxtzhang.photoedit;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -29,20 +30,44 @@ public class ImageActivity extends AppCompatActivity {
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
-                mCropImageView.setImageBitmap(bitmap);
-                mCropImageView.showBitmapInCenter();
+                PhotoCropRotateModel photoCropRotateModel = (PhotoCropRotateModel) getIntent().getSerializableExtra("data");
+                mCropImageView.showBitmapInCenter(bitmap, photoCropRotateModel);
                 mCropImageView.setCropDragView(mCropDragView);
 
-                mCropDragView.bindCropImageView(mCropImageView)
-                        .setCropRate(CropDragView.CROP_RATE_FREE);
+                mCropDragView.bindCropImageView(mCropImageView, photoCropRotateModel);
+
+                mCropDragView.setCropRate(CropDragView.CROP_RATE_FREE);
+
                 mModeNormal.setSelected(true);
+                if (null == photoCropRotateModel) {
+                    return;
+                }
+                float rotate = photoCropRotateModel.rotate;
+                if (rotate == 0) {
+                } else if (rotate == -90) {
+                    //顺时针90度
+                    mCropImageView.rotate();
+                } else if (rotate == 180) {
+                    mCropImageView.rotate();
+                    mCropImageView.rotate();
+                } else if (rotate == 90) {
+
+                    mCropImageView.rotate();
+                    mCropImageView.rotate();
+                    mCropImageView.rotate();
+                }
             }
         }, 500);
 
         findViewById(R.id.tvSubmit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mCropImageView.setImageBitmap(mCropImageView.crop(mCropDragView.getStartX(), mCropDragView.getStartY(), mCropDragView.getCropWidth(), mCropDragView.getCropHeight()));
+                Intent intent = new Intent();
+                intent.putExtra("photo_crop", mCropImageView.crop(mCropDragView.getStartX(), mCropDragView.getStartY(), mCropDragView.getCropWidth(), mCropDragView.getCropHeight()));
+                setResult(RESULT_OK, intent);
+                finish();
+
+                //mCropImageView.setImageBitmap(mCropImageView.crop(mCropDragView.getStartX(), mCropDragView.getStartY(), mCropDragView.getCropWidth(), mCropDragView.getCropHeight()));
             }
         });
 
@@ -123,7 +148,7 @@ public class ImageActivity extends AppCompatActivity {
 
                 mCropDragView
                         .setCropRate(CropDragView.CROP_RATE_FREE)
-                        .updateCropAreaPosition();
+                        .initCropAreaPosition();
             }
         });
 

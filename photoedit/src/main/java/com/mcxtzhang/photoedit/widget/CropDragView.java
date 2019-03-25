@@ -18,6 +18,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
+import com.mcxtzhang.photoedit.PhotoCropRotateModel;
+
 /**
  * Created by zhangxutong on 2019/3/13.
  */
@@ -110,13 +112,30 @@ public class CropDragView extends View {
         mBgPaint.setColor(Color.parseColor("#66000000"));
     }
 
-    public CropDragView bindCropImageView(CropImageView cropImageView) {
+    public CropDragView bindCropImageView(CropImageView cropImageView, PhotoCropRotateModel photoCropRotateModel) {
         mCropImageView = cropImageView;
-        updateCropAreaPosition();
+        if (photoCropRotateModel == null) {
+            initCropAreaPosition();
+        } else {
+            initCropAreaPositionWithData(photoCropRotateModel);
+        }
         return this;
     }
 
-    public void updateCropAreaPosition() {
+    private void initCropAreaPositionWithData(PhotoCropRotateModel photoCropRotateModel) {
+        if (null == mCropImageView) {
+            return;
+        }
+        float scale = mCropImageView.getScale();
+        mCropWidth = photoCropRotateModel.width * scale;
+        mCropHeight = photoCropRotateModel.height * scale;
+        mStartX = (mWidth - mCropWidth) / 2;
+        mStartY = (mHeight - mCropHeight) / 2;
+        invalidate();
+        Log.d(TAG, "initCropAreaPosition with photoCropRotateModel，裁剪区域像素：" + mCropWidth / mCropImageView.getScale() + "," + mCropHeight / mCropImageView.getScale());
+    }
+
+    public void initCropAreaPosition() {
         if (null == mCropImageView) {
             return;
         }
@@ -153,7 +172,7 @@ public class CropDragView extends View {
 
         }*/
         invalidate();
-        Log.d(TAG, "updateCropAreaPosition，裁剪区域像素：" + mCropWidth / mCropImageView.getScale() + "," + mCropHeight / mCropImageView.getScale());
+        Log.d(TAG, "initCropAreaPosition，裁剪区域像素：" + mCropWidth / mCropImageView.getScale() + "," + mCropHeight / mCropImageView.getScale());
 
 
     }

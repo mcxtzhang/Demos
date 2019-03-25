@@ -54,7 +54,8 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(MainActivity.this, ImageActivity.class);
+                startActivityForResult(intent, 100);
             }
         });
 
@@ -62,18 +63,25 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.button3).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivityForResult(new Intent(MainActivity.this, ImageActivity.class), 100);
+                Intent intent = new Intent(MainActivity.this, ImageActivity.class);
+                intent.putExtra("data", mPhotoCropRotateModel);
+                startActivityForResult(intent, 100);
             }
         });
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-////        Bitmap cropPic = data.getParcelableExtra("cropPic");
-////        mImageView.setImageBitmap(cropPic);
+    PhotoCropRotateModel mPhotoCropRotateModel;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+//        Bitmap cropPic = data.getParcelableExtra("cropPic");
+//        mImageView.setImageBitmap(cropPic);
 //        String cropPicPath = data.getStringExtra("cropPicPath");
 //        Bitmap bitmap = BitmapFactory.decodeFile(cropPicPath);
 //        mImageView.setImageBitmap(bitmap);
-//    }
+        if (resultCode == RESULT_OK) {
+            mPhotoCropRotateModel = (PhotoCropRotateModel) data.getSerializableExtra("photo_crop");
+        }
+    }
 }
