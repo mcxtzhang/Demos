@@ -218,6 +218,10 @@ public class CropDragView extends View {
     }
 
     public CropDragView setCropRate(int cropRate) {
+        return setCropRate(cropRate, false);
+    }
+
+    public CropDragView setCropRate(int cropRate, boolean isChange) {
         mCropRate = cropRate;
 
         if (null == mCropImageView) {
@@ -294,7 +298,9 @@ public class CropDragView extends View {
                 }
                 break;
         }
-
+        if (!isChange) {
+            return this;
+        }
         RectF rectF = mCropImageView.getMatrixRectF();
         float picWidth = rectF.width();
         float picHeight = rectF.height();

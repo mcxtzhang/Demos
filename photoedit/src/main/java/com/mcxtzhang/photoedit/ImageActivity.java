@@ -36,9 +36,14 @@ public class ImageActivity extends AppCompatActivity {
 
                 mCropDragView.bindCropImageView(mCropImageView, photoCropRotateModel);
 
-                mCropDragView.setCropRate(CropDragView.CROP_RATE_FREE);
+                if (null == photoCropRotateModel) {
+                    mCropDragView.setCropRate(CropDragView.CROP_RATE_FREE);
+                    mModeNormal.setSelected(true);
+                } else {
+                    mCropDragView.setCropRate(photoCropRotateModel.cropRate);
+                    setCropRateStatusUI(photoCropRotateModel.cropRate);
+                }
 
-                mModeNormal.setSelected(true);
                 if (null == photoCropRotateModel) {
                     return;
                 }
@@ -83,9 +88,7 @@ public class ImageActivity extends AppCompatActivity {
                 if (view.isSelected()) {
                     return;
                 }
-                resetCropRateStatus();
-                view.setSelected(true);
-                mCropDragView.setCropRate(CropDragView.CROP_RATE_FREE);
+                changeCropRateStatus(CropDragView.CROP_RATE_FREE);
             }
         });
         findViewById(R.id.tvMode11).setOnClickListener(new View.OnClickListener() {
@@ -94,9 +97,7 @@ public class ImageActivity extends AppCompatActivity {
                 if (view.isSelected()) {
                     return;
                 }
-                resetCropRateStatus();
-                view.setSelected(true);
-                mCropDragView.setCropRate(CropDragView.CROP_RATE_11);
+                changeCropRateStatus(CropDragView.CROP_RATE_11);
             }
         });
 
@@ -106,9 +107,7 @@ public class ImageActivity extends AppCompatActivity {
                 if (view.isSelected()) {
                     return;
                 }
-                resetCropRateStatus();
-                view.setSelected(true);
-                mCropDragView.setCropRate(CropDragView.CROP_RATE_34);
+                changeCropRateStatus(CropDragView.CROP_RATE_34);
             }
         });
         findViewById(R.id.tvMode43).setOnClickListener(new View.OnClickListener() {
@@ -117,9 +116,7 @@ public class ImageActivity extends AppCompatActivity {
                 if (view.isSelected()) {
                     return;
                 }
-                resetCropRateStatus();
-                view.setSelected(true);
-                mCropDragView.setCropRate(CropDragView.CROP_RATE_43);
+                changeCropRateStatus(CropDragView.CROP_RATE_43);
             }
         });
 
@@ -129,13 +126,13 @@ public class ImageActivity extends AppCompatActivity {
             public void onClick(View view) {
                 mCropImageView.rotate();
                 if (mCropDragView.getCropRate() == CropDragView.CROP_RATE_34) {
-                    resetCropRateStatus();
+                    resetCropRateStatusUI();
                     mMode43.setSelected(true);
-                    mCropDragView.setCropRate(CropDragView.CROP_RATE_43);
+                    mCropDragView.setCropRate(CropDragView.CROP_RATE_43, true);
                 } else if (mCropDragView.getCropRate() == CropDragView.CROP_RATE_43) {
-                    resetCropRateStatus();
+                    resetCropRateStatusUI();
                     mMode34.setSelected(true);
-                    mCropDragView.setCropRate(CropDragView.CROP_RATE_34);
+                    mCropDragView.setCropRate(CropDragView.CROP_RATE_34, true);
                 }
             }
         });
@@ -149,6 +146,8 @@ public class ImageActivity extends AppCompatActivity {
                 mCropDragView
                         .setCropRate(CropDragView.CROP_RATE_FREE)
                         .initCropAreaPosition();
+                resetCropRateStatusUI();
+                mModeNormal.setSelected(true);
             }
         });
 
@@ -156,7 +155,31 @@ public class ImageActivity extends AppCompatActivity {
 
     private View mModeNormal, mMode11, mMode34, mMode43;
 
-    private void resetCropRateStatus() {
+    private void changeCropRateStatus(int cropRate) {
+        resetCropRateStatusUI();
+        setCropRateStatusUI(cropRate);
+
+        mCropDragView.setCropRate(cropRate, true);
+    }
+
+    private void setCropRateStatusUI(int cropRate) {
+        switch (cropRate) {
+            case CropDragView.CROP_RATE_FREE:
+                mModeNormal.setSelected(true);
+                break;
+            case CropDragView.CROP_RATE_11:
+                mMode11.setSelected(true);
+                break;
+            case CropDragView.CROP_RATE_34:
+                mMode34.setSelected(true);
+                break;
+            case CropDragView.CROP_RATE_43:
+                mMode43.setSelected(true);
+                break;
+        }
+    }
+
+    private void resetCropRateStatusUI() {
         mModeNormal.setSelected(false);
         mMode11.setSelected(false);
         mMode34.setSelected(false);

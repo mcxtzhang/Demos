@@ -309,7 +309,8 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
                 (int) startY,
                 (int) width,
                 (int) height,
-                rotate);
+                rotate,
+                mCropDragView.getCropRate());
     }
 
     /**
