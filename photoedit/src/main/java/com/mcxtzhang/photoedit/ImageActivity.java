@@ -103,6 +103,15 @@ public class ImageActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 mCropImageView.rotate();
+                if (mCropDragView.getCropRate() == CropDragView.CROP_RATE_34) {
+                    resetCropRateStatus();
+                    mMode43.setSelected(true);
+                    mCropDragView.setCropRate(CropDragView.CROP_RATE_43);
+                } else if (mCropDragView.getCropRate() == CropDragView.CROP_RATE_43) {
+                    resetCropRateStatus();
+                    mMode34.setSelected(true);
+                    mCropDragView.setCropRate(CropDragView.CROP_RATE_34);
+                }
             }
         });
 
