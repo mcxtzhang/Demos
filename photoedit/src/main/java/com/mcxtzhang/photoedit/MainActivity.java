@@ -2,12 +2,16 @@ package com.mcxtzhang.photoedit;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.mcxtzhang.photoedit.util.CropRotatePhotoUtil;
 
 public class MainActivity extends AppCompatActivity {
     ImageView mImageView;
@@ -43,11 +47,15 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BitmapDrawable bitmapDrawable = (BitmapDrawable) imageView.getDrawable();
-                bitmap = bitmapDrawable.getBitmap();
+//                BitmapDrawable bitmapDrawable = (BitmapDrawable) imageView.getDrawable();
+//                bitmap = bitmapDrawable.getBitmap();
+//
+//                bitmap = PhotoEditUtils.rotaingImageView(90, bitmap);
+                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.long1);
+                Bitmap transform = CropRotatePhotoUtil.transform(bitmap, mPhotoCropRotateModel);
+                Toast.makeText(MainActivity.this, "heig:"+transform.getHeight()+",wid:"+transform.getWidth(), Toast.LENGTH_SHORT).show();
 
-                bitmap = PhotoEditUtils.rotaingImageView(90, bitmap);
-                imageView.setImageBitmap(bitmap);
+                imageView.setImageBitmap(transform);
             }
         });
 
