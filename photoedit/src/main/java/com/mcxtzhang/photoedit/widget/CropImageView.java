@@ -186,7 +186,13 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
                     return true;
                 }
                 float scaleNow = getScale();
-                float scale = Math.max(mCropDragView.getCropWidth() * 1.0f / (d.getIntrinsicWidth() * scaleNow), mCropDragView.getCropHeight() * 1.0f / (d.getIntrinsicHeight() * scaleNow));
+                float rotate = getRotate();
+                float scale = 1;
+                if (rotate == 0 || rotate == 180) {
+                    scale = Math.max(mCropDragView.getCropWidth() * 1.0f / (d.getIntrinsicWidth() * scaleNow), mCropDragView.getCropHeight() * 1.0f / (d.getIntrinsicHeight() * scaleNow));
+                } else {
+                    scale = Math.max(mCropDragView.getCropWidth() * 1.0f / (d.getIntrinsicHeight() * scaleNow), mCropDragView.getCropHeight() * 1.0f / (d.getIntrinsicWidth() * scaleNow));
+                }
                 if (scale > 1) {
                     mImageMatrix.postScale(scale, scale, getWidth() / 2, getHeight() / 2);
                 }
