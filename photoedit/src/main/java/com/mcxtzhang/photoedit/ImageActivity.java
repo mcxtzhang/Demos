@@ -124,7 +124,7 @@ public class ImageActivity extends AppCompatActivity {
         findViewById(R.id.tvRotate).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mCropImageView.rotate();
+                mCropImageView.rotate(true);
                 if (mCropDragView.getCropRate() == CropDragView.CROP_RATE_34) {
                     resetCropRateStatusUI();
                     mMode43.setSelected(true);

@@ -1,5 +1,7 @@
 package com.mcxtzhang.photoedit.widget;
 
+import android.animation.Animator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
@@ -11,6 +13,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.ScaleGestureDetector.OnScaleGestureListener;
+import android.view.View;
 import android.view.ViewConfiguration;
 
 import com.mcxtzhang.photoedit.PhotoCropRotateModel;
@@ -377,22 +380,10 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
      * @param cropHeight
      */
     public void updateShowInCenter(float cropStartX, float cropStartY, float cropWidth, float cropHeight) {
-        float tranX = 0, tranY = 0;
-        tranX = (mWidth - cropWidth - cropStartX - cropStartX) / 2;
-        tranY = (mHeight - cropHeight - cropStartY - cropStartY) / 2;
-//        int horizontalSpace = ;
-//        if (mWidth >) {
-//            //右边离中轴线更近
-//            tranX =
-//        } else {
-//
-//        }
-        mImageMatrix.postTranslate(tranX, tranY);
-
+        final float tranX = (mWidth - cropWidth - cropStartX - cropStartX) / 2;
+        final float tranY = (mHeight - cropHeight - cropStartY - cropStartY) / 2;
 
         float scale = Math.min(mWidth * 1.0f / cropWidth, mHeight * 1.0f / cropHeight);
-        mImageMatrix.postScale(scale, scale, getWidth() / 2, getHeight() / 2);
-        setImageMatrix(mImageMatrix);
 
 
         cropWidth *= scale;
@@ -406,13 +397,141 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
         cropStartY = (mHeight - cropHeight) / 2;
         cropStartX = (mWidth - cropWidth) / 2;
 
-        mCropDragView.setStartX(cropStartX)
-                .setStartY(cropStartY)
-                .setCropWidth(cropWidth)
-                .setCropHeight(cropHeight)
-                .invalidate();
 
+        animateTranslate(tranX, tranY);
+        animateScale(scale);
+        animateUpdateDragCropRectUI(cropStartX, cropStartY, cropWidth, cropHeight);
+
+        final float finalStartX = cropStartX;
+        final float finalStartY = cropStartY;
+        final float finalCropWidth = cropWidth;
+        final float finalCropHeight = cropHeight;
         Log.d(TAG, "updateShowInCenter() called with: tranX = [" + tranX + "], tranY = [" + tranY + "], scale = [" + scale + "], cropHeight = [" + cropHeight + "]");
+    }
+
+    private void animateTranslate(final float tobeTranX, final float tobeTranY) {
+        float scale = getScale();
+        final float tobeTranXInNoScale = tobeTranX / scale;
+        final float tobeTranYInNoScale = tobeTranY / scale;
+
+        ValueAnimator valueAnimator = ValueAnimator.ofFloat(0, 1).setDuration(250);
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            float lastTranX = 0, lastTranY = 0;
+
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                float fraction = animation.getAnimatedFraction();
+
+                float tempTranX = tobeTranXInNoScale * fraction - lastTranX;
+                float tempTranY = tobeTranYInNoScale * fraction - lastTranY;
+                lastTranX += tempTranX;
+                lastTranY += tempTranY;
+
+                //可能与scale 动画一起执行，所以要考虑当前scale
+                float currentScale = getScale();
+                tempTranX *= currentScale;
+                tempTranY *= currentScale;
+
+                mImageMatrix.postTranslate(tempTranX, tempTranY);
+                setImageMatrix(mImageMatrix);
+            }
+        });
+        valueAnimator.start();
+
+        Log.d(TAG, "animateTranslate() called with: tobeTranX = [" + tobeTranX + "], tobeTranY = [" + tobeTranY + "]");
+        getImageMatrix().getValues(mFloats);
+        Log.d(TAG, "animateTranslate() called with: MTRANS_X: " + mFloats[Matrix.MTRANS_X]
+                + "MTRANS_Y: " + mFloats[Matrix.MTRANS_Y]);
+
+    }
+
+    private void animateScale(final float scale) {
+        final float beginScale = getScale();
+        final float finalScale = beginScale * scale;
+        ValueAnimator valueAnimator = ValueAnimator.ofFloat(0, 1).setDuration(250);
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                float fraction = animation.getAnimatedFraction();
+
+                float tempTargetScale = beginScale + (finalScale - beginScale) * fraction;
+                float tempScale = tempTargetScale / getScale();
+                mImageMatrix.postScale(tempScale, tempScale, getWidth() / 2, getHeight() / 2);
+                setImageMatrix(mImageMatrix);
+            }
+        });
+        valueAnimator.start();
+    }
+
+    private void animateRotate(final float degree) {
+        ValueAnimator valueAnimator = ValueAnimator.ofFloat(0, 1).setDuration(250);
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            float lastDegree = 0;
+
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                float fraction = animation.getAnimatedFraction();
+                float tempDegree = degree * fraction - lastDegree;
+                lastDegree += tempDegree;
+
+                mImageMatrix.postRotate(tempDegree, mWidth / 2, mHeight / 2);
+                setImageMatrix(mImageMatrix);
+                //Log.d(TAG, "onAnimationUpdate() called with: getRotate = [" + getRotate() + "]");
+            }
+        });
+        valueAnimator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                mCropDragView.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mCropDragView.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        valueAnimator.start();
+    }
+
+    private void animateUpdateDragCropRectUI(final float finalStartX,
+                                             final float finalStartY,
+                                             final float finalCropWidth,
+                                             final float finalCropHeight) {
+        final float beginStartX = mCropDragView.getStartX();
+        final float beginStartY = mCropDragView.getStartY();
+        final float beginCropWidth = mCropDragView.getCropWidth();
+        final float beginCropHeight = mCropDragView.getCropHeight();
+
+        ValueAnimator valueAnimator = ValueAnimator.ofFloat(0, 1).setDuration(250);
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                float fraction = animation.getAnimatedFraction();
+
+                float tempCropX = beginStartX + (finalStartX - beginStartX) * fraction;
+                float tempCropY = beginStartY + (finalStartY - beginStartY) * fraction;
+                float tempCropWidth = beginCropWidth + (finalCropWidth - beginCropWidth) * fraction;
+                float tempCropHeight = beginCropHeight + (finalCropHeight - beginCropHeight) * fraction;
+
+                setImageMatrix(mImageMatrix);
+                mCropDragView.setStartX(tempCropX)
+                        .setStartY(tempCropY)
+                        .setCropWidth(tempCropWidth)
+                        .setCropHeight(tempCropHeight)
+                        .invalidate();
+            }
+        });
+        valueAnimator.start();
     }
 
     public boolean checkTooLongWide() {
@@ -454,8 +573,10 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
     }
 
     public void rotate() {
-        mImageMatrix.postRotate(90, mWidth / 2, mHeight / 2);
+        rotate(false);
+    }
 
+    public void rotate(boolean animate) {
         float cropWidth = mCropDragView.getCropWidth();
         float cropHeight = mCropDragView.getCropHeight();
 
@@ -470,9 +591,18 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
             scale = (mWidth * 1.0f / cropHeight);
         }
         if (scale != 1) {
-            mImageMatrix.postScale(scale, scale, mWidth / 2, mHeight / 2);
+            if (animate) {
+                animateScale(scale);
+            } else {
+                mImageMatrix.postScale(scale, scale, mWidth / 2, mHeight / 2);
+            }
         }
-        setImageMatrix(mImageMatrix);
+        if (animate) {
+            animateRotate(90);
+        } else {
+            mImageMatrix.postRotate(90, mWidth / 2, mHeight / 2);
+            setImageMatrix(mImageMatrix);
+        }
 
 
         int newCropWidth = (int) (cropHeight * scale);
