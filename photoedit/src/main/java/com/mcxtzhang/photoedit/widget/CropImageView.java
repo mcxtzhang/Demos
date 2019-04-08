@@ -446,6 +446,10 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
     }
 
     private void animateScale(final float scale) {
+        if (scale == 1) {
+            return;
+        }
+        Log.d(TAG, "animateScale() called with: scale = [" + scale + "]");
         final float beginScale = getScale();
         final float finalScale = beginScale * scale;
         ValueAnimator valueAnimator = ValueAnimator.ofFloat(0, 1).setDuration(250);
@@ -455,7 +459,10 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
                 float fraction = animation.getAnimatedFraction();
 
                 float tempTargetScale = beginScale + (finalScale - beginScale) * fraction;
+
                 float tempScale = tempTargetScale / getScale();
+                Log.d(TAG, "onAnimationUpdate() : beginScale = [" + beginScale + "]finalScale = [" + finalScale + ",fraction = [" + fraction + ",tempTargetScale:" + tempTargetScale + "，tempScale：" + tempScale + "，getScale()：" + getScale());
+
                 mImageMatrix.postScale(tempScale, tempScale, getWidth() / 2, getHeight() / 2);
                 setImageMatrix(mImageMatrix);
             }
