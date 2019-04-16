@@ -16,9 +16,7 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Toast;
 
-import com.mcxtzhang.photoedit.PhotoCropRotateModel;
 
 /**
  * Created by zhangxutong on 2019/3/13.
@@ -52,6 +50,7 @@ public class CropDragView extends View {
     private int mTouchDeviationThreshold;
     private float mCropMinBaseLength;
     private float mCropMinWidth, mCropMinHeight;
+    private float mCropMaxWidth, mCropMaxHeight;
     //裁剪单边最小像素（不可小于100px）
     private int mPhotoMinBasePixels = 100;
     private float mPhotoMinWidthPixels, mPhotoMinHeightPixels;
@@ -62,16 +61,21 @@ public class CropDragView extends View {
 
     private Paint mCropLinePaint;
     private int mCropLineWidth;
+    private boolean isShowCropLine;
 
     private Paint mCropCornerPaint;
     private int mCropCornerLineWidth;
     private int mCropCornerLineLength;
+
+    private boolean isHideCropBorder;
 
     private Paint mBgPaint;
 
     /**
      * 外部通信变量
      */
+    private UgcCropView mParentView;
+
     private CropImageView mCropImageView;
 
     private int mCropRate;
@@ -89,7 +93,7 @@ public class CropDragView extends View {
         super(context, attrs, defStyleAttr);
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
 
-        mTouchDeviationThreshold = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 21, displayMetrics);
+        mTouchDeviationThreshold = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 27, displayMetrics);
         mCropMinBaseLength = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 75, displayMetrics);
 
         mCropRect = new RectF();
@@ -109,10 +113,10 @@ public class CropDragView extends View {
         mCropCornerPaint.setStyle(Paint.Style.FILL);
 
         mBgPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mBgPaint.setColor(Color.parseColor("#66000000"));
+        mBgPaint.setColor(Color.parseColor("#b2000000"));
     }
 
-    public CropDragView bindCropImageView(CropImageView cropImageView, PhotoCropRotateModel photoCropRotateModel) {
+    public CropDragView bindCropImageView(CropImageView cropImageView, UGCPhotoCropRotateModel photoCropRotateModel) {
         mCropImageView = cropImageView;
         if (photoCropRotateModel == null) {
             initCropAreaPosition();
@@ -122,7 +126,7 @@ public class CropDragView extends View {
         return this;
     }
 
-    private void initCropAreaPositionWithData(PhotoCropRotateModel photoCropRotateModel) {
+    private void initCropAreaPositionWithData(UGCPhotoCropRotateModel photoCropRotateModel) {
         if (null == mCropImageView) {
             return;
         }
@@ -197,6 +201,11 @@ public class CropDragView extends View {
         return this;
     }
 
+    public CropDragView setParentView(UgcCropView parentView) {
+        mParentView = parentView;
+        return this;
+    }
+
     public float getStartX() {
         return mStartX;
     }
@@ -211,6 +220,34 @@ public class CropDragView extends View {
 
     public float getCropHeight() {
         return mCropHeight;
+    }
+
+    public boolean isShowCropLine() {
+        return isShowCropLine;
+    }
+
+    public CropDragView setShowCropLine(boolean showCropLine) {
+        isShowCropLine = showCropLine;
+        invalidate();
+        return this;
+    }
+
+    public boolean isHideCropBorder() {
+        return isHideCropBorder;
+    }
+
+    public CropDragView setHideCropBorder(boolean hideCropBorder) {
+        isHideCropBorder = hideCropBorder;
+        invalidate();
+        return this;
+    }
+
+    public float getPhotoMinWidthPixels() {
+        return mPhotoMinWidthPixels;
+    }
+
+    public float getPhotoMinHeightPixels() {
+        return mPhotoMinHeightPixels;
     }
 
     public int getCropRate() {
@@ -242,6 +279,10 @@ public class CropDragView extends View {
             case CROP_RATE_FREE:
                 mCropMinWidth = mCropMinBaseLength;
                 mCropMinHeight = mCropMinBaseLength;
+
+                mCropMaxWidth = mWidth;
+                mCropMaxHeight = mHeight;
+
                 mPhotoMinWidthPixels = mPhotoMinBasePixels;
                 mPhotoMinHeightPixels = mPhotoMinBasePixels;
                 newCropWidth = mCropWidth;
@@ -250,6 +291,11 @@ public class CropDragView extends View {
             case CROP_RATE_11:
                 mCropMinWidth = mCropMinBaseLength;
                 mCropMinHeight = mCropMinBaseLength;
+
+                float min = Math.min(mWidth, mHeight);
+                mCropMaxWidth = min;
+                mCropMaxHeight = min;
+
                 mPhotoMinWidthPixels = mPhotoMinBasePixels;
                 mPhotoMinHeightPixels = mPhotoMinBasePixels;
 
@@ -261,6 +307,11 @@ public class CropDragView extends View {
             case CROP_RATE_34:
                 mCropMinWidth = mCropMinBaseLength;
                 mCropMinHeight = (mCropMinBaseLength * 4.0f / 3);
+
+                min = Math.min(mWidth * 1.0f / 3, mHeight * 1.0f / 4);
+                mCropMaxWidth = min * 3;
+                mCropMaxHeight = min * 4;
+
                 mPhotoMinWidthPixels = mPhotoMinBasePixels;
                 mPhotoMinHeightPixels = (mPhotoMinBasePixels * 4.0f / 3);
 
@@ -281,6 +332,11 @@ public class CropDragView extends View {
             case CROP_RATE_43:
                 mCropMinWidth = (mCropMinBaseLength * 4.0f / 3);
                 mCropMinHeight = mCropMinBaseLength;
+
+                min = Math.min(mWidth * 1.0f / 4, mHeight * 1.0f / 3);
+                mCropMaxWidth = min * 4;
+                mCropMaxHeight = min * 3;
+
                 mPhotoMinWidthPixels = (mPhotoMinBasePixels * 4.0f / 3);
                 mPhotoMinHeightPixels = mPhotoMinBasePixels;
 
@@ -312,7 +368,8 @@ public class CropDragView extends View {
             //计算切换比例尺后的，
             //裁剪框的长度宽度
 
-            if (picWidth < picHeight) {
+            if (picWidth < picHeight
+                    || (picWidth == picHeight && newCropWidth > picWidth)) {
                 newCropWidth = picWidth;
                 newCropHeight = computeCropHeightByWidth(newCropWidth);
             } else {
@@ -326,13 +383,13 @@ public class CropDragView extends View {
         if (newCropWidth > mWidth) {
             float scale = mWidth / newCropWidth;
             //缩小图片
-            mCropImageView.scale(scale);
+            mCropImageView.scaleWithAnim(scale);
             newCropWidth = mWidth;
             newCropHeight = computeCropHeightByWidth(newCropWidth);
         }
         if (newCropHeight > mHeight) {
             float scale = mHeight / newCropHeight;
-            mCropImageView.scale(scale);
+            mCropImageView.scaleWithAnim(scale);
             newCropHeight = mHeight;
             newCropWidth = computeCropWidthByHeight(newCropHeight);
         }
@@ -343,22 +400,26 @@ public class CropDragView extends View {
         newStartY = mStartY - (newCropHeight - mCropHeight) / 2;
         rectF = mCropImageView.getMatrixRectF();
         if (newStartX < rectF.left) {
-            mCropImageView.translate(newStartX - rectF.left, 0);
+            mCropImageView.translateWithAnim(newStartX - rectF.left, 0);
         }
         if (newStartX + newCropWidth > rectF.right) {
-            mCropImageView.translate(newStartX + newCropWidth - rectF.right, 0);
+            mCropImageView.translateWithAnim(newStartX + newCropWidth - rectF.right, 0);
         }
         if (newStartY < rectF.top) {
-            mCropImageView.translate(0, newStartY - rectF.top);
+            mCropImageView.translateWithAnim(0, newStartY - rectF.top);
         }
         if (newStartY + newCropHeight > rectF.bottom) {
-            mCropImageView.translate(0, newStartY + newCropHeight - rectF.bottom);
+            mCropImageView.translateWithAnim(0, newStartY + newCropHeight - rectF.bottom);
         }
 
 
+        /*float*/
         mCropWidth = newCropWidth;
+        /*float*/
         mCropHeight = newCropHeight;
+        /*float*/
         mStartX = (mWidth - mCropWidth) / 2;
+        /*float*/
         mStartY = (mHeight - mCropHeight) / 2;
 
         mCropImageView.updateShowInCenter(mStartX, mStartY, mCropWidth, mCropHeight);
@@ -405,41 +466,49 @@ public class CropDragView extends View {
         return mCropMinHeight;
     }
 
+    public void onTouchUp() {
+        postDelayed(mUpdateUIRunnable.setDragMode(mDragMode), 1000);
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
         if (mCropWidth == 0 || mCropHeight == 0) {
             return;
         }
         //border
-        mCropRect.set(mStartX, mStartY, mStartX + mCropWidth, mStartY + mCropHeight);
-        canvas.drawRect(mCropRect, mCropLinePaint);
+        if (!isHideCropBorder) {
+            mCropRect.set(mStartX, mStartY, mStartX + mCropWidth, mStartY + mCropHeight);
+            canvas.drawRect(mCropRect, mCropLinePaint);
 
-        // 4 lines
-        float horizontalStep = (mCropWidth / 3);
-        for (float x = mStartX + horizontalStep; x <= mStartX + horizontalStep + horizontalStep; x = x + horizontalStep) {
-            canvas.drawLine(x, mStartY, x, mStartY + mCropHeight, mCropLinePaint);
-        }
-        float verticalStep = (mCropHeight / 3);
-        for (float y = mStartY + verticalStep; y <= mStartY + verticalStep + verticalStep; y = y + verticalStep) {
-            canvas.drawLine(mStartX, y, mStartX + mCropWidth, y, mCropLinePaint);
-        }
+            // 4 lines
+            if (isShowCropLine) {
+                float horizontalStep = (mCropWidth / 3);
+                for (float x = mStartX + horizontalStep; x <= mStartX + horizontalStep + horizontalStep; x = x + horizontalStep) {
+                    canvas.drawLine(x, mStartY, x, mStartY + mCropHeight, mCropLinePaint);
+                }
+                float verticalStep = (mCropHeight / 3);
+                for (float y = mStartY + verticalStep; y <= mStartY + verticalStep + verticalStep; y = y + verticalStep) {
+                    canvas.drawLine(mStartX, y, mStartX + mCropWidth, y, mCropLinePaint);
+                }
+            }
 
-        //4 corners
-        float offset = (mCropCornerLineWidth - mCropLineWidth) / 2;
-        float cropCornerLineXLength = mCropCornerLineLength > mCropWidth ? mCropWidth : mCropCornerLineLength;
-        float cropCornerLineYLength = mCropCornerLineLength > mCropHeight ? mCropHeight : mCropCornerLineLength;
-        //lt
-        canvas.drawLine(mStartX + offset, mStartY + offset, mStartX + cropCornerLineXLength, mStartY + offset, mCropCornerPaint);
-        canvas.drawLine(mStartX + offset, mStartY + offset, mStartX + offset, mStartY + cropCornerLineYLength, mCropCornerPaint);
-        //rt
-        canvas.drawLine(mStartX + mCropWidth - offset, mStartY + offset, mStartX + mCropWidth - cropCornerLineXLength, mStartY + offset, mCropCornerPaint);
-        canvas.drawLine(mStartX + mCropWidth - offset, mStartY + offset, mStartX + mCropWidth - offset, mStartY + cropCornerLineYLength, mCropCornerPaint);
-        //rb
-        canvas.drawLine(mStartX + mCropWidth - offset, mStartY + mCropHeight - offset, mStartX + mCropWidth - cropCornerLineXLength, mStartY + mCropHeight - offset, mCropCornerPaint);
-        canvas.drawLine(mStartX + mCropWidth - offset, mStartY + mCropHeight - offset, mStartX + mCropWidth - offset, mStartY + mCropHeight - cropCornerLineYLength, mCropCornerPaint);
-        //lb
-        canvas.drawLine(mStartX + offset, mStartY + mCropHeight - offset, mStartX + cropCornerLineXLength, mStartY + mCropHeight - offset, mCropCornerPaint);
-        canvas.drawLine(mStartX + offset, mStartY + mCropHeight - offset, mStartX + offset, mStartY + mCropHeight - cropCornerLineYLength, mCropCornerPaint);
+            //4 corners
+            float offset = (mCropCornerLineWidth - mCropLineWidth) / 2;
+            float cropCornerLineXLength = mCropCornerLineLength > mCropWidth ? mCropWidth : mCropCornerLineLength;
+            float cropCornerLineYLength = mCropCornerLineLength > mCropHeight ? mCropHeight : mCropCornerLineLength;
+            //lt
+            canvas.drawLine(mStartX + offset, mStartY + offset, mStartX + cropCornerLineXLength, mStartY + offset, mCropCornerPaint);
+            canvas.drawLine(mStartX + offset, mStartY + offset, mStartX + offset, mStartY + cropCornerLineYLength, mCropCornerPaint);
+            //rt
+            canvas.drawLine(mStartX + mCropWidth - offset, mStartY + offset, mStartX + mCropWidth - cropCornerLineXLength, mStartY + offset, mCropCornerPaint);
+            canvas.drawLine(mStartX + mCropWidth - offset, mStartY + offset, mStartX + mCropWidth - offset, mStartY + cropCornerLineYLength, mCropCornerPaint);
+            //rb
+            canvas.drawLine(mStartX + mCropWidth - offset, mStartY + mCropHeight - offset, mStartX + mCropWidth - cropCornerLineXLength, mStartY + mCropHeight - offset, mCropCornerPaint);
+            canvas.drawLine(mStartX + mCropWidth - offset, mStartY + mCropHeight - offset, mStartX + mCropWidth - offset, mStartY + mCropHeight - cropCornerLineYLength, mCropCornerPaint);
+            //lb
+            canvas.drawLine(mStartX + offset, mStartY + mCropHeight - offset, mStartX + cropCornerLineXLength, mStartY + mCropHeight - offset, mCropCornerPaint);
+            canvas.drawLine(mStartX + offset, mStartY + mCropHeight - offset, mStartX + offset, mStartY + mCropHeight - cropCornerLineYLength, mCropCornerPaint);
+        }
 
         //shadow
         int layerId = canvas.saveLayer(0, 0, canvas.getWidth(), canvas.getHeight(), null, Canvas.ALL_SAVE_FLAG);
@@ -448,6 +517,22 @@ public class CropDragView extends View {
         canvas.drawRect(mCropRect, mBgPaint);
         mBgPaint.setXfermode(null);
         canvas.restoreToCount(layerId);
+
+//        int left = 0;
+//        int top = 0;
+//        int right = mWidth;
+//        int bottom = mHeight;
+////        if (isHideCropBorder) {
+////            mBgPaint.setColor(Color.parseColor("#000000"));
+////        } else {
+////            mBgPaint.setColor(Color.parseColor("#66000000"));
+////        }
+//        canvas.drawRect(left, top, right, mCropRect.top, mBgPaint);
+//        canvas.drawRect(left, mCropRect.bottom, right, bottom, mBgPaint);
+//
+//        canvas.drawRect(left, mCropRect.top, mCropRect.left, mCropRect.bottom, mBgPaint);
+//        canvas.drawRect(mCropRect.right, mCropRect.top, right, mCropRect.bottom, mBgPaint);
+
 
     }
 
@@ -464,6 +549,7 @@ public class CropDragView extends View {
 
         @Override
         public void run() {
+            setShowCropLine(false);
             if (null != mCropImageView) {
                 float scale = mCropImageView.getScale();
                 float widthPixels = mCropWidth / scale;
@@ -474,7 +560,7 @@ public class CropDragView extends View {
                 Log.d(TAG, "松手后 调整前，裁剪区域像素：" + widthPixels + "," + heightPixels);
                 if (xOffsetPixels < 0) {
                     // TODO: 2019/3/19  
-                    Toast.makeText(getContext(), "图片尺寸过小，无法进行裁剪", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getContext(), "图片尺寸过小，无法进行裁剪", Toast.LENGTH_SHORT).show();
                     float photoMinWidth = (mPhotoMinWidthPixels * scale);
                     switch (dragMode) {
                         case MODE_CORNER_LT:
@@ -515,7 +601,7 @@ public class CropDragView extends View {
                 }
                 if (yOffsetPixels < 0) {
                     // TODO: 2019/3/19
-                    Toast.makeText(getContext(), "图片尺寸过小，无法进行裁剪", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getContext(), "图片尺寸过小，无法进行裁剪", Toast.LENGTH_SHORT).show();
                     float photoMinHeight = (mPhotoMinHeightPixels * scale);
                     switch (dragMode) {
                         case MODE_CORNER_LT:
@@ -566,10 +652,21 @@ public class CropDragView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        Log.d(TAG, "cropdrageview onTouchEvent() called with: event = [" + event + "]");
         removeCallbacks(mUpdateUIRunnable);
 
         if (mCropImageView.checkTooLongWide()) {
+            mParentView.setBusy(false);
             return false;
+        }
+
+        //特殊case ：右手进行裁剪，过程中切换为左手 松手。
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
+                onTouchUp();
+                mDragMode = 0;
+                break;
         }
 
         float eventX = event.getX();
@@ -583,9 +680,13 @@ public class CropDragView extends View {
             case MotionEvent.ACTION_DOWN:
                 mLastDownPoint.set(eventX, eventY);
                 if (touchOnCorner(mCropRect, eventX, eventY)) {
+                    setShowCropLine(true);
+                    mParentView.setBusy(true);
                     return true;
                 } else if (mCropRate == CROP_RATE_FREE && touchOnBorder(mCropRect, eventX, eventY)) {
                     //只有自由比例时，四个边才允许拖拽
+                    setShowCropLine(true);
+                    mParentView.setBusy(true);
                     return true;
                 } else {
                 }
@@ -737,17 +838,20 @@ public class CropDragView extends View {
                         checkHeightInDrag();
                         break;
                 }
+                Log.d(TAG, "onTouchEvent() called with: moveX = [" + moveX + "],moveY:" + moveY
+                        + "onTouchEvent() called with: mCropWidth = [" + mCropWidth + "],mWidth:" + mWidth
+                        + "onTouchEvent() called with: mCropHeight = [" + mCropHeight + "],mHeight:" + mHeight);
                 //边界处理 limit max
                 checkBorderInDrag();
 
                 invalidate();
                 mLastDownPoint.set(eventX, eventY);
                 break;
-            case MotionEvent.ACTION_UP:
-            case MotionEvent.ACTION_CANCEL:
-                postDelayed(mUpdateUIRunnable.setDragMode(mDragMode), 1500);
-                mDragMode = 0;
-                break;
+//            case MotionEvent.ACTION_UP:
+//            case MotionEvent.ACTION_CANCEL:
+//                onTouchUp();
+//                mDragMode = 0;
+//                break;
         }
         return super.onTouchEvent(event);
     }
@@ -777,13 +881,23 @@ public class CropDragView extends View {
 
     private void checkHeightInDrag() {
         if (mCropHeight < mCropMinHeight) {
+            Log.e(TAG, "mCropHeight: " + mCropHeight + ",mCropMinHeight:" + mCropMinHeight);
             mCropHeight = mCropMinHeight;
+        }
+
+        if (mCropHeight > mCropMaxHeight) {
+            mCropHeight = mCropMaxHeight;
         }
     }
 
     private void checkWidthInDrag() {
         if (mCropWidth < mCropMinWidth) {
+            Log.e(TAG, "mCropHeight: " + mCropHeight + ",mCropMinWidth:" + mCropMinWidth);
             mCropWidth = mCropMinWidth;
+        }
+
+        if (mCropWidth > mCropMaxWidth) {
+            mCropWidth = mCropMaxWidth;
         }
     }
 
@@ -791,8 +905,15 @@ public class CropDragView extends View {
         float cropLimitLength;
         cropLimitLength = mCropHeight - mCropMinHeight;
         if (cropLimitLength < 0) {
+            Log.e(TAG, "checkStartYInDrag: " + cropLimitLength);
             mCropHeight -= cropLimitLength;
             mStartY += cropLimitLength;
+        }
+
+        float outOfLength = mCropHeight - mCropMaxHeight;
+        if (outOfLength > 0) {
+            mCropHeight -= outOfLength;
+            mStartY += outOfLength;
         }
     }
 
@@ -800,8 +921,15 @@ public class CropDragView extends View {
         float cropLimitLength;
         cropLimitLength = mCropWidth - mCropMinWidth;
         if (cropLimitLength < 0) {
+            Log.e(TAG, "checkStartYInDrag: " + cropLimitLength);
             mCropWidth -= cropLimitLength;
             mStartX += cropLimitLength;
+        }
+
+        float outOfLength = mCropWidth - mCropMaxWidth;
+        if (outOfLength > 0) {
+            mCropWidth -= outOfLength;
+            mStartX += outOfLength;
         }
     }
 

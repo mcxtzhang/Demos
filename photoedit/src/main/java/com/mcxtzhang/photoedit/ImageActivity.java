@@ -11,26 +11,33 @@ import android.view.View;
 
 import com.mcxtzhang.photoedit.widget.CropDragView;
 import com.mcxtzhang.photoedit.widget.CropImageView;
+import com.mcxtzhang.photoedit.widget.UGCPhotoCropRotateModel;
+import com.mcxtzhang.photoedit.widget.UgcCropView;
 
 public class ImageActivity extends AppCompatActivity {
-    CropImageView mCropImageView;
+    private boolean isLoading;
+    private boolean isCroping;
 
-    CropDragView mCropDragView;
+    private CropImageView mCropImageView;
+    private CropDragView mCropDragView;
+    private UgcCropView mUgcCropView;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image);
-        mCropImageView = findViewById(R.id.zoomImageView);
+        mUgcCropView = findViewById(R.id.ugcCropView);
+        mCropImageView = mUgcCropView.getCropImageView();
+        mCropDragView = mUgcCropView.getCropDragView();
 
-        mCropDragView = findViewById(R.id.cropView);
-
-        final Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.long1);
+        final Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.kuan);
 
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
-                PhotoCropRotateModel photoCropRotateModel = (PhotoCropRotateModel) getIntent().getSerializableExtra("data");
+                UGCPhotoCropRotateModel photoCropRotateModel = (UGCPhotoCropRotateModel) getIntent().getParcelableExtra("data");
                 mCropImageView.showBitmapInCenter(bitmap, photoCropRotateModel);
                 mCropImageView.setCropDragView(mCropDragView);
 
@@ -47,7 +54,7 @@ public class ImageActivity extends AppCompatActivity {
                 if (null == photoCropRotateModel) {
                     return;
                 }
-                float rotate = photoCropRotateModel.rotate;
+                double rotate = photoCropRotateModel.rotate;
                 if (rotate == 0) {
                 } else if (rotate == -90) {
                     //顺时针90度
@@ -128,11 +135,11 @@ public class ImageActivity extends AppCompatActivity {
                 if (mCropDragView.getCropRate() == CropDragView.CROP_RATE_34) {
                     resetCropRateStatusUI();
                     mMode43.setSelected(true);
-                    mCropDragView.setCropRate(CropDragView.CROP_RATE_43, true);
+                    mCropDragView.setCropRate(CropDragView.CROP_RATE_43, false);
                 } else if (mCropDragView.getCropRate() == CropDragView.CROP_RATE_43) {
                     resetCropRateStatusUI();
                     mMode34.setSelected(true);
-                    mCropDragView.setCropRate(CropDragView.CROP_RATE_34, true);
+                    mCropDragView.setCropRate(CropDragView.CROP_RATE_34, false);
                 }
             }
         });

@@ -3,20 +3,21 @@ package com.mcxtzhang.photoedit.util;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 
-import com.mcxtzhang.photoedit.PhotoCropRotateModel;
+import com.mcxtzhang.photoedit.widget.UGCPhotoCropRotateModel;
+
 
 /**
  * Created by zhangxutong on 2019/3/26.
  */
 
 public class CropRotatePhotoUtil {
-    public static Bitmap transform(Bitmap originBitmap, PhotoCropRotateModel photoCropRotateModel) {
+    public static Bitmap transform(Bitmap originBitmap, UGCPhotoCropRotateModel photoCropRotateModel) {
         if (originBitmap == null || photoCropRotateModel == null) {
             return null;
         }
 
         Matrix matrix = new Matrix();
-        float rotate = photoCropRotateModel.rotate;
+        double rotate = photoCropRotateModel.rotate;
         if (rotate == 0) {
         } else if (rotate == -90) {
             //顺时针90度

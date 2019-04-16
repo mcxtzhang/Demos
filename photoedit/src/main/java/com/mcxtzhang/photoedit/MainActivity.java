@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.mcxtzhang.photoedit.util.CropRotatePhotoUtil;
+import com.mcxtzhang.photoedit.widget.UGCPhotoCropRotateModel;
 
 public class MainActivity extends AppCompatActivity {
     ImageView mImageView;
@@ -78,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    PhotoCropRotateModel mPhotoCropRotateModel;
+    UGCPhotoCropRotateModel mPhotoCropRotateModel;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -89,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
 //        Bitmap bitmap = BitmapFactory.decodeFile(cropPicPath);
 //        mImageView.setImageBitmap(bitmap);
         if (resultCode == RESULT_OK) {
-            mPhotoCropRotateModel = (PhotoCropRotateModel) data.getSerializableExtra("photo_crop");
+            mPhotoCropRotateModel = (UGCPhotoCropRotateModel) data.getParcelableExtra("photo_crop");
         }
     }
 }
