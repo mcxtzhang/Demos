@@ -194,7 +194,7 @@ public class CropDragView extends View {
             err.append(stack[i].toString());
             err.append("\n");
         }
-        //Log.e(TAG, "pro1_: " + err.toString());
+        Log.e(TAG, "pro1_: " + err.toString());
 
 
         mStartX = startX;
@@ -672,7 +672,7 @@ public class CropDragView extends View {
         Log.e(TAG, "cropdrageview onTouchEvent() called with: event = [" + event + "]");
         removeCallbacks(mUpdateUIRunnable);
 
-        if (!mCropImageView.isBusy() && mCropImageView.checkTooLongWide()) {
+        if (mCropImageView.checkTooLongWide()) {
             mParentView.setBusy(false);
             return false;
         }

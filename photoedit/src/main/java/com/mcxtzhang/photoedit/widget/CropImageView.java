@@ -642,6 +642,9 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
     }
 
     public boolean checkTooLongWide() {
+        if (isBusy()) {
+            return false;
+        }
         RectF matrixRectF = getMatrixRectF();
         float scale = Math.max(mCropDragView.getCropMinHeight() / matrixRectF.height(), mCropDragView.getCropMinWidth() / matrixRectF.width());
 
