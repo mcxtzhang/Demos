@@ -30,6 +30,7 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
     private Matrix mImageMatrix = new Matrix();
     private final float[] mFloats = new float[9];
     private Bitmap mOriginBitmap;
+    private boolean isBusy;
 
     private ScaleGestureDetector mScaleGestureDetector = null;
 
@@ -111,6 +112,10 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
 
     }
 
+    public boolean isBusy() {
+        return isBusy;
+    }
+
     public CropImageView setParentView(UgcCropView parentView) {
         mParentView = parentView;
         return this;
@@ -185,6 +190,7 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 mParentView.setBusy(true);
+                isBusy = true;
                 break;
             case MotionEvent.ACTION_MOVE:
                 if (!isReported) {
@@ -216,6 +222,7 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
 
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
+                isBusy = false;
                 isReported = false;
                 lastPointerCount = 0;
 
@@ -639,6 +646,8 @@ public class CropImageView extends android.support.v7.widget.AppCompatImageView 
         float scale = Math.max(mCropDragView.getCropMinHeight() / matrixRectF.height(), mCropDragView.getCropMinWidth() / matrixRectF.width());
 
         if (scale > 1) {
+            Log.e(TAG, "pro1_ do checkTooLongWide: ");
+
             mImageMatrix.postScale(scale, scale, getWidth() / 2, getHeight() / 2);
             setImageMatrix(mImageMatrix);
 

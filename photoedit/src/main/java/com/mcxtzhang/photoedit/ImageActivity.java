@@ -23,7 +23,6 @@ public class ImageActivity extends AppCompatActivity {
     private UgcCropView mUgcCropView;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +31,7 @@ public class ImageActivity extends AppCompatActivity {
         mCropImageView = mUgcCropView.getCropImageView();
         mCropDragView = mUgcCropView.getCropDragView();
 
-        final Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.kuan);
+        final Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.pic1);
 
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
@@ -155,6 +154,13 @@ public class ImageActivity extends AppCompatActivity {
                         .initCropAreaPosition();
                 resetCropRateStatusUI();
                 mModeNormal.setSelected(true);
+            }
+        });
+
+        findViewById(R.id.tvCancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
 

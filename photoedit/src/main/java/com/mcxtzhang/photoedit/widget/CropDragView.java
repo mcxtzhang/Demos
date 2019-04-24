@@ -182,6 +182,21 @@ public class CropDragView extends View {
     }
 
     public CropDragView setStartX(float startX) {
+        Log.e(TAG, "setStartX: " + Thread.getAllStackTraces());
+
+        StringBuffer err = new StringBuffer();
+        StackTraceElement[] stack = Thread.currentThread().getStackTrace();
+        String callClassMethodName = null;
+        for (int i = 0; i < stack.length; i++) {
+            String className = stack[i].getClassName();
+            callClassMethodName = className.substring(className.lastIndexOf('.') + 1) + "_" + stack[i].getMethodName();
+            err.append("\tat ");
+            err.append(stack[i].toString());
+            err.append("\n");
+        }
+        //Log.e(TAG, "pro1_: " + err.toString());
+
+
         mStartX = startX;
         return this;
     }
@@ -512,8 +527,10 @@ public class CropDragView extends View {
 
         //shadow
         int layerId = canvas.saveLayer(0, 0, canvas.getWidth(), canvas.getHeight(), null, Canvas.ALL_SAVE_FLAG);
+        mBgPaint.setColor(Color.parseColor("#b2000000"));
         canvas.drawRect(0, 0, mWidth, mHeight, mBgPaint);
         mBgPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OUT));
+        mBgPaint.setColor(Color.parseColor("#000000"));
         canvas.drawRect(mCropRect, mBgPaint);
         mBgPaint.setXfermode(null);
         canvas.restoreToCount(layerId);
@@ -652,10 +669,10 @@ public class CropDragView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        Log.d(TAG, "cropdrageview onTouchEvent() called with: event = [" + event + "]");
+        Log.e(TAG, "cropdrageview onTouchEvent() called with: event = [" + event + "]");
         removeCallbacks(mUpdateUIRunnable);
 
-        if (mCropImageView.checkTooLongWide()) {
+        if (!mCropImageView.isBusy() && mCropImageView.checkTooLongWide()) {
             mParentView.setBusy(false);
             return false;
         }
@@ -672,7 +689,7 @@ public class CropDragView extends View {
         float eventX = event.getX();
         float eventY = event.getY();
         Log.d(TAG, "onTouchEvent() called with: event = [" + event + ",    " + mTouchDeviationThreshold + ",,, " + mDragMode);
-        if (event.getPointerId(0) > 0) {
+        if (event.getPointerId(0) > 0 || mCropImageView.isBusy()) {
             //多指
             return super.onTouchEvent(event);
         }
