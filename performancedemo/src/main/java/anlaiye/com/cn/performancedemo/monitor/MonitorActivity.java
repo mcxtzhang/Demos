@@ -1,6 +1,8 @@
 package anlaiye.com.cn.performancedemo.monitor;
 
 import android.os.Bundle;
+import android.os.Looper;
+import android.os.MessageQueue;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -16,7 +18,7 @@ public class MonitorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_monitor);
 
         //PerformanceMonitorUtils.monitorMainLooper();
-        PerformanceMonitorUtils.monitorChoreoGrapher();
+        //PerformanceMonitorUtils.monitorChoreoGrapher();
         //PerformanceMonitorUtils.monitorFrameMetrics(this);
         //new ActivityFrameMetrics.Builder().build().startFrameMetrics(this);
         /**
@@ -25,13 +27,13 @@ public class MonitorActivity extends AppCompatActivity {
          * 而且，内部的 queueIdle() 方法若返回 true，表示该任务一直存活，
          * 每次 Looper 进入 Idle 时就执行；反之，如果返回 false，则表示只会执行一次，执行完后丢弃。
          */
-        /*Looper.myQueue().addIdleHandler(new MessageQueue.IdleHandler() {
+        Looper.myQueue().addIdleHandler(new MessageQueue.IdleHandler() {
             @Override
             public boolean queueIdle() {
                 Log.e("TAG", "queueIdle: 现在空了");
                 return true;
             }
-        });*/
+        });
         findViewById(R.id.btnJumpA).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
