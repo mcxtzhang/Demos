@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -15,27 +16,28 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="origin drawable  in drawable-xxhdpi:" />
+            android:text="错误用法，图片有透明边缘，占用内存过大：" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/picassobox_loading_xxh" />
+            android:background="@drawable/loading_withpadding_xxh" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="控件有尺寸的 origin drawable，:" />
-
-        <TextView
-            android:layout_width="93dp"
-            android:layout_height="93dp"
-            android:background="@drawable/picassobox_loading_xxh" />
+            android:text="正确用法1，切图不该有透明边缘，利用控件补margin：" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="padding drawable:" />
+            android:layout_margin="33.66dp"
+            android:background="@drawable/loading_only_xxh" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="正确用法2，切图不该有透明边缘，利用inset包装Bitmap：" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -43,68 +45,99 @@
             android:background="@drawable/padding_drawable" />
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="控件有尺寸(93dp)的 padding drawable:" />
+        <!--        <TextView-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="origin drawable  in drawable-xxhdpi:" />-->
 
-        <TextView
-            android:layout_width="93dp"
-            android:layout_height="93dp"
-            android:background="@drawable/padding_drawable" />
+        <!--        <TextView-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:background="@drawable/loading_only_xxh" />-->
 
+        <!--        <TextView-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="控件有尺寸的 origin drawable，:" />-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="控件有尺寸(200dp)的 padding drawable:" />
+        <!--        <TextView-->
+        <!--            android:layout_width="100dp"-->
+        <!--            android:layout_height="100dp"-->
+        <!--            android:background="@drawable/loading_only_xxh" />-->
 
-        <TextView
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:background="@drawable/padding_drawable" />
+        <!--        <TextView-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="padding drawable:" />-->
 
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="控件有尺寸(30dp)的 padding drawable:" />
-
-        <TextView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@drawable/padding_drawable" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="控件有尺寸(40dp)的 padding drawable:" />
-
-        <TextView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/padding_drawable" />
+        <!--        <TextView-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:background="@drawable/padding_drawable" />-->
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="控件有尺寸(70dp)的 padding drawable:" />
+        <!--        <TextView-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="控件有尺寸(100dp)的 padding drawable:" />-->
 
-        <TextView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:background="@drawable/padding_drawable" />
+        <!--        <TextView-->
+        <!--            android:layout_width="100dp"-->
+        <!--            android:layout_height="100dp"-->
+        <!--            android:background="@drawable/padding_drawable" />-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="origin drawable in drawable/:" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/picassobox_loading" />
+        <!--        <TextView-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="控件有尺寸(200dp)的 padding drawable:" />-->
+
+        <!--        <TextView-->
+        <!--            android:layout_width="200dp"-->
+        <!--            android:layout_height="200dp"-->
+        <!--            android:background="@drawable/padding_drawable" />-->
+
+
+        <!--        <TextView-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="控件有尺寸(30dp)的 padding drawable:" />-->
+
+        <!--        <TextView-->
+        <!--            android:layout_width="30dp"-->
+        <!--            android:layout_height="30dp"-->
+        <!--            android:background="@drawable/padding_drawable" />-->
+
+        <!--        <TextView-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="控件有尺寸(40dp)的 padding drawable:" />-->
+
+        <!--        <TextView-->
+        <!--            android:layout_width="40dp"-->
+        <!--            android:layout_height="40dp"-->
+        <!--            android:background="@drawable/padding_drawable" />-->
+
+
+        <!--        <TextView-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="控件有尺寸(70dp)的 padding drawable:" />-->
+
+        <!--        <TextView-->
+        <!--            android:layout_width="70dp"-->
+        <!--            android:layout_height="70dp"-->
+        <!--            android:background="@drawable/padding_drawable" />-->
+
+        <!--        <TextView-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="origin drawable in drawable/:" />-->
+
+        <!--        <TextView-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:background="@drawable/picassobox_loading" />-->
 
     </LinearLayout>
 </ScrollView>
