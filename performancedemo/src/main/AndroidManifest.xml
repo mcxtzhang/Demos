@@ -12,6 +12,13 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".lint.TestInnerClassActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".drawable.DrawableActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,8 +37,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".monitor.list.RvActivity"></activity>
-        <activity android:name=".merge.TestMergeParentActivity"></activity>
+        <activity android:name=".monitor.list.RvActivity" />
+        <activity android:name=".merge.TestMergeParentActivity" />
     </application>
 
 </manifest>
