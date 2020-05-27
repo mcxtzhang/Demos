@@ -2,6 +2,7 @@ package anlaiye.com.cn.performancedemo;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Debug;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -27,9 +28,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String temp = "temp";
-                for (int i = 0; i < 1000; i++) {
+                for (int i = 0; i < 20000; i++) {
                     temp = temp + i;
                 }
+                Log.d(TAG, "onClick() called with: temp = [" + temp + "]");
 
             }
         });
@@ -38,10 +40,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 StringBuilder sb = new StringBuilder("temp");
-                for (int i = 0; i < 1000; i++) {
+                for (int i = 0; i < 20000; i++) {
                     sb.append(i);
                 }
-
+                Log.d(TAG, "onClick() called with: sb = [" + sb + "]");
             }
         });
 
@@ -67,6 +69,24 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, TestMeasureActivity.class));
+            }
+        });
+
+        findViewById(R.id.gcInfos).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+// 运行的GC次数
+                String gcCounts = Debug.getRuntimeStat("art.gc.gc-count");
+// GC使用的总耗时，单位是毫秒
+                String gcTimes = Debug.getRuntimeStat("art.gc.gc-time");
+// 阻塞式GC的次数
+                String blockGcCounts = Debug.getRuntimeStat("art.gc.blocking-gc-count");
+// 阻塞式GC的总耗时
+                String blockGcTimes = Debug.getRuntimeStat("art.gc.blocking-gc-time");
+
+                Log.d(TAG, "onClick() called with: 运行的GC次数 = [" + gcCounts + "], GC使用的总耗时:" + gcTimes +
+                        ", 阻塞式GC的次数:" + blockGcCounts + ",  阻塞式GC的总耗时:" + blockGcTimes);
+
             }
         });
 
