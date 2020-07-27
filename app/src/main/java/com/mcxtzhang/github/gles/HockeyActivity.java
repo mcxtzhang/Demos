@@ -8,6 +8,7 @@ import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.mcxtzhang.github.R;
@@ -54,7 +55,7 @@ public class HockeyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hockey);
 
-        glSurfaceView = new GLSurfaceView(this);
+        glSurfaceView = (GLSurfaceView) findViewById(R.id.glSurfaceView);
 
 
         ActivityManager activityManager =
@@ -75,10 +76,31 @@ public class HockeyActivity extends AppCompatActivity {
         // 指定渲染器
         //glSurfaceView.setRenderer(new HockeyRenderer(this));
         rendererSet = true;
-        glSurfaceView.setRenderer(new HelloWorldRender());
+        //glSurfaceView.setRenderer(new HelloWorldRender());
+
+        final changeDrawModeRender changeDrawModeRender = new changeDrawModeRender();
+        glSurfaceView.setRenderer(changeDrawModeRender);
+        findViewById(R.id.btn1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeDrawModeRender.setDrawMode(GLES20.GL_TRIANGLES);
+            }
+        });
+        findViewById(R.id.btn2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeDrawModeRender.setDrawMode(GLES20.GL_TRIANGLE_STRIP);
+            }
+        });
+        findViewById(R.id.btn3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeDrawModeRender.setDrawMode(GLES20.GL_TRIANGLE_FAN);
+            }
+        });
 
 
-        setContentView(glSurfaceView);
+        //addContentView(glSurfaceView,new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT ));
 
 
         vertexData = ByteBuffer
@@ -143,7 +165,6 @@ public class HockeyActivity extends AppCompatActivity {
 
             GLES20.glEnableVertexAttribArray(aPositionLocation);
             GLES20.glVertexAttribPointer(aPositionLocation, POSITION_COMPONENT_COUNT, GLES20.GL_FLOAT, false, 0, vertexData);
-
 
 
         }
