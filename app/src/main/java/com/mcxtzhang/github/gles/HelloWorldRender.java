@@ -14,18 +14,54 @@ public class HelloWorldRender implements GLSurfaceView.Renderer {
     private int glSurfaceViewWidth;
     private int glSurfaceViewHeight;
 
-    private String vertexShaderCode =
+
+    /**
+     * gl_Position是vertex shader的一个内置变量，表示vertex shader的输出，在我们之前的例子，是直接将输入的顶点原样又输出了，本文将对顶点做变换，先看个简单的例子：
+     */
+/*    private String vertexShaderCode =
             "precision mediump float;\n" +
                     "attribute vec4 a_Position;\n" +
                     "void main() {\n" +
-                    "    gl_Position = a_Position;\n" +
+                    "    gl_Position = a_Position +vec4(0.5,0.5,0,0);\n" +
                     "}";
 
     private String fragmentShaderCode =
             "precision mediump float;\n" +
                     "void main() {\n" +
                     "    gl_FragColor = vec4(0.0, 0.0, 1.0, 1.0);\n" +
+                    "}";*/
+
+
+    /**
+     * 在OpenGL ES 2.0中，attribute就是输入，varying就是从vertex shader往fragment shader的输出
+     */
+    private String vertexShaderCode =
+            "precision mediump float;\n" +
+                    "attribute vec4 a_Position;\n" +
+                    "attribute vec4 a_Color;\n" +
+                    "varying vec4 v_Color;\n" +
+                    "void main() {\n" +
+                    "    gl_Position = a_Position ;\n" +
+                    "    v_Color = a_Color ;\n" +
                     "}";
+
+    private String fragmentShaderCode =
+            "precision mediump float;\n" +
+                    "varying vec4 v_Color;\n" +
+                    "void main() {\n" +
+                    "    gl_FragColor = v_Color;\n" +
+                    "}";
+
+
+    // 颜色数据
+    // The color data
+    private float[] colorData = new float[]{
+            1.0f, 0.0f, 0.0f, 1.0f,
+            0.0f, 1.0f, 0.0f, 1.0f,
+            0.0f, 0.0f, 1.0f, 1.0f};
+    // 每个颜色的成份数（RGBA）
+    // The num of components of per color(RGBA)
+    private int COLOR_COMPONENT_COUNT = 4;
 
 
     @Override
@@ -58,20 +94,20 @@ public class HelloWorldRender implements GLSurfaceView.Renderer {
 
         // 三角形顶点数据
         // The vertex data of a triangle
-  /*      float[] vertexData = new float[]{
+        float[] vertexData = new float[]{
                 0f, 0.5f,
                 -0.5f, -0.5f,
-                0.5f, -0.5f};*/
+                0.5f, -0.5f};
 
 
-        //两个三角形
-        float[] vertexData = new float[]{
-                -0.5f, 1f,
-                -1f, 0f,
-                0, 0,
-                0, 0,
-                1, 0,
-                0.5f, -1f};
+//        //两个三角形
+//        float[] vertexData = new float[]{
+//                -0.5f, 1f,
+//                -1f, 0f,
+//                0, 0,
+//                0, 0,
+//                1, 0,
+//                0.5f, -1f};
 
 // 将三角形顶点数据放入buffer中
 // Put the triangle vertex data into the buffer
@@ -92,6 +128,19 @@ public class HelloWorldRender implements GLSurfaceView.Renderer {
         // 指定a_Position所使用的顶点数据
         // Specify the vertex data of a_Position
         GLES20.glVertexAttribPointer(location, 2, GLES20.GL_FLOAT, false, 0, buffer);
+
+
+        // 将三角形顶点数据放入buffer中
+// Put the triangle vertex data into the buffer
+        FloatBuffer colorDataBuffer = ByteBuffer.allocateDirect(colorData.length * java.lang.Float.SIZE)
+                .order(ByteOrder.nativeOrder())
+                .asFloatBuffer();
+        colorDataBuffer.put(colorData);
+        colorDataBuffer.position(0);
+
+        int a_color = GLES20.glGetAttribLocation(programId, "a_Color");
+        GLES20.glEnableVertexAttribArray(a_color);
+        GLES20.glVertexAttribPointer(a_color, COLOR_COMPONENT_COUNT, GLES20.GL_FLOAT, false, 0, colorDataBuffer);
 
 
     }
@@ -116,7 +165,7 @@ public class HelloWorldRender implements GLSurfaceView.Renderer {
 
         GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, 3);
 
-        GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 3, 3);
+        //GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 3, 3);
 
     }
 }
