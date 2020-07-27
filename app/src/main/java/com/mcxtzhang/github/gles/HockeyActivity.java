@@ -3,15 +3,16 @@ package com.mcxtzhang.github.gles;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.ConfigurationInfo;
+import android.graphics.BitmapFactory;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import com.mcxtzhang.github.R;
+import com.mcxtzhang.github.gles.render.ImageRender;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -78,27 +79,30 @@ public class HockeyActivity extends AppCompatActivity {
         rendererSet = true;
         //glSurfaceView.setRenderer(new HelloWorldRender());
 
-        final changeDrawModeRender changeDrawModeRender = new changeDrawModeRender();
-        glSurfaceView.setRenderer(changeDrawModeRender);
-        findViewById(R.id.btn1).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeDrawModeRender.setDrawMode(GLES20.GL_TRIANGLES);
-            }
-        });
-        findViewById(R.id.btn2).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeDrawModeRender.setDrawMode(GLES20.GL_TRIANGLE_STRIP);
-            }
-        });
-        findViewById(R.id.btn3).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeDrawModeRender.setDrawMode(GLES20.GL_TRIANGLE_FAN);
-            }
-        });
+//        final changeDrawModeRender changeDrawModeRender = new changeDrawModeRender();
+//        glSurfaceView.setRenderer(changeDrawModeRender);
+//        findViewById(R.id.btn1).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                changeDrawModeRender.setDrawMode(GLES20.GL_TRIANGLES);
+//            }
+//        });
+//        findViewById(R.id.btn2).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                changeDrawModeRender.setDrawMode(GLES20.GL_TRIANGLE_STRIP);
+//            }
+//        });
+//        findViewById(R.id.btn3).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                changeDrawModeRender.setDrawMode(GLES20.GL_TRIANGLE_FAN);
+//            }
+//        });
 
+
+        //lessen 6
+        glSurfaceView.setRenderer(new ImageRender(BitmapFactory.decodeResource(getResources(), R.drawable.big_image)));
 
         //addContentView(glSurfaceView,new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT ));
 
