@@ -73,9 +73,9 @@ public class HockeyActivity extends AppCompatActivity {
 
 
         // 指定渲染器
-        glSurfaceView.setRenderer(new HockeyRenderer(this));
+        //glSurfaceView.setRenderer(new HockeyRenderer(this));
         rendererSet = true;
-   //     glSurfaceView.setRenderer(new HelloWorldRender());
+        glSurfaceView.setRenderer(new HelloWorldRender());
 
 
         setContentView(glSurfaceView);

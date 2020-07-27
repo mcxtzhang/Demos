@@ -58,10 +58,20 @@ public class HelloWorldRender implements GLSurfaceView.Renderer {
 
         // 三角形顶点数据
         // The vertex data of a triangle
-        float[] vertexData = new float[]{
+  /*      float[] vertexData = new float[]{
                 0f, 0.5f,
                 -0.5f, -0.5f,
-                0.5f, -0.5f};
+                0.5f, -0.5f};*/
+
+
+        //两个三角形
+        float[] vertexData = new float[]{
+                -0.5f, 1f,
+                -1f, 0f,
+                0, 0,
+                0, 0,
+                1, 0,
+                0.5f, -1f};
 
 // 将三角形顶点数据放入buffer中
 // Put the triangle vertex data into the buffer
@@ -105,6 +115,8 @@ public class HelloWorldRender implements GLSurfaceView.Renderer {
         GLES20.glViewport(0, 0, glSurfaceViewWidth, glSurfaceViewHeight);
 
         GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, 3);
+
+        GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 3, 3);
 
     }
 }
