@@ -2,9 +2,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 
-
-
-
 android {
     compileSdkVersion 25
     buildToolsVersion '26.0.2'
@@ -25,6 +22,7 @@ android {
 }
 
 dependencies {
+    implementation 'com.android.support:appcompat-v7:25.4.0'
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
     // Because RxAndroid releases are few and far between, it is recommended you also
@@ -34,10 +32,10 @@ dependencies {
     compile project(':library')
     annotationProcessor project(':compiler')
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    compile 'com.github.mcxtzhang:PathAnimView:V1.0.0'
-    compile 'io.reactivex:rxandroid:1.2.1'
-    compile 'io.reactivex:rxjava:1.1.6'
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha8'
+    implementation 'com.github.mcxtzhang:PathAnimView:V1.0.0'
+    implementation 'io.reactivex:rxandroid:1.2.1'
+    implementation 'io.reactivex:rxjava:1.1.6'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.0-alpha8'
     testCompile 'junit:junit:4.12'
     compile project(':zxtcommonlib')
     //compile ('com.github.mcxtzhang:all-base-adapter:V1.8.0')
@@ -64,8 +62,6 @@ class DataAndTimePlugin implements Plugin<Project> {
         project.tasks.create('showDate') << {
             println("Current data is " + new Date().format(project.dateAndTime.dateFormat))
         }
-
-
 
 
         project.afterEvaluate {
