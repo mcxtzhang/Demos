@@ -3,6 +3,7 @@ package com.mcxtzhang.github.gles.render;
 import android.graphics.Bitmap;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
+import android.opengl.GLUtils;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -28,8 +29,10 @@ public class ImageRender implements GLSurfaceView.Renderer {
                     "    v_textureCoordinate = a_textureCoordinate;\n" +
                     "}";
 
-    //关键点是uniform sampler2D u_texture;这句，它声明了一个2D的采样器用于采样纹理。
+
     /**
+     * 关键点是uniform sampler2D u_texture;这句，它声明了一个2D的采样器用于采样纹理。
+     * <p>
      * varying vec2 v_textureCoordinate;则是从vertex shader中传递过来的一个经过插值的纹理坐标值，关于varying变量
      * gl_FragColor = texture2D(u_texture, v_textureCoordinate);就是从纹理中采样出v_textureCoordinate坐标所对应的颜色作为fragment shader的输出
      * <p>
@@ -53,7 +56,7 @@ public class ImageRender implements GLSurfaceView.Renderer {
             -1f, -1f,
             1f, 1f,
             1f, -1f};
-//
+    //
 //    private float[] vertexData = new float[]{
 //            -1f*5, -1f*5,
 //            -1f*5, 1f*5,
@@ -71,13 +74,13 @@ public class ImageRender implements GLSurfaceView.Renderer {
 //            1f, 0f,
 //            1f, 1f};
     private float[] textureCoordinateData = new float[]{
-            0f*3, 1f*3,
-            0f*3, 0f*3,
-            1f*3, 0f*3,
+            0f * 3, 1f * 3,
+            0f * 3, 0f * 3,
+            1f * 3, 0f * 3,
 
-            0f*3, 1f*3,
-            1f*3, 0f*3,
-            1f*3, 1f*3};
+            0f * 3, 1f * 3,
+            1f * 3, 0f * 3,
+            1f * 3, 1f * 3};
 
 
     private Bitmap mBitmap;
@@ -88,7 +91,6 @@ public class ImageRender implements GLSurfaceView.Renderer {
 
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-
         // 创建GL程序
         // Create GL program
         int programId = GLES20.glCreateProgram();
@@ -145,6 +147,7 @@ public class ImageRender implements GLSurfaceView.Renderer {
         GLES20.glVertexAttribPointer(a_textureCoordinate, 2, GLES20.GL_FLOAT, false, 0, textureBuffer);
 
 
+
         int[] textures = new int[1];
         GLES20.glGenTextures(textures.length, textures, 0);
         int imageTexture = textures[0];
@@ -167,20 +170,23 @@ public class ImageRender implements GLSurfaceView.Renderer {
         GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_T, GLES20.GL_REPEAT);
 
 
-        ByteBuffer byteBuffer = ByteBuffer.allocate(mBitmap.getWidth() * mBitmap.getHeight() * 4);
-        mBitmap.copyPixelsToBuffer(byteBuffer);
-        byteBuffer.position(0);
+//        ByteBuffer byteBuffer = ByteBuffer.allocate(mBitmap.getWidth() * mBitmap.getHeight() * 4);
+//        mBitmap.copyPixelsToBuffer(byteBuffer);
+//        byteBuffer.position(0);
+//
+//
+//        GLES20.glTexImage2D(GLES20.GL_TEXTURE_2D,
+//                0,
+//                GLES20.GL_RGBA,
+//                mBitmap.getWidth(),
+//                mBitmap.getHeight(),
+//                0,
+//                GLES20.GL_RGBA,
+//                GLES20.GL_UNSIGNED_BYTE,
+//                byteBuffer);
 
 
-        GLES20.glTexImage2D(GLES20.GL_TEXTURE_2D,
-                0,
-                GLES20.GL_RGBA,
-                mBitmap.getWidth(),
-                mBitmap.getHeight(),
-                0,
-                GLES20.GL_RGBA,
-                GLES20.GL_UNSIGNED_BYTE,
-                byteBuffer);
+        GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, mBitmap, 0);
 
 
         int uTextureLocation = GLES20.glGetAttribLocation(programId, "u_texture");
