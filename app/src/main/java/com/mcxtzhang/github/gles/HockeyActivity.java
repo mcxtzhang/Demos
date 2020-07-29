@@ -12,7 +12,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.mcxtzhang.github.R;
-import com.mcxtzhang.github.gles.render.ImageRender;
+import com.mcxtzhang.github.gles.render.FrameButterRender;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -102,9 +102,13 @@ public class HockeyActivity extends AppCompatActivity {
 
 
         //lessen 6
-        glSurfaceView.setRenderer(new ImageRender(BitmapFactory.decodeResource(getResources(), R.drawable.big_image)));
+        //glSurfaceView.setRenderer(new ImageRender(BitmapFactory.decodeResource(getResources(), R.drawable.big_image)));
 
         //addContentView(glSurfaceView,new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT ));
+
+        //lessen 7
+        glSurfaceView.setRenderer(new FrameButterRender(BitmapFactory.decodeResource(getResources(), R.drawable.big_image)));
+
 
 
         vertexData = ByteBuffer
