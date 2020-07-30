@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLUtils;
+import android.util.Log;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -118,6 +119,7 @@ public class FrameButterRender implements GLSurfaceView.Renderer {
 
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
+        Log.e("TAG", "onSurfaceCreated: " );
         // 初始化坐标、图片数据
         // Init the coordinates and image texture
         initData();
@@ -133,6 +135,7 @@ public class FrameButterRender implements GLSurfaceView.Renderer {
 
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height) {
+        Log.w("TAG", "onSurfaceChanged: " );
         // 记录GLSurfaceView的宽高
         // Record the width and height of the GLSurfaceView
         glSurfaceViewWidth = width;
