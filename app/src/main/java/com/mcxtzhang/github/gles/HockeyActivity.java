@@ -3,7 +3,6 @@ package com.mcxtzhang.github.gles;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.ConfigurationInfo;
-import android.graphics.BitmapFactory;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
@@ -12,7 +11,8 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.mcxtzhang.github.R;
-import com.mcxtzhang.github.gles.render.FrameButterRender;
+import com.mcxtzhang.github.gles.render.hockey.FirstHockeyRender;
+import com.mcxtzhang.github.gles.render.hockey.ShaderHelper;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -107,8 +107,11 @@ public class HockeyActivity extends AppCompatActivity {
         //addContentView(glSurfaceView,new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT ));
 
         //lessen 7
-        glSurfaceView.setRenderer(new FrameButterRender(BitmapFactory.decodeResource(getResources(), R.drawable.big_image)));
+        //glSurfaceView.setRenderer(new FrameButterRender(BitmapFactory.decodeResource(getResources(), R.drawable.big_image)));
 
+
+        //hockey lessen 1
+        glSurfaceView.setRenderer(new FirstHockeyRender());
 
 
         vertexData = ByteBuffer

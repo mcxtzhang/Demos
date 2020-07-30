@@ -1,5 +1,5 @@
 package com.mcxtzhang.github.gles;
 
-class LoggerConfig {
+public class LoggerConfig {
     public static final boolean ON = true;
 }

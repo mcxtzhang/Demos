@@ -1,7 +1,9 @@
-package com.mcxtzhang.github.gles;
+package com.mcxtzhang.github.gles.render.hockey;
 
 import android.opengl.GLES20;
 import android.util.Log;
+
+import com.mcxtzhang.github.gles.LoggerConfig;
 
 import static android.opengl.GLES20.GL_COMPILE_STATUS;
 import static android.opengl.GLES20.GL_FRAGMENT_SHADER;
