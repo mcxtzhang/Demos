@@ -53,8 +53,8 @@ public class Chapter5Render implements GLSurfaceView.Renderer {
             -0.25f, -0.5f, 0.7f, 0.7f, 0.7f,
 
             //line 1
-            -0.5f, 0f, 1f, 0f, 0f,
-            0.5f, 0f, 1f, 0f, 0f,
+            -0.25f, 0f, 1f, 0f, 0f,
+            0.25f, 0f, 1f, 0f, 0f,
 
             //2 mallets
             0f, -0.25f, 0f, 0f, 1f,
@@ -110,15 +110,20 @@ public class Chapter5Render implements GLSurfaceView.Renderer {
     public void onSurfaceChanged(GL10 gl, int width, int height) {
         GLES20.glViewport(0, 0, width, height);
 
-        final float aspectRatio = width > height ?
+        float aspectRatio = width > height ?
                 (float) (width) / height :
                 (float) height / width;
+
+        aspectRatio = aspectRatio * 1.5f;//缩小
+
         if ((width > height)) {
             //横屏
-            Matrix.orthoM(projectionMatrix, 0, -aspectRatio, aspectRatio, -1, 1, -1, 1);
+            Matrix.orthoM(projectionMatrix, 0, -aspectRatio, aspectRatio, -1.5f, 1.5f, -1, 1);
         } else {
-            Matrix.orthoM(projectionMatrix, 0, -1, 1, -aspectRatio, aspectRatio, -1, 1);
+            Matrix.orthoM(projectionMatrix, 0, -1.5f + 1f, 1.5f + 1f, -aspectRatio + 1f, aspectRatio + 1f, -1, 1);
         }
+
+        //Matrix.scaleM(projectionMatrix, 0, 1.5f, 1.5f, 1);
 
 
     }
