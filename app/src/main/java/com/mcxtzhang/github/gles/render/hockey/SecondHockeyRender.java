@@ -17,7 +17,10 @@ public class SecondHockeyRender implements GLSurfaceView.Renderer {
     private String vertexShaderCode =
             "precision mediump float;\n" +
                     "attribute vec4 a_Position;\n" +
+                    "attribute vec4 aa_Color;\n" +
+                    "varying vec4 v_Color;\n" +
                     "void main() {\n" +
+                    "    v_Color = aa_Color;\n" +
                     "    gl_Position = a_Position;\n" +
                     "    gl_PointSize = 10.0;\n" +
 
@@ -26,48 +29,49 @@ public class SecondHockeyRender implements GLSurfaceView.Renderer {
     //使用uniform ，用单一的颜色绘制物体
     private String fragmentShaderCode =
             "precision mediump float;\n" +
-                    "uniform vec4 a_Color;\n" +
+                    "varying vec4 v_Color;\n" +
                     "void main() {\n" +
-                    "    gl_FragColor = a_Color;\n" +
+                    "    gl_FragColor = v_Color;\n" +
                     "}";
 
     public static final int POSITION_COMPONENT_COUNT = 2;
+    public static final int COLOR_COMPONENT_COUNT = 3;
+    public static final int BYTES_PER_FLOAT = 4;
+    public static final int STRIDE = (POSITION_COMPONENT_COUNT + COLOR_COMPONENT_COUNT) * BYTES_PER_FLOAT;
 
     private float[] vertexAttrArray = {
             //Order of coordinates:x,y,R,G,B
 
             //Triangle Fan
-            0, 0,
-            -0.5f, -0.5f,
-            0.5f, -0.5f,
-            0.5f, 0.5f,
-            -0.5f, 0.5f,
-            -0.5f, -0.5f,
+            0, 0, 1f, 1f, 1f,
+            -0.5f, -0.5f, 0.7f, 0.7f, 0.7f,
+            0.5f, -0.5f, 0.7f, 0.7f, 0.7f,
+            0.5f, 0.5f, 0.7f, 0.7f, 0.7f,
+            -0.5f, 0.5f, 0.7f, 0.7f, 0.7f,
+            -0.5f, -0.5f, 0.7f, 0.7f, 0.7f,
 
             //line 1
-            -0.5f, 0f,
-            0.5f, 0f,
+            -0.5f, 0f, 1f, 0f, 0f,
+            0.5f, 0f, 1f, 0f, 0f,
 
             //2 mallets
-            0f, -0.25f,
-            0f, 0.25f,
+            0f, -0.25f, 0f, 0f, 1f,
+            0f, 0.25f, 1f, 0f, 0f,
 
             //ball
             0, 0
     };
 
-    public static final int BYTES_PER_FLOAT = 4;
     private FloatBuffer vertexDataBuffer;
 
 
     private int aPositionLocation;
-    private int aColorLocation;
+    private int aaColorLocation;
 
     public SecondHockeyRender() {
         vertexDataBuffer = ByteBuffer.allocateDirect(vertexAttrArray.length * Float.SIZE)
                 .order(ByteOrder.nativeOrder())
                 .asFloatBuffer();
-        vertexDataBuffer.put(vertexAttrArray).position(0);
     }
 
     @Override
@@ -76,14 +80,20 @@ public class SecondHockeyRender implements GLSurfaceView.Renderer {
         GLES20.glUseProgram(programId);
 
         //通过getxxxlocation 获取 代码里定义的参数
-        aColorLocation = GLES20.glGetUniformLocation(programId, "a_Color");
         aPositionLocation = GLES20.glGetAttribLocation(programId, "a_Position");
 
+        vertexDataBuffer.put(vertexAttrArray).position(0);
+
         //vertex 赋值用 vertex开头的API，fragment赋值用  glUniform之类的，根据fragment shader code里的定义来
-        GLES20.glVertexAttribPointer(aPositionLocation, POSITION_COMPONENT_COUNT, GLES20.GL_FLOAT, false, 0, vertexDataBuffer);
+        GLES20.glVertexAttribPointer(aPositionLocation, POSITION_COMPONENT_COUNT, GLES20.GL_FLOAT, false, STRIDE, vertexDataBuffer);
         //vertex 里的参数使用前都需要enable，fragment里的不需要； 实测发现好像 vec4 需要，
         GLES20.glEnableVertexAttribArray(aPositionLocation);
 
+
+        aaColorLocation = GLES20.glGetAttribLocation(programId, "aa_Color");
+        vertexDataBuffer.position(POSITION_COMPONENT_COUNT);
+        GLES20.glVertexAttribPointer(aaColorLocation, COLOR_COMPONENT_COUNT, GLES20.GL_FLOAT, false, STRIDE, vertexDataBuffer);
+        GLES20.glEnableVertexAttribArray(aaColorLocation);
 
     }
 
@@ -98,22 +108,17 @@ public class SecondHockeyRender implements GLSurfaceView.Renderer {
         GLES20.glClear((GLES20.GL_COLOR_BUFFER_BIT));
 
 
-        GLES20.glUniform4f(aColorLocation, 1, 1, 1, 1);
         GLES20.glDrawArrays(GLES20.GL_TRIANGLE_FAN, 0, 6);
 
-        GLES20.glUniform4f(aColorLocation, 1, 0, 0, 1);
         GLES20.glDrawArrays(GLES20.GL_LINES, 6, 2);
 
 
-        GLES20.glUniform4f(aColorLocation, 0, 0, 1, 1);
         GLES20.glDrawArrays(GLES20.GL_POINTS, 8, 1);
 
-        GLES20.glUniform4f(aColorLocation, 1, 0, 0, 1);
         GLES20.glDrawArrays(GLES20.GL_POINTS, 9, 1);
 
 
         //冰球
-        GLES20.glUniform4f(aColorLocation, 0, 1, 0, 1);
         GLES20.glDrawArrays(GLES20.GL_POINTS, 10, 1);
     }
 }
