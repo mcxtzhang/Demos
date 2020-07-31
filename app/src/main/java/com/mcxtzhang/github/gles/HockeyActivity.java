@@ -11,7 +11,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.mcxtzhang.github.R;
-import com.mcxtzhang.github.gles.render.hockey.SecondHockeyRender;
+import com.mcxtzhang.github.gles.render.hockey.Chapter5Render;
 import com.mcxtzhang.github.gles.render.hockey.ShaderHelper;
 
 import java.nio.ByteBuffer;
@@ -114,7 +114,9 @@ public class HockeyActivity extends AppCompatActivity {
         //glSurfaceView.setRenderer(new FirstHockeyRender());
 
         //chapter 4
-        glSurfaceView.setRenderer(new SecondHockeyRender());
+        //glSurfaceView.setRenderer(new SecondHockeyRender());
+        //chapter 5
+        glSurfaceView.setRenderer(new Chapter5Render());
 
 
         vertexData = ByteBuffer
