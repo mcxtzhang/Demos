@@ -10,7 +10,7 @@ import java.nio.FloatBuffer;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-public class FirstHockeyRender implements GLSurfaceView.Renderer {
+public class SecondHockeyRender implements GLSurfaceView.Renderer {
 
 
     private String vertexShaderCode =
@@ -70,7 +70,7 @@ public class FirstHockeyRender implements GLSurfaceView.Renderer {
     private int aColorLocation;
     private int aPointSizeLocation;
 
-    public FirstHockeyRender() {
+    public SecondHockeyRender() {
         vertexDataBuffer = ByteBuffer.allocateDirect(vertexAttrArray.length * Float.SIZE)
                 .order(ByteOrder.nativeOrder())
                 .asFloatBuffer();
