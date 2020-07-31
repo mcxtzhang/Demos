@@ -1,4 +1,4 @@
-package com.mcxtzhang.github.gles.render.hockey;
+package com.mcxtzhang.github.gles.render.hockey.util;
 
 import android.opengl.GLES20;
 import android.util.Log;

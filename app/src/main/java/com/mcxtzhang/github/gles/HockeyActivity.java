@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.mcxtzhang.github.R;
 import com.mcxtzhang.github.gles.render.hockey.Chapter5Render;
-import com.mcxtzhang.github.gles.render.hockey.ShaderHelper;
+import com.mcxtzhang.github.gles.render.hockey.util.ShaderHelper;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
