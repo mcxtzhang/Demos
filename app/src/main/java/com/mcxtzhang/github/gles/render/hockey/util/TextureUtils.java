@@ -24,7 +24,9 @@ public class TextureUtils {
         //放大使用双线性顾虑
         GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);
 
+        //告诉OPenGL读取Bitmap的位图数据，并复制到当前绑定的纹理对象上；
         GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bitmap, 0);
+
         bitmap.recycle();
 
         GLES20.glGenerateMipmap(GLES20.GL_TEXTURE_2D);
