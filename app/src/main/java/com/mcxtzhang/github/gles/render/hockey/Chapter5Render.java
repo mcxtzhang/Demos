@@ -69,7 +69,7 @@ public class Chapter5Render implements GLSurfaceView.Renderer {
     private FloatBuffer vertexDataBuffer;
 
 
-    private final float[] projectionMatrix = new float[16];
+    private  float[] projectionMatrix = new float[16];
 
 
     private int aPositionLocation;
@@ -118,14 +118,28 @@ public class Chapter5Render implements GLSurfaceView.Renderer {
 
         aspectRatio = aspectRatio * 1.5f;//缩小
 
-        if ((width > height)) {
-            //横屏
-            Matrix.orthoM(projectionMatrix, 0, -aspectRatio, aspectRatio, -1.5f, 1.5f, -1, 1);
-        } else {
-            Matrix.orthoM(projectionMatrix, 0, -1.5f + 1f, 1.5f + 1f, -aspectRatio + 1f, aspectRatio + 1f, -1, 1);
-        }
+//        if ((width > height)) {
+//            //横屏
+//            Matrix.orthoM(projectionMatrix, 0, -aspectRatio, aspectRatio, -1.5f, 1.5f, -1, 1);
+//        } else {
+//            Matrix.orthoM(projectionMatrix, 0, -1.5f + 1f, 1.5f + 1f, -aspectRatio + 1f, aspectRatio + 1f, -1, 1);
+//        }
+
+        projectionMatrix =  new float[]{
+                1, 0, 0, 0,
+                0, 1, 0, 0,
+                0, 0, 1, 0,
+                0, 0, 0, 1
+        };
+
+        //Matrix.rotateM(projectionMatrix, 0, 90, 0F, 0F, 1F);
 
         //Matrix.scaleM(projectionMatrix, 0, 1.5f, 1.5f, 1);
+//        Matrix.translateM(projectionMatrix, 0, 0.5f, 0.5f, 0);
+//        Matrix.translateM(projectionMatrix, 0, 0.5f, 0.5f, 0);
+        //Matrix.translateM(projectionMatrix, 0, 1, 1, 0);
+        Matrix.translateM(projectionMatrix, 0, 0, 0, 0);
+
 
 
     }

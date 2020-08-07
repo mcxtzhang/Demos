@@ -4,6 +4,8 @@ import android.graphics.Bitmap;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLUtils;
+import android.opengl.Matrix;
+import android.util.Log;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -21,11 +23,12 @@ public class ImageRender implements GLSurfaceView.Renderer {
      */
     private String vertexShaderCode =
             "precision mediump float;\n" +
+                    "uniform mat4 u_Matrix;\n" +
                     "attribute vec4 a_Position;\n" +
                     "attribute vec2 a_textureCoordinate;\n" +
                     "varying vec2 v_textureCoordinate;\n" +
                     "void main() {\n" +
-                    "    gl_Position = a_Position ;\n" +
+                    "    gl_Position = u_Matrix * a_Position;\n" +
                     "    v_textureCoordinate = a_textureCoordinate;\n" +
                     "}";
 
@@ -65,25 +68,27 @@ public class ImageRender implements GLSurfaceView.Renderer {
 //            -1f*5, -1f*5,
 //            1f*5, 1f*5,
 //            1f*5, -1f*5};
-//    private float[] textureCoordinateData = new float[]{
-//            0f, 1f,
-//            0f, 0f,
-//            1f, 0f,
-//
-//            0f, 1f,
-//            1f, 0f,
-//            1f, 1f};
     private float[] textureCoordinateData = new float[]{
-            0f * 3, 1f * 3,
-            0f * 3, 0f * 3,
-            1f * 3, 0f * 3,
+            0f, 1f,
+            0f, 0f,
+            1f, 0f,
 
-            0f * 3, 1f * 3,
-            1f * 3, 0f * 3,
-            1f * 3, 1f * 3};
+            0f, 1f,
+            1f, 0f,
+            1f, 1f};
+//    private float[] textureCoordinateData = new float[]{
+//            0f * 3, 1f * 3,
+//            0f * 3, 0f * 3,
+//            1f * 3, 0f * 3,
+//
+//            0f * 3, 1f * 3,
+//            1f * 3, 0f * 3,
+//            1f * 3, 1f * 3};
 
 
     private Bitmap mBitmap;
+
+    private int uMatrixLocation;
 
     public ImageRender(Bitmap bitmap) {
         mBitmap = bitmap;
@@ -147,7 +152,6 @@ public class ImageRender implements GLSurfaceView.Renderer {
         GLES20.glVertexAttribPointer(a_textureCoordinate, 2, GLES20.GL_FLOAT, false, 0, textureBuffer);
 
 
-
         int[] textures = new int[1];
         GLES20.glGenTextures(textures.length, textures, 0);
         int imageTexture = textures[0];
@@ -195,6 +199,9 @@ public class ImageRender implements GLSurfaceView.Renderer {
         //？是这样的，纹理单元可以想像成是一种类似寄存器的东西，在OpenGL使用纹理前，我们先要把纹理放到某个纹理单元上，之后的操作OpenGL就会去我们指定的纹理单元上去取对应的纹理。
 
 
+        uMatrixLocation = GLES20.glGetUniformLocation(programId, "u_Matrix");
+
+
     }
 
     private int glSurfaceViewWidth;
@@ -206,11 +213,49 @@ public class ImageRender implements GLSurfaceView.Renderer {
         glSurfaceViewHeight = height;
     }
 
+    private float[] projectionMatrix = new float[]{
+            1, 0, 0, 0,
+            0, 1, 0, 0,
+            0, 0, 1, 0,
+            0, 0, 0, 1
+    };
+
+
+    public void translate(float dx, float dy) {
+        float yPercent = dy / glSurfaceViewHeight;
+        float xPercent = dx / glSurfaceViewWidth;
+        float range = (1 - (-1));
+        dx = xPercent * range;
+        dy = -yPercent * range;
+        Matrix.translateM(projectionMatrix, 0, dx, dy, 0);
+    }
+
+    public void scale(float scaleX, float scaleY) {
+        Matrix.scaleM(projectionMatrix, 0, scaleX, scaleY, 1);
+    }
+
+
     @Override
     public void onDrawFrame(GL10 gl) {
+        Log.d("TAG", "onDrawFrame() called with: gl = [" + gl + "]");
         GLES20.glClearColor(0.9f, 0.9f, 0.9f, 1f);
         GLES20.glClear((GLES20.GL_COLOR_BUFFER_BIT));
         GLES20.glViewport(0, 0, glSurfaceViewWidth, glSurfaceViewHeight);
+
+
+        //Matrix.rotateM(projectionMatrix, 0, 90, 0F, 0F, 1F);
+
+        //Matrix.scaleM(projectionMatrix, 0, 1.5f, 1.5f, 1);
+//        Matrix.translateM(projectionMatrix, 0, 0.5f, 0.5f, 0);
+//        Matrix.translateM(projectionMatrix, 0, 0.5f, 0.5f, 0);
+        //Matrix.translateM(projectionMatrix, 0, 1, 1, 0);
+
+        //平移操作的是顶点坐标
+        //Matrix.translateM(projectionMatrix, 0, 1.4f, 0, 0);
+
+
+        GLES20.glUniformMatrix4fv(uMatrixLocation, 1, false, projectionMatrix, 0);
+
 
         GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, 6);
     }

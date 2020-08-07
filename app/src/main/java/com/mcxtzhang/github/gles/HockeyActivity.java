@@ -3,15 +3,19 @@ package com.mcxtzhang.github.gles;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.ConfigurationInfo;
+import android.graphics.BitmapFactory;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.ScaleGestureDetector;
+import android.view.View;
 import android.widget.Toast;
 
 import com.mcxtzhang.github.R;
-import com.mcxtzhang.github.gles.render.hockey.Chapter5Render;
+import com.mcxtzhang.github.gles.render.ImageRender;
 import com.mcxtzhang.github.gles.render.hockey.util.ShaderHelper;
 
 import java.nio.ByteBuffer;
@@ -102,7 +106,109 @@ public class HockeyActivity extends AppCompatActivity {
 
 
         //lessen 6
-        //glSurfaceView.setRenderer(new ImageRender(BitmapFactory.decodeResource(getResources(), R.drawable.big_image)));
+        final ImageRender imageRender = new ImageRender(BitmapFactory.decodeResource(getResources(), R.drawable.big_image));
+        glSurfaceView.setRenderer(imageRender);
+
+        glSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
+
+        final ScaleGestureDetector mScaleGestureDetector = new ScaleGestureDetector(this, new ScaleGestureDetector.OnScaleGestureListener() {
+            @Override
+            public boolean onScale(ScaleGestureDetector detector) {
+
+                //float scale = getScale();
+                float scaleFactor = detector.getScaleFactor();
+
+//                float widthScaleMax = mCropDragView.getCropWidth() / mCropDragView.getPhotoMinWidthPixels();
+//                float heightScaleMax = mCropDragView.getCropHeight() / mCropDragView.getPhotoMinHeightPixels();
+//                float scaleMax = Math.min(widthScaleMax, heightScaleMax);
+//                if (scale * scaleFactor > scaleMax) {
+//                    scaleFactor = scaleMax / scale;
+//                }
+
+
+                imageRender.scale(scaleFactor, scaleFactor);
+
+//                mImageMatrix.postScale(scaleFactor, scaleFactor, detector.getFocusX(), detector.getFocusY());
+//                setImageMatrix(mImageMatrix);
+//                notifyScaleChanged(detector.getFocusX(), detector.getFocusY());
+                return true;
+            }
+
+            private float beginScale;
+
+            @Override
+            public boolean onScaleBegin(ScaleGestureDetector detector) {
+//                beginScale = getScale();
+                return true;
+            }
+
+            @Override
+            public void onScaleEnd(ScaleGestureDetector detector) {
+//                if (beginScale != 0) {
+//                    reportScale(getScale() / beginScale);
+//                }
+            }
+        });
+
+
+        glSurfaceView.setOnTouchListener(new View.OnTouchListener() {
+
+            float mLastX, mLastY;
+
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                mScaleGestureDetector.onTouchEvent(event);
+
+                float x = 0, y = 0;
+                // 拿到触摸点的个数
+                final int pointerCount = event.getPointerCount();
+                // 得到多个触摸点的x与y均值
+                for (int i = 0; i < pointerCount; i++) {
+                    x += event.getX(i);
+                    y += event.getY(i);
+                }
+                x = x / pointerCount;
+                y = y / pointerCount;
+
+
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        mLastX = x;
+                        mLastY = y;
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        float dx = x - mLastX;
+                        float dy = y - mLastY;
+                        //RectF rectF = getMatrixRectF();
+                        if (true) {
+//                        isCheckLeftAndRight = isCheckTopAndBottom = true;
+//                        // 如果宽度小于屏幕宽度，则禁止左右移动
+//                        if (rectF.width() < getWidth()) {
+//                            dx = 0;
+//                            isCheckLeftAndRight = false;
+//                        }
+//                        // 如果高度小雨屏幕高度，则禁止上下移动
+//                        if (rectF.height() < getHeight()) {
+//                            dy = 0;
+//                            isCheckTopAndBottom = false;
+//                        }
+                            imageRender.translate(dx, dy);
+                        }
+                        mLastX = x;
+                        mLastY = y;
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                    case MotionEvent.ACTION_CANCEL:
+                        break;
+                }
+                glSurfaceView.requestRender();
+
+                return true;
+            }
+        });
+
 
         //addContentView(glSurfaceView,new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT ));
 
@@ -116,7 +222,7 @@ public class HockeyActivity extends AppCompatActivity {
         //chapter 4
         //glSurfaceView.setRenderer(new SecondHockeyRender());
         //chapter 5
-        glSurfaceView.setRenderer(new Chapter5Render());
+        //glSurfaceView.setRenderer(new Chapter5Render());
 
 
         vertexData = ByteBuffer
