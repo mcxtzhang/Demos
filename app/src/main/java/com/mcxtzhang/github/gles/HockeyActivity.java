@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.mcxtzhang.github.R;
 import com.mcxtzhang.github.gles.render.ImageRender;
+import com.mcxtzhang.github.gles.render.hockey.Chapter7Render;
 import com.mcxtzhang.github.gles.render.hockey.util.ShaderHelper;
 
 import java.nio.ByteBuffer;
@@ -107,9 +108,9 @@ public class HockeyActivity extends AppCompatActivity {
 
         //lessen 6
         final ImageRender imageRender = new ImageRender(BitmapFactory.decodeResource(getResources(), R.drawable.big_image));
-        glSurfaceView.setRenderer(imageRender);
+        //glSurfaceView.setRenderer(imageRender);
 
-        glSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
+        //glSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
 
         final ScaleGestureDetector mScaleGestureDetector = new ScaleGestureDetector(this, new ScaleGestureDetector.OnScaleGestureListener() {
             @Override
@@ -223,6 +224,9 @@ public class HockeyActivity extends AppCompatActivity {
         //glSurfaceView.setRenderer(new SecondHockeyRender());
         //chapter 5
         //glSurfaceView.setRenderer(new Chapter5Render());
+
+        //chapter 7
+        glSurfaceView.setRenderer(new Chapter7Render(this));
 
 
         vertexData = ByteBuffer

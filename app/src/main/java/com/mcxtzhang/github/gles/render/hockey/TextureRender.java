@@ -16,26 +16,30 @@ import javax.microedition.khronos.opengles.GL10;
 public class TextureRender implements GLSurfaceView.Renderer {
 
 
-    //varying是一个特殊的变量类型，它把给它的那些值进行混合，并把这些混合后的值发送给片段着色器；
+    //因为纹理有两个分量，s坐标和T坐标；所以被定义为一个vec2；
     private String vertexShaderCode =
             "precision mediump float;\n" +
                     "uniform mat4 u_Matrix;\n" +
+
                     "attribute vec4 a_Position;\n" +
-                    "attribute vec4 aa_Color;\n" +
-                    "varying vec4 v_Color;\n" +
+                    "attribute vec2 a_TextureCoordinates;\n" +
+                    "varying vec2 v_TextureCoordinates;\n" +
                     "void main() {\n" +
-                    "    v_Color = aa_Color;\n" +
                     "    gl_Position = u_Matrix * a_Position;\n" +
-                    "    gl_PointSize = 10.0;\n" +
+                    "    v_TextureCoordinates = a_TextureCoordinates;\n" +
 
                     "}";
 
-    //使用uniform ，用单一的颜色绘制物体
+    //为了把纹理绘制到一个物体上，OpenGl会为每个片段都调用片段着色器；
+    //并且每个调用都接收 v_TextureCoordinates 纹理坐标。
+    //片段着色器也通过 uniform u_TextureUnit 接收实际的纹理数据，它被定义为一个sampler2D，这个变量类型指的是一个二位纹理数据的数组
+    //根据 被插值的纹理坐标 和 纹理数据，texture2D()方法会根据特定纹理坐标读取纹理中对应坐标的颜色值； 然后赋值给gl_FragColor
     private String fragmentShaderCode =
             "precision mediump float;\n" +
-                    "varying vec4 v_Color;\n" +
+                    "uniform sampler2D u_TextureUnit;\n" +
+                    "varying vec2 v_TextureCoordinates;\n" +
                     "void main() {\n" +
-                    "    gl_FragColor = v_Color;\n" +
+                    "    gl_FragColor = texture2D(u_TextureUnit,v_TextureCoordinates);\n" +
                     "}";
 
     public static final int POSITION_COMPONENT_COUNT = 2;
