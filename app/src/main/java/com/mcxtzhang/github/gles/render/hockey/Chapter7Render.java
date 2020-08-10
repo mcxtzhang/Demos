@@ -7,8 +7,10 @@ import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 
 import com.mcxtzhang.github.R;
+import com.mcxtzhang.github.gles.render.hockey.objects.AppendSticker;
 import com.mcxtzhang.github.gles.render.hockey.objects.Mallet;
 import com.mcxtzhang.github.gles.render.hockey.objects.Table;
+import com.mcxtzhang.github.gles.render.hockey.programs.AppendStickerTextureShaderProgram;
 import com.mcxtzhang.github.gles.render.hockey.programs.ColorShaderProgram;
 import com.mcxtzhang.github.gles.render.hockey.programs.TextureShaderProgram;
 import com.mcxtzhang.github.gles.render.hockey.util.TextureUtils;
@@ -25,6 +27,9 @@ public class Chapter7Render implements GLSurfaceView.Renderer {
 
     private Table table;
     private Mallet mMallet;
+    private AppendSticker mAppendSticker;
+    private AppendStickerTextureShaderProgram mAppendStickerProgram;
+    private int mAppendTextureId;
 
     private TextureShaderProgram mTextureShaderProgram;
     private ColorShaderProgram mColorShaderProgram;
@@ -41,6 +46,10 @@ public class Chapter7Render implements GLSurfaceView.Renderer {
 
         table = new Table();
         mMallet = new Mallet();
+
+        mAppendSticker = new AppendSticker();
+        mAppendStickerProgram = new AppendStickerTextureShaderProgram(context);
+        mAppendTextureId = TextureUtils.loadTexture(BitmapFactory.decodeResource(context.getResources(), R.drawable.buy_icon_zaned));
 
         mTextureShaderProgram = new TextureShaderProgram(context);
         mColorShaderProgram = new ColorShaderProgram(context);
@@ -82,5 +91,10 @@ public class Chapter7Render implements GLSurfaceView.Renderer {
         mColorShaderProgram.setUniforms(projectionMatrix);
         mMallet.bindData(mColorShaderProgram);
         mMallet.draw();
+
+        mAppendStickerProgram.useProgram();
+        mAppendStickerProgram.setUniforms(projectionMatrix,mAppendTextureId);
+        mAppendSticker.bindData(mAppendStickerProgram);
+        mAppendSticker.draw();
     }
 }
