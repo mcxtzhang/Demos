@@ -234,6 +234,16 @@ public class ImageRender implements GLSurfaceView.Renderer {
         Matrix.scaleM(projectionMatrix, 0, scaleX, scaleY, 1);
     }
 
+    private float mCurrentDegree = 0;
+
+    public void rotate(float targetDegree) {
+        float realDegree = targetDegree - mCurrentDegree;
+
+        Matrix.rotateM(projectionMatrix, 0, realDegree, 0, 0, 1);
+        mCurrentDegree = targetDegree;
+        //Matrix.setRotateM(projectionMatrix,0,90,0,0,1);
+    }
+
 
     @Override
     public void onDrawFrame(GL10 gl) {

@@ -12,11 +12,11 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
+import android.widget.SeekBar;
 import android.widget.Toast;
 
 import com.mcxtzhang.github.R;
 import com.mcxtzhang.github.gles.render.ImageRender;
-import com.mcxtzhang.github.gles.render.hockey.Chapter7Render;
 import com.mcxtzhang.github.gles.render.hockey.util.ShaderHelper;
 
 import java.nio.ByteBuffer;
@@ -108,9 +108,9 @@ public class HockeyActivity extends AppCompatActivity {
 
         //lessen 6
         final ImageRender imageRender = new ImageRender(BitmapFactory.decodeResource(getResources(), R.drawable.big_image));
-        //glSurfaceView.setRenderer(imageRender);
+        glSurfaceView.setRenderer(imageRender);
 
-        //glSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
+        glSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
 
         final ScaleGestureDetector mScaleGestureDetector = new ScaleGestureDetector(this, new ScaleGestureDetector.OnScaleGestureListener() {
             @Override
@@ -210,6 +210,29 @@ public class HockeyActivity extends AppCompatActivity {
             }
         });
 
+        //rotate
+        SeekBar seekBar = (SeekBar) findViewById(R.id.seekBar);
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                float degree = progress - 45;
+                Log.d(TAG, "onProgressChanged() called with: degree = [" + degree + "], progress = [" + progress + "], fromUser = [" + fromUser + "]");
+                imageRender.rotate(degree);
+                glSurfaceView.requestRender();
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
 
         //addContentView(glSurfaceView,new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT ));
 
@@ -226,7 +249,7 @@ public class HockeyActivity extends AppCompatActivity {
         //glSurfaceView.setRenderer(new Chapter5Render());
 
         //chapter 7
-        glSurfaceView.setRenderer(new Chapter7Render(this));
+        //glSurfaceView.setRenderer(new Chapter7Render(this));
 
 
         vertexData = ByteBuffer
