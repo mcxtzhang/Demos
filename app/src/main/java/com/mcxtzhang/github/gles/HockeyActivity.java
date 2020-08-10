@@ -206,6 +206,7 @@ public class HockeyActivity extends AppCompatActivity {
                 }
                 glSurfaceView.requestRender();
 
+                imageRender.dump();
                 return true;
             }
         });

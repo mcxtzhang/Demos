@@ -18,6 +18,7 @@ import javax.microedition.khronos.opengles.GL10;
  * 如果我们要渲染一张图片，该怎么做呢？这就需要用到纹理，我们需要创建一个纹理并把图片加载到纹理中，然后在fragment shader中对纹理进行采样，从而将纹理渲染出来。
  */
 public class ImageRender implements GLSurfaceView.Renderer {
+    private static final String TAG = "ImageRender";
     /**
      * 在OpenGL ES 2.0中，attribute就是输入，varying就是从vertex shader往fragment shader的输出
      */
@@ -51,7 +52,7 @@ public class ImageRender implements GLSurfaceView.Renderer {
                     "}";
 
 
-    private float[] vertexData = new float[]{
+    private final float[] vertexData = new float[]{
             -1f, -1f,
             -1f, 1f,
             1f, 1f,
@@ -68,7 +69,7 @@ public class ImageRender implements GLSurfaceView.Renderer {
 //            -1f*5, -1f*5,
 //            1f*5, 1f*5,
 //            1f*5, -1f*5};
-    private float[] textureCoordinateData = new float[]{
+    private final float[] textureCoordinateData = new float[]{
             0f, 1f,
             0f, 0f,
             1f, 0f,
@@ -220,6 +221,7 @@ public class ImageRender implements GLSurfaceView.Renderer {
             0, 0, 0, 1
     };
 
+    private float mCurrentDx = 0, mCurrentDy = 0;
 
     public void translate(float dx, float dy) {
         float yPercent = dy / glSurfaceViewHeight;
@@ -228,10 +230,15 @@ public class ImageRender implements GLSurfaceView.Renderer {
         dx = xPercent * range;
         dy = -yPercent * range;
         Matrix.translateM(projectionMatrix, 0, dx, dy, 0);
+        mCurrentDx += dx;
+        mCurrentDy += dy;
     }
+
+    private float mCurrentScale = 1;
 
     public void scale(float scaleX, float scaleY) {
         Matrix.scaleM(projectionMatrix, 0, scaleX, scaleY, 1);
+        mCurrentScale *= scaleX;
     }
 
     private float mCurrentDegree = 0;
@@ -244,10 +251,43 @@ public class ImageRender implements GLSurfaceView.Renderer {
         //Matrix.setRotateM(projectionMatrix,0,90,0,0,1);
     }
 
+    public void dump() {
+        float m00 = projectionMatrix[0];
+        float m01 = projectionMatrix[4];
+        float m02 = projectionMatrix[8];
+
+        float m10 = projectionMatrix[1];
+        float m11 = projectionMatrix[5];
+        float m12 = projectionMatrix[9];
+
+        float m20 = projectionMatrix[2];
+        float m21 = projectionMatrix[6];
+        float m22 = projectionMatrix[10];
+
+        float m03 = projectionMatrix[12];
+        float m13 = projectionMatrix[13];
+        float m23 = projectionMatrix[14];
+
+        double scalingFactor = Math.sqrt(m00 * m00 + m01 * m01 + m02 * m02);
+
+        double temp = 1.0 / scalingFactor;
+        double rotationMatrix = (m00 * temp + m01 * temp + m02 * temp);
+
+        Log.w(TAG, "dump() called, scalingFactor:" + scalingFactor + ",   mCurrentDegree: " + mCurrentDegree + ",rotationMatrix:" + rotationMatrix);
+        Log.w(TAG, "dump() called, mCurrentDx:" + mCurrentDx + ",   mCurrentDy: " + mCurrentDy + ",mCurrentScale:" + mCurrentScale);
+
+
+        Log.d(TAG, "dump() called, m00:" + m00 + ",   m01: " + m01 + "  ,m02:" + m02);
+        Log.d(TAG, "dump() called, m10:" + m10 + ",   m11: " + m11 + "  ,m12:" + m12);
+        Log.d(TAG, "dump() called, m20:" + m20 + ",   m21: " + m21 + "  ,m22:" + m22);
+        Log.d(TAG, "dump() called, \nm03:" + m03 + "\n,m13: " + m13 + "  \n,m23:" + m23);
+
+
+    }
 
     @Override
     public void onDrawFrame(GL10 gl) {
-        Log.d("TAG", "onDrawFrame() called with: gl = [" + gl + "]");
+        Log.d("TAG", "onDrawFrame() called with: vertexData = [" + vertexData + "]" + ", textureCoordinateData:" + textureCoordinateData);
         GLES20.glClearColor(0.9f, 0.9f, 0.9f, 1f);
         GLES20.glClear((GLES20.GL_COLOR_BUFFER_BIT));
         GLES20.glViewport(0, 0, glSurfaceViewWidth, glSurfaceViewHeight);
