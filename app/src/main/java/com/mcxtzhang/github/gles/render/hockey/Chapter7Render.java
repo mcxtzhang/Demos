@@ -93,8 +93,9 @@ public class Chapter7Render implements GLSurfaceView.Renderer {
         mMallet.draw();
 
         mAppendStickerProgram.useProgram();
-        mAppendStickerProgram.setUniforms(projectionMatrix,mAppendTextureId);
         mAppendSticker.bindData(mAppendStickerProgram);
+
+        mAppendStickerProgram.setUniforms(projectionMatrix, mAppendTextureId);
         mAppendSticker.draw();
     }
 }
