@@ -25,12 +25,14 @@ public class ImageRender implements GLSurfaceView.Renderer {
     private String vertexShaderCode =
             "precision mediump float;\n" +
                     "uniform mat4 u_Matrix;\n" +
+                    "uniform mat4 u_MatrixTexture;\n" +
+
                     "attribute vec4 a_Position;\n" +
-                    "attribute vec2 a_textureCoordinate;\n" +
+                    "attribute vec4 a_textureCoordinate;\n" +
                     "varying vec2 v_textureCoordinate;\n" +
                     "void main() {\n" +
                     "    gl_Position = u_Matrix * a_Position;\n" +
-                    "    v_textureCoordinate = a_textureCoordinate;\n" +
+                    "    v_textureCoordinate = (u_MatrixTexture * a_textureCoordinate).xy;\n" +
                     "}";
 
 
@@ -69,14 +71,18 @@ public class ImageRender implements GLSurfaceView.Renderer {
 //            -1f*5, -1f*5,
 //            1f*5, 1f*5,
 //            1f*5, -1f*5};
-    private final float[] textureCoordinateData = new float[]{
-            0f, 1f,
-            0f, 0f,
-            1f, 0f,
 
-            0f, 1f,
-            1f, 0f,
-            1f, 1f};
+    private FloatBuffer mVertexFloatBuffer;
+    private int aPositionLocation;
+
+    private final float[] textureCoordinateData = new float[]{
+            0f, 1f, 0f, 1f,
+            0f, 0f, 0f, 1f,
+            1f, 0f, 0f, 1f,
+
+            0f, 1f, 0f, 1f,
+            1f, 0f, 0f, 1f,
+            1f, 1f, 0f, 1f,};
 //    private float[] textureCoordinateData = new float[]{
 //            0f * 3, 1f * 3,
 //            0f * 3, 0f * 3,
@@ -90,6 +96,15 @@ public class ImageRender implements GLSurfaceView.Renderer {
     private Bitmap mBitmap;
 
     private int uMatrixLocation;
+
+    private float[] textureMatrix = new float[]{
+            1, 0, 0, 0,
+            0, 1, 0, 0,
+            0, 0, 1, 0,
+            0, 0, 0, 1
+    };
+    private int uMatrixTexLocation;
+
 
     public ImageRender(Bitmap bitmap) {
         mBitmap = bitmap;
@@ -124,17 +139,17 @@ public class ImageRender implements GLSurfaceView.Renderer {
          * 顶点坐标系的原点在中间。
          */
 
-        FloatBuffer buffer = ByteBuffer.allocateDirect(vertexData.length * java.lang.Float.SIZE)
+        mVertexFloatBuffer = ByteBuffer.allocateDirect(vertexData.length * java.lang.Float.SIZE)
                 .order(ByteOrder.nativeOrder())
                 .asFloatBuffer();
-        buffer.put(vertexData);
-        buffer.position(0);
+        mVertexFloatBuffer.put(vertexData);
+        mVertexFloatBuffer.position(0);
         // 获取字段a_Position在shader中的位置
-        int location = GLES20.glGetAttribLocation(programId, "a_Position");
+        aPositionLocation = GLES20.glGetAttribLocation(programId, "a_Position");
         // 启动对应位置的参数
-        GLES20.glEnableVertexAttribArray(location);
+        GLES20.glEnableVertexAttribArray(aPositionLocation);
         // 指定a_Position所使用的顶点数据
-        GLES20.glVertexAttribPointer(location, 2, GLES20.GL_FLOAT, false, 0, buffer);
+        GLES20.glVertexAttribPointer(aPositionLocation, 2, GLES20.GL_FLOAT, false, 0, mVertexFloatBuffer);
 
 
         /**
@@ -150,7 +165,7 @@ public class ImageRender implements GLSurfaceView.Renderer {
         // 启动对应位置的参数
         GLES20.glEnableVertexAttribArray(a_textureCoordinate);
         // 指定a_Position所使用的顶点数据
-        GLES20.glVertexAttribPointer(a_textureCoordinate, 2, GLES20.GL_FLOAT, false, 0, textureBuffer);
+        GLES20.glVertexAttribPointer(a_textureCoordinate, 4, GLES20.GL_FLOAT, false, 0, textureBuffer);
 
 
         int[] textures = new int[1];
@@ -201,6 +216,7 @@ public class ImageRender implements GLSurfaceView.Renderer {
 
 
         uMatrixLocation = GLES20.glGetUniformLocation(programId, "u_Matrix");
+        uMatrixTexLocation = GLES20.glGetUniformLocation(programId, "u_MatrixTexture");
 
 
     }
@@ -237,7 +253,7 @@ public class ImageRender implements GLSurfaceView.Renderer {
     private float mCurrentScale = 1;
 
     public void scale(float scaleX, float scaleY) {
-        Matrix.scaleM(projectionMatrix, 0, scaleX, scaleY, 1);
+        Matrix.scaleM(textureMatrix, 0, scaleX, scaleY, 1);
         mCurrentScale *= scaleX;
     }
 
@@ -289,7 +305,7 @@ public class ImageRender implements GLSurfaceView.Renderer {
     public void onDrawFrame(GL10 gl) {
         Log.d("TAG", "onDrawFrame() called with: vertexData = [" + vertexData + "]" + ", textureCoordinateData:" + textureCoordinateData);
         GLES20.glClearColor(0.9f, 0.9f, 0.9f, 1f);
-        GLES20.glClear((GLES20.GL_COLOR_BUFFER_BIT));
+        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
         GLES20.glViewport(0, 0, glSurfaceViewWidth, glSurfaceViewHeight);
 
 
@@ -305,6 +321,7 @@ public class ImageRender implements GLSurfaceView.Renderer {
 
 
         GLES20.glUniformMatrix4fv(uMatrixLocation, 1, false, projectionMatrix, 0);
+        GLES20.glUniformMatrix4fv(uMatrixTexLocation, 1, false, textureMatrix, 0);
 
 
         GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, 6);
