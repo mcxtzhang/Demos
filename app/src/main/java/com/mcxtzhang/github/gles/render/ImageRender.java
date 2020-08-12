@@ -56,12 +56,11 @@ public class ImageRender implements GLSurfaceView.Renderer {
 
     private final float[] vertexData = new float[]{
             -1f, -1f,
+            1f, -1f,
+
             -1f, 1f,
             1f, 1f,
-
-            -1f, -1f,
-            1f, 1f,
-            1f, -1f};
+    };
     //
 //    private float[] vertexData = new float[]{
 //            -1f*5, -1f*5,
@@ -77,12 +76,11 @@ public class ImageRender implements GLSurfaceView.Renderer {
 
     private final float[] textureCoordinateData = new float[]{
             0f, 1f, 0f, 1f,
+            1f, 1f, 0f, 1f,
+
             0f, 0f, 0f, 1f,
             1f, 0f, 0f, 1f,
-
-            0f, 1f, 0f, 1f,
-            1f, 0f, 0f, 1f,
-            1f, 1f, 0f, 1f,};
+    };
 //    private float[] textureCoordinateData = new float[]{
 //            0f * 3, 1f * 3,
 //            0f * 3, 0f * 3,
@@ -237,17 +235,36 @@ public class ImageRender implements GLSurfaceView.Renderer {
             0, 0, 0, 1
     };
 
-    private float mCurrentDx = 0, mCurrentDy = 0;
+    private float mCurrentDxInVertex = 0, mCurrentDyInVertex = 0;
 
-    public void translate(float dx, float dy) {
-        float yPercent = dy / glSurfaceViewHeight;
-        float xPercent = dx / glSurfaceViewWidth;
+    public void translate(float dxInScreen, float dyInScreen) {
+        float dxPercent = dxInScreen / glSurfaceViewWidth;
+        float dyPercent = dyInScreen / glSurfaceViewHeight;
         float range = (1 - (-1));
-        dx = xPercent * range;
-        dy = -yPercent * range;
-        Matrix.translateM(projectionMatrix, 0, dx, dy, 0);
-        mCurrentDx += dx;
-        mCurrentDy += dy;
+        float dxInVertex = dxPercent * range;
+        float dyInVertex = -dyPercent * range;
+
+
+        //偶数x轴，奇数y轴
+        for (int i = 0; i < vertexData.length; i++) {
+            if (isOdd(i)) {
+                vertexData[i] += dyInVertex;
+            } else {
+                vertexData[i] += dxInVertex;
+            }
+        }
+
+        mVertexFloatBuffer.put(vertexData);
+        mVertexFloatBuffer.position(0);
+
+
+        //Matrix.translateM(projectionMatrix, 0, dx, dy, 0);
+        mCurrentDxInVertex += dxInVertex;
+        mCurrentDyInVertex += dyInVertex;
+    }
+
+    public static boolean isOdd(int i) {
+        return (i & 1) != 0;
     }
 
     private float mCurrentScale = 1;
@@ -290,7 +307,7 @@ public class ImageRender implements GLSurfaceView.Renderer {
         double rotationMatrix = (m00 * temp + m01 * temp + m02 * temp);
 
         Log.w(TAG, "dump() called, scalingFactor:" + scalingFactor + ",   mCurrentDegree: " + mCurrentDegree + ",rotationMatrix:" + rotationMatrix);
-        Log.w(TAG, "dump() called, mCurrentDx:" + mCurrentDx + ",   mCurrentDy: " + mCurrentDy + ",mCurrentScale:" + mCurrentScale);
+        Log.w(TAG, "dump() called, mCurrentDxInVertex:" + mCurrentDxInVertex + ",   mCurrentDyInVertex: " + mCurrentDyInVertex + ",mCurrentScale:" + mCurrentScale);
 
 
         Log.d(TAG, "dump() called, m00:" + m00 + ",   m01: " + m01 + "  ,m02:" + m02);
@@ -324,6 +341,6 @@ public class ImageRender implements GLSurfaceView.Renderer {
         GLES20.glUniformMatrix4fv(uMatrixTexLocation, 1, false, textureMatrix, 0);
 
 
-        GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, 6);
+        GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4);
     }
 }
