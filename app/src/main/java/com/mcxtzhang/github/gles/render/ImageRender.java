@@ -278,8 +278,24 @@ public class ImageRender implements GLSurfaceView.Renderer {
 
     public void rotate(float targetDegree) {
         float realDegree = targetDegree - mCurrentDegree;
+        Log.d(TAG, "rotate() called with: targetDegree = [" + targetDegree + "],realDegree:" + realDegree);
 
-        Matrix.rotateM(projectionMatrix, 0, realDegree, 0, 0, 1);
+        realDegree *= (float) (Math.PI / 180.0f);
+
+        //Matrix.rotateM(projectionMatrix, 0, realDegree, 0, 0, 1);
+        //偶数x轴，奇数y轴
+        for (int i = 0; i < vertexData.length; i = i + 2) {
+            float x = vertexData[i];
+            float y = vertexData[i + 1];
+            //new x
+            vertexData[i] = (float) (x * Math.cos(realDegree) + y * Math.sin(realDegree));
+            //new y
+            vertexData[i + 1] = (float) (-x * Math.sin(realDegree) + y * Math.cos(realDegree));
+        }
+        mVertexFloatBuffer.put(vertexData);
+        mVertexFloatBuffer.position(0);
+
+
         mCurrentDegree = targetDegree;
         //Matrix.setRotateM(projectionMatrix,0,90,0,0,1);
     }
