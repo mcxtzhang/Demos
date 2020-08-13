@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLUtils;
-import android.opengl.Matrix;
 import android.util.Log;
 
 import java.nio.ByteBuffer;
@@ -270,7 +269,19 @@ public class ImageRender implements GLSurfaceView.Renderer {
     private float mCurrentScale = 1;
 
     public void scale(float scaleX, float scaleY) {
-        Matrix.scaleM(textureMatrix, 0, scaleX, scaleY, 1);
+        Log.d(TAG, "scale() called with: scaleX = [" + scaleX + "], scaleY = [" + scaleY + "]");
+        //偶数x轴，奇数y轴
+        for (int i = 0; i < vertexData.length; i++) {
+            if (isOdd(i)) {
+                vertexData[i] = vertexData[i]*scaleX;
+            } else {
+                vertexData[i] = vertexData[i]* scaleY;
+            }
+        }
+
+        mVertexFloatBuffer.put(vertexData).position(0);
+
+
         mCurrentScale *= scaleX;
     }
 
