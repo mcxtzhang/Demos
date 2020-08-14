@@ -16,7 +16,7 @@ import android.widget.SeekBar;
 import android.widget.Toast;
 
 import com.mcxtzhang.github.R;
-import com.mcxtzhang.github.gles.render.ImageRender;
+import com.mcxtzhang.github.gles.render.FilterRender;
 import com.mcxtzhang.github.gles.render.hockey.util.ShaderHelper;
 
 import java.nio.ByteBuffer;
@@ -107,7 +107,9 @@ public class HockeyActivity extends AppCompatActivity {
 
 
         //lessen 6
-        final ImageRender imageRender = new ImageRender(BitmapFactory.decodeResource(getResources(), R.drawable.big_image));
+        //final ImageRender imageRender = new ImageRender(BitmapFactory.decodeResource(getResources(), R.drawable.big_image));
+        final FilterRender imageRender = new FilterRender(BitmapFactory.decodeResource(getResources(), R.drawable.big_image),
+                BitmapFactory.decodeResource(getResources(), R.drawable.filter_2));
         glSurfaceView.setRenderer(imageRender);
 
         glSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
