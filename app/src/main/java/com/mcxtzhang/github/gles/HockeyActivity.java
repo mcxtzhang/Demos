@@ -3,6 +3,7 @@ package com.mcxtzhang.github.gles;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.ConfigurationInfo;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 import com.mcxtzhang.github.R;
 import com.mcxtzhang.github.gles.render.FilterRender;
+import com.mcxtzhang.github.gles.render.GrayFilterRender;
 import com.mcxtzhang.github.gles.render.hockey.util.ShaderHelper;
 
 import java.nio.ByteBuffer;
@@ -107,12 +109,12 @@ public class HockeyActivity extends AppCompatActivity {
 
 
         //lessen 6
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.big_image);
         //final ImageRender imageRender = new ImageRender(BitmapFactory.decodeResource(getResources(), R.drawable.big_image));
-        final FilterRender imageRender = new FilterRender(BitmapFactory.decodeResource(getResources(), R.drawable.big_image),
+        final FilterRender imageRender = new FilterRender(bitmap,
                 BitmapFactory.decodeResource(getResources(), R.drawable.filter_2));
-        glSurfaceView.setRenderer(imageRender);
+        //glSurfaceView.setRenderer(imageRender);
 
-        glSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
 
         final ScaleGestureDetector mScaleGestureDetector = new ScaleGestureDetector(this, new ScaleGestureDetector.OnScaleGestureListener() {
             @Override
@@ -261,6 +263,9 @@ public class HockeyActivity extends AppCompatActivity {
                 .asFloatBuffer();
         vertexData.put(tableVerticesWithTriangles);
 
+
+        glSurfaceView.setRenderer(new GrayFilterRender(bitmap));
+        glSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
 
     }
 
