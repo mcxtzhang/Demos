@@ -14,4 +14,29 @@ public class ShaderUtil {
             "    gl_FragColor = vec4(vec3(luminance), 1.0);\n" +
             "}\n" +
             "\n";
+
+
+    public static final String YLZZ_FRAGMENT_SHADER = "// 精度\n" +
+            "precision highp float;\n" +
+            "// 通过uniform传递过来的纹理\n" +
+            "uniform sampler2D u_texture;\n" +
+            "// 纹理坐标\n" +
+            "varying highp vec2 v_textureCoordinate;\n" +
+            "\n" +
+            "void main() {\n" +
+            "    \n" +
+            "    vec2 uv = v_textureCoordinate.xy;\n" +
+            "    float y;\n" +
+            "    // 0.0～0.5 范围内显示0.25～0.75范围的像素\n" +
+            "    if (uv.y >= 0.0 && uv.y <= 0.5) {\n" +
+            "        y = uv.y + 0.25;\n" +
+            "    }else {\n" +
+            "        // 0.5～1.0范围内显示 0.25～0.75范围的像素\n" +
+            "        y = uv.y - 0.25;\n" +
+            "    }\n" +
+            "    \n" +
+            "    // 获取纹理像素，用于显示\n" +
+            "    gl_FragColor = texture2D(u_texture, vec2(uv.x, y));\n" +
+            "}\n" +
+            "\n";
 }

@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 import com.mcxtzhang.github.R;
 import com.mcxtzhang.github.gles.render.FilterRender;
-import com.mcxtzhang.github.gles.render.GrayFilterRender;
+import com.mcxtzhang.github.gles.render.YLZZFilterRender;
 import com.mcxtzhang.github.gles.render.hockey.util.ShaderHelper;
 
 import java.nio.ByteBuffer;
@@ -264,7 +264,8 @@ public class HockeyActivity extends AppCompatActivity {
         vertexData.put(tableVerticesWithTriangles);
 
 
-        glSurfaceView.setRenderer(new GrayFilterRender(bitmap));
+        //glSurfaceView.setRenderer(new GrayFilterRender(bitmap));
+        glSurfaceView.setRenderer(new YLZZFilterRender(bitmap));
         glSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
 
     }
