@@ -76,7 +76,8 @@ public class YLZZFilterRender implements GLSurfaceView.Renderer {
         int vertexShader = GLES20.glCreateShader(GLES20.GL_VERTEX_SHADER);
         int fragmentShader = GLES20.glCreateShader(GLES20.GL_FRAGMENT_SHADER);
         GLES20.glShaderSource(vertexShader, vertexShaderCode);
-        GLES20.glShaderSource(fragmentShader, ShaderUtil.YLZZ_FRAGMENT_SHADER);
+        //GLES20.glShaderSource(fragmentShader, ShaderUtil.YLZZ_FRAGMENT_SHADER);
+        GLES20.glShaderSource(fragmentShader, ShaderUtil.YLZZ_FRAGMENT_SHADER_2);
         GLES20.glCompileShader(vertexShader);
         GLES20.glCompileShader(fragmentShader);
         // 将shader程序附着到GL程序上
