@@ -13,6 +13,11 @@
         android:orientation="vertical"
         tools:context=".drawable.DrawableActivity">
 
+        <ImageView
+            android:id="@+id/testImage1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -23,26 +28,26 @@
             android:layout_height="wrap_content"
             android:background="@drawable/loading_withpadding_xxh" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="正确用法1，切图不该有透明边缘，利用控件补margin：" />
+        <!--        <TextView-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="正确用法1，切图不该有透明边缘，利用控件补margin：" />-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="33.66dp"
-            android:background="@drawable/loading_only_xxh" />
+        <!--        <TextView-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_margin="33.66dp"-->
+        <!--            android:background="@drawable/loading_only_xxh" />-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="正确用法2，切图不该有透明边缘，利用inset包装Bitmap：" />
+        <!--        <TextView-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="正确用法2，切图不该有透明边缘，利用inset包装Bitmap：" />-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/padding_drawable" />
+        <!--        <TextView-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:background="@drawable/padding_drawable" />-->
 
 
         <!--        <TextView-->
