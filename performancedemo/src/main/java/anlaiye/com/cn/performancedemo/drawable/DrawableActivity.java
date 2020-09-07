@@ -26,11 +26,12 @@ public class DrawableActivity extends AppCompatActivity {
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
         Log.d("DrawableActivity", "onCreate() called with: metrics = [" + metrics.densityDpi + "]");
 
-
+        String url = "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3373849050,246075620&fm=26&gp=0.jpg";
         Glide.with(this)
-               // .load("https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3373849050,246075620&fm=26&gp=0.jpg")
-               // .load("https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2126677482,734469783&fm=26&gp=0.jpg")
-                .load("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1599217734897&di=a505089e59d0b77acd344d21c3c86625&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F01%2F99%2F30%2F598471c9d2119_610.jpg")
+                .load(url)
+                 //.load("https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3373849050,246075620&fm=26&gp=0.jpg")
+                // .load("https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2126677482,734469783&fm=26&gp=0.jpg")
+                //.load("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1599217734897&di=a505089e59d0b77acd344d21c3c86625&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F01%2F99%2F30%2F598471c9d2119_610.jpg")
                 .asBitmap()
                 .into(new SimpleTarget<Bitmap>() {
                     @Override
@@ -38,7 +39,7 @@ public class DrawableActivity extends AppCompatActivity {
                         Log.d(TAG, "onResourceReady() called with: resource = [" + resource
                                 + "], resource.getWidth() = [" + resource.getWidth() + "]"
                                 + "], resource.getHeight() = [" + resource.getHeight() + "]"
-                                + "], resource.getAllocationByteCount() = [" + resource.getConfig().toString()+ "]");
+                                + "], resource.getAllocationByteCount() = [" + resource.getConfig().toString() + "]");
 
                         ((ImageView) findViewById(R.id.testImage1)).setImageBitmap(resource);
 

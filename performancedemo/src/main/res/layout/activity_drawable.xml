@@ -13,6 +13,10 @@
         android:orientation="vertical"
         tools:context=".drawable.DrawableActivity">
 
+        <anlaiye.com.cn.performancedemo.drawable.CstBadView1
+            android:layout_width="300dp"
+            android:layout_height="300dp"/>
+
         <ImageView
             android:id="@+id/testImage1"
             android:layout_width="wrap_content"
