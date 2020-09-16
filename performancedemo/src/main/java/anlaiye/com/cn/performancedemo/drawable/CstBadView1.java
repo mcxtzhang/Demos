@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 import anlaiye.com.cn.performancedemo.R;
@@ -28,30 +27,21 @@ public class CstBadView1 extends View {
         super(context, attrs, defStyleAttr);
     }
 
-
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        Log.d(TAG, "onMeasure() called with: widthMeasureSpec = [" + widthMeasureSpec + "], heightMeasureSpec = [" + heightMeasureSpec + "]");
-    }
-
-    @Override
-    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        super.onLayout(changed, left, top, right, bottom);
-        Log.d(TAG, "onLayout() called with: changed = [" + changed + "], left = [" + left + "], top = [" + top + "], right = [" + right + "], bottom = [" + bottom + "]");
-    }
-
     int mText = 0;
+
+    //    Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.pic_500_2);
+//        canvas.drawBitmap(bitmap, 0, 0, paint);
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        Log.d(TAG, "onDraw() called with: canvas = [" + canvas + "]");
+        //Log.d(TAG, "onDraw() called with: canvas = [" + canvas + "]");
         Paint paint = new Paint();
         paint.setColor(Color.BLACK);
+        paint.setTextSize(100);
 
-        canvas.drawText(String.valueOf(mText++), getWidth() / 2, getHeight() / 2, paint);
         canvas.drawBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.pic_500_2), 0, 0, paint);
+        canvas.drawText(String.valueOf(mText++), getWidth() / 2, getHeight() / 2, paint);
         invalidate();
     }
 }

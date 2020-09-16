@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".drawable.DumpBitmapActivity">
+        <activity android:name=".drawable.DrawableActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,13 +21,19 @@
             </intent-filter>
         </activity>
 
+
+
+
+
+        <activity android:name=".drawable.DumpBitmapActivity">
+
+        </activity>
+
         <activity android:name=".drawable.TestDrawableActivity">
 
         </activity>
         <activity android:name=".lint.TestInnerClassActivity" />
-        <activity android:name=".drawable.DrawableActivity" >
 
-        </activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
