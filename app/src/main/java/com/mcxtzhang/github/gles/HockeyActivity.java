@@ -17,8 +17,7 @@ import android.widget.SeekBar;
 import android.widget.Toast;
 
 import com.mcxtzhang.github.R;
-import com.mcxtzhang.github.gles.render.FilterRender;
-import com.mcxtzhang.github.gles.render.YLZZFilterRender;
+import com.mcxtzhang.github.gles.render.ImageRender;
 import com.mcxtzhang.github.gles.render.hockey.util.ShaderHelper;
 
 import java.nio.ByteBuffer;
@@ -110,10 +109,10 @@ public class HockeyActivity extends AppCompatActivity {
 
         //lessen 6
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.big_image);
-        //final ImageRender imageRender = new ImageRender(BitmapFactory.decodeResource(getResources(), R.drawable.big_image));
-        final FilterRender imageRender = new FilterRender(bitmap,
-                BitmapFactory.decodeResource(getResources(), R.drawable.filter_2));
-        //glSurfaceView.setRenderer(imageRender);
+        final ImageRender imageRender = new ImageRender(BitmapFactory.decodeResource(getResources(), R.drawable.big_image));
+//        final FilterRender imageRender = new FilterRender(bitmap,
+//                BitmapFactory.decodeResource(getResources(), R.drawable.filter_2));
+        glSurfaceView.setRenderer(imageRender);
 
 
         final ScaleGestureDetector mScaleGestureDetector = new ScaleGestureDetector(this, new ScaleGestureDetector.OnScaleGestureListener() {
@@ -164,6 +163,11 @@ public class HockeyActivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 mScaleGestureDetector.onTouchEvent(event);
+
+                Bitmap bitmap1 = BitmapFactory.decodeResource(getResources(), R.drawable.big_image);
+                //imageRender.setCropRotateParams(0,0,bitmap1.getWidth(),bitmap1.getHeight(),0);
+                //imageRender.setCropRotateParams(0,0,bitmap1.getWidth()/2,bitmap1.getHeight()/2,0);
+                imageRender.setCropRotateParams(200,200,200,200,0);
 
                 float x = 0, y = 0;
                 // 拿到触摸点的个数
@@ -265,7 +269,7 @@ public class HockeyActivity extends AppCompatActivity {
 
 
         //glSurfaceView.setRenderer(new GrayFilterRender(bitmap));
-        glSurfaceView.setRenderer(new YLZZFilterRender(bitmap));
+        //glSurfaceView.setRenderer(new YLZZFilterRender(bitmap));
         glSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
 
     }

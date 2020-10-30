@@ -62,13 +62,13 @@ public class ImageRender implements GLSurfaceView.Renderer {
     };
     //
 //    private float[] vertexData = new float[]{
-//            -1f*5, -1f*5,
-//            -1f*5, 1f*5,
-//            1f*5, 1f*5,
+//            -1f*2, -1f*2,
+//            1f*2, -1f*2,
 //
-//            -1f*5, -1f*5,
-//            1f*5, 1f*5,
-//            1f*5, -1f*5};
+//            -1f*2, 1f*2,
+//            1f*2, 1f*2,
+//
+//            };
 
     private FloatBuffer mVertexFloatBuffer;
     private int aPositionLocation;
@@ -273,9 +273,9 @@ public class ImageRender implements GLSurfaceView.Renderer {
         //偶数x轴，奇数y轴
         for (int i = 0; i < vertexData.length; i++) {
             if (isOdd(i)) {
-                vertexData[i] = vertexData[i]*scaleX;
+                vertexData[i] = vertexData[i] * scaleX;
             } else {
-                vertexData[i] = vertexData[i]* scaleY;
+                vertexData[i] = vertexData[i] * scaleY;
             }
         }
 
@@ -369,5 +369,49 @@ public class ImageRender implements GLSurfaceView.Renderer {
 
 
         GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4);
+    }
+
+
+    public void setCropRotateParams(int x, int y, int w, int h, double degree) {
+        Log.d(TAG, "setCropRotateParams() called with: x = [" + x + "], y = [" + y + "], w = [" + w + "], h = [" + h + "], degree = [" + degree + "]");
+
+        float bW = mBitmap.getWidth();
+        float bH = mBitmap.getHeight();
+
+        float vertexW = 2 * bW / w;
+        float vertexH = 2 * bH / h;
+
+        float x1 = -1 - (2 * x * 1.0f / w);
+        float y1 = 1 + (2 * y * 1.0f / h);
+
+
+        float x2 = x1 + vertexW;
+        float y2 = y1;
+
+        float x3 = x1;
+        float y3 = y1 - vertexH;
+
+        float x4 = x2;
+        float y4 = y3;
+
+        vertexData[0] = x3;
+        vertexData[1] = y3;
+
+        vertexData[2] = x4;
+        vertexData[3] = y4;
+
+        vertexData[4] = x1;
+        vertexData[5] = y1;
+
+        vertexData[6] = x2;
+        vertexData[7] = y2;
+
+        if (null != mVertexFloatBuffer) {
+            mVertexFloatBuffer.put(vertexData);
+            mVertexFloatBuffer.position(0);
+        }
+
+
+        //rotate((float) rotate);
     }
 }
